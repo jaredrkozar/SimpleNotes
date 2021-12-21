@@ -39,11 +39,10 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         let cell = detailsView.dequeueReusableCell(withReuseIdentifier: "DetailCollectionViewCell", for: indexPath) as! DetailCollectionViewCell
         
         if indexPath.section == 0 {
-            cell.layer.cornerRadius = 10.0
-            cell.detailImageView.backgroundColor = UIColor(named: details[indexPath.section][indexPath.item])
+            cell.detailImageView.backgroundColor = UIColor(named: details[0][indexPath.item])
         } else {
-            let configuration = UIImage.SymbolConfiguration(pointSize: 25.0, weight: .medium, scale: .medium)
-            cell.detailImageView.image = UIImage(systemName: details[indexPath.section][indexPath.item], withConfiguration: configuration)
+            let configuration = UIImage.SymbolConfiguration(pointSize: 30.0, weight: .regular, scale: .large)
+            cell.detailImageView.image = UIImage(systemName: details[1][indexPath.item], withConfiguration: configuration)
         }
            
         return cell

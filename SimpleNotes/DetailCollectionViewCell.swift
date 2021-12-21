@@ -14,6 +14,7 @@ class DetailCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        detailImageView.layer.cornerRadius = 10.0
         
         detailImageView.contentMode = .center
     }
