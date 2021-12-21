@@ -11,23 +11,30 @@ import WSTagsField
 class EditTagsTableViewController: UITableViewController {
 
     var newNoteVC = WSTagsField()
-    var allTags = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: nil, action: #selector(doneButtonTapped))
+        title = "Edit Tags"
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
         
         let plusButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonTapped))
         
-        let editButton = UIBarButtonItem(title: "Edit", style: .plain, target: nil, action: #selector(editButtonTapped))
+        let nib = UINib(nibName: "TagTableViewCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "TagTableViewCell")
         
-        self.navigationItem.leftBarButtonItems = [plusButton, editButton]
+        self.navigationItem.leftBarButtonItems = [plusButton]
         self.navigationItem.rightBarButtonItems = [doneButton]
         
+        tableView.rowHeight = 70
         self.tableView.allowsMultipleSelection = true
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        print("DDD")
+        tableView.reloadData()
+    }
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -37,19 +44,19 @@ class EditTagsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return allTags.count
+        return tags.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "tagCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TagTableViewCell", for: indexPath) as! TagTableViewCell
         
-        cell.textLabel?.text = allTags[indexPath.row]
+        let tag = tags[indexPath.row]
+        
+        cell.tagImage.image = tag.symbol
+        
+        cell.tagName.text = tag.name
         
         return cell
-    }
-
-    @objc func editButtonTapped(sender: UIBarButtonItem) {
-        tableView.isEditing = true
     }
     
     @objc func plusButtonTapped(sender: UIBarButtonItem) {
@@ -98,11 +105,11 @@ class EditTagsTableViewController: UITableViewController {
     */
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        newNoteVC.addTag(allTags[indexPath.row])
+        newNoteVC.addTag(tags[indexPath.row].name)
     }
 
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        newNoteVC.removeTag(allTags[indexPath.row])
+        newNoteVC.removeTag(tags[indexPath.row].name)
     }
 }

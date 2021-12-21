@@ -18,5 +18,4 @@ class DetailCollectionViewCell: UICollectionViewCell {
         
         detailImageView.contentMode = .scaleAspectFit
     }
-
 }

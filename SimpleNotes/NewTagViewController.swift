@@ -9,6 +9,7 @@ import UIKit
 
 class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
+    @IBOutlet var tagNameField: UITextField!
     @IBOutlet var symbolImage: UIImageView!
     @IBOutlet var detailsView: UICollectionView!
     
@@ -25,6 +26,14 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         detailsView.delegate = self
         detailsView.dataSource = self
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
+
+        let cancelButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(cancelButtonTapped))
+        
+        self.navigationItem.rightBarButtonItems = [doneButton]
+        
+        self.navigationItem.leftBarButtonItems = [cancelButton]
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -57,5 +66,12 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
 
-
+    @objc func cancelButtonTapped(sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func doneButtonTapped(sender: UIBarButtonItem) {
+        tags.append(Tag(symbol: symbolImage.image, name: tagNameField.text!))
+        dismiss(animated: true, completion: nil)
+    }
 }

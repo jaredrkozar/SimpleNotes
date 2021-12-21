@@ -8,3 +8,4 @@
 import UIKit
 
 var notes = [Note]()
+var tags = [Tag]()
