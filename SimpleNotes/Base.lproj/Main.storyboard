@@ -83,15 +83,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fQ6-Ug-scP">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fQ6-Ug-scP">
                                 <rect key="frame" x="107" y="70" width="200" height="200"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="tgn-ul-b5E"/>
+                                </constraints>
                             </imageView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BAY-vm-Duc">
-                                <rect key="frame" x="20" y="382" width="383" height="480"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="BAY-vm-Duc">
+                                <rect key="frame" x="20" y="382" width="374" height="480"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="15" minimumInteritemSpacing="10" id="njT-CJ-muv">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="15" minimumInteritemSpacing="0.0" id="njT-CJ-muv">
                                     <size key="itemSize" width="70" height="70"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -108,15 +109,26 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bKo-hS-a0z">
+                            <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bKo-hS-a0z">
                                 <rect key="frame" x="80" y="316" width="255" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="OrX-8x-tb4"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="bKo-hS-a0z" firstAttribute="top" secondItem="fQ6-Ug-scP" secondAttribute="bottom" constant="46" id="1xi-8K-tvQ"/>
+                            <constraint firstItem="BAY-vm-Duc" firstAttribute="top" secondItem="bKo-hS-a0z" secondAttribute="bottom" constant="32" id="3yI-hs-alc"/>
+                            <constraint firstItem="bKo-hS-a0z" firstAttribute="centerX" secondItem="BAY-vm-Duc" secondAttribute="centerX" id="G4G-Qa-egz"/>
+                            <constraint firstItem="BAY-vm-Duc" firstAttribute="bottom" secondItem="OrX-8x-tb4" secondAttribute="bottom" id="HZL-NE-fVk"/>
+                            <constraint firstItem="fQ6-Ug-scP" firstAttribute="leading" secondItem="OrX-8x-tb4" secondAttribute="leading" constant="107" id="JLe-nr-3A9"/>
+                            <constraint firstItem="BAY-vm-Duc" firstAttribute="trailing" secondItem="m1L-BI-KhG" secondAttribute="trailingMargin" id="La6-eq-11n"/>
+                            <constraint firstItem="BAY-vm-Duc" firstAttribute="leading" secondItem="m1L-BI-KhG" secondAttribute="leadingMargin" id="QhF-UQ-spU"/>
+                            <constraint firstItem="bKo-hS-a0z" firstAttribute="leading" secondItem="OrX-8x-tb4" secondAttribute="leading" constant="80" id="Tiv-bJ-m0E"/>
+                            <constraint firstItem="fQ6-Ug-scP" firstAttribute="centerX" secondItem="bKo-hS-a0z" secondAttribute="centerX" id="XX5-61-UnT"/>
+                            <constraint firstItem="fQ6-Ug-scP" firstAttribute="top" secondItem="OrX-8x-tb4" secondAttribute="top" constant="26" id="c1s-jr-xtA"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="detailsView" destination="BAY-vm-Duc" id="Bov-wO-c8I"/>

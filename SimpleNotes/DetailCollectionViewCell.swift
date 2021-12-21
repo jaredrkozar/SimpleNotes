@@ -16,7 +16,7 @@ class DetailCollectionViewCell: UICollectionViewCell {
         // Initialization code
         detailImageView.layer.cornerRadius = 10.0
         
-        detailImageView.contentMode = .center
+        detailImageView.contentMode = .scaleAspectFit
     }
 
 }
