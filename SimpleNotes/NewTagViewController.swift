@@ -59,7 +59,8 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            symbolImage.tintColor = UIColor(named: details[indexPath.section][indexPath.item])
+            symbolImage.image = symbolImage.image!.withTintColor(UIColor(named: details[indexPath.section][indexPath.item])!, renderingMode: .alwaysOriginal)
+            
         } else {
             let configuration = UIImage.SymbolConfiguration(pointSize: 55.0, weight: .medium, scale: .large)
             symbolImage.image = UIImage(systemName: details[indexPath.section][indexPath.item], withConfiguration: configuration)
@@ -71,6 +72,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     @objc func doneButtonTapped(sender: UIBarButtonItem) {
+        
         tags.append(Tag(symbol: symbolImage.image, name: tagNameField.text!))
         dismiss(animated: true, completion: nil)
     }
