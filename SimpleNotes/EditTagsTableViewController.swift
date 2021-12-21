@@ -53,18 +53,9 @@ class EditTagsTableViewController: UITableViewController {
     }
     
     @objc func plusButtonTapped(sender: UIBarButtonItem) {
-        let addTag = UIAlertController(title: "Add Tag", message: "Add a tat", preferredStyle: .alert)
-        addTag.addTextField()
-        
-        let submitAction = UIAlertAction(title: "Submit", style: .default) { [weak self, weak addTag] action in
-            guard let answer = addTag?.textFields else { return }
-            self!.allTags.append(answer[0].text!)
-            self!.tableView.reloadData()
-        }
-        
-        addTag.addAction(submitAction)
-        
-        present(addTag, animated: true, completion: nil)
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newTagVC") as! NewTagViewController
+        let navController = UINavigationController(rootViewController: vc)
+        self.navigationController?.present(navController, animated: true, completion: nil)
     }
     
     @objc func doneButtonTapped(sender: UIBarButtonItem) {
