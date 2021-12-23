@@ -12,6 +12,8 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet var tagNameField: UITextField!
     @IBOutlet var symbolImage: UIImageView!
     @IBOutlet var detailsView: UICollectionView!
+    var image: UIImage?
+    var color: UIColor?
     
     let details = [["Red", "Green", "Blue"], ["folder", "tray", "externaldrive", "doc", "doc.plaintext", "note.text", "book", "book.closed", "ticket", "link", "person", "person.crop.circle", "person.crop.square", "sun.max", "moon", "umbrella", "thermometer", "cloud.moon", "mic", "loupe", "magnifyingglass", "square", "circle", "eye", "tshirt", "eyeglasses", "facemask", "message", "bubble.right", "quote.bubble", "star.bubble", "exclamation.bubble", "plus.bubble", "checkmark.bubble"]]
       
@@ -26,7 +28,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         detailsView.delegate = self
         detailsView.dataSource = self
-        
+                                    
         let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
 
         let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped))
@@ -59,13 +61,15 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            symbolImage.image = (symbolImage.image ?? UIImage(systemName: details[1][0]))? .withTintColor(UIColor(named: details[indexPath.section][indexPath.item])!, renderingMode: .alwaysOriginal)
             
-            
+            color = UIColor(named: details[indexPath.section][indexPath.item])!
         } else {
-            let configuration = UIImage.SymbolConfiguration(pointSize: 55.0, weight: .medium, scale: .large)
-            symbolImage.image = UIImage(systemName: details[indexPath.section][indexPath.item], withConfiguration: configuration)
+                
+            let configuration = UIImage.SymbolConfiguration(pointSize: 30.0, weight: .regular, scale: .large)
+            image = UIImage(systemName: details[1][indexPath.item], withConfiguration: configuration)!
         }
+        
+        setImageAndColor(image: (image ?? UIImage(systemName: details[1][0]))!, color: (color ?? UIColor(named: "AccentColor"))!)
     }
 
     @objc func cancelButtonTapped(sender: UIBarButtonItem) {
@@ -79,4 +83,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         dismiss(animated: true, completion: nil)
     }
     
+    func setImageAndColor(image: UIImage, color: UIColor) {
+        symbolImage.image = image.withTintColor(color, renderingMode: .alwaysOriginal)
+    }
 }
