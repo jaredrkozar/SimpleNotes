@@ -72,8 +72,9 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     @objc func doneButtonTapped(sender: UIBarButtonItem) {
+  
+        save(name: tagNameField.text!, symbol: (symbolImage.image?.convertToData())!)
         
-        tags.append(Tag(symbol: symbolImage.image, name: tagNameField.text!))
         dismiss(animated: true, completion: nil)
     }
 }

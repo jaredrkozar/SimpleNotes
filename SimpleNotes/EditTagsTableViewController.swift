@@ -7,6 +7,7 @@
 
 import UIKit
 import WSTagsField
+import CoreData
 
 class EditTagsTableViewController: UITableViewController {
 
@@ -29,8 +30,17 @@ class EditTagsTableViewController: UITableViewController {
         
         tableView.rowHeight = 70
         self.tableView.allowsMultipleSelection = true
+        fetchTags() 
     }
 
+    func fetchTags() {
+        do {
+            tags = try context.fetch(Tag.fetchRequest())
+            tableView.reloadData()
+        } catch {
+            print("An error occured")
+        }
+    }
     override func viewWillAppear(_ animated: Bool) {
         print("DDD")
         tableView.reloadData()
@@ -52,7 +62,7 @@ class EditTagsTableViewController: UITableViewController {
         
         let tag = tags[indexPath.row]
         
-        cell.tagImage.image = tag.symbol
+        cell.tagImage.image = tag.symbol?.toImage()
         
         cell.tagName.text = tag.name
         
@@ -105,11 +115,11 @@ class EditTagsTableViewController: UITableViewController {
     */
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        newNoteVC.addTag(tags[indexPath.row].name)
+        newNoteVC.addTag(tags[indexPath.row].name!)
     }
 
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        newNoteVC.removeTag(tags[indexPath.row].name)
+        newNoteVC.removeTag(tags[indexPath.row].name!)
     }
 }

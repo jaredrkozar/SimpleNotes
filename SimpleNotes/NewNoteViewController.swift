@@ -24,17 +24,15 @@ class NewNoteViewController: UIViewController {
         
         noteTitleField.layer.borderColor = UIColor(named: "AccentColor")?.cgColor
         noteTitleField.layer.borderWidth = 1.5
-        noteTitleField.becomeFirstResponder()
         
         noteTextField.layer.borderColor = UIColor(named: "AccentColor")?.cgColor
         noteTextField.layer.borderWidth = 1.5
         noteTextField.layer.cornerRadius = 6.0
         
-        noteTagsField.readOnly = true
         noteTagsField.cornerRadius = 6.0
         noteTagsField.spaceBetweenTags = 3.0
         noteTagsField.numberOfLines = 2
-        
+
         let saveNote = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveNote))
         
         let editTags = UIBarButtonItem(image: UIImage(systemName: "tag"), style: .plain, target: self, action: #selector(editTagsButtonTapped))
@@ -52,11 +50,6 @@ class NewNoteViewController: UIViewController {
         let navController = UINavigationController(rootViewController: vc)
         vc.newNoteVC = noteTagsField
         self.navigationController?.present(navController, animated: true, completion: nil)
-    }
-    
-    func tagEdit(tag: String, removeTag: Bool) {
-        print(tag)
-        self.noteTagsField.addTag("DDD")
     }
     
 }
