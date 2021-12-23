@@ -14,7 +14,7 @@ let context = (UIApplication.shared.delegate as! AppDelegate).persistentContaine
 
 extension UIImage {
     func convertToData() -> String {
-        let imageData = self.jpegData(compressionQuality: 1)
+        let imageData = self.pngData()
         let imageStr = imageData?.base64EncodedString(options: .lineLength64Characters) ?? ""
         return imageStr
     }
@@ -30,7 +30,7 @@ extension String {
 }
 
 
-func save(name: String, symbol: String) {
+func saveTag(name: String, symbol: String) {
   
     let newTag = Tag(context: context)
     newTag.symbol = symbol
