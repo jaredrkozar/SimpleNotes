@@ -29,7 +29,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
 
-        let cancelButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(cancelButtonTapped))
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped))
         
         self.navigationItem.rightBarButtonItems = [doneButton]
         
@@ -59,7 +59,8 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            symbolImage.image = symbolImage.image!.withTintColor(UIColor(named: details[indexPath.section][indexPath.item])!, renderingMode: .alwaysOriginal)
+            symbolImage.image = (symbolImage.image ?? UIImage(systemName: details[1][0]))? .withTintColor(UIColor(named: details[indexPath.section][indexPath.item])!, renderingMode: .alwaysOriginal)
+            
             
         } else {
             let configuration = UIImage.SymbolConfiguration(pointSize: 55.0, weight: .medium, scale: .large)
@@ -77,4 +78,5 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         dismiss(animated: true, completion: nil)
     }
+    
 }
