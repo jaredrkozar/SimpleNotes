@@ -8,7 +8,8 @@
 import UIKit
 
 class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-
+    let detailIcons = UIImage.SymbolConfiguration(pointSize: 30.0, weight: .regular, scale: .large)
+    
     @IBOutlet var tagNameField: UITextField!
     @IBOutlet var symbolImage: UIImageView!
     @IBOutlet var detailsView: UICollectionView!
@@ -36,6 +37,8 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.navigationItem.rightBarButtonItems = [doneButton]
         
         self.navigationItem.leftBarButtonItems = [cancelButton]
+        
+        symbolImage.image = UIImage(systemName: details[1][0], withConfiguration: detailIcons)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -52,8 +55,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         if indexPath.section == 0 {
             cell.detailImageView.backgroundColor = UIColor(named: details[0][indexPath.item])
         } else {
-            let configuration = UIImage.SymbolConfiguration(pointSize: 30.0, weight: .regular, scale: .large)
-            cell.detailImageView.image = UIImage(systemName: details[1][indexPath.item], withConfiguration: configuration)
+            cell.detailImageView.image = UIImage(systemName: details[1][indexPath.item], withConfiguration: detailIcons)?.withTintColor(UIColor(named: "Gray")!, renderingMode: .alwaysOriginal)
         }
            
         return cell
@@ -64,9 +66,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             color = UIColor(named: details[indexPath.section][indexPath.item])!
         } else {
-                
-            let configuration = UIImage.SymbolConfiguration(pointSize: 30.0, weight: .regular, scale: .large)
-            image = UIImage(systemName: details[1][indexPath.item], withConfiguration: configuration)!
+            image = UIImage(systemName: details[1][indexPath.item], withConfiguration: detailIcons)!
         }
         
         setImageAndColor(image: (image ?? UIImage(systemName: details[1][0]))!, color: (color ?? UIColor(named: "AccentColor"))!)
