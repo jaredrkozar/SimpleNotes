@@ -6,11 +6,9 @@
 //
 
 import UIKit
-import CoreData
 
 var notes = [Note]()
 var tags: [Tag] = []
-let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
 extension UIImage {
     func convertToData() -> String {
@@ -26,19 +24,5 @@ extension String {
             return UIImage(data: data)
         }
         return nil
-    }
-}
-
-
-func saveTag(name: String, symbol: String) {
-  
-    let newTag = Tag(context: context)
-    newTag.symbol = symbol
-    newTag.name = name
-    
-    do {
-        try context.save()
-    } catch {
-        print("An error occured while saving a tag.")
     }
 }
