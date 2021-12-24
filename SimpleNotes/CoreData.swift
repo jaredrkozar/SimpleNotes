@@ -22,3 +22,11 @@ func saveTag(name: String, symbol: String) {
         print("An error occured while saving a tag.")
     }
 }
+
+func fetchTags() {
+    do {
+        tags = try context.fetch(Tag.fetchRequest())
+    } catch {
+        print("An error occured")
+    }
+}

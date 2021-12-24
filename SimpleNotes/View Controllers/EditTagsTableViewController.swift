@@ -30,17 +30,10 @@ class EditTagsTableViewController: UITableViewController {
         
         tableView.rowHeight = 70
         self.tableView.allowsMultipleSelection = true
-        fetchTags() 
+        fetchTags()
+        tableView.reloadData()
     }
-
-    func fetchTags() {
-        do {
-            tags = try context.fetch(Tag.fetchRequest())
-            tableView.reloadData()
-        } catch {
-            print("An error occured")
-        }
-    }
+    
     override func viewWillAppear(_ animated: Bool) {
         print("DDD")
         tableView.reloadData()
