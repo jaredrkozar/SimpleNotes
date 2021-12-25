@@ -7,7 +7,7 @@
 
 import UIKit
 
-var notes = [Note]()
+var notes: [Note] = []
 var tags: [Tag] = []
 
 extension UIImage {

@@ -22,26 +22,26 @@ class NewNoteViewController: UIViewController {
         
         title = "New Note"
         
-        noteTitleField.layer.borderColor = UIColor(named: "AccentColor")?.cgColor
-        noteTitleField.layer.borderWidth = 1.5
+        noteTitleField.backgroundColor = UIColor.systemGray5
+        noteTitleField.layer.cornerRadius = 6.0
         
-        noteTextField.layer.borderColor = UIColor(named: "AccentColor")?.cgColor
-        noteTextField.layer.borderWidth = 1.5
+        noteTextField.backgroundColor = UIColor.systemGray5
         noteTextField.layer.cornerRadius = 6.0
         
         noteTagsField.cornerRadius = 6.0
         noteTagsField.spaceBetweenTags = 3.0
         noteTagsField.numberOfLines = 2
 
-        let saveNote = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveNote))
+        let saveNote = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveNoteButtonTapped))
         
         let editTags = UIBarButtonItem(image: UIImage(systemName: "tag"), style: .plain, target: self, action: #selector(editTagsButtonTapped))
         
         self.navigationItem.rightBarButtonItems = [editTags, saveNote]
     }
     
-    @objc func saveNote(sender: UIBarButtonItem) {
-        print("YOLO")
+    @objc func saveNoteButtonTapped(sender: UIBarButtonItem) {
+        saveNote(title: noteTitleField.text!, text: noteTextField.text, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}))
+        dismiss(animated: true, completion: nil)
     }
 
     @objc func editTagsButtonTapped(_ sender: Any) {

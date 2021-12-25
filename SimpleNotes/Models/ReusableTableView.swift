@@ -26,9 +26,9 @@ class ReusableTableView: NSObject, UITableViewDataSource {
         cell.noteTitle.text = note.title
 
         cell.noteText.text = note.text
-        cell.noteDate.text = note.date.formatted()
+        cell.noteDate.text = note.date!.formatted()
         
-        cell.noteTags.addTags(note.tags)
+        cell.noteTags.addTag("DD")
        
         cell.accessibilityLabel = "\(note.title) Created on \(note.date)"
         

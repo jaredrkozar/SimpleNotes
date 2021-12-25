@@ -19,8 +19,9 @@
 		7F498B4F277248BE00202413 /* Tag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B4D277248BE00202413 /* Tag+CoreDataClass.swift */; };
 		7F498B50277248BE00202413 /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B4E277248BE00202413 /* Tag+CoreDataProperties.swift */; };
 		7F498B572775719E00202413 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B562775719E00202413 /* CoreData.swift */; };
+		7F498B632776C1F500202413 /* Note+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B612776C1F500202413 /* Note+CoreDataClass.swift */; };
+		7F498B642776C1F500202413 /* Note+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B622776C1F500202413 /* Note+CoreDataProperties.swift */; };
 		7F8BBDF1276D6A98005B07C1 /* ReusableTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BBDF0276D6A98005B07C1 /* ReusableTableView.swift */; };
-		7F8BBDF3276D6AEB005B07C1 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BBDF2276D6AEB005B07C1 /* Note.swift */; };
 		7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BBDFB276ED795005B07C1 /* Extensions.swift */; };
 		7FEBEC6F276135DA0066F0C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEBEC6E276135DA0066F0C0 /* AppDelegate.swift */; };
 		7FEBEC71276135DA0066F0C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEBEC70276135DA0066F0C0 /* SceneDelegate.swift */; };
@@ -73,8 +74,9 @@
 		7F498B4D277248BE00202413 /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7F498B4E277248BE00202413 /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7F498B562775719E00202413 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		7F498B612776C1F500202413 /* Note+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataClass.swift"; sourceTree = "<group>"; };
+		7F498B622776C1F500202413 /* Note+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7F8BBDF0276D6A98005B07C1 /* ReusableTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableTableView.swift; sourceTree = "<group>"; };
-		7F8BBDF2276D6AEB005B07C1 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		7F8BBDFB276ED795005B07C1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7FEBEC6B276135DA0066F0C0 /* SimpleNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FEBEC6E276135DA0066F0C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -162,7 +164,6 @@
 			children = (
 				7FEBECA0276136280066F0C0 /* NoteTableViewCell.swift */,
 				7FEBECA1276136280066F0C0 /* NoteTableViewCell.xib */,
-				7F8BBDF2276D6AEB005B07C1 /* Note.swift */,
 			);
 			path = Note;
 			sourceTree = "<group>";
@@ -181,6 +182,8 @@
 		7FEBEC62276135DA0066F0C0 = {
 			isa = PBXGroup;
 			children = (
+				7F498B612776C1F500202413 /* Note+CoreDataClass.swift */,
+				7F498B622776C1F500202413 /* Note+CoreDataProperties.swift */,
 				7F498B4D277248BE00202413 /* Tag+CoreDataClass.swift */,
 				7F498B4E277248BE00202413 /* Tag+CoreDataProperties.swift */,
 				7FEBEC6D276135DA0066F0C0 /* SimpleNotes */,
@@ -499,12 +502,13 @@
 				7FEBECA2276136280066F0C0 /* NoteTableViewCell.swift in Sources */,
 				7F498AAA276FC22100202413 /* NewNoteViewController.swift in Sources */,
 				7F498AC627718CAA00202413 /* TagTableViewCell.swift in Sources */,
-				7F8BBDF3276D6AEB005B07C1 /* Note.swift in Sources */,
 				7F498B50277248BE00202413 /* Tag+CoreDataProperties.swift in Sources */,
 				7F498B572775719E00202413 /* CoreData.swift in Sources */,
+				7F498B632776C1F500202413 /* Note+CoreDataClass.swift in Sources */,
 				7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */,
 				7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */,
 				7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */,
+				7F498B642776C1F500202413 /* Note+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

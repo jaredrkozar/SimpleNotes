@@ -14,7 +14,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        notes.append(Note(title: "DDD", date: Date.now, text: "dkkdkdkdkdkdk", tags: ["kdkkkdkd", "dldlldldld"]))
+        fetchNotes()
         tableView.dataSource = dataSource
         dataSource.note = notes
        
