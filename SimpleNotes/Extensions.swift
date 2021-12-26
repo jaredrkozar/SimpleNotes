@@ -8,7 +8,7 @@
 import UIKit
 
 var notes: [Note] = []
-var tags: [Tag] = []
+var tags: [AllTags] = []
 
 extension UIImage {
     func convertToData() -> String {

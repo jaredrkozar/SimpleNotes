@@ -16,11 +16,13 @@
 		7F498AC627718CAA00202413 /* TagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AC427718CAA00202413 /* TagTableViewCell.swift */; };
 		7F498AC727718CAA00202413 /* TagTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F498AC527718CAA00202413 /* TagTableViewCell.xib */; };
 		7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B0B27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld */; };
-		7F498B4F277248BE00202413 /* Tag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B4D277248BE00202413 /* Tag+CoreDataClass.swift */; };
-		7F498B50277248BE00202413 /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B4E277248BE00202413 /* Tag+CoreDataProperties.swift */; };
 		7F498B572775719E00202413 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B562775719E00202413 /* CoreData.swift */; };
-		7F498B632776C1F500202413 /* Note+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B612776C1F500202413 /* Note+CoreDataClass.swift */; };
-		7F498B642776C1F500202413 /* Note+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B622776C1F500202413 /* Note+CoreDataProperties.swift */; };
+		7F8358FB27792D0D007428A8 /* AllTags+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8358F527792D0C007428A8 /* AllTags+CoreDataProperties copy.swift */; };
+		7F8358FC27792D0D007428A8 /* Note+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8358F627792D0C007428A8 /* Note+CoreDataClass copy.swift */; };
+		7F8358FD27792D0D007428A8 /* Note+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8358F727792D0C007428A8 /* Note+CoreDataProperties copy.swift */; };
+		7F8358FE27792D0D007428A8 /* AllTags+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8358F827792D0C007428A8 /* AllTags+CoreDataClass copy.swift */; };
+		7F8358FF27792D0D007428A8 /* TagsForNote+CoreDataClass copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8358F927792D0C007428A8 /* TagsForNote+CoreDataClass copy.swift */; };
+		7F83590027792D0D007428A8 /* TagsForNote+CoreDataProperties copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8358FA27792D0D007428A8 /* TagsForNote+CoreDataProperties copy.swift */; };
 		7F8BBDF1276D6A98005B07C1 /* ReusableTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BBDF0276D6A98005B07C1 /* ReusableTableView.swift */; };
 		7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BBDFB276ED795005B07C1 /* Extensions.swift */; };
 		7FEBEC6F276135DA0066F0C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEBEC6E276135DA0066F0C0 /* AppDelegate.swift */; };
@@ -71,11 +73,13 @@
 		7F498AC427718CAA00202413 /* TagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTableViewCell.swift; sourceTree = "<group>"; };
 		7F498AC527718CAA00202413 /* TagTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagTableViewCell.xib; sourceTree = "<group>"; };
 		7F498B0C27722F4E00202413 /* SimpleNotesDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleNotesDataModel.xcdatamodel; sourceTree = "<group>"; };
-		7F498B4D277248BE00202413 /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = "<group>"; };
-		7F498B4E277248BE00202413 /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7F498B562775719E00202413 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
-		7F498B612776C1F500202413 /* Note+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataClass.swift"; sourceTree = "<group>"; };
-		7F498B622776C1F500202413 /* Note+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		7F8358F527792D0C007428A8 /* AllTags+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllTags+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
+		7F8358F627792D0C007428A8 /* Note+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataClass copy.swift"; sourceTree = "<group>"; };
+		7F8358F727792D0C007428A8 /* Note+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
+		7F8358F827792D0C007428A8 /* AllTags+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllTags+CoreDataClass copy.swift"; sourceTree = "<group>"; };
+		7F8358F927792D0C007428A8 /* TagsForNote+CoreDataClass copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TagsForNote+CoreDataClass copy.swift"; sourceTree = "<group>"; };
+		7F8358FA27792D0D007428A8 /* TagsForNote+CoreDataProperties copy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TagsForNote+CoreDataProperties copy.swift"; sourceTree = "<group>"; };
 		7F8BBDF0276D6A98005B07C1 /* ReusableTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableTableView.swift; sourceTree = "<group>"; };
 		7F8BBDFB276ED795005B07C1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7FEBEC6B276135DA0066F0C0 /* SimpleNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -179,13 +183,23 @@
 			path = "View Controllers";
 			sourceTree = "<group>";
 		};
+		7F8358F427792493007428A8 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				7F498B562775719E00202413 /* CoreData.swift */,
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
 		7FEBEC62276135DA0066F0C0 = {
 			isa = PBXGroup;
 			children = (
-				7F498B612776C1F500202413 /* Note+CoreDataClass.swift */,
-				7F498B622776C1F500202413 /* Note+CoreDataProperties.swift */,
-				7F498B4D277248BE00202413 /* Tag+CoreDataClass.swift */,
-				7F498B4E277248BE00202413 /* Tag+CoreDataProperties.swift */,
+				7F8358F527792D0C007428A8 /* AllTags+CoreDataProperties copy.swift */,
+				7F8358F627792D0C007428A8 /* Note+CoreDataClass copy.swift */,
+				7F8358F727792D0C007428A8 /* Note+CoreDataProperties copy.swift */,
+				7F8358F827792D0C007428A8 /* AllTags+CoreDataClass copy.swift */,
+				7F8358F927792D0C007428A8 /* TagsForNote+CoreDataClass copy.swift */,
+				7F8358FA27792D0D007428A8 /* TagsForNote+CoreDataProperties copy.swift */,
 				7FEBEC6D276135DA0066F0C0 /* SimpleNotes */,
 				7FEBEC84276135DC0066F0C0 /* SimpleNotesTests */,
 				7FEBEC8E276135DC0066F0C0 /* SimpleNotesUITests */,
@@ -212,7 +226,7 @@
 				7F498B0B27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld */,
 				7FEBEC70276135DA0066F0C0 /* SceneDelegate.swift */,
 				7F8BBDFB276ED795005B07C1 /* Extensions.swift */,
-				7F498B562775719E00202413 /* CoreData.swift */,
+				7F8358F427792493007428A8 /* Core Data */,
 				7FEBEC74276135DA0066F0C0 /* Main.storyboard */,
 				7F498B58277571CF00202413 /* View Controllers */,
 				7F498AC327718C7500202413 /* Models */,
@@ -494,21 +508,23 @@
 			files = (
 				7F498AC12771656900202413 /* DetailCollectionViewCell.swift in Sources */,
 				7FEBEC73276135DA0066F0C0 /* ViewController.swift in Sources */,
+				7F8358FB27792D0D007428A8 /* AllTags+CoreDataProperties copy.swift in Sources */,
 				7FEBEC6F276135DA0066F0C0 /* AppDelegate.swift in Sources */,
+				7F83590027792D0D007428A8 /* TagsForNote+CoreDataProperties copy.swift in Sources */,
+				7F8358FE27792D0D007428A8 /* AllTags+CoreDataClass copy.swift in Sources */,
 				7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */,
 				7FEBEC71276135DA0066F0C0 /* SceneDelegate.swift in Sources */,
 				7F8BBDF1276D6A98005B07C1 /* ReusableTableView.swift in Sources */,
-				7F498B4F277248BE00202413 /* Tag+CoreDataClass.swift in Sources */,
 				7FEBECA2276136280066F0C0 /* NoteTableViewCell.swift in Sources */,
 				7F498AAA276FC22100202413 /* NewNoteViewController.swift in Sources */,
 				7F498AC627718CAA00202413 /* TagTableViewCell.swift in Sources */,
-				7F498B50277248BE00202413 /* Tag+CoreDataProperties.swift in Sources */,
 				7F498B572775719E00202413 /* CoreData.swift in Sources */,
-				7F498B632776C1F500202413 /* Note+CoreDataClass.swift in Sources */,
+				7F8358FF27792D0D007428A8 /* TagsForNote+CoreDataClass copy.swift in Sources */,
+				7F8358FC27792D0D007428A8 /* Note+CoreDataClass copy.swift in Sources */,
 				7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */,
+				7F8358FD27792D0D007428A8 /* Note+CoreDataProperties copy.swift in Sources */,
 				7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */,
 				7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */,
-				7F498B642776C1F500202413 /* Note+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,7 +12,7 @@ let context = (UIApplication.shared.delegate as! AppDelegate).persistentContaine
 
 func saveTag(name: String, symbol: String) {
   
-    let newTag = Tag(context: context)
+    let newTag = AllTags(context: context)
     newTag.symbol = symbol
     newTag.name = name
     
@@ -25,7 +25,7 @@ func saveTag(name: String, symbol: String) {
 
 func fetchTags() {
     do {
-        tags = try context.fetch(Tag.fetchRequest())
+        tags = try context.fetch(AllTags.fetchRequest())
     } catch {
         print("An error occured")
     }
@@ -37,7 +37,7 @@ func saveNote(title: String, text: String, date: Date, tags: [String]) {
     newNote.title = title
     newNote.text = text
     newNote.date = date
-    
+   
     do {
         try context.save()
     } catch {
