@@ -37,7 +37,8 @@ func saveNote(title: String, text: String, date: Date, tags: [String]) {
     newNote.title = title
     newNote.text = text
     newNote.date = date
-   
+    newNote.tags = tags
+
     do {
         try context.save()
     } catch {

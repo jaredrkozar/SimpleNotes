@@ -21,16 +21,16 @@ class ReusableTableView: NSObject, UITableViewDataSource {
             fatalError("Unable to dequeue the image cell.")
         }
         
-        let note = note[indexPath.row]
+        let singlenote = note[indexPath.row]
 
-        cell.noteTitle.text = note.title
+        cell.noteTitle.text = singlenote.title
 
-        cell.noteText.text = note.text
-        cell.noteDate.text = note.date!.formatted()
+        cell.noteText.text = singlenote.text
+        cell.noteDate.text = singlenote.date!.formatted()
         
-        cell.noteTags.addTag("DD")
+        cell.noteTags.addTags(singlenote.tags!)
        
-        cell.accessibilityLabel = "\(note.title) Created on \(note.date)"
+        cell.accessibilityLabel = "\(singlenote.title) Created on \(singlenote.date)"
         
         cell.layoutIfNeeded()
         return cell

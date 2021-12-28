@@ -1,8 +1,8 @@
 //
 //  AllTags+CoreDataProperties.swift
-//  
+//  SimpleNotes
 //
-//  Created by JaredKozar on 12/26/21.
+//  Created by JaredKozar on 12/28/21.
 //
 //
 
@@ -18,5 +18,9 @@ extension AllTags {
 
     @NSManaged public var name: String?
     @NSManaged public var symbol: String?
+
+}
+
+extension AllTags : Identifiable {
 
 }
