@@ -17,7 +17,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         fetchNotes()
         tableView.dataSource = dataSource
         dataSource.note = notes
-       
+        
         let nib = UINib(nibName: "NoteTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "NoteTableViewCell")
         
@@ -36,6 +36,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     @objc func addNote(sender: UIBarButtonItem) {
   
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newNoteVC") as! NewNoteViewController
+        vc.isEditingNote = false
         let navController = UINavigationController(rootViewController: vc)
         self.navigationController?.present(navController, animated: true, completion: nil)
     }
@@ -44,5 +45,15 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         print("UII")
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newNoteVC") as! NewNoteViewController
+        vc.isEditingNote = true
+        vc.noteTitle = notes[indexPath.row].title!
+        vc.noteText = notes[indexPath.row].text!
+        vc.noteTags = notes[indexPath.row].tags!
+        vc.noteDate = notes[indexPath.row].date!
+        
+        let navController = UINavigationController(rootViewController: vc)
+        self.navigationController?.present(navController, animated: true, completion: nil)
+    }
 }
-

@@ -29,7 +29,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         detailsView.delegate = self
         detailsView.dataSource = self
-                                    
+        
         let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
 
         let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped))

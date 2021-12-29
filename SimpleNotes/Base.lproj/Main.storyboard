@@ -152,13 +152,14 @@
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="d5H-v5-Gwg">
-                                <rect key="frame" x="20" y="136" width="234" height="31"/>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="d5H-v5-Gwg">
+                                <rect key="frame" x="20" y="136" width="374" height="31"/>
                             </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tags" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Urz-d4-f6m">
                                 <rect key="frame" x="20" y="183" width="54" height="63"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="54" id="rY6-XP-0WT"/>
+                                    <constraint firstAttribute="width" constant="54" id="3f8-S3-shG"/>
+                                    <constraint firstAttribute="height" constant="63" id="aTz-RE-taq"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -167,30 +168,27 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x5V-vY-q3k" customClass="WSTagsField" customModule="WSTagsField">
                                 <rect key="frame" x="104" y="191" width="290" height="55"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="nlC-g5-513"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="oxs-af-oCl"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="x5V-vY-q3k" firstAttribute="trailing" secondItem="tbF-hv-3GQ" secondAttribute="trailing" id="5ah-rT-7PL"/>
-                            <constraint firstItem="tbF-hv-3GQ" firstAttribute="top" secondItem="Urz-d4-f6m" secondAttribute="bottom" constant="17" id="6gH-xV-JHV"/>
-                            <constraint firstItem="2PP-DV-WOH" firstAttribute="trailing" secondItem="x5V-vY-q3k" secondAttribute="trailing" id="7TG-54-Fxv"/>
-                            <constraint firstItem="Urz-d4-f6m" firstAttribute="bottom" secondItem="x5V-vY-q3k" secondAttribute="bottom" id="9xW-TA-tby"/>
-                            <constraint firstItem="oxs-af-oCl" firstAttribute="bottom" secondItem="tbF-hv-3GQ" secondAttribute="bottom" constant="36" id="BBP-KF-Yol"/>
-                            <constraint firstItem="2PP-DV-WOH" firstAttribute="trailing" secondItem="XIu-OA-gEi" secondAttribute="trailingMargin" id="F8e-ar-VHH"/>
-                            <constraint firstItem="x5V-vY-q3k" firstAttribute="leading" secondItem="Urz-d4-f6m" secondAttribute="trailing" constant="30" id="H9e-A6-FCZ"/>
-                            <constraint firstItem="x5V-vY-q3k" firstAttribute="top" secondItem="d5H-v5-Gwg" secondAttribute="bottom" constant="24" id="RI6-nX-jEc"/>
-                            <constraint firstItem="2PP-DV-WOH" firstAttribute="leading" secondItem="d5H-v5-Gwg" secondAttribute="leading" id="ZaQ-kC-6hy"/>
-                            <constraint firstItem="Urz-d4-f6m" firstAttribute="top" secondItem="d5H-v5-Gwg" secondAttribute="bottom" constant="16" id="drQ-wg-ug6"/>
-                            <constraint firstItem="d5H-v5-Gwg" firstAttribute="top" secondItem="2PP-DV-WOH" secondAttribute="bottom" constant="23" id="hbA-lk-vSK"/>
-                            <constraint firstItem="2PP-DV-WOH" firstAttribute="leading" secondItem="XIu-OA-gEi" secondAttribute="leadingMargin" id="hjD-ba-byY"/>
-                            <constraint firstItem="d5H-v5-Gwg" firstAttribute="leading" secondItem="Urz-d4-f6m" secondAttribute="leading" id="kiW-Mc-bfb"/>
-                            <constraint firstItem="Urz-d4-f6m" firstAttribute="leading" secondItem="tbF-hv-3GQ" secondAttribute="leading" id="pbW-fG-heR"/>
-                            <constraint firstItem="2PP-DV-WOH" firstAttribute="top" secondItem="oxs-af-oCl" secondAttribute="top" constant="35" id="qrA-bE-HHj"/>
-                            <constraint firstItem="oxs-af-oCl" firstAttribute="trailing" secondItem="d5H-v5-Gwg" secondAttribute="trailing" constant="160" id="wlc-ma-iK7"/>
+                            <constraint firstItem="x5V-vY-q3k" firstAttribute="leading" secondItem="Urz-d4-f6m" secondAttribute="trailing" constant="30" id="6q8-jd-JTL"/>
+                            <constraint firstItem="2PP-DV-WOH" firstAttribute="trailing" secondItem="d5H-v5-Gwg" secondAttribute="trailing" id="8vv-RX-QB6"/>
+                            <constraint firstItem="2PP-DV-WOH" firstAttribute="trailing" secondItem="XIu-OA-gEi" secondAttribute="trailingMargin" id="Bnf-ZO-zqb"/>
+                            <constraint firstItem="2PP-DV-WOH" firstAttribute="leading" secondItem="XIu-OA-gEi" secondAttribute="leadingMargin" id="Bs3-AH-7zH"/>
+                            <constraint firstItem="2PP-DV-WOH" firstAttribute="leading" secondItem="d5H-v5-Gwg" secondAttribute="leading" id="De5-i8-cUd"/>
+                            <constraint firstItem="Urz-d4-f6m" firstAttribute="top" secondItem="d5H-v5-Gwg" secondAttribute="bottom" constant="16" id="Dkg-dQ-moG"/>
+                            <constraint firstItem="2PP-DV-WOH" firstAttribute="top" secondItem="oxs-af-oCl" secondAttribute="top" constant="35" id="E6O-Fm-Qp8"/>
+                            <constraint firstItem="d5H-v5-Gwg" firstAttribute="leading" secondItem="Urz-d4-f6m" secondAttribute="leading" id="P4a-tW-6yD"/>
+                            <constraint firstItem="x5V-vY-q3k" firstAttribute="top" secondItem="d5H-v5-Gwg" secondAttribute="bottom" constant="24" id="Sce-cy-ufo"/>
+                            <constraint firstItem="d5H-v5-Gwg" firstAttribute="trailing" secondItem="x5V-vY-q3k" secondAttribute="trailing" id="W9r-Ft-kph"/>
+                            <constraint firstItem="x5V-vY-q3k" firstAttribute="trailing" secondItem="tbF-hv-3GQ" secondAttribute="trailing" id="eEP-Ey-va1"/>
+                            <constraint firstItem="oxs-af-oCl" firstAttribute="bottom" secondItem="tbF-hv-3GQ" secondAttribute="bottom" constant="36" id="guE-cJ-IoB"/>
+                            <constraint firstItem="d5H-v5-Gwg" firstAttribute="top" secondItem="2PP-DV-WOH" secondAttribute="bottom" constant="23" id="lrm-8U-eAq"/>
+                            <constraint firstItem="tbF-hv-3GQ" firstAttribute="top" secondItem="Urz-d4-f6m" secondAttribute="bottom" constant="17" id="rSY-fU-cVI"/>
+                            <constraint firstItem="Urz-d4-f6m" firstAttribute="leading" secondItem="tbF-hv-3GQ" secondAttribute="leading" id="s0A-hN-RyT"/>
+                            <constraint firstItem="Urz-d4-f6m" firstAttribute="bottom" secondItem="x5V-vY-q3k" secondAttribute="bottom" id="wo7-1J-OhM"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="WI1-1S-W4Z"/>

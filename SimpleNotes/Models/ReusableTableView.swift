@@ -8,7 +8,7 @@
 import UIKit
 import WSTagsField
 
-class ReusableTableView: NSObject, UITableViewDataSource {
+class ReusableTableView: NSObject, UITableViewDataSource, UITableViewDelegate {
 
     var note = [Note]()
     
@@ -35,5 +35,5 @@ class ReusableTableView: NSObject, UITableViewDataSource {
         cell.layoutIfNeeded()
         return cell
     }
-    
+
 }

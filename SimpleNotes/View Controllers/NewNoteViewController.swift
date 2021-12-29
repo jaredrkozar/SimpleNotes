@@ -15,6 +15,12 @@ class NewNoteViewController: UIViewController {
     @IBOutlet var noteTextField: UITextView!
     @IBOutlet var noteTagsField: WSTagsField!
     
+    var noteTitle: String = ""
+    var noteText: String = ""
+    var noteDate = Date()
+    var noteTags = [String]()
+    var isEditingNote: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,19 +30,32 @@ class NewNoteViewController: UIViewController {
         
         noteTitleField.backgroundColor = UIColor.systemGray5
         noteTitleField.layer.cornerRadius = 6.0
+        noteTitleField.text = noteTitle ?? ""
         
         noteTextField.backgroundColor = UIColor.systemGray5
         noteTextField.layer.cornerRadius = 6.0
+        noteTextField.text = noteText ?? ""
         
         noteTagsField.cornerRadius = 6.0
         noteTagsField.spaceBetweenTags = 3.0
         noteTagsField.numberOfLines = 2
-
+        noteTagsField.addTags(noteTags)
+        noteTagsField.readOnly = true
+        
+        noteDateField.date = noteDate ?? Date.now
+        
         let saveNote = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveNoteButtonTapped))
         
         let editTags = UIBarButtonItem(image: UIImage(systemName: "tag"), style: .plain, target: self, action: #selector(editTagsButtonTapped))
         
-        self.navigationItem.rightBarButtonItems = [editTags, saveNote]
+        let cancel = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped))
+        
+        self.navigationItem.leftBarButtonItems = [cancel]
+        self.navigationItem.rightBarButtonItems = [saveNote, editTags]
+    }
+    
+    @objc func cancelButtonTapped(sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
     
     @objc func saveNoteButtonTapped(sender: UIBarButtonItem) {
