@@ -62,6 +62,10 @@ class NewNoteViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+       updateNote()
+    }
+    
     @objc func cancelButtonTapped(sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
@@ -69,6 +73,8 @@ class NewNoteViewController: UIViewController {
     @objc func saveNoteButtonTapped(sender: UIBarButtonItem) {
         saveNote(title: noteTitleField.text!, text: noteTextField.text, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}))
 
+        NotificationCenter.default.post(name: Notification.Name("UpdateNotesTable"), object: nil)
+        
         dismiss(animated: true, completion: nil)
     }
 

@@ -62,3 +62,12 @@ func fetchNotes() {
         print("An error occured")
     }
 }
+
+func deleteNote(note: Note) {
+    context.delete(note)
+    do {
+        try context.save()
+    } catch {
+        print("An error occured")
+    }
+}

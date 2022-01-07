@@ -10,10 +10,10 @@ import WSTagsField
 
 class ReusableTableView: NSObject, UITableViewDataSource, UITableViewDelegate {
 
-    var note = [Note]()
+    var listofnotes = [Note]()
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notes.count
+        return listofnotes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -21,7 +21,7 @@ class ReusableTableView: NSObject, UITableViewDataSource, UITableViewDelegate {
             fatalError("Unable to dequeue the image cell.")
         }
         
-        let singlenote = note[indexPath.row]
+        let singlenote = listofnotes[indexPath.row]
 
         cell.noteTitle.text = singlenote.title
 

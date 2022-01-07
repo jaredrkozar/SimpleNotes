@@ -7,9 +7,8 @@
 
 import UIKit
 
-class ViewController: UITableViewController, UINavigationControllerDelegate, RefreshDataDelegate {
+class ViewController: UITableViewController, UINavigationControllerDelegate {
 
-    var refreshTable: RefreshDataDelegate?
     var dataSource = ReusableTableView()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,7 +16,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate, Ref
         
         fetchNotes()
         tableView.dataSource = dataSource
-        dataSource.note = notes
+        dataSource.listofnotes = notes
         
         let nib = UINib(nibName: "NoteTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "NoteTableViewCell")
@@ -32,6 +31,13 @@ class ViewController: UITableViewController, UINavigationControllerDelegate, Ref
         let settings = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsScreen))
 
         self.navigationItem.rightBarButtonItems = [addNote, settings]
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(UpdateNotesTable(_:)), name: NSNotification.Name( "UpdateNotesTable"), object: nil)
+    }
+    
+    @objc func UpdateNotesTable(_ notification: Notification) {
+        print("RELOAD")
+        tableView.reloadData()
     }
     
     @objc func addNote(sender: UIBarButtonItem) {
@@ -78,15 +84,17 @@ class ViewController: UITableViewController, UINavigationControllerDelegate, Ref
               image: UIImage(systemName: "trash"),
                 attributes: .destructive) { [self] _ in
                     
-               print("Delete note")
+                    deleteNote(note: dataSource.listofnotes[indexPath.row])
+                    
+                    
+                    self.dataSource.listofnotes.remove(at: indexPath.row)
+                    
+                    self.tableView.reloadData()
+                    
                 
             }
             return UIMenu(title: "", children: [editAction, deleteAction])
         }
-    }
-    
-    func refreshData() {
-        tableView.reloadData()
     }
     
 }
