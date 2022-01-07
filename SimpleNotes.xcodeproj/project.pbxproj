@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		09385CB48FA40554C6B2AEEF /* Pods_SimpleNotes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67D0F4EDDFADB1B9E912C456 /* Pods_SimpleNotes.framework */; };
+		7F3765FC2787FA6A00A107FF /* RefreshDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3765FB2787FA6A00A107FF /* RefreshDataDelegate.swift */; };
 		7F498AAA276FC22100202413 /* NewNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AA9276FC22100202413 /* NewNoteViewController.swift */; };
 		7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */; };
 		7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498ABD2771624200202413 /* NewTagViewController.swift */; };
@@ -64,6 +65,7 @@
 		60D50653D3745D01A5BE209D /* Pods-SimpleNotesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotesTests.release.xcconfig"; path = "Target Support Files/Pods-SimpleNotesTests/Pods-SimpleNotesTests.release.xcconfig"; sourceTree = "<group>"; };
 		67D0F4EDDFADB1B9E912C456 /* Pods_SimpleNotes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleNotes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A1C248CD3F4C5A2CD5C2124 /* Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig"; path = "Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig"; sourceTree = "<group>"; };
+		7F3765FB2787FA6A00A107FF /* RefreshDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshDataDelegate.swift; sourceTree = "<group>"; };
 		7F498AA9276FC22100202413 /* NewNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteViewController.swift; sourceTree = "<group>"; };
 		7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTagsTableViewController.swift; sourceTree = "<group>"; };
 		7F498ABD2771624200202413 /* NewTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTagViewController.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				7F8BBDF0276D6A98005B07C1 /* ReusableTableView.swift */,
+				7F3765FB2787FA6A00A107FF /* RefreshDataDelegate.swift */,
 				7F835927277BFEB0007428A8 /* SplitViewManager.swift */,
 				7F498ACB27718EDC00202413 /* Note */,
 				7F498ACA27718ECB00202413 /* Tags */,
@@ -503,6 +506,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F3765FC2787FA6A00A107FF /* RefreshDataDelegate.swift in Sources */,
 				7F498AC12771656900202413 /* DetailCollectionViewCell.swift in Sources */,
 				7F835921277AD75C007428A8 /* Note+CoreDataClass.swift in Sources */,
 				7F835923277AD75C007428A8 /* AllTags+CoreDataClass.swift in Sources */,

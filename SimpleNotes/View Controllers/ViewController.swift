@@ -7,8 +7,9 @@
 
 import UIKit
 
-class ViewController: UITableViewController, UINavigationControllerDelegate {
+class ViewController: UITableViewController, UINavigationControllerDelegate, RefreshDataDelegate {
 
+    var refreshTable: RefreshDataDelegate?
     var dataSource = ReusableTableView()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,4 +57,37 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         let navController = UINavigationController(rootViewController: vc)
         self.navigationController?.present(navController, animated: true, completion: nil)
     }
+    
+    override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            let editAction = UIAction(
+              title: "Edit Tags", image: UIImage(systemName: "tag")) { [self] _ in
+                //gets the current dimension and splits it up into 2 parts, and saves them so they can be shown in the text fields in editPresetViewController. The editPresetViewController is then shown via a popover
+                
+                  let cellTag = tableView.cellForRow(at: indexPath) as! NoteTableViewCell
+                  
+                  let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
+                  let navController = UINavigationController(rootViewController: vc)
+                  vc.newNoteVC = cellTag.noteTags
+                  self.navigationController?.present(navController, animated: true, completion: nil)
+                
+            }
+            
+            let deleteAction = UIAction(
+                //deletes the current cell
+              title: "Delete",
+              image: UIImage(systemName: "trash"),
+                attributes: .destructive) { [self] _ in
+                    
+               print("Delete note")
+                
+            }
+            return UIMenu(title: "", children: [editAction, deleteAction])
+        }
+    }
+    
+    func refreshData() {
+        tableView.reloadData()
+    }
+    
 }

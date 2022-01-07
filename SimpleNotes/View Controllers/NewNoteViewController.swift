@@ -21,6 +21,8 @@ class NewNoteViewController: UIViewController {
     var noteTags = [String]()
     var isEditingNote: Bool = false
     
+    var viewDelegate: RefreshDataDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -60,6 +62,7 @@ class NewNoteViewController: UIViewController {
     
     @objc func saveNoteButtonTapped(sender: UIBarButtonItem) {
         saveNote(title: noteTitleField.text!, text: noteTextField.text, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}))
+        viewDelegate.
         dismiss(animated: true, completion: nil)
     }
 
