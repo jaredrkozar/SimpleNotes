@@ -28,8 +28,6 @@ class NewNoteViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        title = "New Note"
-        
         noteTitleField.backgroundColor = UIColor.systemGray5
         noteTitleField.layer.cornerRadius = 6.0
         noteTitleField.text = noteTitle ?? ""
@@ -52,8 +50,16 @@ class NewNoteViewController: UIViewController {
         
         let cancel = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped))
         
-        self.navigationItem.leftBarButtonItems = [cancel]
-        self.navigationItem.rightBarButtonItems = [saveNote, editTags]
+        let shareButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareButtonTapped))
+        
+        if isEditingNote == true {
+            title = "Edit Note"
+            self.navigationItem.rightBarButtonItems = [shareButton, editTags]
+        } else {
+            title = "New Note"
+            self.navigationItem.leftBarButtonItems = [cancel]
+            self.navigationItem.rightBarButtonItems = [saveNote, editTags]
+        }
     }
     
     @objc func cancelButtonTapped(sender: UIBarButtonItem) {
@@ -62,7 +68,7 @@ class NewNoteViewController: UIViewController {
     
     @objc func saveNoteButtonTapped(sender: UIBarButtonItem) {
         saveNote(title: noteTitleField.text!, text: noteTextField.text, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}))
-        viewDelegate.
+
         dismiss(animated: true, completion: nil)
     }
 
@@ -72,6 +78,10 @@ class NewNoteViewController: UIViewController {
         let navController = UINavigationController(rootViewController: vc)
         vc.newNoteVC = noteTagsField
         self.navigationController?.present(navController, animated: true, completion: nil)
+    }
+    
+    @objc func shareButtonTapped(sender: UIBarButtonItem) {
+        print("Share")
     }
     
 }

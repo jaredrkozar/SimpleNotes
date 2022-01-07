@@ -46,6 +46,15 @@ func saveNote(title: String, text: String, date: Date, tags: [String]) {
     }
 }
 
+func updateNote() {
+
+    do {
+        try context.save()
+    } catch {
+        print("An error occured while saving a tag.")
+    }
+}
+
 func fetchNotes() {
     do {
         notes = try context.fetch(Note.fetchRequest())

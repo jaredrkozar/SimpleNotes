@@ -54,8 +54,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate, Ref
         vc.noteTags = notes[indexPath.row].tags!
         vc.noteDate = notes[indexPath.row].date!
         
-        let navController = UINavigationController(rootViewController: vc)
-        self.navigationController?.present(navController, animated: true, completion: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
