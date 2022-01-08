@@ -36,7 +36,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     }
     
     @objc func UpdateNotesTable(_ notification: Notification) {
-        print("RELOAD")
+        self.tableView.reloadData()
         tableView.reloadData()
     }
     
@@ -85,7 +85,6 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                 attributes: .destructive) { [self] _ in
                     
                     deleteNote(note: dataSource.listofnotes[indexPath.row])
-                    
                     
                     self.dataSource.listofnotes.remove(at: indexPath.row)
                     
