@@ -15,11 +15,11 @@ class NewNoteViewController: UIViewController {
     @IBOutlet var noteTextField: UITextView!
     @IBOutlet var noteTagsField: WSTagsField!
     
-    var noteTitle: String = ""
-    var noteText: String = ""
-    var noteDate = Date()
-    var noteTags = [String]()
+    var timer: Timer?
+    
     var isEditingNote: Bool = false
+    
+    var currentNote: Note?
     
     var viewDelegate: RefreshDataDelegate?
     
@@ -27,23 +27,23 @@ class NewNoteViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+
         noteTitleField.backgroundColor = UIColor.systemGray5
         noteTitleField.layer.cornerRadius = 6.0
-        noteTitleField.text = noteTitle ?? ""
+        noteTitleField.text = currentNote?.title ?? ""
         
         noteTextField.backgroundColor = UIColor.systemGray5
         noteTextField.layer.cornerRadius = 6.0
-        noteTextField.text = noteText ?? ""
+        noteTextField.text = currentNote?.text ?? ""
         
         noteTagsField.cornerRadius = 6.0
         noteTagsField.spaceBetweenTags = 3.0
         noteTagsField.numberOfLines = 2
-        noteTagsField.addTags(noteTags)
+        noteTagsField.addTags(currentNote?.tags ?? [])
         noteTagsField.readOnly = true
         
-        noteDateField.date = noteDate ?? Date.now
-        
+        noteDateField.date = currentNote?.date ?? Date.now
+  
         let saveNote = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveNoteButtonTapped))
         
         let editTags = UIBarButtonItem(image: UIImage(systemName: "tag"), style: .plain, target: self, action: #selector(editTagsButtonTapped))
@@ -55,6 +55,7 @@ class NewNoteViewController: UIViewController {
         if isEditingNote == true {
             title = "Edit Note"
             self.navigationItem.rightBarButtonItems = [shareButton, editTags]
+            timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(autoSaveNote), userInfo: nil, repeats: true)
         } else {
             title = "New Note"
             self.navigationItem.leftBarButtonItems = [cancel]
@@ -62,22 +63,23 @@ class NewNoteViewController: UIViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-       updateNote()
-    }
-    
     @objc func cancelButtonTapped(sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
     @objc func saveNoteButtonTapped(sender: UIBarButtonItem) {
-        saveNote(title: noteTitleField.text!, text: noteTextField.text, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}))
+        saveNote(currentNote: nil, title: noteTitleField.text!, text: noteTextField.text, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}))
 
         NotificationCenter.default.post(name: Notification.Name("UpdateNotesTable"), object: nil)
         
         dismiss(animated: true, completion: nil)
     }
 
+    @objc func autoSaveNote() {
+        saveNote(currentNote: currentNote, title: noteTitleField.text!, text: noteTextField.text, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}))
+    }
+    
+    
     @objc func editTagsButtonTapped(_ sender: Any) {
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController

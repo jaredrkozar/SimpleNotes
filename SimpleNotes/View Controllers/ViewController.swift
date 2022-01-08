@@ -55,10 +55,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newNoteVC") as! NewNoteViewController
         vc.isEditingNote = true
-        vc.noteTitle = notes[indexPath.row].title!
-        vc.noteText = notes[indexPath.row].text!
-        vc.noteTags = notes[indexPath.row].tags!
-        vc.noteDate = notes[indexPath.row].date!
+        vc.currentNote = dataSource.listofnotes[indexPath.row]
         
         self.navigationController?.pushViewController(vc, animated: true)
     }

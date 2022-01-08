@@ -31,9 +31,9 @@ func fetchTags() {
     }
 }
 
-func saveNote(title: String, text: String, date: Date, tags: [String]) {
+func saveNote(currentNote: Note?, title: String, text: String, date: Date, tags: [String]) {
   
-    let newNote = Note(context: context)
+    let newNote = currentNote ?? Note(context: context)
     newNote.title = title
     newNote.text = text
     newNote.date = date
@@ -42,16 +42,7 @@ func saveNote(title: String, text: String, date: Date, tags: [String]) {
     do {
         try context.save()
     } catch {
-        print("An error occured while saving a tag.")
-    }
-}
-
-func updateNote() {
-
-    do {
-        try context.save()
-    } catch {
-        print("An error occured while saving a tag.")
+        print("An error occured while saving a note.")
     }
 }
 
