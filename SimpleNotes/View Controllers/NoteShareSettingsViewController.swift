@@ -28,7 +28,7 @@ class NoteShareSettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            if indexPath.row == 1 {
+            if indexPath.row == 0 {
                 format = SharingType.pdf
             } else {
                 format = SharingType.plainText
@@ -46,7 +46,7 @@ class NoteShareSettingsViewController: UITableViewController {
                     case .email:
                     sendEmail(noteTitle: noteTitle, noteText: noteText, noteDate: noteDate, notePDF: nil)
                     case .messages:
-                        print("MEssages")
+                        sendText(noteTitle: noteTitle, noteText: noteText, noteDate: noteDate, notePDF: nil)
                     default:
                         break
                 }
