@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NoteShareSettingsViewController: UIViewController {
+class NoteShareSettingsViewController: UITableViewController {
 
     @IBOutlet var sendNoteButton: CustomButton!
     
@@ -19,7 +19,16 @@ class NoteShareSettingsViewController: UIViewController {
         title = sharingLocation?.viewTitle
     
         view.backgroundColor = UIColor.systemBackground
+    
     }
     
-    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            if indexPath.row == 1 {
+                SharingType = .pdf
+            } else {
+                SharingType = .plainText
+            }
+        }
+    }
 }
