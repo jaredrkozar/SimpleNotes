@@ -92,7 +92,7 @@ class NoteViewController: UIViewController {
 
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "shareNoteVC") as! NoteShareSettingsViewController
         let navigationController = UINavigationController(rootViewController: vc)
-
+        
         let shareToOtherApps = UIAction(title: "Other Apps", image: UIImage(systemName: "square.and.arrow.up"), identifier: .none, discoverabilityTitle: "Share to other apps", attributes: [], state: .on) { [self] _ in
             
             if let picker = navigationController.presentationController as? UISheetPresentationController {
@@ -101,7 +101,7 @@ class NoteViewController: UIViewController {
                picker.preferredCornerRadius = 7.0
             }
             
-            
+            vc.sharingLocation = .otherapps
             self.present(navigationController, animated: true, completion: nil)
         }
         
@@ -113,6 +113,7 @@ class NoteViewController: UIViewController {
                picker.preferredCornerRadius = 7.0
             }
             
+            vc.sharingLocation = .messages
             self.present(navigationController, animated: true, completion: nil)
         }
         
@@ -124,7 +125,7 @@ class NoteViewController: UIViewController {
                picker.preferredCornerRadius = 7.0
             }
             
-            
+            vc.sharingLocation = .email
             self.present(navigationController, animated: true, completion: nil)
         }
         

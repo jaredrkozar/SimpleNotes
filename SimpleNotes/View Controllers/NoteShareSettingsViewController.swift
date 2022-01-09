@@ -12,13 +12,14 @@ class NoteShareSettingsViewController: UIViewController {
     @IBOutlet var sendNoteButton: CustomButton!
     
     var sharingLocation: SharingLocation?
-    override func viewDidLoad() {
-        super.viewDidLoad()
     
+    override func viewWillAppear(_ animated: Bool) {
         // Do any additional setup after loading the view.
         sendNoteButton.setTitle(sharingLocation?.buttonMessage, for: .normal)
         title = sharingLocation?.viewTitle
     
         view.backgroundColor = UIColor.systemBackground
     }
+    
+    
 }
