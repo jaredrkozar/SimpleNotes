@@ -101,7 +101,11 @@ class NoteViewController: UIViewController {
                picker.preferredCornerRadius = 7.0
             }
             
+            vc.noteTitle = noteTitleField.text!
+            vc.noteText = noteTextField.text!
+            vc.noteDate = noteDateField.date.formatted()
             vc.sharingLocation = .otherapps
+            
             self.present(navigationController, animated: true, completion: nil)
         }
         
@@ -113,6 +117,9 @@ class NoteViewController: UIViewController {
                picker.preferredCornerRadius = 7.0
             }
             
+            vc.noteTitle = noteTitleField.text!
+            vc.noteText = noteTextField.text!
+            vc.noteDate = noteDateField.date.formatted()
             vc.sharingLocation = .messages
             self.present(navigationController, animated: true, completion: nil)
         }
@@ -125,7 +132,11 @@ class NoteViewController: UIViewController {
                picker.preferredCornerRadius = 7.0
             }
             
+            vc.noteTitle = noteTitleField.text!
+            vc.noteText = noteTextField.text!
+            vc.noteDate = noteDateField.date.formatted()
             vc.sharingLocation = .email
+            
             self.present(navigationController, animated: true, completion: nil)
         }
         

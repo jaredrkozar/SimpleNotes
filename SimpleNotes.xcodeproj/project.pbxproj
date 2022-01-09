@@ -12,6 +12,7 @@
 		7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3765FF278A078B00A107FF /* NoteShareSettingsViewController.swift */; };
 		7F376602278A087900A107FF /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376601278A087900A107FF /* CustomButton.swift */; };
 		7F37660F278A52DA00A107FF /* SharingLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37660E278A52DA00A107FF /* SharingLocation.swift */; };
+		7F376613278AC3CD00A107FF /* SendEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376612278AC3CD00A107FF /* SendEmail.swift */; };
 		7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AA9276FC22100202413 /* NoteViewController.swift */; };
 		7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */; };
 		7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498ABD2771624200202413 /* NewTagViewController.swift */; };
@@ -72,6 +73,7 @@
 		7F3765FF278A078B00A107FF /* NoteShareSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteShareSettingsViewController.swift; sourceTree = "<group>"; };
 		7F376601278A087900A107FF /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		7F37660E278A52DA00A107FF /* SharingLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingLocation.swift; sourceTree = "<group>"; };
+		7F376612278AC3CD00A107FF /* SendEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendEmail.swift; sourceTree = "<group>"; };
 		7F498AA9276FC22100202413 /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTagsTableViewController.swift; sourceTree = "<group>"; };
 		7F498ABD2771624200202413 /* NewTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTagViewController.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				7FEBEC70276135DA0066F0C0 /* SceneDelegate.swift */,
 				7F8BBDFB276ED795005B07C1 /* Extensions.swift */,
 				7FEBEC74276135DA0066F0C0 /* Main.storyboard */,
+				7F376612278AC3CD00A107FF /* SendEmail.swift */,
 				7F8358F427792493007428A8 /* Core Data */,
 				7F498B58277571CF00202413 /* View Controllers */,
 				7F498AC327718C7500202413 /* Models */,
@@ -537,6 +540,7 @@
 				7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */,
 				7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */,
 				7F835922277AD75C007428A8 /* Note+CoreDataProperties.swift in Sources */,
+				7F376613278AC3CD00A107FF /* SendEmail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

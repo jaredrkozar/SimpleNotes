@@ -12,6 +12,10 @@ class NoteShareSettingsViewController: UITableViewController {
     @IBOutlet var sendNoteButton: CustomButton!
     
     var sharingLocation: SharingLocation?
+    var format: SharingType?
+    var noteTitle: String = ""
+    var noteText: String = ""
+    var noteDate: String = ""
     
     override func viewWillAppear(_ animated: Bool) {
         // Do any additional setup after loading the view.
@@ -25,10 +29,30 @@ class NoteShareSettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             if indexPath.row == 1 {
-                SharingType = .pdf
+                format = SharingType.pdf
             } else {
-                SharingType = .plainText
+                format = SharingType.plainText
             }
         }
     }
+    
+    @IBAction func didTapExportButton(_ sender: Any) {
+        
+        switch format {
+            case .pdf:
+                print("DDD")
+            case .plainText:
+                switch sharingLocation {
+                    case .email:
+                    sendEmail(noteTitle: noteTitle, noteText: noteText, noteDate: noteDate, notePDF: nil)
+                    case .messages:
+                        print("MEssages")
+                    default:
+                        break
+                }
+            default:
+                break
+        }
+    }
+    
 }
