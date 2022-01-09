@@ -10,6 +10,11 @@ import UIKit
 var notes: [Note] = []
 var tags: [AllTags] = []
 
+public enum SharingType {
+    case pdf
+    case plainText
+}
+
 extension UIImage {
     func convertToData() -> String {
         let imageData = self.pngData()

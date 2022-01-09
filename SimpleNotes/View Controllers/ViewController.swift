@@ -8,7 +8,7 @@
 import UIKit
 
 class ViewController: UITableViewController, UINavigationControllerDelegate {
-
+    
     var dataSource = ReusableTableView()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,17 +32,16 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
 
         self.navigationItem.rightBarButtonItems = [addNote, settings]
         
-        NotificationCenter.default.addObserver(self, selector: #selector(UpdateNotesTable(_:)), name: NSNotification.Name( "UpdateNotesTable"), object: nil)
     }
     
-    @objc func UpdateNotesTable(_ notification: Notification) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.tableView.reloadData()
-        tableView.reloadData()
     }
     
     @objc func addNote(sender: UIBarButtonItem) {
   
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newNoteVC") as! NewNoteViewController
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newNoteVC") as! NoteViewController
         vc.isEditingNote = false
         let navController = UINavigationController(rootViewController: vc)
         self.navigationController?.present(navController, animated: true, completion: nil)
@@ -53,7 +52,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newNoteVC") as! NewNoteViewController
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newNoteVC") as! NoteViewController
         vc.isEditingNote = true
         vc.currentNote = dataSource.listofnotes[indexPath.row]
         
@@ -89,6 +88,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                     
                 
             }
+            
             return UIMenu(title: "", children: [editAction, deleteAction])
         }
     }

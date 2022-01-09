@@ -12,7 +12,7 @@
         <!--View Controller-->
         <scene sceneID="PmG-vl-gsQ">
             <objects>
-                <tableViewController id="arc-id-ieb" customClass="ViewController" customModule="SimpleNotes" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ViewController" id="arc-id-ieb" customClass="ViewController" customModule="SimpleNotes" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="h6w-9i-1b5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -131,10 +131,38 @@
             </objects>
             <point key="canvasLocation" x="1747.826086956522" y="1606.4732142857142"/>
         </scene>
-        <!--New Note View Controller-->
+        <!--Note Share Settings View Controller-->
+        <scene sceneID="7EY-Z1-ENy">
+            <objects>
+                <viewController storyboardIdentifier="shareNoteVC" id="epi-Mw-mHd" customClass="NoteShareSettingsViewController" customModule="SimpleNotes" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ws8-Ka-UER">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Gc-LY-JBS" customClass="CustomButton" customModule="SimpleNotes" customModuleProvider="target">
+                                <rect key="frame" x="20" y="282" width="327" height="65"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button">
+                                    <fontDescription key="titleFontDescription" style="UICTFontTextStyleTitle3"/>
+                                </buttonConfiguration>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="fKP-li-c88"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <connections>
+                        <outlet property="sendNoteButton" destination="2Gc-LY-JBS" id="KEf-5w-esg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UjX-5W-5dD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2673.913043478261" y="1587.7232142857142"/>
+        </scene>
+        <!--Note View Controller-->
         <scene sceneID="y9w-sR-9Sz">
             <objects>
-                <viewController storyboardIdentifier="newNoteVC" id="gOO-df-WfE" customClass="NewNoteViewController" customModule="SimpleNotes" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="newNoteVC" id="gOO-df-WfE" customClass="NoteViewController" customModule="SimpleNotes" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XIu-OA-gEi">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -206,6 +234,7 @@
         <!--Navigation Controller-->
         <scene sceneID="wV8-eb-MmO">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sGA-eC-gAj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7ss-ib-oT3" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wtU-kz-QXZ">
@@ -217,7 +246,6 @@
                         <segue destination="arc-id-ieb" kind="relationship" relationship="rootViewController" id="ih6-JI-4wx"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sGA-eC-gAj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1795.6521739130437" y="125.89285714285714"/>
         </scene>

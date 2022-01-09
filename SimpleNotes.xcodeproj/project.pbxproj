@@ -9,7 +9,10 @@
 /* Begin PBXBuildFile section */
 		09385CB48FA40554C6B2AEEF /* Pods_SimpleNotes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67D0F4EDDFADB1B9E912C456 /* Pods_SimpleNotes.framework */; };
 		7F3765FC2787FA6A00A107FF /* RefreshDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3765FB2787FA6A00A107FF /* RefreshDataDelegate.swift */; };
-		7F498AAA276FC22100202413 /* NewNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AA9276FC22100202413 /* NewNoteViewController.swift */; };
+		7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3765FF278A078B00A107FF /* NoteShareSettingsViewController.swift */; };
+		7F376602278A087900A107FF /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376601278A087900A107FF /* CustomButton.swift */; };
+		7F37660F278A52DA00A107FF /* SharingLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37660E278A52DA00A107FF /* SharingLocation.swift */; };
+		7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AA9276FC22100202413 /* NoteViewController.swift */; };
 		7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */; };
 		7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498ABD2771624200202413 /* NewTagViewController.swift */; };
 		7F498AC12771656900202413 /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498ABF2771656900202413 /* DetailCollectionViewCell.swift */; };
@@ -66,7 +69,10 @@
 		67D0F4EDDFADB1B9E912C456 /* Pods_SimpleNotes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleNotes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A1C248CD3F4C5A2CD5C2124 /* Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig"; path = "Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7F3765FB2787FA6A00A107FF /* RefreshDataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshDataDelegate.swift; sourceTree = "<group>"; };
-		7F498AA9276FC22100202413 /* NewNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteViewController.swift; sourceTree = "<group>"; };
+		7F3765FF278A078B00A107FF /* NoteShareSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteShareSettingsViewController.swift; sourceTree = "<group>"; };
+		7F376601278A087900A107FF /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		7F37660E278A52DA00A107FF /* SharingLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingLocation.swift; sourceTree = "<group>"; };
+		7F498AA9276FC22100202413 /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTagsTableViewController.swift; sourceTree = "<group>"; };
 		7F498ABD2771624200202413 /* NewTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTagViewController.swift; sourceTree = "<group>"; };
 		7F498ABF2771656900202413 /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -145,7 +151,9 @@
 		7F498AC327718C7500202413 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7F376601278A087900A107FF /* CustomButton.swift */,
 				7F8BBDF0276D6A98005B07C1 /* ReusableTableView.swift */,
+				7F37660E278A52DA00A107FF /* SharingLocation.swift */,
 				7F3765FB2787FA6A00A107FF /* RefreshDataDelegate.swift */,
 				7F835927277BFEB0007428A8 /* SplitViewManager.swift */,
 				7F498ACB27718EDC00202413 /* Note */,
@@ -177,10 +185,11 @@
 		7F498B58277571CF00202413 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				7F498AA9276FC22100202413 /* NewNoteViewController.swift */,
+				7F498AA9276FC22100202413 /* NoteViewController.swift */,
 				7FEBEC72276135DA0066F0C0 /* ViewController.swift */,
 				7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */,
 				7F498ABD2771624200202413 /* NewTagViewController.swift */,
+				7F3765FF278A078B00A107FF /* NoteShareSettingsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -226,8 +235,8 @@
 				7F498B0B27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld */,
 				7FEBEC70276135DA0066F0C0 /* SceneDelegate.swift */,
 				7F8BBDFB276ED795005B07C1 /* Extensions.swift */,
-				7F8358F427792493007428A8 /* Core Data */,
 				7FEBEC74276135DA0066F0C0 /* Main.storyboard */,
+				7F8358F427792493007428A8 /* Core Data */,
 				7F498B58277571CF00202413 /* View Controllers */,
 				7F498AC327718C7500202413 /* Models */,
 				7FEBEC77276135DC0066F0C0 /* Assets.xcassets */,
@@ -515,13 +524,16 @@
 				7F835924277AD75C007428A8 /* AllTags+CoreDataProperties.swift in Sources */,
 				7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */,
 				7FEBEC71276135DA0066F0C0 /* SceneDelegate.swift in Sources */,
+				7F37660F278A52DA00A107FF /* SharingLocation.swift in Sources */,
 				7F8BBDF1276D6A98005B07C1 /* ReusableTableView.swift in Sources */,
+				7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */,
 				7F835928277BFEB0007428A8 /* SplitViewManager.swift in Sources */,
 				7FEBECA2276136280066F0C0 /* NoteTableViewCell.swift in Sources */,
-				7F498AAA276FC22100202413 /* NewNoteViewController.swift in Sources */,
+				7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */,
 				7F498AC627718CAA00202413 /* TagTableViewCell.swift in Sources */,
 				7F498B572775719E00202413 /* CoreData.swift in Sources */,
 				7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */,
+				7F376602278A087900A107FF /* CustomButton.swift in Sources */,
 				7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */,
 				7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */,
 				7F835922277AD75C007428A8 /* Note+CoreDataProperties.swift in Sources */,
@@ -707,9 +719,10 @@
 				DEVELOPMENT_TEAM = 7UHNX49SSD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SimpleNotes/Info.plist;
+				INFOPLIST_KEY_NSMainNibFile = Main;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -736,9 +749,10 @@
 				DEVELOPMENT_TEAM = 7UHNX49SSD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SimpleNotes/Info.plist;
+				INFOPLIST_KEY_NSMainNibFile = Main;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

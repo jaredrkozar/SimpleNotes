@@ -8,7 +8,7 @@
 import UIKit
 import WSTagsField
 
-class NewNoteViewController: UIViewController {
+class NoteViewController: UIViewController {
 
     @IBOutlet var noteTitleField: UITextField!
     @IBOutlet var noteDateField: UIDatePicker!
@@ -50,7 +50,7 @@ class NewNoteViewController: UIViewController {
         
         let cancel = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped))
         
-        let shareButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareButtonTapped))
+        let shareButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "square.and.arrow.up"), primaryAction: nil, menu: shareButtonTapped())
         
         if isEditingNote == true {
             title = "Edit Note"
@@ -88,8 +88,48 @@ class NewNoteViewController: UIViewController {
         self.navigationController?.present(navController, animated: true, completion: nil)
     }
     
-    @objc func shareButtonTapped(sender: UIBarButtonItem) {
-        print("Share")
+    func shareButtonTapped() -> UIMenu {
+
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "shareNoteVC") as! NoteShareSettingsViewController
+        let navigationController = UINavigationController(rootViewController: vc)
+
+        let shareToOtherApps = UIAction(title: "Other Apps", image: UIImage(systemName: "square.and.arrow.up"), identifier: .none, discoverabilityTitle: "Share to other apps", attributes: [], state: .on) { [self] _ in
+            
+            if let picker = navigationController.presentationController as? UISheetPresentationController {
+               picker.detents = [.medium()]
+               picker.prefersGrabberVisible = true
+               picker.preferredCornerRadius = 7.0
+            }
+            
+            
+            self.present(navigationController, animated: true, completion: nil)
+        }
+        
+        let shareToMessages = UIAction(title: "Messages", image: UIImage(systemName: "message"), identifier: .none, discoverabilityTitle: "Text someone the note", attributes: []) { [self] _ in
+    
+            if let picker = navigationController.presentationController as? UISheetPresentationController {
+               picker.detents = [.medium()]
+               picker.prefersGrabberVisible = true
+               picker.preferredCornerRadius = 7.0
+            }
+            
+            self.present(navigationController, animated: true, completion: nil)
+        }
+        
+        let toEmail = UIAction(title: "Mail", image: UIImage(systemName: "envelope"), identifier: nil, discoverabilityTitle: "Email the note", attributes: []) { [self] _ in
+
+            if let picker = navigationController.presentationController as? UISheetPresentationController {
+               picker.detents = [.medium()]
+               picker.prefersGrabberVisible = true
+               picker.preferredCornerRadius = 7.0
+            }
+            
+            
+            self.present(navigationController, animated: true, completion: nil)
+        }
+        
+        return UIMenu(title: "Share Note", subtitle: nil, image: nil, identifier: nil, options: [], children: [shareToOtherApps, shareToMessages, toEmail])
+        
     }
     
 }

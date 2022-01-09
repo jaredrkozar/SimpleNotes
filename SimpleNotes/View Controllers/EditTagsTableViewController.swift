@@ -35,11 +35,10 @@ class EditTagsTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("DDD")
-        tableView.reloadData()
+        super.viewWillAppear(animated)
+        self.tableView.reloadData()
     }
-    // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
