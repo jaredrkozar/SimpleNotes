@@ -8,11 +8,9 @@
 import UIKit
 
 extension NoteShareSettingsViewController {
-    func sendToOtherApps(noteTitle: String, noteText: String?, notePDF: Data?) {
+    func sendToOtherApps(data: [Any]) {
         
-        
-        let items = ["Title: \(noteTitle). Text: \(noteText)."]
-        let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        let ac = UIActivityViewController(activityItems: data, applicationActivities: nil)
         self.present(ac, animated: true)
     }
 }

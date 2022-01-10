@@ -47,7 +47,10 @@ class NoteShareSettingsViewController: UITableViewController {
                     case .messages:
                         sendText(noteTitle: noteTitle, noteText: nil, noteDate: nil, notePDF: PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: "Created on \(noteDate)"))
                     case .otherapps:
-                        sendToOtherApps(noteTitle: noteTitle, noteText: noteText, notePDF: nil)
+                    
+                    let url = NSURLfileURL(withPath:fileName)
+                    
+                    sendToOtherApps(data: [PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: "Created on \(noteDate)"), noteTitle])
                     default:
                         break
                 }
@@ -58,7 +61,7 @@ class NoteShareSettingsViewController: UITableViewController {
                     case .messages:
                         sendText(noteTitle: noteTitle, noteText: noteText, noteDate: noteDate, notePDF: nil)
                     case .otherapps:
-                        sendToOtherApps(noteTitle: noteTitle, noteText: noteText, notePDF: nil)
+                    sendToOtherApps(data: ["Title \(noteTitle). Text \(noteText)"])
                     default:
                         break
                 }

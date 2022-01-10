@@ -9,6 +9,10 @@ import UIKit
 
 class PDFCreator {
 
+    var headerFont: Int?
+    var bodyFont: Int?
+    
+    
     func createPDF(noteTitle: String, noteText: String?, noteDate: String) -> Data {
         let pdfMetaData = [kCGPDFContextTitle: noteTitle]
         
