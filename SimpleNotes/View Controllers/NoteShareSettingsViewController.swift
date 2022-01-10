@@ -47,6 +47,8 @@ class NoteShareSettingsViewController: UITableViewController {
                     sendEmail(noteTitle: noteTitle, noteText: noteText, noteDate: noteDate, notePDF: nil)
                     case .messages:
                         sendText(noteTitle: noteTitle, noteText: noteText, noteDate: noteDate, notePDF: nil)
+                    case .otherapps:
+                        sendToOtherApps(noteTitle: noteTitle, noteText: noteText, notePDF: nil)
                     default:
                         break
                 }
