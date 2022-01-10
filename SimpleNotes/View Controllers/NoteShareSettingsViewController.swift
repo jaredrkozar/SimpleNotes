@@ -10,7 +10,7 @@ import UIKit
 class NoteShareSettingsViewController: UITableViewController {
 
     @IBOutlet var sendNoteButton: CustomButton!
-    
+
     var sharingLocation: SharingLocation?
     var format: SharingType?
     var noteTitle: String = ""
@@ -20,6 +20,7 @@ class NoteShareSettingsViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         // Do any additional setup after loading the view.
         sendNoteButton.setTitle(sharingLocation?.buttonMessage, for: .normal)
+        
         title = sharingLocation?.viewTitle
     
         view.backgroundColor = UIColor.systemBackground
@@ -34,17 +35,26 @@ class NoteShareSettingsViewController: UITableViewController {
                 format = SharingType.plainText
             }
         }
+        
     }
     
     @IBAction func didTapExportButton(_ sender: Any) {
-        
         switch format {
             case .pdf:
-                print("DDD")
+                switch sharingLocation {
+                    case .email:
+                    sendEmail(noteTitle: noteTitle, noteText: nil, noteDate: nil, notePDF: PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: noteDate))
+                    case .messages:
+                        sendText(noteTitle: noteTitle, noteText: nil, noteDate: nil, notePDF: PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: noteDate))
+                    case .otherapps:
+                        sendToOtherApps(noteTitle: noteTitle, noteText: noteText, notePDF: nil)
+                    default:
+                        break
+                }
             case .plainText:
                 switch sharingLocation {
                     case .email:
-                    sendEmail(noteTitle: noteTitle, noteText: noteText, noteDate: noteDate, notePDF: nil)
+                        sendEmail(noteTitle: noteTitle, noteText: noteText, noteDate: noteDate, notePDF: nil)
                     case .messages:
                         sendText(noteTitle: noteTitle, noteText: noteText, noteDate: noteDate, notePDF: nil)
                     case .otherapps:

@@ -15,6 +15,7 @@
 		7F376613278AC3CD00A107FF /* SendEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376612278AC3CD00A107FF /* SendEmail.swift */; };
 		7F376615278B569D00A107FF /* SendText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376614278B569D00A107FF /* SendText.swift */; };
 		7F376617278B59B800A107FF /* SendToOtherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376616278B59B800A107FF /* SendToOtherApp.swift */; };
+		7F37661A278BC7B400A107FF /* PDFCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376619278BC7B400A107FF /* PDFCreator.swift */; };
 		7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AA9276FC22100202413 /* NoteViewController.swift */; };
 		7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */; };
 		7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498ABD2771624200202413 /* NewTagViewController.swift */; };
@@ -78,6 +79,7 @@
 		7F376612278AC3CD00A107FF /* SendEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendEmail.swift; sourceTree = "<group>"; };
 		7F376614278B569D00A107FF /* SendText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendText.swift; sourceTree = "<group>"; };
 		7F376616278B59B800A107FF /* SendToOtherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendToOtherApp.swift; sourceTree = "<group>"; };
+		7F376619278BC7B400A107FF /* PDFCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFCreator.swift; sourceTree = "<group>"; };
 		7F498AA9276FC22100202413 /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTagsTableViewController.swift; sourceTree = "<group>"; };
 		7F498ABD2771624200202413 /* NewTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTagViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +154,17 @@
 				60D50653D3745D01A5BE209D /* Pods-SimpleNotesTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		7F376618278BC78A00A107FF /* Sharing */ = {
+			isa = PBXGroup;
+			children = (
+				7F376612278AC3CD00A107FF /* SendEmail.swift */,
+				7F376616278B59B800A107FF /* SendToOtherApp.swift */,
+				7F376614278B569D00A107FF /* SendText.swift */,
+				7F376619278BC7B400A107FF /* PDFCreator.swift */,
+			);
+			path = Sharing;
 			sourceTree = "<group>";
 		};
 		7F498AC327718C7500202413 /* Models */ = {
@@ -242,9 +255,7 @@
 				7FEBEC70276135DA0066F0C0 /* SceneDelegate.swift */,
 				7F8BBDFB276ED795005B07C1 /* Extensions.swift */,
 				7FEBEC74276135DA0066F0C0 /* Main.storyboard */,
-				7F376612278AC3CD00A107FF /* SendEmail.swift */,
-				7F376616278B59B800A107FF /* SendToOtherApp.swift */,
-				7F376614278B569D00A107FF /* SendText.swift */,
+				7F376618278BC78A00A107FF /* Sharing */,
 				7F8358F427792493007428A8 /* Core Data */,
 				7F498B58277571CF00202413 /* View Controllers */,
 				7F498AC327718C7500202413 /* Models */,
@@ -535,6 +546,7 @@
 				7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */,
 				7FEBEC71276135DA0066F0C0 /* SceneDelegate.swift in Sources */,
 				7F37660F278A52DA00A107FF /* SharingLocation.swift in Sources */,
+				7F37661A278BC7B400A107FF /* PDFCreator.swift in Sources */,
 				7F8BBDF1276D6A98005B07C1 /* ReusableTableView.swift in Sources */,
 				7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */,
 				7F835928277BFEB0007428A8 /* SplitViewManager.swift in Sources */,
