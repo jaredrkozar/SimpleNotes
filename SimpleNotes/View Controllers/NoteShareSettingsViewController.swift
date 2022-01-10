@@ -43,9 +43,9 @@ class NoteShareSettingsViewController: UITableViewController {
             case .pdf:
                 switch sharingLocation {
                     case .email:
-                    sendEmail(noteTitle: noteTitle, noteText: nil, noteDate: nil, notePDF: PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: noteDate))
+                    sendEmail(noteTitle: noteTitle, noteText: nil, noteDate: nil, notePDF: PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: "Created on \(noteDate)"))
                     case .messages:
-                        sendText(noteTitle: noteTitle, noteText: nil, noteDate: nil, notePDF: PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: noteDate))
+                        sendText(noteTitle: noteTitle, noteText: nil, noteDate: nil, notePDF: PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: "Created on \(noteDate)"))
                     case .otherapps:
                         sendToOtherApps(noteTitle: noteTitle, noteText: noteText, notePDF: nil)
                     default:

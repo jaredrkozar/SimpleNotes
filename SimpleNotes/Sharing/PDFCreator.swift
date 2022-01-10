@@ -25,7 +25,11 @@ class PDFCreator {
 
             context.beginPage()
 
-            let titleBottom = addTitle(noteTitle: noteTitle, pageRect: pageRect)
+            addTitle(noteTitle: noteTitle, pageRect: pageRect)
+            
+            addDate(noteDate: noteDate, pageRect: pageRect)
+            
+            addText(noteText: noteText!, pageRect: pageRect)
         }
         
         return data
@@ -33,7 +37,7 @@ class PDFCreator {
     
     func addTitle(noteTitle: String, pageRect: CGRect) -> CGFloat {
 
-      let titleFont = UIFont.systemFont(ofSize: 18.0, weight: .bold)
+      let titleFont = UIFont.systemFont(ofSize: 20.0, weight: .bold)
   
       let titleAttributes: [NSAttributedString.Key: Any] =
         [NSAttributedString.Key.font: titleFont]
@@ -46,8 +50,8 @@ class PDFCreator {
       let titleStringSize = attributedTitle.size()
 
       let titleStringRect = CGRect(
-        x: (pageRect.width - titleStringSize.width) / 2.0,
-        y: 36,
+        x: 30,
+        y: 35,
         width: titleStringSize.width,
         height: titleStringSize.height
       )
@@ -57,4 +61,63 @@ class PDFCreator {
       return titleStringRect.origin.y + titleStringRect.size.height
     }
 
+    func addDate(noteDate: String, pageRect: CGRect) -> CGFloat {
+
+      let titleFont = UIFont.systemFont(ofSize: 20.0, weight: .medium)
+  
+      let titleAttributes: [NSAttributedString.Key: Any] =
+        [NSAttributedString.Key.font: titleFont]
+ 
+      let attributedTitle = NSAttributedString(
+        string: noteDate,
+        attributes: titleAttributes
+      )
+        
+      let titleStringSize = attributedTitle.size()
+
+      let titleStringRect = CGRect(
+        x: pageRect.width - 300,
+        y: 35,
+        width: titleStringSize.width,
+        height: titleStringSize.height
+      )
+        
+      attributedTitle.draw(in: titleStringRect)
+
+      return titleStringRect.origin.y + titleStringRect.size.height
+    }
+    
+    func addText(noteText: String, pageRect: CGRect) -> CGFloat {
+
+        let textFont = UIFont.systemFont(ofSize: 15.0, weight: .regular)
+        // 1
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .natural
+        paragraphStyle.lineBreakMode = .byCharWrapping
+     
+        
+        // 2
+        let textAttributes = [
+          NSAttributedString.Key.paragraphStyle: paragraphStyle,
+          NSAttributedString.Key.font: textFont
+          
+        ]
+        let attributedText = NSAttributedString(
+          string: noteText,
+          attributes: textAttributes
+        )
+        
+        let titleStringSize = attributedText.size()
+        // 3
+        let textRect = CGRect(
+          x: 30,
+          y: 100,
+          width: pageRect.width - 50,
+          height: pageRect.height - 50
+        )
+        attributedText.draw(in: textRect)
+        
+        return textRect.origin.y + textRect.size.height
+    }
+    
 }
