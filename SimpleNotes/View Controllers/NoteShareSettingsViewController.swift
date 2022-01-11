@@ -24,7 +24,42 @@ class NoteShareSettingsViewController: UITableViewController {
         title = sharingLocation?.viewTitle
     
         view.backgroundColor = UIColor.systemBackground
+        tableView.reloadData()
     
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var numRows = 0
+        
+        switch sharingLocation {
+            case .email:
+                if section == 0 {
+                        numRows = 2
+                } else {
+                    numRows = 0
+                }
+            case .messages:
+            if section == 0 {
+                    numRows = 2
+            } else {
+                numRows = 2
+            }
+            case .otherapps:
+            if section == 0 {
+                    numRows = 2
+            } else {
+                numRows = 0
+            }
+        case .googledrive:
+            if section == 1 {
+                    numRows = 1
+            } else {
+                numRows = 0
+            }
+            case .none:
+                break
+        }
+        return numRows
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -34,6 +69,11 @@ class NoteShareSettingsViewController: UITableViewController {
             } else {
                 format = SharingType.plainText
             }
+            
+        } else if indexPath.section == 1 {
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "folderLocationsVC") as! FolderLocationViewController
+            let navController = UINavigationController(rootViewController: vc)
+            self.navigationController?.present(navController, animated: true, completion: nil)
         }
         
     }
@@ -47,8 +87,6 @@ class NoteShareSettingsViewController: UITableViewController {
                     case .messages:
                         sendText(noteTitle: noteTitle, noteText: nil, noteDate: nil, notePDF: PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: "Created on \(noteDate)"))
                     case .otherapps:
-                    
-                    let url = NSURLfileURL(withPath:fileName)
                     
                     sendToOtherApps(data: [PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: "Created on \(noteDate)"), noteTitle])
                     default:

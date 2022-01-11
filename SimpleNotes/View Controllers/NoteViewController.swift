@@ -93,54 +93,27 @@ class NoteViewController: UIViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "shareNoteVC") as! NoteShareSettingsViewController
         let navigationController = UINavigationController(rootViewController: vc)
         
-        let shareToOtherApps = UIAction(title: "Other Apps", image: UIImage(systemName: "square.and.arrow.up"), identifier: .none, discoverabilityTitle: "Share to other apps", attributes: [], state: .on) { [self] _ in
-            
-            if let picker = navigationController.presentationController as? UISheetPresentationController {
-               picker.detents = [.medium()]
-               picker.prefersGrabberVisible = true
-               picker.preferredCornerRadius = 7.0
-            }
-            
-            vc.noteTitle = noteTitleField.text!
-            vc.noteText = noteTextField.text!
-            vc.noteDate = noteDateField.date.formatted()
-            vc.sharingLocation = .otherapps
-            
-            self.present(navigationController, animated: true, completion: nil)
-        }
+        var locations = [UIAction]()
         
-        let shareToMessages = UIAction(title: "Messages", image: UIImage(systemName: "message"), identifier: .none, discoverabilityTitle: "Text someone the note", attributes: []) { [self] _ in
-    
-            if let picker = navigationController.presentationController as? UISheetPresentationController {
-               picker.detents = [.medium()]
-               picker.prefersGrabberVisible = true
-               picker.preferredCornerRadius = 7.0
-            }
-            
-            vc.noteTitle = noteTitleField.text!
-            vc.noteText = noteTextField.text!
-            vc.noteDate = noteDateField.date.formatted()
-            vc.sharingLocation = .messages
-            self.present(navigationController, animated: true, completion: nil)
-        }
-        
-        let toEmail = UIAction(title: "Mail", image: UIImage(systemName: "envelope"), identifier: nil, discoverabilityTitle: "Email the note", attributes: []) { [self] _ in
+        for location in SharingLocation.allCases {
+            locations.append( UIAction(title: "\(location.viewTitle)", image: location.icon, identifier: nil, attributes: []) { _ in
 
-            if let picker = navigationController.presentationController as? UISheetPresentationController {
-               picker.detents = [.medium()]
-               picker.prefersGrabberVisible = true
-               picker.preferredCornerRadius = 7.0
-            }
-            
-            vc.noteTitle = noteTitleField.text!
-            vc.noteText = noteTextField.text!
-            vc.noteDate = noteDateField.date.formatted()
-            vc.sharingLocation = .email
-            
-            self.present(navigationController, animated: true, completion: nil)
-        }
+                if let picker = navigationController.presentationController as? UISheetPresentationController {
+                   picker.detents = [.medium()]
+                   picker.prefersGrabberVisible = true
+                   picker.preferredCornerRadius = 7.0
+                }
+                
+                vc.noteTitle = self.noteTitleField.text!
+                vc.noteText = self.noteTextField.text!
+                vc.noteDate = self.noteDateField.date.formatted()
+                vc.sharingLocation = location
+                
+                self.present(navigationController, animated: true, completion: nil)
+             })
+          }
         
-        return UIMenu(title: "Share Note", subtitle: nil, image: nil, identifier: nil, options: [], children: [shareToOtherApps, shareToMessages, toEmail])
+        return UIMenu(title: "Share Note", subtitle: nil, image: nil, identifier: nil, options: [], children: locations)
         
     }
     
