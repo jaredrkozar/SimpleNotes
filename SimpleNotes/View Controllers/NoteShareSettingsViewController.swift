@@ -28,38 +28,20 @@ class NoteShareSettingsViewController: UITableViewController {
     
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var numRows = 0
-        
-        switch sharingLocation {
-            case .email:
-                if section == 0 {
-                        numRows = 2
-                } else {
-                    numRows = 0
-                }
-            case .messages:
-            if section == 0 {
-                    numRows = 2
-            } else {
-                numRows = 2
-            }
-            case .otherapps:
-            if section == 0 {
-                    numRows = 2
-            } else {
-                numRows = 0
-            }
-        case .googledrive:
-            if section == 1 {
-                    numRows = 1
-            } else {
-                numRows = 0
-            }
-            case .none:
-                break
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if sectionShouldBeHidden(section) {
+            return nil // Show nothing for the header of hidden sections
+        } else {
+            return super.tableView(tableView, titleForHeaderInSection: section) // Use the default header for other sections
         }
-        return numRows
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if sectionShouldBeHidden(section) {
+                return 0 // Don't show any rows for hidden sections
+        } else {
+            return super.tableView(tableView, numberOfRowsInSection: section) // Use the default number of rows for other sections
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -108,4 +90,28 @@ class NoteShareSettingsViewController: UITableViewController {
         }
     }
     
+    private func sectionShouldBeHidden(_ section: Int) -> Bool {
+        var shouldHideSection: Bool = false
+        
+        switch sharingLocation {
+        case .email, .messages, .otherapps:
+            switch section {
+                case 1:
+                    shouldHideSection = true
+                default:
+                    shouldHideSection =  false
+            }
+        case .googledrive:
+            switch section {
+                case 0:
+                    shouldHideSection = true
+                default:
+                    shouldHideSection = false
+            }
+            case .none:
+                break
+        }
+        return shouldHideSection
+    }
+
 }
