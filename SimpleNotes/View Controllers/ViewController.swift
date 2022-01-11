@@ -48,7 +48,9 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     }
 
     @objc func settingsScreen(sender: UIButton) {
-        print("UII")
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "settingsVC") as! SettingsViewController
+        let navController = UINavigationController(rootViewController: vc)
+        self.navigationController?.present(navController, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

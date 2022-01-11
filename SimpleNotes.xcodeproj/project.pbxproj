@@ -17,6 +17,8 @@
 		7F376617278B59B800A107FF /* SendToOtherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376616278B59B800A107FF /* SendToOtherApp.swift */; };
 		7F37661A278BC7B400A107FF /* PDFCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376619278BC7B400A107FF /* PDFCreator.swift */; };
 		7F37661E278D40F700A107FF /* FolderLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37661D278D40F700A107FF /* FolderLocationViewController.swift */; };
+		7F376620278E02A400A107FF /* GoogleAPIInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37661F278E02A400A107FF /* GoogleAPIInteractor.swift */; };
+		7F376626278E220D00A107FF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376625278E220D00A107FF /* SettingsViewController.swift */; };
 		7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AA9276FC22100202413 /* NoteViewController.swift */; };
 		7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */; };
 		7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498ABD2771624200202413 /* NewTagViewController.swift */; };
@@ -82,6 +84,8 @@
 		7F376616278B59B800A107FF /* SendToOtherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendToOtherApp.swift; sourceTree = "<group>"; };
 		7F376619278BC7B400A107FF /* PDFCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFCreator.swift; sourceTree = "<group>"; };
 		7F37661D278D40F700A107FF /* FolderLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLocationViewController.swift; sourceTree = "<group>"; };
+		7F37661F278E02A400A107FF /* GoogleAPIInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAPIInteractor.swift; sourceTree = "<group>"; };
+		7F376625278E220D00A107FF /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		7F498AA9276FC22100202413 /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTagsTableViewController.swift; sourceTree = "<group>"; };
 		7F498ABD2771624200202413 /* NewTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTagViewController.swift; sourceTree = "<group>"; };
@@ -165,6 +169,7 @@
 				7F376616278B59B800A107FF /* SendToOtherApp.swift */,
 				7F376614278B569D00A107FF /* SendText.swift */,
 				7F376619278BC7B400A107FF /* PDFCreator.swift */,
+				7F37661F278E02A400A107FF /* GoogleAPIInteractor.swift */,
 			);
 			path = Sharing;
 			sourceTree = "<group>";
@@ -207,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				7F498AA9276FC22100202413 /* NoteViewController.swift */,
+				7F376625278E220D00A107FF /* SettingsViewController.swift */,
 				7FEBEC72276135DA0066F0C0 /* ViewController.swift */,
 				7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */,
 				7F498ABD2771624200202413 /* NewTagViewController.swift */,
@@ -308,6 +314,7 @@
 				7FEBEC68276135DA0066F0C0 /* Frameworks */,
 				7FEBEC69276135DA0066F0C0 /* Resources */,
 				0BD81FC602351466F45213C1 /* [CP] Embed Pods Frameworks */,
+				E2CCCC0A909405A204A18221 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -346,6 +353,7 @@
 				7FEBEC88276135DC0066F0C0 /* Frameworks */,
 				7FEBEC89276135DC0066F0C0 /* Resources */,
 				9B49C7EC2DB85AD3DA2D8A88 /* [CP] Embed Pods Frameworks */,
+				963247BA4F446D9D9436FFA6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -470,6 +478,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		963247BA4F446D9D9436FFA6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9B49C7EC2DB85AD3DA2D8A88 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -531,6 +556,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E2CCCC0A909405A204A18221 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SimpleNotes/Pods-SimpleNotes-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SimpleNotes/Pods-SimpleNotes-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SimpleNotes/Pods-SimpleNotes-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -560,9 +602,11 @@
 				7F498B572775719E00202413 /* CoreData.swift in Sources */,
 				7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */,
 				7F376602278A087900A107FF /* CustomButton.swift in Sources */,
+				7F376620278E02A400A107FF /* GoogleAPIInteractor.swift in Sources */,
 				7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */,
 				7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */,
 				7F835922277AD75C007428A8 /* Note+CoreDataProperties.swift in Sources */,
+				7F376626278E220D00A107FF /* SettingsViewController.swift in Sources */,
 				7F376613278AC3CD00A107FF /* SendEmail.swift in Sources */,
 				7F37661E278D40F700A107FF /* FolderLocationViewController.swift in Sources */,
 			);

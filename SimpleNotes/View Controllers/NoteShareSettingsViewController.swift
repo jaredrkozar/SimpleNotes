@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import GoogleSignIn
 
 class NoteShareSettingsViewController: UITableViewController {
-
+    
     @IBOutlet var sendNoteButton: CustomButton!
 
     var sharingLocation: SharingLocation?
@@ -25,6 +26,8 @@ class NoteShareSettingsViewController: UITableViewController {
     
         view.backgroundColor = UIColor.systemBackground
         tableView.reloadData()
+        
+        format = .pdf
     
     }
     
@@ -70,7 +73,10 @@ class NoteShareSettingsViewController: UITableViewController {
                         sendText(noteTitle: noteTitle, noteText: nil, noteDate: nil, notePDF: PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: "Created on \(noteDate)"))
                     case .otherapps:
                     
-                    sendToOtherApps(data: [PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: "Created on \(noteDate)"), noteTitle])
+                        sendToOtherApps(data: [PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: "Created on \(noteDate)"), noteTitle])
+                    case .googledrive:
+                    
+                   setupGoogleSignIn()
                     default:
                         break
                 }
