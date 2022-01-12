@@ -76,7 +76,7 @@ class NoteShareSettingsViewController: UITableViewController {
                         sendToOtherApps(data: [PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: "Created on \(noteDate)"), noteTitle])
                     case .googledrive:
                     
-                   setupGoogleSignIn()
+                        signIn()
                     default:
                         break
                 }

@@ -17,8 +17,8 @@
 		7F376617278B59B800A107FF /* SendToOtherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376616278B59B800A107FF /* SendToOtherApp.swift */; };
 		7F37661A278BC7B400A107FF /* PDFCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376619278BC7B400A107FF /* PDFCreator.swift */; };
 		7F37661E278D40F700A107FF /* FolderLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37661D278D40F700A107FF /* FolderLocationViewController.swift */; };
-		7F376620278E02A400A107FF /* GoogleAPIInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37661F278E02A400A107FF /* GoogleAPIInteractor.swift */; };
 		7F376626278E220D00A107FF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376625278E220D00A107FF /* SettingsViewController.swift */; };
+		7F37662E278E666100A107FF /* GoogleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37662D278E666100A107FF /* GoogleInteractor.swift */; };
 		7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AA9276FC22100202413 /* NoteViewController.swift */; };
 		7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */; };
 		7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498ABD2771624200202413 /* NewTagViewController.swift */; };
@@ -84,8 +84,8 @@
 		7F376616278B59B800A107FF /* SendToOtherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendToOtherApp.swift; sourceTree = "<group>"; };
 		7F376619278BC7B400A107FF /* PDFCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFCreator.swift; sourceTree = "<group>"; };
 		7F37661D278D40F700A107FF /* FolderLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLocationViewController.swift; sourceTree = "<group>"; };
-		7F37661F278E02A400A107FF /* GoogleAPIInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAPIInteractor.swift; sourceTree = "<group>"; };
 		7F376625278E220D00A107FF /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		7F37662D278E666100A107FF /* GoogleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleInteractor.swift; sourceTree = "<group>"; };
 		7F498AA9276FC22100202413 /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTagsTableViewController.swift; sourceTree = "<group>"; };
 		7F498ABD2771624200202413 /* NewTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTagViewController.swift; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 				7F376616278B59B800A107FF /* SendToOtherApp.swift */,
 				7F376614278B569D00A107FF /* SendText.swift */,
 				7F376619278BC7B400A107FF /* PDFCreator.swift */,
-				7F37661F278E02A400A107FF /* GoogleAPIInteractor.swift */,
+				7F37662D278E666100A107FF /* GoogleInteractor.swift */,
 			);
 			path = Sharing;
 			sourceTree = "<group>";
@@ -602,11 +602,11 @@
 				7F498B572775719E00202413 /* CoreData.swift in Sources */,
 				7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */,
 				7F376602278A087900A107FF /* CustomButton.swift in Sources */,
-				7F376620278E02A400A107FF /* GoogleAPIInteractor.swift in Sources */,
 				7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */,
 				7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */,
 				7F835922277AD75C007428A8 /* Note+CoreDataProperties.swift in Sources */,
 				7F376626278E220D00A107FF /* SettingsViewController.swift in Sources */,
+				7F37662E278E666100A107FF /* GoogleInteractor.swift in Sources */,
 				7F376613278AC3CD00A107FF /* SendEmail.swift in Sources */,
 				7F37661E278D40F700A107FF /* FolderLocationViewController.swift in Sources */,
 			);
