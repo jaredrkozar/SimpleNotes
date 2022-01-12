@@ -19,6 +19,7 @@
 		7F37661E278D40F700A107FF /* FolderLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37661D278D40F700A107FF /* FolderLocationViewController.swift */; };
 		7F376626278E220D00A107FF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376625278E220D00A107FF /* SettingsViewController.swift */; };
 		7F37662E278E666100A107FF /* GoogleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37662D278E666100A107FF /* GoogleInteractor.swift */; };
+		7F376630278E6A8500A107FF /* APIInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37662F278E6A8500A107FF /* APIInteractor.swift */; };
 		7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AA9276FC22100202413 /* NoteViewController.swift */; };
 		7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */; };
 		7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498ABD2771624200202413 /* NewTagViewController.swift */; };
@@ -86,6 +87,7 @@
 		7F37661D278D40F700A107FF /* FolderLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLocationViewController.swift; sourceTree = "<group>"; };
 		7F376625278E220D00A107FF /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		7F37662D278E666100A107FF /* GoogleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleInteractor.swift; sourceTree = "<group>"; };
+		7F37662F278E6A8500A107FF /* APIInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIInteractor.swift; sourceTree = "<group>"; };
 		7F498AA9276FC22100202413 /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTagsTableViewController.swift; sourceTree = "<group>"; };
 		7F498ABD2771624200202413 /* NewTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTagViewController.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				7F376614278B569D00A107FF /* SendText.swift */,
 				7F376619278BC7B400A107FF /* PDFCreator.swift */,
 				7F37662D278E666100A107FF /* GoogleInteractor.swift */,
+				7F37662F278E6A8500A107FF /* APIInteractor.swift */,
 			);
 			path = Sharing;
 			sourceTree = "<group>";
@@ -587,6 +590,7 @@
 				7F835923277AD75C007428A8 /* AllTags+CoreDataClass.swift in Sources */,
 				7FEBEC73276135DA0066F0C0 /* ViewController.swift in Sources */,
 				7FEBEC6F276135DA0066F0C0 /* AppDelegate.swift in Sources */,
+				7F376630278E6A8500A107FF /* APIInteractor.swift in Sources */,
 				7F835924277AD75C007428A8 /* AllTags+CoreDataProperties.swift in Sources */,
 				7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */,
 				7FEBEC71276135DA0066F0C0 /* SceneDelegate.swift in Sources */,

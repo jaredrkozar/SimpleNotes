@@ -9,6 +9,8 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
 
+    var interactor = GoogleInteractor()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,6 +24,6 @@ class SettingsViewController: UITableViewController {
     // MARK: - Table view data source
 
     @IBAction func logOutButton(_ sender: Any) {
-        NoteShareSettingsViewController().signOut()
+        interactor.signOut()
     }
 }

@@ -76,7 +76,16 @@ class NoteShareSettingsViewController: UITableViewController {
                         sendToOtherApps(data: [PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: "Created on \(noteDate)"), noteTitle])
                     case .googledrive:
                     
-                        signIn()
+                    if(GIDSignIn.sharedInstance().hasPreviousSignIn()) {
+
+                        GoogleInteractor().signInSliently(vc: self)
+
+                      } else {
+
+                          GoogleInteractor().signIn(vc: self)
+
+                     }
+                    
                     default:
                         break
                 }
