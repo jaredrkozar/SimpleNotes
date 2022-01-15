@@ -18,6 +18,8 @@ class NoteShareSettingsViewController: UITableViewController {
     var noteText: String = ""
     var noteDate: String = ""
     
+    let google = GoogleInteractor()
+    
     override func viewWillAppear(_ animated: Bool) {
         // Do any additional setup after loading the view.
         sendNoteButton.setTitle(sharingLocation?.buttonMessage, for: .normal)
@@ -76,16 +78,7 @@ class NoteShareSettingsViewController: UITableViewController {
                         sendToOtherApps(data: [PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: "Created on \(noteDate)"), noteTitle])
                     case .googledrive:
                     
-                    if(GIDSignIn.sharedInstance().hasPreviousSignIn()) {
-
-                        GoogleInteractor().signInSliently(vc: self)
-
-                      } else {
-
-                          GoogleInteractor().signIn(vc: self)
-
-                     }
-                    
+                    google.signIn(vc: self)
                     default:
                         break
                 }

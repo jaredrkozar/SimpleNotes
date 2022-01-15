@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import GoogleSignIn
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -78,5 +79,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             }
         }
     }
-}
+    
+    // Open URL
+    func application(_ application: UIApplication,
+                      open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+         var handled: Bool
 
+        handled = GIDSignIn.sharedInstance().handle(url)
+         if handled {
+           return true
+         }
+         
+         return false
+     }
+
+     @available(iOS 9.0, *)
+     func application(_ app: UIApplication, open url: URL,
+                      options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+         var handled: Bool
+         handled = GIDSignIn.sharedInstance().handle(url)
+         
+         if handled {
+           return true
+         }
+         // Handle other custom URL types.
+         // If not handled by this app, return false.
+         return false
+     }
+    
+}

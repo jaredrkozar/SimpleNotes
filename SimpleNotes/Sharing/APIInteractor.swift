@@ -9,9 +9,9 @@ import UIKit
 
 protocol APIInteractor {
     
-    func signIn(from: AnyObject)
+    func signIn(vc: UIViewController)
     
-    var isSignedIn: Bool {get}
+    var isSignedIn: Bool { get }
     
     func signOut()
 }
