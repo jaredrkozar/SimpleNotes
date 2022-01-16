@@ -104,9 +104,7 @@ class NoteViewController: UIViewController {
                    picker.preferredCornerRadius = 7.0
                 }
                 
-                vc.noteTitle = self.noteTitleField.text!
-                vc.noteText = self.noteTextField.text!
-                vc.noteDate = self.noteDateField.date.formatted()
+                vc.currentNote = self.currentNote
                 vc.sharingLocation = location
                 
                 self.present(navigationController, animated: true, completion: nil)

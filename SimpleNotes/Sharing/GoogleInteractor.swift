@@ -68,12 +68,30 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
          driveService.executeQuery(query, completionHandler: {(ticket, files, error) in
 
              if let filesList : GTLRDrive_FileList = files as? GTLRDrive_FileList {
-                 if let listOfFolders : [GTLRDrive_File] = filesList.files {
-                     onCompleted(listOfFolders, error)
+                 if let listOfFiles : [GTLRDrive_File] = filesList.files {
+                     onCompleted(listOfFiles, error)
                  }
              }
          })
        }
+    
+    func uploadNote(note: Data, noteName: String, folderID: String?) {
+        let currentFolder = folderID ?? "root"
+        
+        let file = GTLRDrive_File()
+        file.name = noteName
+        file.parents = [currentFolder]
+        let parameters = GTLRUploadParameters(data: note, mimeType: MimeTypes.pdf.typeURL)
+        parameters.shouldUploadWithSingleRequest = true
+        
+        let query = GTLRDriveQuery_FilesCreate.query(withObject: file, uploadParameters: parameters)
+        
+       
+        self.driveService.executeQuery(query, completionHandler: { (ticket, file, error) in
+            print(error)
+            NotificationCenter.default.post(name: Notification.Name( "fileUploaded"), object: nil)
+                })
+    }
     
     override init() {
         super.init()
@@ -81,6 +99,5 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         if GIDSignIn.sharedInstance().currentUser != nil {
         self.driveService.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
         }
-        
     }
 }

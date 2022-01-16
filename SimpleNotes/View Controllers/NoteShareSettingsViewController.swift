@@ -14,11 +14,16 @@ class NoteShareSettingsViewController: UITableViewController {
 
     var sharingLocation: SharingLocation?
     var format: SharingType?
-    var noteTitle: String = ""
-    var noteText: String = ""
-    var noteDate: String = ""
+    var currentNote: Note?
     
     let google = GoogleInteractor()
+    
+    var folderID: String?
+    
+    override func viewDidLoad() {
+        NotificationCenter.default.addObserver(self, selector: #selector(showAlert(_:)), name: NSNotification.Name( "fileUploaded"), object: nil)
+
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         // Do any additional setup after loading the view.
@@ -72,26 +77,28 @@ class NoteShareSettingsViewController: UITableViewController {
             case .pdf:
                 switch sharingLocation {
                     case .email:
-                    sendEmail(noteTitle: noteTitle, noteText: nil, noteDate: nil, notePDF: PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: "Created on \(noteDate)"))
+                    sendEmail(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: PDFCreator().createPDF(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: "Created on \(currentNote!.date?.formatted() ?? Date.now.formatted())"))
                     case .messages:
-                        sendText(noteTitle: noteTitle, noteText: nil, noteDate: nil, notePDF: PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: "Created on \(noteDate)"))
+                    sendText(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: PDFCreator().createPDF(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: "Created on \(currentNote!.date?.formatted() ?? Date.now.formatted())"))
                     case .otherapps:
                     
-                        sendToOtherApps(data: [PDFCreator().createPDF(noteTitle: noteTitle, noteText: noteText, noteDate: "Created on \(noteDate)"), noteTitle])
+                    sendToOtherApps(data: [PDFCreator().createPDF(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: "Created on \(currentNote!.date?.formatted() ?? Date.now.formatted())"), currentNote?.title!])
                     case .googledrive:
-                    
                     google.signIn(vc: self)
+                    if GIDSignIn.sharedInstance().hasPreviousSignIn() {
+                        google.uploadNote(note: PDFCreator().createPDF(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: "Created on \(currentNote!.date?.formatted() ?? Date.now.formatted())"), noteName: (currentNote?.title)!, folderID: folderID ?? nil)
+                    }
                     default:
                         break
                 }
             case .plainText:
                 switch sharingLocation {
                     case .email:
-                        sendEmail(noteTitle: noteTitle, noteText: noteText, noteDate: noteDate, notePDF: nil)
+                    sendEmail(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: currentNote?.date?.formatted(), notePDF: nil)
                     case .messages:
-                        sendText(noteTitle: noteTitle, noteText: noteText, noteDate: noteDate, notePDF: nil)
+                    sendText(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: currentNote?.date?.formatted(), notePDF: nil)
                     case .otherapps:
-                    sendToOtherApps(data: ["Title \(noteTitle). Text \(noteText)"])
+                    sendToOtherApps(data: ["Title \(String(describing: currentNote?.title)). Text \(String(describing: currentNote?.text))"])
                     default:
                         break
                 }
@@ -124,4 +131,9 @@ class NoteShareSettingsViewController: UITableViewController {
         return shouldHideSection
     }
 
+    @objc func showAlert(_ notification: Notification) {
+        let alert = UIAlertController(title: "Note uploaded successfully", message: "The note was uploaded successully", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+    }
 }
