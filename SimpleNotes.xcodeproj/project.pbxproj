@@ -38,6 +38,9 @@
 		7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BBDFB276ED795005B07C1 /* Extensions.swift */; };
 		7FC55D962791372D001DDFD5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */; };
 		7FC55D9827920A45001DDFD5 /* DriveFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55D9727920A45001DDFD5 /* DriveFile.swift */; };
+		7FC55DA12792ADEB001DDFD5 /* FolderRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55D9F2792ADEB001DDFD5 /* FolderRowCell.swift */; };
+		7FC55DA22792ADEB001DDFD5 /* FolderRowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FC55DA02792ADEB001DDFD5 /* FolderRowCell.xib */; };
+		7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55DA327939E49001DDFD5 /* MimeTypes.swift */; };
 		7FEBEC6F276135DA0066F0C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEBEC6E276135DA0066F0C0 /* AppDelegate.swift */; };
 		7FEBEC71276135DA0066F0C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEBEC70276135DA0066F0C0 /* SceneDelegate.swift */; };
 		7FEBEC73276135DA0066F0C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEBEC72276135DA0066F0C0 /* ViewController.swift */; };
@@ -107,6 +110,9 @@
 		7F8BBDFB276ED795005B07C1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7FC55D9727920A45001DDFD5 /* DriveFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriveFile.swift; sourceTree = "<group>"; };
+		7FC55D9F2792ADEB001DDFD5 /* FolderRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderRowCell.swift; sourceTree = "<group>"; };
+		7FC55DA02792ADEB001DDFD5 /* FolderRowCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderRowCell.xib; sourceTree = "<group>"; };
+		7FC55DA327939E49001DDFD5 /* MimeTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypes.swift; sourceTree = "<group>"; };
 		7FEBEC6B276135DA0066F0C0 /* SimpleNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FEBEC6E276135DA0066F0C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7FEBEC70276135DA0066F0C0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -196,8 +202,11 @@
 			isa = PBXGroup;
 			children = (
 				7F376601278A087900A107FF /* CustomButton.swift */,
+				7FC55D9F2792ADEB001DDFD5 /* FolderRowCell.swift */,
+				7FC55DA02792ADEB001DDFD5 /* FolderRowCell.xib */,
 				7F8BBDF0276D6A98005B07C1 /* ReusableTableView.swift */,
 				7F37660E278A52DA00A107FF /* SharingLocation.swift */,
+				7FC55DA327939E49001DDFD5 /* MimeTypes.swift */,
 				7F3765FB2787FA6A00A107FF /* RefreshDataDelegate.swift */,
 				7F835927277BFEB0007428A8 /* SplitViewManager.swift */,
 				7F498ACB27718EDC00202413 /* Note */,
@@ -428,6 +437,7 @@
 				7FEBEC76276135DA0066F0C0 /* Main.storyboard in Resources */,
 				7FEBECA3276136280066F0C0 /* NoteTableViewCell.xib in Resources */,
 				7F498AC22771656900202413 /* DetailCollectionViewCell.xib in Resources */,
+				7FC55DA22792ADEB001DDFD5 /* FolderRowCell.xib in Resources */,
 				7FC55D962791372D001DDFD5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -592,6 +602,7 @@
 			files = (
 				7F376615278B569D00A107FF /* SendText.swift in Sources */,
 				7F3765FC2787FA6A00A107FF /* RefreshDataDelegate.swift in Sources */,
+				7FC55DA12792ADEB001DDFD5 /* FolderRowCell.swift in Sources */,
 				7F498AC12771656900202413 /* DetailCollectionViewCell.swift in Sources */,
 				7F835921277AD75C007428A8 /* Note+CoreDataClass.swift in Sources */,
 				7F835923277AD75C007428A8 /* AllTags+CoreDataClass.swift in Sources */,
@@ -617,6 +628,7 @@
 				7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */,
 				7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */,
 				7F835922277AD75C007428A8 /* Note+CoreDataProperties.swift in Sources */,
+				7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */,
 				7F376626278E220D00A107FF /* SettingsViewController.swift in Sources */,
 				7F37662E278E666100A107FF /* GoogleInteractor.swift in Sources */,
 				7F376613278AC3CD00A107FF /* SendEmail.swift in Sources */,

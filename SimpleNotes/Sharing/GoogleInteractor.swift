@@ -57,24 +57,19 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         GIDSignIn.sharedInstance().signOut()
     }
     
-    func fetchFolders(onCompleted: @escaping (GTLRDrive_FileList?, Error?) -> ()) {
-        let root = "mimeType = 'application/vnd.google-apps.folder'"
-
+    func fetchFolders(folderID: String?, onCompleted: @escaping ([GTLRDrive_File]?, Error?) -> ()) {
+        let currentFolder = folderID ?? "root"
          let query = GTLRDriveQuery_FilesList.query()
          query.pageSize = 100
-         query.q = root
+         query.q = "'\(currentFolder)' in parents and trashed=false"
          query.fields = "files(id,name,mimeType,modifiedTime,createdTime,fileExtension,size),nextPageToken"
-
+        query.includeItemsFromAllDrives = false
+        query.corpora = "user"
          driveService.executeQuery(query, completionHandler: {(ticket, files, error) in
 
              if let filesList : GTLRDrive_FileList = files as? GTLRDrive_FileList {
-                 if let filesShow : [GTLRDrive_File] = filesList.files {
-                     print("files \(filesShow)")
-                     for ArrayList in filesShow {
-                         let name = ArrayList.name ?? ""
-                         let id = ArrayList.identifier ?? ""
-                         print("hello\(name)", id)
-                     }
+                 if let listOfFolders : [GTLRDrive_File] = filesList.files {
+                     onCompleted(listOfFolders, error)
                  }
              }
          })
