@@ -58,6 +58,7 @@ class NoteShareSettingsViewController: UITableViewController {
             }
             
         } else if indexPath.section == 1 {
+            google.signIn(vc: self)
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "folderLocationsVC") as! FolderLocationViewController
             let navController = UINavigationController(rootViewController: vc)
             vc.currentfolder = "Root"

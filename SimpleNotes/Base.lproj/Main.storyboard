@@ -198,6 +198,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="3Xu-fc-bVS">
+                            <rect key="frame" x="0.0" y="111" width="414" height="63"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jfN-ig-UZW" customClass="CustomButton" customModule="SimpleNotes" customModuleProvider="target">
+                                    <rect key="frame" x="22" y="8" width="372" height="47"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                    <connections>
+                                        <action selector="selectFolderButton:" destination="WHD-yu-wGj" eventType="touchUpInside" id="2qZ-QJ-uNZ"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="jfN-ig-UZW" firstAttribute="leading" secondItem="3Xu-fc-bVS" secondAttribute="leading" constant="22" id="BJv-LI-SLF"/>
+                                <constraint firstAttribute="trailing" secondItem="jfN-ig-UZW" secondAttribute="trailing" constant="20" symbolic="YES" id="KIe-S6-LqK"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FolderRowCell" id="uvl-hb-7cd" customClass="FolderRowCell" customModule="SimpleNotes" customModuleProvider="target">
                                 <rect key="frame" x="20" y="49.5" width="374" height="43.5"/>
@@ -213,10 +232,13 @@
                             <outlet property="delegate" destination="WHD-yu-wGj" id="l0h-e7-Aw3"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="selectFolderButton" destination="jfN-ig-UZW" id="HGO-fL-HjL"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="11V-kf-3fR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1693" y="2279"/>
+            <point key="canvasLocation" x="1692.753623188406" y="2278.7946428571427"/>
         </scene>
         <!--Note View Controller-->
         <scene sceneID="y9w-sR-9Sz">
