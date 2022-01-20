@@ -63,11 +63,14 @@ class NoteShareSettingsViewController: UITableViewController {
             }
             
         } else if indexPath.section == 1 {
-            google.signIn(vc: self)
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "folderLocationsVC") as! FolderLocationViewController
-            let navController = UINavigationController(rootViewController: vc)
-            vc.currentfolder = "Root"
-            self.navigationController?.present(navController, animated: true, completion: nil)
+            if GIDSignIn.sharedInstance().hasPreviousSignIn() {
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "folderLocationsVC") as! FolderLocationViewController
+                let navController = UINavigationController(rootViewController: vc)
+                vc.currentfolder = "Root"
+                self.navigationController?.present(navController, animated: true, completion: nil)
+            } else {
+                google.signIn(vc: self)
+            }
         }
         
     }
@@ -84,10 +87,12 @@ class NoteShareSettingsViewController: UITableViewController {
                     
                     sendToOtherApps(data: [PDFCreator().createPDF(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: "Created on \(currentNote!.date?.formatted() ?? Date.now.formatted())"), currentNote?.title!])
                     case .googledrive:
-                    google.signIn(vc: self)
-                    if GIDSignIn.sharedInstance().hasPreviousSignIn() {
-                        google.uploadNote(note: PDFCreator().createPDF(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: "Created on \(currentNote!.date?.formatted() ?? Date.now.formatted())"), noteName: (currentNote?.title)!, folderID: folderID ?? nil)
-                    }
+                    if google.isSignedIn {
+                            google.signIn(vc: self)
+                            google.uploadNote(note: PDFCreator().createPDF(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: "Created on \(currentNote!.date?.formatted() ?? Date.now.formatted())"), noteName: (currentNote?.title)!, folderID: folderID ?? nil)
+                        } else {
+                            google.signIn(vc: self)
+                        }
                     default:
                         break
                 }

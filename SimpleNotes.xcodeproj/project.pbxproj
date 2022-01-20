@@ -37,7 +37,6 @@
 		7F8BBDF1276D6A98005B07C1 /* ReusableTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BBDF0276D6A98005B07C1 /* ReusableTableView.swift */; };
 		7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BBDFB276ED795005B07C1 /* Extensions.swift */; };
 		7FC55D962791372D001DDFD5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */; };
-		7FC55D9827920A45001DDFD5 /* DriveFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55D9727920A45001DDFD5 /* DriveFile.swift */; };
 		7FC55DA12792ADEB001DDFD5 /* FolderRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55D9F2792ADEB001DDFD5 /* FolderRowCell.swift */; };
 		7FC55DA22792ADEB001DDFD5 /* FolderRowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FC55DA02792ADEB001DDFD5 /* FolderRowCell.xib */; };
 		7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55DA327939E49001DDFD5 /* MimeTypes.swift */; };
@@ -109,7 +108,6 @@
 		7F8BBDF0276D6A98005B07C1 /* ReusableTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableTableView.swift; sourceTree = "<group>"; };
 		7F8BBDFB276ED795005B07C1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		7FC55D9727920A45001DDFD5 /* DriveFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriveFile.swift; sourceTree = "<group>"; };
 		7FC55D9F2792ADEB001DDFD5 /* FolderRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderRowCell.swift; sourceTree = "<group>"; };
 		7FC55DA02792ADEB001DDFD5 /* FolderRowCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderRowCell.xib; sourceTree = "<group>"; };
 		7FC55DA327939E49001DDFD5 /* MimeTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypes.swift; sourceTree = "<group>"; };
@@ -192,7 +190,6 @@
 				7F376614278B569D00A107FF /* SendText.swift */,
 				7F376619278BC7B400A107FF /* PDFCreator.swift */,
 				7F37662D278E666100A107FF /* GoogleInteractor.swift */,
-				7FC55D9727920A45001DDFD5 /* DriveFile.swift */,
 				7F37662F278E6A8500A107FF /* APIInteractor.swift */,
 			);
 			path = Sharing;
@@ -611,7 +608,6 @@
 				7F376630278E6A8500A107FF /* APIInteractor.swift in Sources */,
 				7F835924277AD75C007428A8 /* AllTags+CoreDataProperties.swift in Sources */,
 				7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */,
-				7FC55D9827920A45001DDFD5 /* DriveFile.swift in Sources */,
 				7FEBEC71276135DA0066F0C0 /* SceneDelegate.swift in Sources */,
 				7F37660F278A52DA00A107FF /* SharingLocation.swift in Sources */,
 				7F37661A278BC7B400A107FF /* PDFCreator.swift in Sources */,
