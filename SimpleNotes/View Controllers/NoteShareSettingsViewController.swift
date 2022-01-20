@@ -63,13 +63,12 @@ class NoteShareSettingsViewController: UITableViewController {
             }
             
         } else if indexPath.section == 1 {
+            google.signIn(vc: self)
             if GIDSignIn.sharedInstance().hasPreviousSignIn() {
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "folderLocationsVC") as! FolderLocationViewController
                 let navController = UINavigationController(rootViewController: vc)
                 vc.currentfolder = "Root"
                 self.navigationController?.present(navController, animated: true, completion: nil)
-            } else {
-                google.signIn(vc: self)
             }
         }
         
@@ -93,6 +92,8 @@ class NoteShareSettingsViewController: UITableViewController {
                         } else {
                             google.signIn(vc: self)
                         }
+                case .dropbox:
+                    print("DRopbox")
                     default:
                         break
                 }
@@ -123,7 +124,7 @@ class NoteShareSettingsViewController: UITableViewController {
                 default:
                     shouldHideSection =  false
             }
-        case .googledrive:
+        case .googledrive, .dropbox:
             switch section {
                 case 0:
                     shouldHideSection = true

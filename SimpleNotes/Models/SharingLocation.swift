@@ -12,6 +12,7 @@ public enum SharingLocation: CaseIterable {
     case email
     case otherapps
     case googledrive
+    case dropbox
     
     var icon: UIImage {
         switch self {
@@ -23,6 +24,8 @@ public enum SharingLocation: CaseIterable {
             return UIImage(systemName: "square.and.arrow.up")!
         case .googledrive:
             return UIImage(named: "GoogleDrive")!
+        case .dropbox:
+            return UIImage(named: "Dropbox")!
         }
     }
     
@@ -37,6 +40,8 @@ public enum SharingLocation: CaseIterable {
                 return "Other App"
         case .googledrive:
                 return "Google Drive"
+        case .dropbox:
+                return "Dropbox"
         }
     }
     
@@ -51,6 +56,8 @@ public enum SharingLocation: CaseIterable {
                 return "Send to Another App"
         case .googledrive:
                 return "Upload to Google Drive"
+        case .dropbox:
+                return "Upload to Dropbox"
         }
     }
 }

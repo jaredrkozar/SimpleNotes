@@ -61,7 +61,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
          query.fields = "files(id,name,mimeType,modifiedTime,createdTime,fileExtension,size),nextPageToken"
         query.includeItemsFromAllDrives = false
         query.corpora = "user"
-        query.requestID = "com.jkozar.SimpleNotes"
+        
          driveService.executeQuery(query, completionHandler: {(ticket, files, error) in
 
              if let filesList : GTLRDrive_FileList = files as? GTLRDrive_FileList {
@@ -76,19 +76,25 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         
         let file = GTLRDrive_File()
         file.name = noteName
-        
-        if let folderID = folderID {
-            file.parents = [folderID]
-        }
        
         let params = GTLRUploadParameters(data: note, mimeType: MimeTypes.pdf.typeURL)
        params.shouldUploadWithSingleRequest = true
   
        let upload = GTLRDriveQuery_FilesCreate.query(withObject: file, uploadParameters: params)
-       
-       self.driveService.executeQuery(upload, completionHandler: { (ticket, file, error) in
-           print("LDL")
-       })
+        
+        driveService.uploadProgressBlock = { _, totalBytesUploaded, totalBytesExpectedToUpload in
+            print(totalBytesUploaded / totalBytesExpectedToUpload)
+        }
+        
+       self.driveService.executeQuery(upload, completionHandler:  { (response, result, error) in
+           print(result)
+           print(response)
+           guard error == nil else {
+               print(error!.localizedDescription)
+               return
+           }}
+       )
+                                    
     }
     
     override init() {

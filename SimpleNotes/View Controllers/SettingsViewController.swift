@@ -8,12 +8,11 @@
 import UIKit
 
 class SettingsViewController: UITableViewController {
-
-    var interactor = GoogleInteractor()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = "Settings"
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -22,8 +21,4 @@ class SettingsViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
-    @IBAction func logOutButton(_ sender: Any) {
-        interactor.signOut()
-    }
 }
