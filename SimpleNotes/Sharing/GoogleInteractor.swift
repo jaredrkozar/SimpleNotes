@@ -13,7 +13,7 @@ import GTMAppAuth
 import AppAuth
 
 class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
-
+    
     var driveService = GTLRDriveService()
     var driveUser: GIDGoogleUser?
     var clientID: String = "968933311910-9e4an07ni7ugfji5i8t6cfkj18h1861m.apps.googleusercontent.com"
@@ -79,7 +79,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
          })
        }
 
-    func uploadNote(note: Data, noteName: String, folderID: String?) {
+    func uploadFile(note: Data, noteName: String, folderID: String?) {
         
         let file = GTLRDrive_File()
         file.name = noteName
@@ -89,19 +89,13 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
   
        let upload = GTLRDriveQuery_FilesCreate.query(withObject: file, uploadParameters: params)
         
-        driveService.uploadProgressBlock = { _, totalBytesUploaded, totalBytesExpectedToUpload in
-            print(totalBytesUploaded / totalBytesExpectedToUpload)
-        }
-        
        self.driveService.executeQuery(upload, completionHandler:  { (response, result, error) in
-           print(result)
-           print(response)
+      
            guard error == nil else {
                print(error!.localizedDescription)
                return
            }}
        )
-                                    
     }
     
     override init() {

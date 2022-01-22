@@ -17,5 +17,7 @@ protocol APIInteractor {
     
     func fetchFiles(folderID: String?, onCompleted: @escaping ([CloudServiceFiles]?, Error?) -> ())
     
+    func uploadFile(note: Data, noteName: String, folderID: String?)
+    
     func getFileType(type: String) -> String
 }

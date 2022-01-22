@@ -11,29 +11,30 @@ import SwiftyDropbox
 class DropboxInteractor: APIInteractor {
 
     var filesInFolder = [CloudServiceFiles]()
+    let client = DropboxClientsManager.authorizedClient
     
     func fetchFiles(folderID: String?, onCompleted: @escaping ([CloudServiceFiles]?, Error?) -> ()) {
-        if let client = DropboxClientsManager.authorizedClient {
-            client.files.listFolder(path: folderID!).response { response, error in
-                        if let result = response {
+        client!.files.listFolder(path: folderID!).response { response, error in
+            if let result = response {
+        
+                for file in result.entries {
+                    var isFolder: Bool = true
                     
-                            for file in result.entries {
-                                var isFolder: Bool = true
-                                
-                                if file is Files.FileMetadata {
-                                    isFolder = false
-                                }
-                                
-                                self.filesInFolder.append(CloudServiceFiles(name: file.name, type: isFolder ? "folder" : self.getFileType(type: file.name), folderID: ""))
-                            }
-                            
-                            onCompleted(self.filesInFolder, nil)
-                            
-                        } else {
-                            print(error!)
-                        }
+                    if file is Files.FileMetadata {
+                        isFolder = false
                     }
+                    
+                    self.filesInFolder.append(CloudServiceFiles(name: file.name, type: isFolder ? "folder" : self.getFileType(type: file.name), folderID: file.pathLower!))
                 }
+                
+                onCompleted(self.filesInFolder, nil)
+                
+            } else {
+                print(error!)
+            }
+        }
+
+            
     }
     
     func signIn(vc: UIViewController) {
@@ -58,6 +59,20 @@ class DropboxInteractor: APIInteractor {
     
     func signOut() {
         DropboxClientsManager.unlinkClients()
+    }
+    
+    func uploadFile(note: Data, noteName: String, folderID: String?) {
+
+        let newPath = folderID! + "/\(noteName).pdf"
+        print(newPath)
+        client?.files.upload(path: newPath, mode: .add, autorename: true, clientModified: nil, mute: false, input: note).response{ response, error in
+                if let _ = response { // to enable use: if let metadata = response {
+                    print("OK")
+                } else {
+                    print("Error at end")
+                    print(error)
+                }
+            }
     }
     
     func getFileType(type: String) -> String {

@@ -102,13 +102,13 @@ class NoteShareSettingsViewController: UITableViewController {
                     case .googledrive:
                     if google.isSignedIn {
                             google.signIn(vc: self)
-                            google.uploadNote(note: PDFCreator().createPDF(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: "Created on \(currentNote!.date?.formatted() ?? Date.now.formatted())"), noteName: (currentNote?.title)!, folderID: folderID ?? nil)
+                            google.uploadFile(note: PDFCreator().createPDF(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: "Created on \(currentNote!.date?.formatted() ?? Date.now.formatted())"), noteName: (currentNote?.title)!, folderID: folderID ?? nil)
                         } else {
                             google.signIn(vc: self)
                         }
                 case .dropbox:
                     if dropbox.isSignedIn == true {
-                        print("Signed in to dropbox")
+                        dropbox.uploadFile(note: PDFCreator().createPDF(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: "Created on \(currentNote!.date?.formatted() ?? Date.now.formatted())"), noteName: (currentNote?.title)!, folderID: folderID ?? "/")
                     } else {
                         dropbox.signIn(vc: self)
                     }
