@@ -114,22 +114,25 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
     
     func getFileType(type: String) -> String {
         var fileType = ""
-        
-        if type == "application/vnd.google-apps.folder" {
-            fileType = "folder"
-        } else if type == "application/pdf" {
-            fileType = "pdf"
-        } else if type == "application/vnd.google-apps.document" {
-            fileType = "document"
-        } else if type == "application/vnd.google-apps.spreadsheet" {
-            fileType = "spreadsheet"
-        } else if type == "application/vnd.google-apps.presentation" {
-            fileType = "presentation"
-        } else if type == "application/vnd.google-apps.audio" {
-            fileType = "audiofile"
-        } else if type == "application/vnd.google-apps.unknown" {
-            fileType = "other"
+        switch type {
+        case "application/vnd.google-apps.folder":
+                fileType = "folder"
+            case "application/pdf":
+                fileType = "pdf"
+            case "application/vnd.google-apps.document":
+                fileType = "document"
+            case "application/vnd.google-apps.spreadsheet":
+                fileType = "spreadsheet"
+            case "application/vnd.google-apps.presentation":
+                fileType = "presentation"
+            case "application/vnd.google-apps.audio":
+                fileType = "audiofile"
+            case "application/vnd.google-apps.unknown":
+                fileType = "other"
+                default:
+                fileType = "other"
         }
+        
         
         return fileType
     }

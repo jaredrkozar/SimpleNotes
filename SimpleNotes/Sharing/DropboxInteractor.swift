@@ -9,19 +9,17 @@ import UIKit
 import SwiftyDropbox
 
 class DropboxInteractor: APIInteractor {
-    
-    func getFileType(type: String) -> String {
-        return "DDD"
-    }
+
     var filesInFolder = [CloudServiceFiles]()
     
     func fetchFiles(folderID: String?, onCompleted: @escaping ([CloudServiceFiles]?, Error?) -> ()) {
         if let client = DropboxClientsManager.authorizedClient {
             client.files.listFolder(path: folderID!).response { response, error in
                         if let result = response {
-
+                            
                             for file in result.entries {
-                                self.filesInFolder.append(CloudServiceFiles(name: file.name, type: file.description, folderID: "DDD"))
+                                print((file.name as NSString).pathExtension)
+                                self.filesInFolder.append(CloudServiceFiles(name: file.name, type: file.description, folderID: self.getFileType(type: file.name)))
                             }
                             
                             onCompleted(self.filesInFolder, nil)
@@ -32,11 +30,6 @@ class DropboxInteractor: APIInteractor {
                     }
                 }
     }
-    
-    func fetchFiles() {
-        print("DD")
-    }
-    
     
     func signIn(vc: UIViewController) {
         let scopeRequest = ScopeRequest(scopeType: .user, scopes: [], includeGrantedScopes: false)
@@ -62,6 +55,26 @@ class DropboxInteractor: APIInteractor {
         DropboxClientsManager.unlinkClients()
     }
     
-
+    func getFileType(type: String) -> String {
+        var fileType = ""
+        let type = (type as NSString).pathExtension
+        print(type)
+        switch type {
+            case "txt", "md", "html":
+                fileType = "document"
+            case "xlxs", "xls", "xlm", "xl", "gsheet":
+                fileType = "spreadsheet"
+            case "pdf":
+                fileType = "pdf"
+            case "ppt", "pptx", "pptm", "gslides":
+                fileType = "presentation"
+            case "mp3", "m4a", "flac", "mp4", "wav":
+                fileType = "audiofile"
+            
+            default:
+                fileType = "other"
+        }
+        return fileType
+    }
 
 }

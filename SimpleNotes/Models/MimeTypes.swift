@@ -10,7 +10,7 @@ import UIKit
 public enum MimeTypes: CaseIterable {
     case folder
     case pdf
-    case doc
+    case document
     case spreadsheet
     case presentation
     case audiofile
@@ -22,7 +22,7 @@ public enum MimeTypes: CaseIterable {
             return (UIImage(systemName: "folder")?.withTintColor(UIColor(named: "Gray")!, renderingMode: .alwaysOriginal)) as! UIImage
         case .pdf:
             return (UIImage(systemName: "doc.viewfinder")?.withTintColor(UIColor(named: "Red")!, renderingMode: .alwaysOriginal)) as! UIImage
-        case .doc:
+        case .document:
             return (UIImage(systemName: "doc")?.withTintColor(UIColor(named: "AccentColor")!, renderingMode: .alwaysOriginal)) as! UIImage
         case .spreadsheet:
             return (UIImage(systemName: "tablecells")?.withTintColor(UIColor(named: "Green")!, renderingMode: .alwaysOriginal)) as! UIImage
@@ -43,8 +43,8 @@ public enum MimeTypes: CaseIterable {
                 return "folder"
         case .pdf:
                 return "pdf"
-        case .doc:
-                return "doc"
+        case .document:
+                return "document"
         case .spreadsheet:
                 return "spreadsheet"
         case .presentation:
@@ -52,7 +52,7 @@ public enum MimeTypes: CaseIterable {
         case .audiofile:
                 return "audiofile"
         case .other:
-                return "otherZ"
+                return "other"
         }
     }
 }
