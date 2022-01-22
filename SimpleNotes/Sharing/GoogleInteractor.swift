@@ -17,6 +17,8 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
     var driveService = GTLRDriveService()
     var driveUser: GIDGoogleUser?
     var clientID: String = "968933311910-9e4an07ni7ugfji5i8t6cfkj18h1861m.apps.googleusercontent.com"
+    var filesInFolder = [CloudServiceFiles]()
+    var folderID: String?
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         self.driveService.authorizer = user.authentication.fetcherAuthorizer()
@@ -53,7 +55,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         GIDSignIn.sharedInstance().signOut()
     }
     
-    func fetchFiles(folderID: String?, onCompleted: @escaping ([AnyObject]?, Error?) -> ()) {
+    func fetchFiles(folderID: String?, onCompleted: @escaping ([CloudServiceFiles]?, Error?) -> ()) {
         let currentFolder = folderID ?? "root"
          let query = GTLRDriveQuery_FilesList.query()
          query.pageSize = 100
@@ -62,11 +64,16 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         query.includeItemsFromAllDrives = false
         query.corpora = "user"
         
-         driveService.executeQuery(query, completionHandler: {(ticket, files, error) in
+        driveService.executeQuery(query, completionHandler: { [self](ticket, files, error) in
 
              if let filesList : GTLRDrive_FileList = files as? GTLRDrive_FileList {
+
                  if let listOfFiles : [GTLRDrive_File] = filesList.files {
-                     onCompleted(listOfFiles, error)
+                     
+                     for file in listOfFiles {
+                         filesInFolder.append(CloudServiceFiles(name: file.name!, type: getFileType(type: file.mimeType!), folderID: file.identifier!))
+                     }
+                     onCompleted(filesInFolder, error)
                  }
              }
          })
@@ -77,7 +84,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         let file = GTLRDrive_File()
         file.name = noteName
        
-        let params = GTLRUploadParameters(data: note, mimeType: MimeTypes.pdf.typeURL)
+        let params = GTLRUploadParameters(data: note, mimeType: "application/pdf")
        params.shouldUploadWithSingleRequest = true
   
        let upload = GTLRDriveQuery_FilesCreate.query(withObject: file, uploadParameters: params)
@@ -104,4 +111,27 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         self.driveService.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
         }
     }
+    
+    func getFileType(type: String) -> String {
+        var fileType = ""
+        
+        if type == "application/vnd.google-apps.folder" {
+            fileType = "folder"
+        } else if type == "application/pdf" {
+            fileType = "pdf"
+        } else if type == "application/vnd.google-apps.document" {
+            fileType = "document"
+        } else if type == "application/vnd.google-apps.spreadsheet" {
+            fileType = "spreadsheet"
+        } else if type == "application/vnd.google-apps.presentation" {
+            fileType = "presentation"
+        } else if type == "application/vnd.google-apps.audio" {
+            fileType = "audiofile"
+        } else if type == "application/vnd.google-apps.unknown" {
+            fileType = "other"
+        }
+        
+        return fileType
+    }
+    
 }

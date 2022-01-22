@@ -40,19 +40,19 @@ public enum MimeTypes: CaseIterable {
         
         switch self {
             case .folder:
-                return "application/vnd.google-apps.folder"
+                return "folder"
         case .pdf:
-                return "application/pdf"
+                return "pdf"
         case .doc:
-                return "application/vnd.google-apps.document"
+                return "doc"
         case .spreadsheet:
-                return "application/vnd.google-apps.spreadsheet"
+                return "spreadsheet"
         case .presentation:
-                return "application/vnd.google-apps.presentation"
+                return "presentation"
         case .audiofile:
-                return "application/vnd.google-apps.audio"
+                return "audiofile"
         case .other:
-                return "application/vnd.google-apps.unknown"
+                return "otherZ"
         }
     }
 }

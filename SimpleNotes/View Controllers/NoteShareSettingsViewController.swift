@@ -64,20 +64,24 @@ class NoteShareSettingsViewController: UITableViewController {
             }
             
         } else if indexPath.section == 1 {
-            switch sharingLocation {
-                case .dropbox:
-                    google.signIn(vc: self)
-            case .googledrive:
+
+            if google.isSignedIn == false && sharingLocation == .googledrive {
+                google.signIn(vc: self)
+            } else if  dropbox.isSignedIn == false && sharingLocation == .dropbox {
                 dropbox.signIn(vc: self)
-            default:
-                return
-            }
-            
-            if google.isSignedIn == true || dropbox.isSignedIn == true {
+            } else if google.isSignedIn == true && sharingLocation == .googledrive {
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "folderLocationsVC") as! FolderLocationViewController
-                let navController = UINavigationController(rootViewController: vc)
-                vc.currentfolder = "Root"
-                vc.location = sharingLocation
+                       let navController = UINavigationController(rootViewController: vc)
+                       vc.currentfolder = ""
+                vc.location = .googledrive
+                
+                self.navigationController?.present(navController, animated: true, completion: nil)
+            } else if dropbox.isSignedIn == true && sharingLocation == .dropbox {
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "folderLocationsVC") as! FolderLocationViewController
+                       let navController = UINavigationController(rootViewController: vc)
+                       vc.currentfolder = "root"
+                vc.location = .dropbox
+                
                 self.navigationController?.present(navController, animated: true, completion: nil)
             }
         }

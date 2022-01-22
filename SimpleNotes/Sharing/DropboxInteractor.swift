@@ -9,21 +9,23 @@ import UIKit
 import SwiftyDropbox
 
 class DropboxInteractor: APIInteractor {
-   
-    func fetchFiles(folderID: String?, onCompleted: @escaping ([AnyObject]?, Error?) -> ()) {
+    
+    func getFileType(type: String) -> String {
+        return "DDD"
+    }
+    var filesInFolder = [CloudServiceFiles]()
+    
+    func fetchFiles(folderID: String?, onCompleted: @escaping ([CloudServiceFiles]?, Error?) -> ()) {
         if let client = DropboxClientsManager.authorizedClient {
             client.files.listFolder(path: folderID!).response { response, error in
                         if let result = response {
-                            print("Folder contents:")
-                            for entry in result.entries {
-                                client.files.getMetadata(path: (entry.pathLower)!).response { response, error in
-                                    if let metadata = response {
-                                        if let folder = metadata as? Files.FolderMetadata {
-                                            print(folder.name)
-                                        }
-                                    }
-                                }
+
+                            for file in result.entries {
+                                self.filesInFolder.append(CloudServiceFiles(name: file.name, type: file.description, folderID: "DDD"))
                             }
+                            
+                            onCompleted(self.filesInFolder, nil)
+                            
                         } else {
                             print(error!)
                         }

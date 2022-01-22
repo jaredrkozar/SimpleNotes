@@ -15,5 +15,7 @@ protocol APIInteractor {
     
     func signOut()
     
-    func fetchFiles(folderID: String?, onCompleted: @escaping ([AnyObject]?, Error?) -> ())
+    func fetchFiles(folderID: String?, onCompleted: @escaping ([CloudServiceFiles]?, Error?) -> ())
+    
+    func getFileType(type: String) -> String
 }
