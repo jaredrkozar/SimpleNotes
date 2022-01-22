@@ -53,7 +53,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         GIDSignIn.sharedInstance().signOut()
     }
     
-    func fetchFolders(folderID: String?, onCompleted: @escaping ([GTLRDrive_File]?, Error?) -> ()) {
+    func fetchFiles(folderID: String?, onCompleted: @escaping ([AnyObject]?, Error?) -> ()) {
         let currentFolder = folderID ?? "root"
          let query = GTLRDriveQuery_FilesList.query()
          query.pageSize = 100

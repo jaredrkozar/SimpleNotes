@@ -14,4 +14,6 @@ protocol APIInteractor {
     var isSignedIn: Bool { get }
     
     func signOut()
+    
+    func fetchFiles(folderID: String?, onCompleted: @escaping ([AnyObject]?, Error?) -> ())
 }

@@ -17,6 +17,7 @@ class NoteShareSettingsViewController: UITableViewController {
     var currentNote: Note?
     
     let google = GoogleInteractor()
+    let dropbox = DropboxInteractor()
     
     var folderID: String?
     
@@ -63,11 +64,20 @@ class NoteShareSettingsViewController: UITableViewController {
             }
             
         } else if indexPath.section == 1 {
-            google.signIn(vc: self)
-            if GIDSignIn.sharedInstance().hasPreviousSignIn() {
+            switch sharingLocation {
+                case .dropbox:
+                    google.signIn(vc: self)
+            case .googledrive:
+                dropbox.signIn(vc: self)
+            default:
+                return
+            }
+            
+            if google.isSignedIn == true || dropbox.isSignedIn == true {
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "folderLocationsVC") as! FolderLocationViewController
                 let navController = UINavigationController(rootViewController: vc)
                 vc.currentfolder = "Root"
+                vc.location = sharingLocation
                 self.navigationController?.present(navController, animated: true, completion: nil)
             }
         }
@@ -93,7 +103,11 @@ class NoteShareSettingsViewController: UITableViewController {
                             google.signIn(vc: self)
                         }
                 case .dropbox:
-                    print("DRopbox")
+                    if dropbox.isSignedIn == true {
+                        print("Signed in to dropbox")
+                    } else {
+                        dropbox.signIn(vc: self)
+                    }
                     default:
                         break
                 }

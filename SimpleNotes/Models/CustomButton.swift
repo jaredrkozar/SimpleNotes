@@ -14,6 +14,7 @@ class CustomButton: UIButton {
             self.layer.cornerCurve = .continuous
             self.layer.cornerRadius = 7.0
         self.layer.backgroundColor = UIColor(named: "AccentColor")?.cgColor
+        self.titleLabel?.textColor = UIColor.white
             self.setTitleColor(.white, for: .normal)
         #endif
     }

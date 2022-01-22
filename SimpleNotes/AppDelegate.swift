@@ -8,6 +8,7 @@
 import UIKit
 import CoreData
 import GoogleSignIn
+import SwiftyDropbox
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -18,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
+        DropboxClientsManager.setupWithAppKey("4plzdchy13fkopr")
         return true
     }
 
@@ -83,10 +85,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     // Open URL
     func application(_ application: UIApplication,
                       open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        print(url.scheme?.lowercased())
          var handled: Bool
 
         handled = GIDSignIn.sharedInstance().handle(url)
-        print("DDKD")
+   
          if handled {
            return true
          }
