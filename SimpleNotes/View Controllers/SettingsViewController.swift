@@ -39,7 +39,7 @@ class SettingsViewController: UITableViewController {
 
     func configure() {
         models.append(Sections(title: "Appearance", settings: [
-            SettingsOptions(title: "Accounts", option: "", icon: UIImage(systemName: "eyedropper.halffull"), iconBGColor: UIColor(named: "Blue")!) {
+            SettingsOptions(title: "Accounts", option: "", icon: UIImage(systemName: "cloud"), iconBGColor: UIColor(named: "Blue")!) {
                
                 let accountSettings = self.storyboard!.instantiateViewController(withIdentifier: "accountSettings") as! AccountSettingsViewController
                 self.show(accountSettings, sender: true)

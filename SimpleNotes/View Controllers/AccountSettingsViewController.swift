@@ -19,30 +19,17 @@ class AccountSettingsViewController: UITableViewController {
         
         title = "Account Settings"
 
-        returnCell(num: 0).logOutButton.setTitle("Lolkkkk", for: .normal)
-        
-        
         tableView.rowHeight = 70
-        
-        print(models[0].settings.count)
-    
-    }
-
-    func returnCell(num: Int) -> TableRowCell {
-        let cell = tableView(tableView, cellForRowAt: NSIndexPath(row: num, section: num) as IndexPath) as! TableRowCell
-        
-        return cell
-        
     }
     
     func configure() {
         models.append(Sections(title: "Advanced", settings: [
-            SettingsOptions(title: "Google Drive", option: "", icon: UIImage(named: "GoogleDrive"), iconBGColor: UIColor(named: "Yellow")!) {
+            SettingsOptions(title: "Google Drive", option: "", icon: UIImage(named: "GoogleDrive"), iconBGColor: UIColor(named: "Blue")!) {
                             
                 GoogleInteractor().signOut()
                 },
                         
-                SettingsOptions(title: "Dropbox", option: "", icon: UIImage(named: "Dropbox"), iconBGColor: UIColor(named: "Blue")!) {
+                SettingsOptions(title: "Dropbox", option: "", icon: UIImage(named: "Dropbox"), iconBGColor: UIColor(named: "LightBlue")!) {
                   
                     DropboxInteractor().signOut()
                     
@@ -80,36 +67,34 @@ class AccountSettingsViewController: UITableViewController {
         cell.icon.tintColor = UIColor.white
         cell.cellIndex = indexPath
         cell.delegate = self
-        
+
         return cell
     }
 }
 
 extension AccountSettingsViewController: TableRowCellDelegate {
-    func buttonTapped(num: Int) {
+    func buttonTapped(cell: TableRowCell, num: Int?) {
             
         switch num {
             case 0:
 
                 if GoogleInteractor().isSignedIn == true {
-                    returnCell(num: 0).logOutButton.setTitle("Log Out", for: .normal)
                     GoogleInteractor().signOut()
-                    tableView.reloadData()
+                    cell.logOutButton.setTitle("Log In", for: .normal)
                 } else {
+
                     GoogleInteractor().signIn(vc: self)
-                    returnCell(num: 0).logOutButton.setTitle("Log In", for: .normal)
-                    tableView.reloadData()
+                    cell.logOutButton.setTitle("Log Out", for: .normal)
+                    
                 }
-            tableView.reloadData()
             case 1:
             if DropboxInteractor().isSignedIn == true {
                 DropboxInteractor().signOut()
-                returnCell(num: 1).logOutButton.setTitle("Log Out", for: .normal)
-                tableView.reloadData()
+                cell.logOutButton.setTitle("Log In", for: .normal)
+        
                 } else {
                     DropboxInteractor().signIn(vc: self)
-                    returnCell(num: 1).logOutButton.setTitle("Log In", for: .normal)
-                    tableView.reloadData()
+                    cell.logOutButton.setTitle("Log Out", for: .normal)
                 }
         default:
             return

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol TableRowCellDelegate: AnyObject {
-    func buttonTapped(num: Int)
+    func buttonTapped(cell: TableRowCell, num: Int?)
 }
 
 class TableRowCell: UITableViewCell {
@@ -25,6 +25,7 @@ class TableRowCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -35,6 +36,6 @@ class TableRowCell: UITableViewCell {
     
     @IBAction func buttonTapped(_ sender: UIButton) {
         
-        delegate?.buttonTapped(num: cellIndex!.row)
+        delegate?.buttonTapped(cell: self, num: cellIndex!.row)
     }
 }
