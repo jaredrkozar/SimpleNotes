@@ -16,10 +16,15 @@ class DropboxInteractor: APIInteractor {
         if let client = DropboxClientsManager.authorizedClient {
             client.files.listFolder(path: folderID!).response { response, error in
                         if let result = response {
-                            
+                    
                             for file in result.entries {
-                                print((file.name as NSString).pathExtension)
-                                self.filesInFolder.append(CloudServiceFiles(name: file.name, type: file.description, folderID: self.getFileType(type: file.name)))
+                                var isFolder: Bool = true
+                                
+                                if file is Files.FileMetadata {
+                                    isFolder = false
+                                }
+                                
+                                self.filesInFolder.append(CloudServiceFiles(name: file.name, type: isFolder ? "folder" : self.getFileType(type: file.name), folderID: ""))
                             }
                             
                             onCompleted(self.filesInFolder, nil)
@@ -57,8 +62,9 @@ class DropboxInteractor: APIInteractor {
     
     func getFileType(type: String) -> String {
         var fileType = ""
+        
         let type = (type as NSString).pathExtension
-        print(type)
+
         switch type {
             case "txt", "md", "html":
                 fileType = "document"
@@ -70,11 +76,9 @@ class DropboxInteractor: APIInteractor {
                 fileType = "presentation"
             case "mp3", "m4a", "flac", "mp4", "wav":
                 fileType = "audiofile"
-            
             default:
                 fileType = "other"
         }
         return fileType
     }
-
 }
