@@ -33,6 +33,9 @@
 		7F53DAA6279BA51B006789F6 /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */; };
 		7F53DAA8279BEF62006789F6 /* CloudServiceFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAA7279BEF62006789F6 /* CloudServiceFiles.swift */; };
 		7F53DAAA279CC36C006789F6 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAA9279CC36C006789F6 /* AlertController.swift */; };
+		7F53DAAC279D4B09006789F6 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAAB279D4B09006789F6 /* TabBarController.swift */; };
+		7F53DAAE279D4B75006789F6 /* TagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAAD279D4B75006789F6 /* TagsTableViewController.swift */; };
+		7F53DAB0279D4CAD006789F6 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAAF279D4CAD006789F6 /* SidebarViewController.swift */; };
 		7F835921277AD75C007428A8 /* Note+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F83591D277AD75C007428A8 /* Note+CoreDataClass.swift */; };
 		7F835922277AD75C007428A8 /* Note+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F83591E277AD75C007428A8 /* Note+CoreDataProperties.swift */; };
 		7F835923277AD75C007428A8 /* AllTags+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F83591F277AD75C007428A8 /* AllTags+CoreDataClass.swift */; };
@@ -107,6 +110,9 @@
 		7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		7F53DAA7279BEF62006789F6 /* CloudServiceFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudServiceFiles.swift; sourceTree = "<group>"; };
 		7F53DAA9279CC36C006789F6 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
+		7F53DAAB279D4B09006789F6 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		7F53DAAD279D4B75006789F6 /* TagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsTableViewController.swift; sourceTree = "<group>"; };
+		7F53DAAF279D4CAD006789F6 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		7F83591D277AD75C007428A8 /* Note+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		7F83591E277AD75C007428A8 /* Note+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		7F83591F277AD75C007428A8 /* AllTags+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AllTags+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -247,6 +253,9 @@
 			isa = PBXGroup;
 			children = (
 				7F498AA9276FC22100202413 /* NoteViewController.swift */,
+				7F53DAAB279D4B09006789F6 /* TabBarController.swift */,
+				7F53DAAD279D4B75006789F6 /* TagsTableViewController.swift */,
+				7F53DAAF279D4CAD006789F6 /* SidebarViewController.swift */,
 				7F376625278E220D00A107FF /* SettingsViewController.swift */,
 				7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */,
 				7FEBEC72276135DA0066F0C0 /* ViewController.swift */,
@@ -641,9 +650,12 @@
 				7F835922277AD75C007428A8 /* Note+CoreDataProperties.swift in Sources */,
 				7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */,
 				7F376626278E220D00A107FF /* SettingsViewController.swift in Sources */,
+				7F53DAAE279D4B75006789F6 /* TagsTableViewController.swift in Sources */,
+				7F53DAAC279D4B09006789F6 /* TabBarController.swift in Sources */,
 				7F37662E278E666100A107FF /* GoogleInteractor.swift in Sources */,
 				7F376613278AC3CD00A107FF /* SendEmail.swift in Sources */,
 				7F37661E278D40F700A107FF /* FolderLocationViewController.swift in Sources */,
+				7F53DAB0279D4CAD006789F6 /* SidebarViewController.swift in Sources */,
 				7FF31CCE2799E04F00923AE3 /* DropboxInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

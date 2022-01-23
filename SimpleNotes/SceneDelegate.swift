@@ -38,8 +38,52 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
+        let modelName: String = {
+            var systemInfo = utsname()
+            uname(&systemInfo)
+            let machineMirror = Mirror(reflecting: systemInfo.machine)
+            let identifier = machineMirror.children.reduce("") { identifier, element in
+                guard let value = element.value as? Int8, value != 0 else { return identifier }
+                return identifier + String(UnicodeScalar(UInt8(value)))
+            }
+            func mapToDevice(identifier: String) -> String {
+                #if os(iOS)
+                switch identifier {
+                default: return identifier
+                }
+                #elseif os(tvOS)
+                switch identifier {
+                default: return identifier
+                }
+                #endif
+            }
+            return mapToDevice(identifier: identifier)
+        }()
+
+        if modelName.contains("iPad") {
+            currentDevice = .ipad
+        } else if modelName.contains("iPhone") {
+            currentDevice = .iphone
+        } else {
+            currentDevice = .mac
+        }
         
-        guard let _ = (scene as? UIWindowScene) else { return }
+        if let windowScene = scene as? UIWindowScene {
+            let window = UIWindow(windowScene: windowScene)
+            let splitViewController = UISplitViewController(style: .tripleColumn)
+            splitViewController.preferredDisplayMode = .twoOverSecondary
+            splitViewController.presentsWithGesture = true
+            splitViewController.preferredSplitBehavior = .tile
+
+            splitViewController.setViewController(SidebarViewController(), for: .primary)
+            splitViewController.setViewController(TabBarController(), for: .compact)
+            
+            splitViewController.primaryBackgroundStyle = .sidebar
+            window.rootViewController = splitViewController
+            self.window = window
+            window.makeKeyAndVisible()
+            
+        }
         
     }
 

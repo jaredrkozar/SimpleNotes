@@ -9,6 +9,13 @@ import UIKit
 
 var notes: [Note] = []
 var tags: [AllTags] = []
+public var currentDevice: Device?
+
+public enum Device {
+    case iphone
+    case ipad
+    case mac
+}
 
 public enum SharingType {
     case pdf

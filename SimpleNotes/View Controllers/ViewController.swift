@@ -55,10 +55,20 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newNoteVC") as! NoteViewController
+        
         vc.isEditingNote = true
         vc.currentNote = dataSource.listofnotes[indexPath.row]
         
-        self.navigationController?.pushViewController(vc, animated: true)
+        switch currentDevice {
+            case .ipad:
+                splitViewController?.setViewController(vc, for: .secondary)
+        case .iphone:
+                self.navigationController?.pushViewController(vc, animated: true)
+        case .mac:
+            return
+        case .none:
+            return
+        }
     }
     
     override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
