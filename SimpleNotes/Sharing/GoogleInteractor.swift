@@ -37,9 +37,9 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         
         if(isSignedIn == true) {
             GIDSignIn.sharedInstance().restorePreviousSignIn()
+    
             driveService.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
             driveService.apiKey = "AIzaSyBz0NAnojMb8LOmWUlEIHWTHvljk4Yboaw"
-            print("restorex")
         } else {
             GIDSignIn.sharedInstance().signIn()
 
@@ -66,6 +66,10 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         
         driveService.executeQuery(query, completionHandler: { [self](ticket, files, error) in
 
+            if error != nil {
+                CustomAlert.showAlert(title: "An error occured while fetching the files", message:  error?.localizedDescription)
+            }
+            
              if let filesList : GTLRDrive_FileList = files as? GTLRDrive_FileList {
 
                  if let listOfFiles : [GTLRDrive_File] = filesList.files {
@@ -92,7 +96,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
        self.driveService.executeQuery(upload, completionHandler:  { (response, result, error) in
       
            guard error == nil else {
-               print(error!.localizedDescription)
+               CustomAlert.showAlert(title: "An error occured while fetching the files", message:  error?.localizedDescription)
                return
            }}
        )

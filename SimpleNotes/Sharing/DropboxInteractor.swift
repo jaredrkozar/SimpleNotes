@@ -9,12 +9,13 @@ import UIKit
 import SwiftyDropbox
 
 class DropboxInteractor: APIInteractor {
-
+    
     var filesInFolder = [CloudServiceFiles]()
     let client = DropboxClientsManager.authorizedClient
-    
+
     func fetchFiles(folderID: String?, onCompleted: @escaping ([CloudServiceFiles]?, Error?) -> ()) {
-        client!.files.listFolder(path: folderID!).response { response, error in
+        
+        client!.files.listFolder(path: folderID ?? "").response { [self] response, error in
             if let result = response {
         
                 for file in result.entries {
@@ -23,14 +24,15 @@ class DropboxInteractor: APIInteractor {
                     if file is Files.FileMetadata {
                         isFolder = false
                     }
-                    
+                
                     self.filesInFolder.append(CloudServiceFiles(name: file.name, type: isFolder ? "folder" : self.getFileType(type: file.name), folderID: file.pathLower!))
                 }
                 
                 onCompleted(self.filesInFolder, nil)
                 
             } else {
-                print(error!)
+                
+                CustomAlert.showAlert(title: "An error occured while fetching the files", message:  error?.description)
             }
         }
 
@@ -64,13 +66,14 @@ class DropboxInteractor: APIInteractor {
     func uploadFile(note: Data, noteName: String, folderID: String?) {
 
         let newPath = folderID! + "/\(noteName).pdf"
-        print(newPath)
         client?.files.upload(path: newPath, mode: .add, autorename: true, clientModified: nil, mute: false, input: note).response{ response, error in
                 if let _ = response { // to enable use: if let metadata = response {
-                    print("OK")
+                    
+                    CustomAlert.showAlert(title: "Successfully uploaded note", message:  "The note was successfully uploaded to Dropbox")
                 } else {
-                    print("Error at end")
-                    print(error)
+                    
+                    CustomAlert.showAlert(title: "An error occured while uploading the note", message:  error?.description)
+                    
                 }
             }
     }
