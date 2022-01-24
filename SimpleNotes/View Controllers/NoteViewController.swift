@@ -82,10 +82,25 @@ class NoteViewController: UIViewController {
     
     @objc func editTagsButtonTapped(_ sender: Any) {
         
+        
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
         let navController = UINavigationController(rootViewController: vc)
         vc.newNoteVC = noteTagsField
-        self.navigationController?.present(navController, animated: true, completion: nil)
+        
+        switch currentDevice {
+        case .iphone:
+            present(navController, animated: true, completion: nil)
+        case .ipad:
+            navController.modalPresentationStyle = UIModalPresentationStyle.popover
+            navController.preferredContentSize = CGSize(width: 375, height: 300)
+            navController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
+            present(navController, animated: true, completion: nil)
+        case .mac:
+            return
+        
+        case .none:
+            return
+        }
     }
     
     func shareButtonTapped() -> UIMenu {
@@ -98,11 +113,25 @@ class NoteViewController: UIViewController {
         for location in SharingLocation.allCases {
             locations.append( UIAction(title: "\(location.viewTitle)", image: location.icon, identifier: nil, attributes: []) { _ in
 
-                if let picker = navigationController.presentationController as? UISheetPresentationController {
-                   picker.detents = [.medium()]
-                   picker.prefersGrabberVisible = true
-                   picker.preferredCornerRadius = 7.0
+                switch currentDevice {
+                case .iphone:
+                    if let picker = navigationController.presentationController as? UISheetPresentationController {
+                       picker.detents = [.medium()]
+                       picker.prefersGrabberVisible = true
+                       picker.preferredCornerRadius = 7.0
+                    }
+                case .ipad:
+                    navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
+                  navigationController.preferredContentSize = CGSize(width: 375, height: 300)
+                    navigationController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
+                    
+                case .mac:
+                    return
+                
+                case .none:
+                    return
                 }
+                
                 
                 vc.currentNote = self.currentNote
                 vc.sharingLocation = location

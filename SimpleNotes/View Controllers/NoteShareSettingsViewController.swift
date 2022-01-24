@@ -21,11 +21,6 @@ class NoteShareSettingsViewController: UITableViewController {
     
     var folderID: String?
     
-    override func viewDidLoad() {
-        NotificationCenter.default.addObserver(self, selector: #selector(showAlert(_:)), name: NSNotification.Name( "fileUploaded"), object: nil)
-
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         // Do any additional setup after loading the view.
         sendNoteButton.setTitle(sharingLocation?.buttonMessage, for: .normal)
@@ -154,10 +149,8 @@ class NoteShareSettingsViewController: UITableViewController {
         }
         return shouldHideSection
     }
-
-    @objc func showAlert(_ notification: Notification) {
-        let alert = UIAlertController(title: "Note uploaded successfully", message: "The note was uploaded successully", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return .leastNormalMagnitude
     }
 }

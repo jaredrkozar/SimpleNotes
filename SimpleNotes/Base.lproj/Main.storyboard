@@ -407,11 +407,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="D1F-HL-PlJ">
-                            <rect key="frame" x="0.0" y="257.5" width="414" height="134"/>
+                            <rect key="frame" x="0.0" y="257.5" width="414" height="90"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vhy-pB-UWv" customClass="CustomButton" customModule="SimpleNotes" customModuleProvider="target">
-                                    <rect key="frame" x="8" y="63" width="398" height="62"/>
+                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vhy-pB-UWv" customClass="CustomButton" customModule="SimpleNotes" customModuleProvider="target">
+                                    <rect key="frame" x="8" y="7" width="398" height="62"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="62" id="Ebb-vh-FIc"/>
                                     </constraints>
