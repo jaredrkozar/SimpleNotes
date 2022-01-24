@@ -132,8 +132,8 @@ extension SidebarViewController {
                 var headerItem = Item(title: section.rawValue, image: nil)
                 var sectionSnapshot = NSDiffableDataSourceSectionSnapshot<Item>()
                 sectionSnapshot.append([headerItem])
-                
-                tags.flatMap({ tag in
+               
+                tags.compactMap({ tag in
                     tagsItems.append(Item(title: tag.name, image: tag.symbol!.toImage()))
                 })
                         

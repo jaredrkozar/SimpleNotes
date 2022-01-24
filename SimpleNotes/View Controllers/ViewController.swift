@@ -13,7 +13,6 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
         fetchNotes()
         tableView.dataSource = dataSource
         dataSource.listofnotes = notes

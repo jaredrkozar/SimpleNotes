@@ -72,11 +72,10 @@ class EditTagsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        newNoteVC.addTag(tags[indexPath.row].name!)
-    }
-
-    
-    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        newNoteVC.removeTag(tags[indexPath.row].name!)
+        if newNoteVC.tags.map({$0.text}).contains(tags[indexPath.row].name) {
+            newNoteVC.removeTag(tags[indexPath.row].name!)
+        } else {
+            newNoteVC.addTag(tags[indexPath.row].name!)
+        }
     }
 }
