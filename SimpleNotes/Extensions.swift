@@ -9,6 +9,8 @@ import UIKit
 
 var notes: [Note] = []
 var tags: [AllTags] = []
+var currentTag: String?
+
 public var currentDevice: Device?
 
 public enum Device {

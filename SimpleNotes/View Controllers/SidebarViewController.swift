@@ -10,7 +10,7 @@ import UIKit
 class SidebarViewController: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>! = nil
     private var collectionView: UICollectionView! = nil
-    private var supplementaryViewControllers = [UINavigationController(rootViewController: ViewController()), UINavigationController(rootViewController: NoteViewController())
+    private var supplementaryViewControllers = [UINavigationController(rootViewController: ViewController())
     
     ]
 
@@ -48,7 +48,7 @@ extension SidebarViewController {
     
     private func createLayout() -> UICollectionViewLayout {
         return UICollectionViewCompositionalLayout { section, layoutEnvironment in
-            var config = UICollectionLayoutListConfiguration(appearance: .sidebar)
+            var config = UICollectionLayoutListConfiguration(appearance: .sidebarPlain)
             
 
             config.headerMode = section == 0 ? .none : .firstItemInSection
@@ -152,11 +152,20 @@ extension SidebarViewController {
 extension SidebarViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard indexPath.section == 0 else { return }
-    
-        splitViewController?.setViewController(supplementaryViewControllers[indexPath.row], for: .supplementary)
         
-        view.window?.windowScene?.title = tabsItems[indexPath.row].title
+        print("DDDD")
+        
+        if indexPath.section == 1 {
+
+            let tag = tagsItems[indexPath.row - 1]
+            currentTag = "DDDDDDLLDLDLD"
+            view.window?.windowScene?.title = "Filtering by \(String(describing: tag.title))"
+        } else {
+            view.window?.windowScene?.title = "All Notes"
+            currentTag = "folder"
+        }
+        
+        splitViewController?.setViewController(supplementaryViewControllers[0], for: .supplementary)
     }
 
 }

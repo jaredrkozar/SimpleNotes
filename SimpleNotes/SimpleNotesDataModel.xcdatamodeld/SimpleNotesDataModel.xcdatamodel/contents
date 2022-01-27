@@ -6,12 +6,17 @@
     </entity>
     <entity name="Note" representedClassName="Note" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="tags" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
         <attribute name="text" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tags" inverseName="notes" inverseEntity="Tags"/>
+    </entity>
+    <entity name="Tags" representedClassName="Tags" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="notes" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="tags" inverseEntity="Note"/>
     </entity>
     <elements>
         <element name="AllTags" positionX="-143.2405395507812" positionY="-105.2455444335938" width="128" height="59"/>
-        <element name="Note" positionX="-45" positionY="18" width="128" height="103"/>
+        <element name="Note" positionX="-45" positionY="18" width="128" height="89"/>
+        <element name="Tags" positionX="-90" positionY="-18" width="128" height="59"/>
     </elements>
 </model>

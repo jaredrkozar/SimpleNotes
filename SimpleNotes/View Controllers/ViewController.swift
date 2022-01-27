@@ -13,7 +13,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        fetchNotes()
+        fetchNotes(tag: nil)
         tableView.dataSource = dataSource
         dataSource.listofnotes = notes
         
@@ -31,11 +31,6 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
 
         self.navigationItem.rightBarButtonItems = [addNote, settings]
         
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.tableView.reloadData()
     }
     
     @objc func addNote(sender: UIBarButtonItem) {

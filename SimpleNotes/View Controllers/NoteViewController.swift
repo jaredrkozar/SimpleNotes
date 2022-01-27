@@ -27,7 +27,7 @@ class NoteViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-
+        
         noteTitleField.backgroundColor = UIColor.systemGray5
         noteTitleField.layer.cornerRadius = 6.0
         noteTitleField.text = currentNote?.title ?? ""
@@ -39,8 +39,9 @@ class NoteViewController: UIViewController {
         noteTagsField.cornerRadius = 6.0
         noteTagsField.spaceBetweenTags = 3.0
         noteTagsField.numberOfLines = 2
-        noteTagsField.addTags(currentNote?.tags ?? [])
+        
         noteTagsField.readOnly = true
+        noteTagsField.addTags((currentNote?.tags?.map({"\(String(describing: $0.name!))"})) ?? [String]())
         
         noteDateField.date = currentNote?.date ?? Date.now
   
