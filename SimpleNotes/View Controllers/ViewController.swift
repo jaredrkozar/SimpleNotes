@@ -99,12 +99,9 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                     self.dataSource.listofnotes.remove(at: indexPath.row)
                     
                     self.tableView.reloadData()
-                    
-                
             }
             
             return UIMenu(title: "", children: [editAction, deleteAction])
         }
     }
-    
 }

@@ -13,10 +13,14 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet var tagNameField: UITextField!
     @IBOutlet var symbolImage: UIImageView!
     @IBOutlet var detailsView: UICollectionView!
-    var image: UIImage?
-    var color: UIColor?
+    var image: String?
+    var color: String?
+    var name: String?
     
-    let details = [["Red", "Green", "AccentColor", "Yellow", "Orange"], ["folder", "tray", "externaldrive", "doc", "doc.plaintext", "note.text", "book", "book.closed", "ticket", "link", "person", "person.crop.circle", "person.crop.square", "sun.max", "moon", "umbrella", "thermometer", "cloud.moon", "mic", "loupe", "magnifyingglass", "square", "circle", "eye", "tshirt", "eyeglasses", "facemask", "message", "bubble.right", "quote.bubble", "star.bubble", "exclamation.bubble", "plus.bubble", "checkmark.bubble"]]
+    var imageIndex: Int?
+    var colorIndex: Int?
+    
+    let details = [["Red", "Green", "AccentColor", "Yellow", "Orange"], ["folder", "tray", "externaldrive", "doc", "doc.plaintext", "note.text", "book", "book.closed", "ticket", "link", "person", "person.crop.circle", "person.crop.square", "sun.max", "moon", "umbrella", "thermometer", "cloud.moon", "mic", "loupe", "magnifyingglass", "square", "circle", "eye", "tshirt", "eyeglasses", "facemask", "message", "bubble.right", "quote.bubble", "star.bubble", "exclamationmark.bubble", "plus.bubble", "checkmark.bubble"]]
       
     
     override func viewDidLoad() {
@@ -38,7 +42,8 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         self.navigationItem.leftBarButtonItems = [cancelButton]
         
-        symbolImage.image = UIImage(systemName: details[1][0], withConfiguration: detailIcons)
+        tagNameField.text = name
+        symbolImage.image = (image ?? "folder").sendBackSymbol(color: color ?? "AccentColor")
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -55,7 +60,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         if indexPath.section == 0 {
             cell.detailImageView.backgroundColor = UIColor(named: details[0][indexPath.item])
         } else {
-            cell.detailImageView.image = UIImage(systemName: details[1][indexPath.item], withConfiguration: detailIcons)?.withTintColor(UIColor(named: "Gray")!, renderingMode: .alwaysOriginal)
+            cell.detailImageView.image = details[1][indexPath.item].sendBackSymbol(color: "Gray")
         }
            
         return cell
@@ -63,13 +68,14 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            
-            color = UIColor(named: details[indexPath.section][indexPath.item])!
+            colorIndex = indexPath.item
+            color = details[indexPath.section][indexPath.item]
         } else {
-            image = UIImage(systemName: details[1][indexPath.item], withConfiguration: detailIcons)!
+            imageIndex = indexPath.item
+            image = details[1][indexPath.item]
         }
         
-        setImageAndColor(image: (image ?? UIImage(systemName: details[1][0]))!, color: (color ?? UIColor(named: "AccentColor"))!)
+        setImageAndColor(image: image ?? "folder", color: color ?? "AccentColor")
     }
 
     @objc func cancelButtonTapped(sender: UIBarButtonItem) {
@@ -77,13 +83,15 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     @objc func doneButtonTapped(sender: UIBarButtonItem) {
-  
-        saveTag(name: tagNameField.text!, symbol: (symbolImage.image?.convertToData())!)
+        print(details[0][colorIndex ?? 2])
+        print(details[1][imageIndex ?? 0])
+        
+        saveTag(name: tagNameField.text!, symbol: details[1][imageIndex ?? 0], color: details[0][colorIndex ?? 2])
         
         dismiss(animated: true, completion: nil)
     }
     
-    func setImageAndColor(image: UIImage, color: UIColor) {
-        symbolImage.image = image.withTintColor(color, renderingMode: .alwaysOriginal)
+    func setImageAndColor(image: String, color: String) {
+        symbolImage.image = UIImage(systemName: image)!.withTintColor(UIColor(named: color)!, renderingMode: .alwaysOriginal)
     }
 }

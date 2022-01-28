@@ -54,7 +54,7 @@ class EditTagsTableViewController: UITableViewController {
         
         let tag = tags[indexPath.row]
         
-        cell.tagImage.image = tag.symbol?.toImage()
+        cell.tagImage.image = UIImage(systemName: tag.symbol!)?.withTintColor(UIColor(named: tag.color!)!, renderingMode: .alwaysOriginal)
         
         cell.tagName.text = tag.name
         
@@ -78,4 +78,39 @@ class EditTagsTableViewController: UITableViewController {
             newNoteVC.addTag(tags[indexPath.row].name!)
         }
     }
+    
+    override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            let editAction = UIAction(
+              title: "Edit Tag", image: UIImage(systemName: "tag")) { [self] _ in
+                //gets the current dimension and splits it up into 2 parts, and saves them so they can be shown in the text fields in editPresetViewController. The editPresetViewController is then shown via a popover
+                
+                  let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newTagVC") as! NewTagViewController
+                  let navController = UINavigationController(rootViewController: vc)
+                  vc.name = tags[indexPath.row].name
+                  vc.color = tags[indexPath.row].color
+                  vc.image = tags[indexPath.row].symbol
+                  
+                  self.navigationController?.present(navController, animated: true, completion: nil)
+                
+            }
+            
+            let deleteAction = UIAction(
+                //deletes the current cell
+              title: "Delete",
+              image: UIImage(systemName: "trash"),
+                attributes: .destructive) { [self] _ in
+                    
+                    deleteTag(tag: tags[indexPath.row])
+                    
+                    tags.remove(at: indexPath.row)
+                    
+                    self.tableView.reloadData()
+            }
+            
+            return UIMenu(title: "", children: [editAction, deleteAction])
+        }
+    }
+    
+    
 }

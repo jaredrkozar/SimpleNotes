@@ -24,19 +24,9 @@ public enum SharingType {
     case plainText
 }
 
-extension UIImage {
-    func convertToData() -> String {
-        let imageData = self.pngData()
-        let imageStr = imageData?.base64EncodedString(options: .lineLength64Characters) ?? ""
-        return imageStr
-    }
-}
-
 extension String {
-    func toImage() -> UIImage? {
-        if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters){
-            return UIImage(data: data)
-        }
-        return nil
+    func sendBackSymbol(color: String) -> UIImage {
+        print(self)
+        return UIImage(systemName: self)!.withTintColor(UIColor(named: color)!, renderingMode: .alwaysOriginal)
     }
 }

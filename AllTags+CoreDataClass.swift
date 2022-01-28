@@ -2,7 +2,7 @@
 //  AllTags+CoreDataClass.swift
 //  SimpleNotes
 //
-//  Created by JaredKozar on 1/24/22.
+//  Created by JaredKozar on 1/28/22.
 //
 //
 

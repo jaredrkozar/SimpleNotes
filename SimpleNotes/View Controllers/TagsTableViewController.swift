@@ -43,7 +43,7 @@ class TagsTableViewController: UITableViewController {
         cell.background.backgroundColor = UIColor.clear
         cell.name.text = tag.name
         
-        cell.icon.image = tag.symbol?.toImage()
+        cell.icon.image = tag.name?.sendBackSymbol(color: tag.color!)
         
         return cell
         

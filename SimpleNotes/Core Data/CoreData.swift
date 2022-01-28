@@ -10,11 +10,12 @@ import CoreData
 
 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
-func saveTag(name: String, symbol: String) {
+func saveTag(name: String, symbol: String, color: String) {
   
     let newTag = AllTags(context: context)
     newTag.symbol = symbol
     newTag.name = name
+    newTag.color = color
     do {
         try context.save()
     } catch {
@@ -73,6 +74,16 @@ func fetchNotes(tag: String?) {
 
 func deleteNote(note: Note) {
     context.delete(note)
+    do {
+        try context.save()
+    } catch {
+        print("An error occured")
+    }
+}
+
+func deleteTag(tag: AllTags) {
+    context.delete(tag)
+    
     do {
         try context.save()
     } catch {
