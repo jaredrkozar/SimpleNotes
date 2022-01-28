@@ -10,12 +10,20 @@ import UIKit
 class ViewController: UITableViewController, UINavigationControllerDelegate {
     
     var dataSource = ReusableTableView()
+    
+    @objc func updateTag(_ notification: Notification) {
+           //updates table view if tag is selected
+        fetchNotes(tag: currentTag ?? nil)
+        tableView.dataSource = dataSource
+        dataSource.listofnotes = notes
+        tableView.reloadData()
+       }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        fetchNotes(tag: nil)
-        tableView.dataSource = dataSource
-        dataSource.listofnotes = notes
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTag(_:)), name: NSNotification.Name( "updateTag"), object: nil)
         
         let nib = UINib(nibName: "NoteTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "NoteTableViewCell")

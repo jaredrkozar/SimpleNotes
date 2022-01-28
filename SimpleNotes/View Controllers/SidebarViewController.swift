@@ -9,11 +9,11 @@ import UIKit
 
 class SidebarViewController: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>! = nil
-    private var collectionView: UICollectionView! = nil
-    private var supplementaryViewControllers = [UINavigationController(rootViewController: ViewController())
     
-    ]
-
+    private var viewcontroller: ViewController?
+    
+    private var collectionView: UICollectionView! = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "VisionText"
@@ -23,18 +23,9 @@ class SidebarViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(configureDataSource(_:)), name: NSNotification.Name( "configureDataSource"), object: nil)
         NotificationCenter.default.post(name: Notification.Name( "configureDataSource"), object: nil)
-        
-        setInitialSecondaryView()
 
     }
     
-    private func setInitialSecondaryView() {
-        collectionView.selectItem(at: IndexPath(row: 0, section: 0),
-                                  animated: false,
-                                  scrollPosition: UICollectionView.ScrollPosition.centeredVertically)
-        splitViewController?.setViewController(supplementaryViewControllers[0], for: .supplementary)
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         #if targetEnvironment(macCatalyst)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -48,7 +39,7 @@ extension SidebarViewController {
     
     private func createLayout() -> UICollectionViewLayout {
         return UICollectionViewCompositionalLayout { section, layoutEnvironment in
-            var config = UICollectionLayoutListConfiguration(appearance: .sidebarPlain)
+            var config = UICollectionLayoutListConfiguration(appearance: .sidebar)
             
 
             config.headerMode = section == 0 ? .none : .firstItemInSection
@@ -136,7 +127,7 @@ extension SidebarViewController {
                 tags.compactMap({ tag in
                     tagsItems.append(Item(title: tag.name, image: tag.symbol!.toImage()))
                 })
-                        
+       
                 sectionSnapshot.append(tagsItems, to: headerItem)
             
             
@@ -152,20 +143,17 @@ extension SidebarViewController {
 extension SidebarViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        print("DDDD")
-        
-        if indexPath.section == 1 {
-
-            let tag = tagsItems[indexPath.row - 1]
-            currentTag = "DDDDDDLLDLDLD"
-            view.window?.windowScene?.title = "Filtering by \(String(describing: tag.title))"
+       
+        if indexPath.section != 0 {
+            print("FILTER")
+            currentTag = tagsItems[indexPath.row - 1].title
+            view.window?.windowScene?.title = "Filtering by \(String(describing: currentTag))"
+            
         } else {
-            view.window?.windowScene?.title = "All Notes"
-            currentTag = "folder"
+            currentTag = nil
         }
         
-        splitViewController?.setViewController(supplementaryViewControllers[0], for: .supplementary)
+        NotificationCenter.default.post(name: Notification.Name( "updateTag"), object: nil)
     }
 
 }
@@ -178,8 +166,7 @@ struct Item: Hashable {
     private let identifier = UUID()
 }
 
-var tabsItems = [Item(title: "Notes", image: UIImage(systemName: "square.grid.2x2.fill"))
-                ]
+var tabsItems = [Item(title: "Notes", image: UIImage(systemName: "square.grid.2x2.fill"))]
 
 var tagsItems = [Item]()
 

@@ -59,10 +59,13 @@ func saveNote(currentNote: Note?, title: String, text: String, date: Date, tags:
 func fetchNotes(tag: String?) {
     let request = Note.fetchRequest() as NSFetchRequest<Note>
     
+    if tag != nil {
+        request.predicate = NSPredicate(format:  "tags.name CONTAINS[c] %@", tag!)
+    }
+
     do {
         
         notes = try context.fetch(request)
-        
     } catch {
         print("Fetch failed")
     }

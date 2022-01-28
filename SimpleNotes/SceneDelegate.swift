@@ -76,6 +76,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             splitViewController.preferredSplitBehavior = .tile
 
             splitViewController.setViewController(SidebarViewController(), for: .primary)
+                
+            splitViewController.setViewController(ViewController(), for: .supplementary)
+            
             splitViewController.setViewController(TabBarController(), for: .compact)
             
             splitViewController.primaryBackgroundStyle = .sidebar
