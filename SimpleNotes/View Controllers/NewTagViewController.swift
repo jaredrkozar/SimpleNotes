@@ -75,7 +75,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
             image = details[1][indexPath.item]
         }
         
-        setImageAndColor(image: image ?? "folder", color: color ?? "AccentColor")
+        symbolImage.image = (image ?? "folder").sendBackSymbol(color: color ?? "AccentColor")
     }
 
     @objc func cancelButtonTapped(sender: UIBarButtonItem) {
@@ -89,9 +89,5 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         saveTag(name: tagNameField.text!, symbol: details[1][imageIndex ?? 0], color: details[0][colorIndex ?? 2])
         
         dismiss(animated: true, completion: nil)
-    }
-    
-    func setImageAndColor(image: String, color: String) {
-        symbolImage.image = UIImage(systemName: image)!.withTintColor(UIColor(named: color)!, renderingMode: .alwaysOriginal)
     }
 }

@@ -8,12 +8,12 @@
 import UIKit
 import WSTagsField
 
-class NoteViewController: UIViewController {
+class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
 
     @IBOutlet var noteTitleField: UITextField!
     @IBOutlet var noteDateField: UIDatePicker!
-    @IBOutlet var noteTextField: UITextView!
     @IBOutlet var noteTagsField: WSTagsField!
+    @IBOutlet var noteContents: UIView!
     
     var timer: Timer?
     
@@ -23,18 +23,32 @@ class NoteViewController: UIViewController {
     
     var viewDelegate: RefreshDataDelegate?
     
+    var textBoxes = [CustomTextBox]()
+    
+    @objc func tappedScreen(_ sender: UITapGestureRecognizer) {
+        let textbox = newTextBox(point: sender.location(in: self.view), text: "")
+        textbox.becomeFirstResponder()
+        view.addSubview(textbox)
+        textBoxes.append(textbox)
+    }
+    
+    func newTextBox(point: CGPoint, text: String) -> CustomTextBox {
+        let textview = CustomTextBox(frame: CGRect(x: point.x, y: point.y, width: 100, height: 100), textContainer: nil)
+        return textview
+        
+    }
+                                     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedScreen(_:)))
+        noteContents.addGestureRecognizer(tapRecognizer)
+        
         noteTitleField.backgroundColor = UIColor.systemGray5
         noteTitleField.layer.cornerRadius = 6.0
         noteTitleField.text = currentNote?.title ?? ""
-        
-        noteTextField.backgroundColor = UIColor.systemGray5
-        noteTextField.layer.cornerRadius = 6.0
-        noteTextField.text = currentNote?.text ?? ""
         
         noteTagsField.cornerRadius = 6.0
         noteTagsField.spaceBetweenTags = 3.0
@@ -69,7 +83,7 @@ class NoteViewController: UIViewController {
     }
     
     @objc func saveNoteButtonTapped(sender: UIBarButtonItem) {
-        saveNote(currentNote: nil, title: noteTitleField.text!, text: noteTextField.text, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}))
+        saveNote(currentNote: nil, title: noteTitleField.text!, textboxes: textBoxes, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}))
 
         NotificationCenter.default.post(name: Notification.Name("UpdateNotesTable"), object: nil)
         
@@ -77,12 +91,11 @@ class NoteViewController: UIViewController {
     }
 
     @objc func autoSaveNote() {
-        saveNote(currentNote: currentNote, title: noteTitleField.text!, text: noteTextField.text, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}))
+        saveNote(currentNote: currentNote, title: noteTitleField.text!, textboxes: textBoxes, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}))
     }
     
     
     @objc func editTagsButtonTapped(_ sender: Any) {
-        
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
         let navController = UINavigationController(rootViewController: vc)
@@ -133,7 +146,7 @@ class NoteViewController: UIViewController {
                     return
                 }
                 
-                
+                vc.currentNoteView = self.noteContents
                 vc.currentNote = self.currentNote
                 vc.sharingLocation = location
                 

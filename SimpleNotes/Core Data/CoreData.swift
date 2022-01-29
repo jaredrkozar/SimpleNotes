@@ -31,12 +31,11 @@ func fetchTags() {
     }
 }
 
-func saveNote(currentNote: Note?, title: String, text: String, date: Date, tags: [String]) {
+func saveNote(currentNote: Note?, title: String, textboxes: [CustomTextBox], date: Date, tags: [String]) {
    
     let newNote = currentNote ?? Note(context: context)
 
     newNote.title = title
-    newNote.text = text
     newNote.date = date
     
     var tagset = Set<Tags>()
@@ -49,6 +48,17 @@ func saveNote(currentNote: Note?, title: String, text: String, date: Date, tags:
     }
 
     newNote.addToTags(tagset)
+    
+    var textboxes = Set<TextBox>()
+    
+    for textbox in textboxes {
+        let newtextbox = TextBox(context: context)
+        newtextbox.text = textbox.text
+        newtextbox.xCoordinate = textbox.xCoordinate
+        newtextbox.yCoordinate = textbox.yCoordinate
+    }
+
+    newNote.addToTextbox(textboxes)
     
     do {
         try context.save()

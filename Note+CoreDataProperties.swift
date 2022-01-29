@@ -2,7 +2,7 @@
 //  Note+CoreDataProperties.swift
 //  SimpleNotes
 //
-//  Created by JaredKozar on 1/24/22.
+//  Created by JaredKozar on 1/28/22.
 //
 //
 
@@ -17,9 +17,9 @@ extension Note {
     }
 
     @NSManaged public var date: Date?
-    @NSManaged public var text: String?
     @NSManaged public var title: String?
     @NSManaged public var tags: Set<Tags>?
+    @NSManaged public var textbox:  Set<TextBox>?
 
 }
 
@@ -36,7 +36,24 @@ extension Note {
     @NSManaged public func addToTags(_ values: Set<Tags>)
 
     @objc(removeTags:)
-    @NSManaged public func removeFromTags(_ values: NSSet)
+    @NSManaged public func removeFromTags(_ values: Set<Tags>)
+
+}
+
+// MARK: Generated accessors for textbox
+extension Note {
+
+    @objc(addTextboxObject:)
+    @NSManaged public func addToTextbox(_ value: TextBox)
+
+    @objc(removeTextboxObject:)
+    @NSManaged public func removeFromTextbox(_ value: TextBox)
+
+    @objc(addTextbox:)
+    @NSManaged public func addToTextbox(_ values: Set<TextBox>)
+
+    @objc(removeTextbox:)
+    @NSManaged public func removeFromTextbox(_ values: Set<TextBox>)
 
 }
 

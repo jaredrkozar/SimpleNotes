@@ -30,3 +30,17 @@ extension String {
         return UIImage(systemName: self)!.withTintColor(UIColor(named: color)!, renderingMode: .alwaysOriginal)
     }
 }
+
+func createPdfFromView(aView: UIView) -> NSMutableData
+{
+    let pdfData = NSMutableData()
+    UIGraphicsBeginPDFContextToData(pdfData, aView.bounds, nil)
+    UIGraphicsBeginPDFPage()
+
+    let pdfContext = UIGraphicsGetCurrentContext()!
+
+    aView.layer.render(in: pdfContext)
+    UIGraphicsEndPDFContext()
+
+    return pdfData
+}

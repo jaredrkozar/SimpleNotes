@@ -68,25 +68,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             currentDevice = .mac
         }
         
-        if let windowScene = scene as? UIWindowScene {
-            let window = UIWindow(windowScene: windowScene)
-            let splitViewController = UISplitViewController(style: .tripleColumn)
-            splitViewController.preferredDisplayMode = .twoOverSecondary
-            splitViewController.presentsWithGesture = true
-            splitViewController.preferredSplitBehavior = .tile
-
-            splitViewController.setViewController(SidebarViewController(), for: .primary)
-                
-            splitViewController.setViewController(ViewController(), for: .supplementary)
-            
-            splitViewController.setViewController(TabBarController(), for: .compact)
-            
-            splitViewController.primaryBackgroundStyle = .sidebar
-            window.rootViewController = splitViewController
-            self.window = window
-            window.makeKeyAndVisible()
-            
-        }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
         
     }
 

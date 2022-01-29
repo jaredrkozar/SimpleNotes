@@ -25,7 +25,6 @@ class ReusableTableView: NSObject, UITableViewDataSource, UITableViewDelegate {
 
         cell.noteTitle.text = singlenote.title
 
-        cell.noteText.text = singlenote.text
         cell.noteDate.text = singlenote.date!.formatted()
         
         cell.noteTags.addTags((singlenote.tags?.map({"\(String(describing: $0.name!))"})) ?? [])

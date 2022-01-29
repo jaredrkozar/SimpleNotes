@@ -15,6 +15,7 @@ class NoteShareSettingsViewController: UITableViewController {
     var sharingLocation: SharingLocation?
     var format: SharingType?
     var currentNote: Note?
+    var currentNoteView: UIView!
     
     let google = GoogleInteractor()
     let dropbox = DropboxInteractor()
@@ -84,43 +85,27 @@ class NoteShareSettingsViewController: UITableViewController {
     }
     
     @IBAction func didTapExportButton(_ sender: Any) {
-        switch format {
-            case .pdf:
-                switch sharingLocation {
-                    case .email:
-                    sendEmail(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: PDFCreator().createPDF(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: "Created on \(currentNote!.date?.formatted() ?? Date.now.formatted())"))
-                    case .messages:
-                    sendText(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: PDFCreator().createPDF(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: "Created on \(currentNote!.date?.formatted() ?? Date.now.formatted())"))
-                    case .otherapps:
-                    
-                    sendToOtherApps(data: [PDFCreator().createPDF(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: "Created on \(currentNote!.date?.formatted() ?? Date.now.formatted())"), currentNote?.title!])
-                    case .googledrive:
-                    if google.isSignedIn {
-                            google.signIn(vc: self)
-                            google.uploadFile(note: PDFCreator().createPDF(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: "Created on \(currentNote!.date?.formatted() ?? Date.now.formatted())"), noteName: (currentNote?.title)!, folderID: folderID ?? nil)
-                        } else {
-                            google.signIn(vc: self)
-                        }
-                case .dropbox:
-                    if dropbox.isSignedIn == true {
-                        dropbox.uploadFile(note: PDFCreator().createPDF(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: "Created on \(currentNote!.date?.formatted() ?? Date.now.formatted())"), noteName: (currentNote?.title)!, folderID: folderID ?? "/")
-                    } else {
-                        dropbox.signIn(vc: self)
-                    }
-                    default:
-                        break
+        switch sharingLocation {
+            case .email:
+            sendEmail(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: createPdfFromView(aView: currentNoteView) as Data)
+            case .messages:
+            sendText(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: createPdfFromView(aView: currentNoteView) as Data)
+            case .otherapps:
+            
+            sendToOtherApps(data: [createPdfFromView(aView: self.view), currentNote?.title!])
+            case .googledrive:
+            if google.isSignedIn {
+                    google.signIn(vc: self)
+                google.uploadFile(note: createPdfFromView(aView: currentNoteView) as Data, noteName: (currentNote?.title)!, folderID: folderID ?? nil)
+                } else {
+                    google.signIn(vc: self)
                 }
-            case .plainText:
-                switch sharingLocation {
-                    case .email:
-                    sendEmail(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: currentNote?.date?.formatted(), notePDF: nil)
-                    case .messages:
-                    sendText(noteTitle: (currentNote?.title)!, noteText: currentNote?.text, noteDate: currentNote?.date?.formatted(), notePDF: nil)
-                    case .otherapps:
-                    sendToOtherApps(data: ["Title \(String(describing: currentNote?.title)). Text \(String(describing: currentNote?.text))"])
-                    default:
-                        break
-                }
+        case .dropbox:
+            if dropbox.isSignedIn == true {
+                dropbox.uploadFile(note: createPdfFromView(aView: currentNoteView) as Data, noteName: (currentNote?.title)!, folderID: folderID ?? "/")
+            } else {
+                dropbox.signIn(vc: self)
+            }
             default:
                 break
         }
