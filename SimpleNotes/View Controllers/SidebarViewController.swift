@@ -145,7 +145,6 @@ extension SidebarViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
        
         if indexPath.section != 0 {
-            print("FILTER")
             currentTag = tagsItems[indexPath.row - 1].title
             view.window?.windowScene?.title = "Filtering by \(String(describing: currentTag))"
             
@@ -153,7 +152,12 @@ extension SidebarViewController: UICollectionViewDelegate {
             currentTag = nil
         }
         
-        NotificationCenter.default.post(name: Notification.Name( "updateTag"), object: nil)
+        splitViewController?.setViewController(ViewController(), for: .supplementary)
+        
+        
+        view.window?.windowScene?.title = tabsItems[indexPath.row].title
+    
+        
     }
 
 }

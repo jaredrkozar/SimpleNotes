@@ -2,7 +2,7 @@
 //  Note+CoreDataProperties.swift
 //  SimpleNotes
 //
-//  Created by JaredKozar on 1/28/22.
+//  Created by JaredKozar on 4/21/22.
 //
 //
 
@@ -18,8 +18,9 @@ extension Note {
 
     @NSManaged public var date: Date?
     @NSManaged public var title: String?
-    @NSManaged public var tags: Set<Tags>?
-    @NSManaged public var textbox:  Set<TextBox>?
+    @NSManaged public var noteID: String?
+    @NSManaged public var tags: NSSet?
+    @NSManaged public var textbox: NSSet?
 
 }
 

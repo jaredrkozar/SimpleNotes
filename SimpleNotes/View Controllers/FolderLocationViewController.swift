@@ -9,37 +9,63 @@ import UIKit
 
 class FolderLocationViewController: UITableViewController {
 
+    var location: SharingLocation?
+    var currentfolder: String?
+    var allFiles = [CloudServiceFiles]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         title = "Folders"
-        GoogleInteractor().fetchFolders(onCompleted: { (fileItem, error) in
-            
-            print(fileItem?.files?.count)
-        })
+        
+        let nib = UINib(nibName: "TableRowCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "TableRowCell")
+        
+        if location == .googledrive {
+            GoogleInteractor().fetchFiles(folderID: currentfolder, onCompleted: {
+                (files, error) in
+                self.allFiles = files!
+                
+            })
+        } else if location == .dropbox {
+            DropboxInteractor().fetchFiles(folderID: currentfolder, onCompleted: {
+                (files, error) in
+                self.allFiles = files!
+                
+            })
+        }
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return allFiles.count
     }
 
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
-        // Configure the cell...
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableRowCell", for: indexPath) as? TableRowCell else {
+            fatalError("Unable to dequeue the note cell.")
+        }
+         
+        let file = allFiles[indexPath.row]
+        
+        if file.type == "folder" {
+            cell.icon.image = UIImage(systemName: "folder")
+        } else {
+            cell.icon.image = UIImage(systemName: "pin")
+        }
+        cell.name.text = file.name
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.

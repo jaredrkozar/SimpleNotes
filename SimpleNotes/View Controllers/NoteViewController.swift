@@ -55,7 +55,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
         noteTagsField.numberOfLines = 2
         
         noteTagsField.readOnly = true
-        noteTagsField.addTags((currentNote?.tags?.map({"\(String(describing: $0.name!))"})) ?? [String]())
+        noteTagsField.addTags((currentNote?.tags?.map({"\(String(describing: ($0 as AnyObject).name!))"})) ?? [String]())
         
         noteDateField.date = currentNote?.date ?? Date.now
   

@@ -37,7 +37,7 @@ func saveNote(currentNote: Note?, title: String, textboxes: [CustomTextBox], dat
 
     newNote.title = title
     newNote.date = date
-    
+    newNote.noteID = UUID().uuidString
     var tagset = Set<Tags>()
     
     for tag in tags {
