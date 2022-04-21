@@ -13,7 +13,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         fetchNotes(tag: currentTag ?? nil)
-        =
+        
         tableView.dataSource = dataSource
         dataSource.listofnotes = notes
         tableView.reloadData()
@@ -59,12 +59,12 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         vc.currentNote = dataSource.listofnotes[indexPath.row]
         
         switch currentDevice {
-            case .ipad:
+        case .ipad, .mac:
                 splitViewController?.setViewController(vc, for: .secondary)
+            
+            showDetailViewController(vc, sender: true)
         case .iphone:
-                self.navigationController?.pushViewController(vc, animated: true)
-        case .mac:
-            return
+                navigationController?.pushViewController(vc, animated: true)
         case .none:
             return
         }
