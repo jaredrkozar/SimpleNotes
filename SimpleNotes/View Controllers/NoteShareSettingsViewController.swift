@@ -68,7 +68,6 @@ class NoteShareSettingsViewController: UITableViewController {
             } else if google.isSignedIn == true && sharingLocation == .googledrive {
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "folderLocationsVC") as! FolderLocationViewController
                        let navController = UINavigationController(rootViewController: vc)
-                       vc.currentfolder = ""
                 vc.location = .googledrive
                 
                 self.navigationController?.present(navController, animated: true, completion: nil)

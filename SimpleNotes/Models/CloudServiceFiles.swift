@@ -9,6 +9,6 @@ import UIKit
 
 struct CloudServiceFiles {
     var name: String
-    var type: String
+    var type: MimeTypes
     var folderID: String
 }

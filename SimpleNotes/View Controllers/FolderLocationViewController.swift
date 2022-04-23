@@ -9,6 +9,7 @@ import UIKit
 
 class FolderLocationViewController: UITableViewController {
 
+    @IBOutlet var selectFolderButton: CustomButton!
     var location: SharingLocation?
     var currentfolder: String?
     var allFiles = [CloudServiceFiles]()
@@ -21,21 +22,25 @@ class FolderLocationViewController: UITableViewController {
         let nib = UINib(nibName: "TableRowCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "TableRowCell")
         
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
         if location == .googledrive {
-            GoogleInteractor().fetchFiles(folderID: currentfolder, onCompleted: {
+            GoogleInteractor().fetchFiles(folderID: currentfolder ?? "root", onCompleted: {
                 (files, error) in
                 self.allFiles = files!
+                print(self.allFiles.count)
+                self.tableView.reloadData()
                 
             })
         } else if location == .dropbox {
-            DropboxInteractor().fetchFiles(folderID: currentfolder, onCompleted: {
+            DropboxInteractor().fetchFiles(folderID: currentfolder ?? "", onCompleted: {
                 (files, error) in
                 self.allFiles = files!
                 
             })
         }
     }
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -55,14 +60,10 @@ class FolderLocationViewController: UITableViewController {
         }
          
         let file = allFiles[indexPath.row]
-        
-        if file.type == "folder" {
-            cell.icon.image = UIImage(systemName: "folder")
-        } else {
-            cell.icon.image = UIImage(systemName: "pin")
-        }
+        cell.logOutButton.isHidden = true
         cell.name.text = file.name
-
+        cell.icon.image = file.type.icon
+        cell.background.backgroundColor = UIColor.clear
         return cell
     }
     

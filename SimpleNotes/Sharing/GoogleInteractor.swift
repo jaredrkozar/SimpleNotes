@@ -15,12 +15,14 @@ import AppAuth
 class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
     
     var driveService = GTLRDriveService()
+    
     var driveUser: GIDGoogleUser?
     var clientID: String = "968933311910-9e4an07ni7ugfji5i8t6cfkj18h1861m.apps.googleusercontent.com"
     var filesInFolder = [CloudServiceFiles]()
     var folderID: String?
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        //gets alled once the user signs in
         self.driveService.authorizer = user.authentication.fetcherAuthorizer()
         self.setValue("refreshtoken", forKey: user.authentication.refreshToken)
     }
@@ -30,20 +32,14 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
     }
     
     func signIn(vc: UIViewController) {
-        GIDSignIn.sharedInstance().clientID = clientID
-        GIDSignIn.sharedInstance().scopes = [kGTLRAuthScopeDrive]
-        GIDSignIn.sharedInstance().delegate = vc as? GIDSignInDelegate
-        GIDSignIn.sharedInstance()?.presentingViewController = vc
         
-        if(isSignedIn == true) {
-            GIDSignIn.sharedInstance().restorePreviousSignIn()
-    
-            driveService.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
-            driveService.apiKey = "AIzaSyBz0NAnojMb8LOmWUlEIHWTHvljk4Yboaw"
-        } else {
-            GIDSignIn.sharedInstance().signIn()
-
-        }
+        GIDSignIn.sharedInstance().delegate = vc as? GIDSignInDelegate
+        GIDSignIn.sharedInstance().scopes = [kGTLRAuthScopeDrive]
+        
+        GIDSignIn.sharedInstance().restorePreviousSignIn()
+       
+        driveService.apiKey = "AIzaSyBz0NAnojMb8LOmWUlEIHWTHvljk4Yboaw"
+        driveService.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
     }
     
     var isSignedIn: Bool {
@@ -55,32 +51,36 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         GIDSignIn.sharedInstance().signOut()
     }
     
-    func fetchFiles(folderID: String?, onCompleted: @escaping ([CloudServiceFiles]?, Error?) -> ()) {
-        let currentFolder = folderID ?? "root"
+    func fetchFiles(folderID: String, onCompleted: @escaping ([CloudServiceFiles]?, Error?) -> ()) {
+        
+        GIDSignIn.sharedInstance().restorePreviousSignIn()
+       
+        driveService.apiKey = "AIzaSyBz0NAnojMb8LOmWUlEIHWTHvljk4Yboaw"
+        driveService.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
+        GIDSignIn.sharedInstance().clientID = clientID
+ 
          let query = GTLRDriveQuery_FilesList.query()
          query.pageSize = 100
-         query.q = "'\(currentFolder)' in parents and trashed=false"
-         query.fields = "files(id,name,mimeType,modifiedTime,createdTime,fileExtension,size),nextPageToken"
+         query.q = "'\(folderID)' in parents and trashed=false"
+        query.fields = "files(id,kind,mimeType,name,size,iconLink)"
+        
         query.includeItemsFromAllDrives = false
         query.corpora = "user"
         
-        driveService.executeQuery(query, completionHandler: { [self](ticket, files, error) in
+        driveService.executeQuery(query) { (ticket, result, error) in
+        
+            if let filesList : GTLRDrive_FileList = result as? GTLRDrive_FileList {
 
-            if error != nil {
-                CustomAlert.showAlert(title: "An error occured while fetching the files", message:  error?.localizedDescription)
+                if let listOfFiles : [GTLRDrive_File] = filesList.files {
+                    
+                    for file in listOfFiles {
+                        self.filesInFolder.append(CloudServiceFiles(name: file.name!, type: self.getFileType(type: file.mimeType!), folderID: file.identifier!))
+                    }
+                    
+                    onCompleted(self.filesInFolder, error)
+                }
             }
-            
-             if let filesList : GTLRDrive_FileList = files as? GTLRDrive_FileList {
-
-                 if let listOfFiles : [GTLRDrive_File] = filesList.files {
-                     
-                     for file in listOfFiles {
-                         filesInFolder.append(CloudServiceFiles(name: file.name!, type: getFileType(type: file.mimeType!), folderID: file.identifier!))
-                     }
-                     onCompleted(filesInFolder, error)
-                 }
-             }
-         })
+        }
        }
 
     func uploadFile(note: Data, noteName: String, folderID: String?) {
@@ -104,35 +104,30 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
     
     override init() {
         super.init()
-        GIDSignIn.sharedInstance().clientID = clientID
-        if GIDSignIn.sharedInstance().currentUser != nil {
-        self.driveService.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
-        }
+        GIDSignIn.sharedInstance().restorePreviousSignIn()
+
     }
     
-    func getFileType(type: String) -> String {
-        var fileType = ""
+    func getFileType(type: String) -> MimeTypes {
         switch type {
-        case "application/vnd.google-apps.folder":
-                fileType = "folder"
+            case "application/vnd.google-apps.folder":
+                return .folder
             case "application/pdf":
-                fileType = "pdf"
+                return .pdf
             case "application/vnd.google-apps.document":
-                fileType = "document"
+                return .document
             case "application/vnd.google-apps.spreadsheet":
-                fileType = "spreadsheet"
+                return .spreadsheet
             case "application/vnd.google-apps.presentation":
-                fileType = "presentation"
+                return .presentation
             case "application/vnd.google-apps.audio":
-                fileType = "audiofile"
+                return .audiofile
             case "application/vnd.google-apps.unknown":
-                fileType = "other"
-                default:
-                fileType = "other"
+                return .other
+            default:
+                return .other
         }
         
-        
-        return fileType
     }
     
 }

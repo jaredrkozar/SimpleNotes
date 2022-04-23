@@ -13,7 +13,7 @@ class DropboxInteractor: APIInteractor {
     var filesInFolder = [CloudServiceFiles]()
     let client = DropboxClientsManager.authorizedClient
 
-    func fetchFiles(folderID: String?, onCompleted: @escaping ([CloudServiceFiles]?, Error?) -> ()) {
+    func fetchFiles(folderID: String, onCompleted: @escaping ([CloudServiceFiles]?, Error?) -> ()) {
         
         client!.files.listFolder(path: folderID ?? "").response { [self] response, error in
             if let result = response {
@@ -25,7 +25,7 @@ class DropboxInteractor: APIInteractor {
                         isFolder = false
                     }
                 
-                    self.filesInFolder.append(CloudServiceFiles(name: file.name, type: isFolder ? "folder" : self.getFileType(type: file.name), folderID: file.pathLower!))
+                    self.filesInFolder.append(CloudServiceFiles(name: file.name, type: self.getFileType(type: file.name), folderID: file.pathLower!))
                 }
                 
                 onCompleted(self.filesInFolder, nil)
@@ -78,25 +78,23 @@ class DropboxInteractor: APIInteractor {
             }
     }
     
-    func getFileType(type: String) -> String {
-        var fileType = ""
-        
+    func getFileType(type: String) -> MimeTypes {
         let type = (type as NSString).pathExtension
 
         switch type {
             case "txt", "md", "html":
-                fileType = "document"
+            return .document
             case "xlxs", "xls", "xlm", "xl", "gsheet":
-                fileType = "spreadsheet"
+            return .spreadsheet
             case "pdf":
-                fileType = "pdf"
+            return .pdf
             case "ppt", "pptx", "pptm", "gslides":
-                fileType = "presentation"
+            return .presentation
             case "mp3", "m4a", "flac", "mp4", "wav":
-                fileType = "audiofile"
+            return .audiofile
             default:
-                fileType = "other"
+            return .other
         }
-        return fileType
+        
     }
 }

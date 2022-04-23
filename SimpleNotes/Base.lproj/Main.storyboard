@@ -190,7 +190,7 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="selectFolderButton" destination="jzF-Ko-7OV" id="pHU-EW-U5b"/>
+                        <outlet property="selectFolderButton" destination="jzF-Ko-7OV" id="h39-Tg-ads"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="11V-kf-3fR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

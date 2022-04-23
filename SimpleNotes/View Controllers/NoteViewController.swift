@@ -104,14 +104,11 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
         switch currentDevice {
         case .iphone:
             present(navController, animated: true, completion: nil)
-        case .ipad:
+        case .ipad, .mac:
             navController.modalPresentationStyle = UIModalPresentationStyle.popover
             navController.preferredContentSize = CGSize(width: 375, height: 300)
             navController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
             present(navController, animated: true, completion: nil)
-        case .mac:
-            return
-        
         case .none:
             return
         }
