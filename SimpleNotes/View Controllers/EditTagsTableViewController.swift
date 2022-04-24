@@ -54,7 +54,7 @@ class EditTagsTableViewController: UITableViewController {
         
         let tag = tags[indexPath.row]
         
-        cell.tagImage.image = UIImage(systemName: tag.symbol!)?.withTintColor(UIColor(named: tag.color!)!, renderingMode: .alwaysOriginal)
+        cell.tagImage.image = UIImage(systemName: tag.symbol!)?.withTintColor(UIColor(hex: tag.color!)!, renderingMode: .alwaysOriginal)
         
         cell.tagName.text = tag.name
         
@@ -88,7 +88,7 @@ class EditTagsTableViewController: UITableViewController {
                   let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newTagVC") as! NewTagViewController
                   let navController = UINavigationController(rootViewController: vc)
                   vc.name = tags[indexPath.row].name
-                  vc.color = tags[indexPath.row].color
+                  vc.color = UIColor(hex: tags[indexPath.row].color!)
                   vc.image = tags[indexPath.row].symbol
                   
                   self.navigationController?.present(navController, animated: true, completion: nil)

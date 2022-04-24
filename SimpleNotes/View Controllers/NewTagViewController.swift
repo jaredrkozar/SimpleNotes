@@ -14,13 +14,13 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet var symbolImage: UIImageView!
     @IBOutlet var detailsView: UICollectionView!
     var image: String?
-    var color: String?
+    var color: UIColor?
     var name: String?
     
     var imageIndex: Int?
     var colorIndex: Int?
     
-    let details = [["Red", "Green", "AccentColor", "Yellow", "Orange"], ["folder", "tray", "externaldrive", "doc", "doc.plaintext", "note.text", "book", "book.closed", "ticket", "link", "person", "person.crop.circle", "person.crop.square", "sun.max", "moon", "umbrella", "thermometer", "cloud.moon", "mic", "loupe", "magnifyingglass", "square", "circle", "eye", "tshirt", "eyeglasses", "facemask", "message", "bubble.right", "quote.bubble", "star.bubble", "exclamationmark.bubble", "plus.bubble", "checkmark.bubble"]]
+    let details = [[UIColor.systemRed, UIColor.systemOrange, UIColor.systemYellow, UIColor.systemGreen, UIColor.systemBlue, UIColor.systemCyan, UIColor.systemPurple, UIColor.systemIndigo, UIColor.systemPink], ["folder", "tray", "externaldrive", "doc", "doc.plaintext", "note.text", "book", "book.closed", "ticket", "link", "person", "person.crop.circle", "person.crop.square", "sun.max", "moon", "umbrella", "thermometer", "cloud.moon", "mic", "loupe", "magnifyingglass", "square", "circle", "eye", "tshirt", "eyeglasses", "facemask", "message", "bubble.right", "quote.bubble", "star.bubble", "exclamationmark.bubble", "plus.bubble", "checkmark.bubble"]]
       
     
     override func viewDidLoad() {
@@ -43,7 +43,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.navigationItem.leftBarButtonItems = [cancelButton]
         
         tagNameField.text = name
-        symbolImage.image = (image ?? "folder").sendBackSymbol(color: color ?? "AccentColor")
+        symbolImage.image = sendBackSymbol(imageName: "folder", color: color ?? UIColor.systemBlue)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -58,9 +58,9 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         let cell = detailsView.dequeueReusableCell(withReuseIdentifier: "DetailCollectionViewCell", for: indexPath) as! DetailCollectionViewCell
         
         if indexPath.section == 0 {
-            cell.detailImageView.backgroundColor = UIColor(named: details[0][indexPath.item])
+            cell.detailImageView.backgroundColor = details[0][indexPath.item] as? UIColor
         } else {
-            cell.detailImageView.image = details[1][indexPath.item].sendBackSymbol(color: "Gray")
+            cell.detailImageView.image =  sendBackSymbol(imageName: details[1][indexPath.item] as! String, color: UIColor.systemGray)
         }
            
         return cell
@@ -69,13 +69,13 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             colorIndex = indexPath.item
-            color = details[indexPath.section][indexPath.item]
+            color = details[0][indexPath.item] as! UIColor
         } else {
             imageIndex = indexPath.item
-            image = details[1][indexPath.item]
+            image = details[1][indexPath.item] as! String
         }
         
-        symbolImage.image = (image ?? "folder").sendBackSymbol(color: color ?? "AccentColor")
+        symbolImage.image = sendBackSymbol(imageName: (image ?? "folder"), color: color ?? UIColor.systemGray)
     }
 
     @objc func cancelButtonTapped(sender: UIBarButtonItem) {
@@ -86,8 +86,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         print(details[0][colorIndex ?? 2])
         print(details[1][imageIndex ?? 0])
         
-        saveTag(name: tagNameField.text!, symbol: details[1][imageIndex ?? 0], color: details[0][colorIndex ?? 2])
-        
+        saveTag(name: tagNameField.text!, symbol: details[1][imageIndex ?? 0] as! String, color: (color?.toHex)!)
         dismiss(animated: true, completion: nil)
     }
 }

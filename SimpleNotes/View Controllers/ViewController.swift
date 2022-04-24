@@ -10,7 +10,7 @@ import UIKit
 class ViewController: UITableViewController, UINavigationControllerDelegate {
     
     var dataSource = ReusableTableView()
-    
+
     override func viewDidAppear(_ animated: Bool) {
         fetchNotes(tag: currentTag ?? nil)
         

@@ -21,8 +21,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
     
     var currentNote: Note?
     
-    var viewDelegate: RefreshDataDelegate?
-    
     var textBoxes = [CustomTextBox]()
     
     @objc func tappedScreen(_ sender: UITapGestureRecognizer) {
@@ -67,9 +65,18 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
         
         let shareButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "square.and.arrow.up"), primaryAction: nil, menu: shareButtonTapped())
         
+        let flexibleSPace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        let undoButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.uturn.backward"), primaryAction: nil, menu: shareButtonTapped())
+        
+        let redoButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.uturn.forward"), primaryAction: nil, menu: shareButtonTapped())
+                                         
+        
+        let addMediaButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "plus"), primaryAction: nil, menu: shareButtonTapped())
+        
         if isEditingNote == true {
             title = "Edit Note"
-            self.navigationItem.rightBarButtonItems = [shareButton, editTags]
+            self.navigationItem.leftBarButtonItems = [addMediaButton, undoButton, redoButton]
             timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(autoSaveNote), userInfo: nil, repeats: true)
         } else {
             title = "New Note"

@@ -125,7 +125,7 @@ extension SidebarViewController {
                 sectionSnapshot.append([headerItem])
                
                 tags.compactMap({ tag in
-                    tagsItems.append(Item(title: tag.name, image: tag.symbol?.sendBackSymbol(color: tag.color!)))
+                    tagsItems.append(Item(title: tag.name, image: sendBackSymbol(imageName: tag.symbol!, color: UIColor(hex: tag.color!)!)))
                 })
        
                 sectionSnapshot.append(tagsItems, to: headerItem)

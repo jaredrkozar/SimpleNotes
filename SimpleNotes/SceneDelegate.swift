@@ -73,7 +73,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let splitViewController = UISplitViewController(style: .tripleColumn)
             splitViewController.preferredDisplayMode = .twoOverSecondary
             splitViewController.presentsWithGesture = true
-            splitViewController.preferredSplitBehavior = .tile
+            splitViewController.preferredSplitBehavior = .displace
 
             splitViewController.setViewController(SidebarViewController(), for: .primary)
             splitViewController.setViewController(TabBarController(), for: .compact)

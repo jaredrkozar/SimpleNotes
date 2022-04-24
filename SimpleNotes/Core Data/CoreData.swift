@@ -16,6 +16,7 @@ func saveTag(name: String, symbol: String, color: String) {
     newTag.symbol = symbol
     newTag.name = name
     newTag.color = color
+    
     do {
         try context.save()
     } catch {

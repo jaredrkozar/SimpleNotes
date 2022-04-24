@@ -2,7 +2,7 @@
 //  AllTags+CoreDataProperties.swift
 //  SimpleNotes
 //
-//  Created by JaredKozar on 1/28/22.
+//  Created by JaredKozar on 4/24/22.
 //
 //
 
@@ -16,9 +16,9 @@ extension AllTags {
         return NSFetchRequest<AllTags>(entityName: "AllTags")
     }
 
+    @NSManaged public var color: String?
     @NSManaged public var name: String?
     @NSManaged public var symbol: String?
-    @NSManaged public var color: String?
 
 }
 

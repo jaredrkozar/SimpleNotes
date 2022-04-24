@@ -42,7 +42,7 @@ class TagsTableViewController: UITableViewController {
         cell.logOutButton.isHidden = true
         cell.background.backgroundColor = UIColor.clear
        
-        cell.icon.image = UIImage(systemName: tag.symbol!)?.withTintColor(UIColor(named: tag.color!)!, renderingMode: .alwaysOriginal)
+        cell.icon.image = UIImage(systemName: tag.symbol!)?.withTintColor(UIColor.systemGreen, renderingMode: .alwaysOriginal)
         
         cell.name.text = tag.name
         

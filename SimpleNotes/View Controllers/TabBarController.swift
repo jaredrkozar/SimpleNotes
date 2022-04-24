@@ -32,6 +32,7 @@ private extension TabBarController {
         vc.tabBarItem = UITabBarItem(title: "Notes",
                                      image: UIImage(systemName: "square.grid.2x2.fill"),
                                      tag: 0)
+
         return UINavigationController(rootViewController: vc)
     }
 

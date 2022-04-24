@@ -86,22 +86,22 @@ class NoteShareSettingsViewController: UITableViewController {
     @IBAction func didTapExportButton(_ sender: Any) {
         switch sharingLocation {
             case .email:
-            sendEmail(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: createPdfFromView(aView: currentNoteView) as Data)
+            sendEmail(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: currentNoteView.createPDF() as Data)
             case .messages:
-            sendText(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: createPdfFromView(aView: currentNoteView) as Data)
+            sendText(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: currentNoteView.createPDF() as Data)
             case .otherapps:
             
-            sendToOtherApps(data: [createPdfFromView(aView: self.view), currentNote?.title!])
+            sendToOtherApps(data: [currentNoteView.createPDF(), currentNote?.title! ?? ""])
             case .googledrive:
             if google.isSignedIn {
                     google.signIn(vc: self)
-                google.uploadFile(note: createPdfFromView(aView: currentNoteView) as Data, noteName: (currentNote?.title)!, folderID: folderID ?? nil)
+                google.uploadFile(note: currentNoteView.createPDF() as Data, noteName: (currentNote?.title)!, folderID: folderID ?? nil)
                 } else {
                     google.signIn(vc: self)
                 }
         case .dropbox:
             if dropbox.isSignedIn == true {
-                dropbox.uploadFile(note: createPdfFromView(aView: currentNoteView) as Data, noteName: (currentNote?.title)!, folderID: folderID ?? "/")
+                dropbox.uploadFile(note: currentNoteView.createPDF() as Data, noteName: (currentNote?.title)!, folderID: folderID ?? "/")
             } else {
                 dropbox.signIn(vc: self)
             }
