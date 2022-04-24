@@ -131,13 +131,11 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
                        picker.prefersGrabberVisible = true
                        picker.preferredCornerRadius = 7.0
                     }
-                case .ipad:
+                case .ipad, .mac:
                     navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
                   navigationController.preferredContentSize = CGSize(width: 375, height: 300)
                     navigationController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
                     
-                case .mac:
-                    return
                 
                 case .none:
                     return

@@ -372,7 +372,7 @@
         <!--Split View Controller-->
         <scene sceneID="Uig-Gd-Ri3">
             <objects>
-                <splitViewController allowDoubleColumnStyle="YES" preferredDisplayMode="twoBeside" presentsWithGesture="NO" id="rir-Vb-Qdo" sceneMemberID="viewController">
+                <splitViewController allowDoubleColumnStyle="YES" preferredDisplayMode="twoOver" presentsWithGesture="NO" id="rir-Vb-Qdo" sceneMemberID="viewController">
                     <connections>
                         <segue destination="YiZ-rJ-bFy" kind="relationship" relationship="masterViewController" id="hSA-5F-bGB"/>
                         <segue destination="V1M-Cw-dBX" kind="relationship" relationship="detailViewController" id="AP9-CN-3bG"/>

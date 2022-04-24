@@ -19,20 +19,20 @@ public enum MimeTypes: CaseIterable {
     var icon: UIImage {
         switch self {
             case .folder:
-            return (UIImage(systemName: "folder")?.withTintColor(UIColor(named: "Gray")!, renderingMode: .alwaysOriginal)) as! UIImage
+            return (UIImage(systemName: "folder")?.withTintColor(UIColor.systemCyan, renderingMode: .alwaysOriginal)) as! UIImage
         case .pdf:
-            return (UIImage(systemName: "doc.viewfinder")?.withTintColor(UIColor(named: "Red")!, renderingMode: .alwaysOriginal)) as! UIImage
+            return (UIImage(systemName: "doc.viewfinder")?.withTintColor(UIColor.systemRed, renderingMode: .alwaysOriginal)) as! UIImage
         case .document:
-            return (UIImage(systemName: "doc")?.withTintColor(UIColor(named: "AccentColor")!, renderingMode: .alwaysOriginal)) as! UIImage
+            return (UIImage(systemName: "doc")?.withTintColor(UIColor.systemBlue, renderingMode: .alwaysOriginal)) as! UIImage
         case .spreadsheet:
-            return (UIImage(systemName: "tablecells")?.withTintColor(UIColor(named: "Green")!, renderingMode: .alwaysOriginal)) as! UIImage
+            return (UIImage(systemName: "tablecells")?.withTintColor(UIColor.systemGreen, renderingMode: .alwaysOriginal)) as! UIImage
             
         case .presentation:
-            return (UIImage(systemName: "rectangle.grid.2x2")?.withTintColor(UIColor(named: "Yellow")!, renderingMode: .alwaysOriginal)) as! UIImage
+            return (UIImage(systemName: "rectangle.grid.2x2")?.withTintColor(UIColor.systemYellow, renderingMode: .alwaysOriginal)) as! UIImage
         case .audiofile:
-            return (UIImage(systemName: "mic")?.withTintColor(UIColor(named: "Red")!, renderingMode: .alwaysOriginal)) as! UIImage
+            return (UIImage(systemName: "mic")?.withTintColor(UIColor.systemPink, renderingMode: .alwaysOriginal)) as! UIImage
         case .other:
-            return (UIImage(systemName: "questionmark.circle")?.withTintColor(UIColor(named: "Gray")!, renderingMode: .alwaysOriginal)) as! UIImage
+            return (UIImage(systemName: "questionmark.circle")?.withTintColor(UIColor.systemPurple, renderingMode: .alwaysOriginal)) as! UIImage
         }
     }
     
