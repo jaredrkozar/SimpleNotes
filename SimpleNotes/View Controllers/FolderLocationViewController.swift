@@ -65,6 +65,11 @@ class FolderLocationViewController: UITableViewController {
         cell.name.text = file.name
         cell.icon.image = file.type.icon
         cell.background.backgroundColor = UIColor.clear
+        
+        if file.type.typeURL == "folder" {
+            cell.accessoryType = .disclosureIndicator
+        }
+        
         return cell
     }
     

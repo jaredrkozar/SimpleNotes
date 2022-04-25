@@ -13,12 +13,15 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet var tagNameField: UITextField!
     @IBOutlet var symbolImage: UIImageView!
     @IBOutlet var detailsView: UICollectionView!
+    var currentTag: AllTags?
+    
     var image: String?
     var color: UIColor?
     var name: String?
     
     var imageIndex: Int?
     var colorIndex: Int?
+    var isEditingTag: Bool?
     
     let details = [[UIColor.systemRed, UIColor.systemOrange, UIColor.systemYellow, UIColor.systemGreen, UIColor.systemBlue, UIColor.systemCyan, UIColor.systemPurple, UIColor.systemIndigo, UIColor.systemPink, UIColor(named: "Red")], ["folder", "tray", "externaldrive", "doc", "doc.plaintext", "note.text", "book", "book.closed", "ticket", "link", "person", "person.crop.circle", "person.crop.square", "sun.max", "moon", "umbrella", "thermometer", "cloud.moon", "mic", "loupe", "magnifyingglass", "square", "circle", "eye", "tshirt", "eyeglasses", "facemask", "message", "bubble.right", "quote.bubble", "star.bubble", "exclamationmark.bubble", "plus.bubble", "checkmark.bubble"]]
       
@@ -55,15 +58,17 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = detailsView.dequeueReusableCell(withReuseIdentifier: "DetailCollectionViewCell", for: indexPath) as! DetailCollectionViewCell
         
         if indexPath.section == 0 {
+            let cell = detailsView.dequeueReusableCell(withReuseIdentifier: "DetailCollectionViewCell", for: indexPath) as! DetailCollectionViewCell
             cell.detailImageView.backgroundColor = details[0][indexPath.item] as? UIColor
+            
+            return cell
         } else {
+            let cell = detailsView.dequeueReusableCell(withReuseIdentifier: "DetailCollectionViewCell", for: indexPath) as! DetailCollectionViewCell
             cell.detailImageView.image =  sendBackSymbol(imageName: details[1][indexPath.item] as! String, color: UIColor.systemGray)
+            return cell
         }
-           
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -86,7 +91,13 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         print(details[0][colorIndex ?? 2])
         print(details[1][imageIndex ?? 0])
         
-        saveTag(name: tagNameField.text!, symbol: details[1][imageIndex ?? 0] as! String, color: (color?.toHex)!)
+        if isEditingTag == true {
+            saveTag(currentTag: currentTag, name: tagNameField.text!, symbol: image ?? details[1][imageIndex ?? 0] as! String, color: (color?.toHex)!)
+        } else {
+            saveTag(currentTag: nil, name: tagNameField.text!, symbol: details[1][imageIndex ?? 0] as! String, color: (color?.toHex)!)
+        }
+        
+        
         dismiss(animated: true, completion: nil)
     }
 }

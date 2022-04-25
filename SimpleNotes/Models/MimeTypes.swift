@@ -19,20 +19,20 @@ public enum MimeTypes: CaseIterable {
     var icon: UIImage {
         switch self {
             case .folder:
-            return (UIImage(systemName: "folder")?.withTintColor(UIColor.systemCyan, renderingMode: .alwaysOriginal)) as! UIImage
+            return (UIImage(systemName: "folder")?.withTintColor(UIColor.systemCyan, renderingMode: .alwaysOriginal))!
         case .pdf:
-            return (UIImage(systemName: "doc.viewfinder")?.withTintColor(UIColor.systemRed, renderingMode: .alwaysOriginal)) as! UIImage
+            return (UIImage(systemName: "doc.viewfinder")?.withTintColor(UIColor.systemRed, renderingMode: .alwaysOriginal))!
         case .document:
-            return (UIImage(systemName: "doc")?.withTintColor(UIColor.systemBlue, renderingMode: .alwaysOriginal)) as! UIImage
+            return (UIImage(systemName: "doc")?.withTintColor(UIColor.systemBlue, renderingMode: .alwaysOriginal))!
         case .spreadsheet:
-            return (UIImage(systemName: "tablecells")?.withTintColor(UIColor.systemGreen, renderingMode: .alwaysOriginal)) as! UIImage
+            return (UIImage(systemName: "tablecells")?.withTintColor(UIColor.systemGreen, renderingMode: .alwaysOriginal))!
             
         case .presentation:
-            return (UIImage(systemName: "rectangle.grid.2x2")?.withTintColor(UIColor.systemYellow, renderingMode: .alwaysOriginal)) as! UIImage
+            return (UIImage(systemName: "rectangle.grid.2x2")?.withTintColor(UIColor.systemYellow, renderingMode: .alwaysOriginal))!
         case .audiofile:
-            return (UIImage(systemName: "mic")?.withTintColor(UIColor.systemPink, renderingMode: .alwaysOriginal)) as! UIImage
+            return (UIImage(systemName: "mic")?.withTintColor(UIColor.systemPink, renderingMode: .alwaysOriginal))!
         case .other:
-            return (UIImage(systemName: "questionmark.circle")?.withTintColor(UIColor.systemPurple, renderingMode: .alwaysOriginal)) as! UIImage
+            return (UIImage(systemName: "questionmark.circle")?.withTintColor(UIColor.systemPurple, renderingMode: .alwaysOriginal))!
         }
     }
     

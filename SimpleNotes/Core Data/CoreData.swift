@@ -10,9 +10,9 @@ import CoreData
 
 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
-func saveTag(name: String, symbol: String, color: String) {
+func saveTag(currentTag: AllTags?, name: String, symbol: String, color: String) {
   
-    let newTag = AllTags(context: context)
+    let newTag = currentTag ?? AllTags(context: context)
     newTag.symbol = symbol
     newTag.name = name
     newTag.color = color
