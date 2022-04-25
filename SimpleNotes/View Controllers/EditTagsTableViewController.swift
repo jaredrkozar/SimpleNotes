@@ -88,6 +88,7 @@ class EditTagsTableViewController: UITableViewController {
                   let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newTagVC") as! NewTagViewController
                   let navController = UINavigationController(rootViewController: vc)
                   vc.name = tags[indexPath.row].name
+                  print(tags[indexPath.row].name)
                   vc.color = UIColor(hex: tags[indexPath.row].color!)
                   vc.image = tags[indexPath.row].symbol
                   

@@ -20,7 +20,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     var imageIndex: Int?
     var colorIndex: Int?
     
-    let details = [[UIColor.systemRed, UIColor.systemOrange, UIColor.systemYellow, UIColor.systemGreen, UIColor.systemBlue, UIColor.systemCyan, UIColor.systemPurple, UIColor.systemIndigo, UIColor.systemPink], ["folder", "tray", "externaldrive", "doc", "doc.plaintext", "note.text", "book", "book.closed", "ticket", "link", "person", "person.crop.circle", "person.crop.square", "sun.max", "moon", "umbrella", "thermometer", "cloud.moon", "mic", "loupe", "magnifyingglass", "square", "circle", "eye", "tshirt", "eyeglasses", "facemask", "message", "bubble.right", "quote.bubble", "star.bubble", "exclamationmark.bubble", "plus.bubble", "checkmark.bubble"]]
+    let details = [[UIColor.systemRed, UIColor.systemOrange, UIColor.systemYellow, UIColor.systemGreen, UIColor.systemBlue, UIColor.systemCyan, UIColor.systemPurple, UIColor.systemIndigo, UIColor.systemPink, UIColor(named: "Red")], ["folder", "tray", "externaldrive", "doc", "doc.plaintext", "note.text", "book", "book.closed", "ticket", "link", "person", "person.crop.circle", "person.crop.square", "sun.max", "moon", "umbrella", "thermometer", "cloud.moon", "mic", "loupe", "magnifyingglass", "square", "circle", "eye", "tshirt", "eyeglasses", "facemask", "message", "bubble.right", "quote.bubble", "star.bubble", "exclamationmark.bubble", "plus.bubble", "checkmark.bubble"]]
       
     
     override func viewDidLoad() {
@@ -43,7 +43,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.navigationItem.leftBarButtonItems = [cancelButton]
         
         tagNameField.text = name
-        symbolImage.image = sendBackSymbol(imageName: "folder", color: color ?? UIColor.systemBlue)
+        symbolImage.image = sendBackSymbol(imageName: image ?? "folder", color: color ?? UIColor.systemBlue)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
