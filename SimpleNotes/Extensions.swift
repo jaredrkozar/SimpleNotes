@@ -9,7 +9,7 @@ import UIKit
 
 var notes: [Note] = []
 var tags: [AllTags] = []
-var currentTag: String?
+var currentNote: Note?
 
 public var currentDevice: Device?
 

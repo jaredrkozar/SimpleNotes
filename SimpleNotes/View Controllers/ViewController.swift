@@ -10,13 +10,19 @@ import UIKit
 class ViewController: UITableViewController, UINavigationControllerDelegate {
     
     var dataSource = ReusableTableView()
-
-    override func viewDidAppear(_ animated: Bool) {
-        fetchNotes(tag: currentTag ?? nil)
+    
+    func viewAppeared(currentTag: String?) {
+        fetchNotes(tag: currentTag)
         
         tableView.dataSource = dataSource
         dataSource.listofnotes = notes
         tableView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if currentDevice == .iphone {
+            viewAppeared(currentTag: nil)
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()

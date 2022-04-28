@@ -14,13 +14,13 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     @IBOutlet var symbolImage: UIImageView!
     @IBOutlet var detailsView: UICollectionView!
     var currentTag: AllTags?
+    var colorCell = "colorCell"
+    var iconCell = "iconCell"
     
     var image: String?
     var color: UIColor?
     var name: String?
-    
-    var imageIndex: Int?
-    var colorIndex: Int?
+
     var isEditingTag: Bool?
     
     let details = [[UIColor.systemRed, UIColor.systemOrange, UIColor.systemYellow, UIColor.systemGreen, UIColor.systemBlue, UIColor.systemCyan, UIColor.systemPurple, UIColor.systemIndigo, UIColor.systemPink, UIColor(named: "Red")], ["folder", "tray", "externaldrive", "doc", "doc.plaintext", "note.text", "book", "book.closed", "ticket", "link", "person", "person.crop.circle", "person.crop.square", "sun.max", "moon", "umbrella", "thermometer", "cloud.moon", "mic", "loupe", "magnifyingglass", "square", "circle", "eye", "tshirt", "eyeglasses", "facemask", "message", "bubble.right", "quote.bubble", "star.bubble", "exclamationmark.bubble", "plus.bubble", "checkmark.bubble"]]
@@ -33,6 +33,9 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         let nib = UINib(nibName: "DetailCollectionViewCell", bundle: nil)
         detailsView.register(nib, forCellWithReuseIdentifier: "DetailCollectionViewCell")
+        
+        let colorCell = UINib(nibName: "ColorCollectionViewCell", bundle: nil)
+        detailsView.register(colorCell, forCellWithReuseIdentifier: "ColorCollectionViewCell")
         
         detailsView.delegate = self
         detailsView.dataSource = self
@@ -47,6 +50,8 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         tagNameField.text = name
         symbolImage.image = sendBackSymbol(imageName: image ?? "folder", color: color ?? UIColor.systemBlue)
+        
+        detailsView.register(CollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader , withReuseIdentifier: CollectionReusableView.identifier)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -60,12 +65,14 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.section == 0 {
-            let cell = detailsView.dequeueReusableCell(withReuseIdentifier: "DetailCollectionViewCell", for: indexPath) as! DetailCollectionViewCell
-            cell.detailImageView.backgroundColor = details[0][indexPath.item] as? UIColor
+            let cell = detailsView.dequeueReusableCell(withReuseIdentifier: "ColorCollectionViewCell", for: indexPath) as! ColorCollectionViewCell
+            cell.layer.cornerRadius = 12.0
+            cell.backgroundColor = details[0][indexPath.item] as? UIColor
             
             return cell
         } else {
             let cell = detailsView.dequeueReusableCell(withReuseIdentifier: "DetailCollectionViewCell", for: indexPath) as! DetailCollectionViewCell
+
             cell.detailImageView.image =  sendBackSymbol(imageName: details[1][indexPath.item] as! String, color: UIColor.systemGray)
             return cell
         }
@@ -73,10 +80,8 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            colorIndex = indexPath.item
             color = details[0][indexPath.item] as! UIColor
         } else {
-            imageIndex = indexPath.item
             image = details[1][indexPath.item] as! String
         }
         
@@ -88,16 +93,27 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     @objc func doneButtonTapped(sender: UIBarButtonItem) {
-        print(details[0][colorIndex ?? 2])
-        print(details[1][imageIndex ?? 0])
-        
         if isEditingTag == true {
-            saveTag(currentTag: currentTag, name: tagNameField.text!, symbol: image ?? details[1][imageIndex ?? 0] as! String, color: (color?.toHex)!)
+            saveTag(currentTag: currentTag, name: tagNameField.text!, symbol: image!, color: (color?.toHex)!)
         } else {
-            saveTag(currentTag: nil, name: tagNameField.text!, symbol: details[1][imageIndex ?? 0] as! String, color: (color?.toHex)!)
+            saveTag(currentTag: nil, name: tagNameField.text!, symbol: image!, color: (color?.toHex)!)
         }
         
         
         dismiss(animated: true, completion: nil)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "sectionHeader", for: indexPath) as? CollectionReusableView
+        
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionReusableView.identifier, for: indexPath) as! CollectionReusableView
+            
+            if indexPath.section == 1 {
+                header.label.text = " Dark icons"
+            } else {
+                header.label.text = " Light icons"
+            }
+        
+        return header
     }
 }

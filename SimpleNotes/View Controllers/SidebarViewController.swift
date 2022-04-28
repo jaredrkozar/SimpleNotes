@@ -20,7 +20,9 @@ class SidebarViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         configureHierarchy()
         fetchTags()
-        
+        collectionView.selectItem(at: IndexPath(row: 0, section: 0),
+                                         animated: false,
+                                         scrollPosition: UICollectionView.ScrollPosition.centeredVertically)
         NotificationCenter.default.addObserver(self, selector: #selector(configureDataSource(_:)), name: NSNotification.Name( "configureDataSource"), object: nil)
         NotificationCenter.default.post(name: Notification.Name( "configureDataSource"), object: nil)
 
@@ -145,11 +147,16 @@ extension SidebarViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
        
         if indexPath.section != 0 {
-            currentTag = tagsItems[indexPath.row - 1].title
-            view.window?.windowScene?.title = "Filtering by \(String(describing: currentTag))"
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
+            let navController = UINavigationController(rootViewController: vc)
+            vc.viewAppeared(currentTag: tagsItems[indexPath.row - 1].title)
+            self.navigationController?.present(navController, animated: true, completion: nil)
             
         } else {
-            currentTag = nil
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
+            let navController = UINavigationController(rootViewController: vc)
+            vc.viewAppeared(currentTag: nil)
+            self.navigationController?.present(navController, animated: true, completion: nil)
         }
         
         splitViewController?.setViewController(ViewController(), for: .supplementary)

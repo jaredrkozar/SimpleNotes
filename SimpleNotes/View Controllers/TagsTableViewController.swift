@@ -59,10 +59,10 @@ class TagsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        currentTag = tags[indexPath.row].name
-        let vc = ViewController()
-        
-        self.show(vc, sender: nil)
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        let navController = UINavigationController(rootViewController: vc)
+        vc.viewAppeared(currentTag: tags[indexPath.row].name)
+        self.navigationController?.present(navController, animated: true, completion: nil)
         
     }
     override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
@@ -70,12 +70,16 @@ class TagsTableViewController: UITableViewController {
             let editAction = UIAction(
               title: "Edit Tags", image: UIImage(systemName: "tag")) { [self] _ in
                 //gets the current dimension and splits it up into 2 parts, and saves them so they can be shown in the text fields in editPresetViewController. The editPresetViewController is then shown via a popover
-                
-                  let cellTag = tableView.cellForRow(at: indexPath) as! NoteTableViewCell
                   
-                  let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
+                  let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! NewTagViewController
                   let navController = UINavigationController(rootViewController: vc)
-                  vc.newNoteVC = cellTag.noteTags
+                  vc.isEditingTag = true
+                  vc.currentTag = tags[indexPath.row]
+                  vc.color = UIColor(hex: tags[indexPath.row].color!)
+                  vc.image = tags[indexPath.row].symbol
+                  vc.name = tags[indexPath.row].name
+                  vc.isEditingTag = true
+                  
                   self.navigationController?.present(navController, animated: true, completion: nil)
                 
             }
