@@ -76,7 +76,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
         
         if isEditingNote == true {
             title = "Edit Note"
-            self.navigationItem.leftBarButtonItems = [addMediaButton, undoButton, redoButton]
+            self.navigationItem.rightBarButtonItems = [shareButton, editTags]
             timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(autoSaveNote), userInfo: nil, repeats: true)
         } else {
             title = "New Note"

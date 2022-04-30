@@ -9,9 +9,22 @@ import UIKit
 
 class ColorCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet var checkmark: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        checkmark.image = UIImage(systemName: "checkmark.circle.fill")?.withTintColor(UIColor.white, renderingMode: .alwaysOriginal)
+        
+        checkmark.isHidden = true
+    }
+    
+    func setSelected() {
+        if(isSelected == true) {
+            checkmark.isHidden = false
+        } else {
+            checkmark.isHidden = true
+        }
     }
 
 }

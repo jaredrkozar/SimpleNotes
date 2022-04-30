@@ -27,6 +27,7 @@ class FolderLocationViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
 
         if location == .googledrive {
+            print("DDDDD")
             GoogleInteractor().fetchFiles(folderID: currentfolder ?? "root", onCompleted: {
                 (files, error) in
                 self.allFiles = files!
@@ -78,7 +79,7 @@ class FolderLocationViewController: UITableViewController {
 
         if  selectedFile.type == .folder {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "folderLocationsVC") as! FolderLocationViewController
-            
+            vc.location = location
             vc.currentfolder = selectedFile.folderID
             self.navigationController?.pushViewController(vc, animated: true)
             

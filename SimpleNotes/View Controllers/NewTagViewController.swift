@@ -37,8 +37,10 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         let colorCell = UINib(nibName: "ColorCollectionViewCell", bundle: nil)
         detailsView.register(colorCell, forCellWithReuseIdentifier: "ColorCollectionViewCell")
         
+        detailsView.allowsMultipleSelection = false
         detailsView.delegate = self
         detailsView.dataSource = self
+        detailsView.remembersLastFocusedIndexPath = true
         
         let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
 
@@ -80,14 +82,32 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 0 {
+  
+            let colorcell = detailsView.cellForItem(at: indexPath) as? ColorCollectionViewCell
+            colorcell?.checkmark.isHidden = false
             color = details[0][indexPath.item] as! UIColor
         } else {
+            
+          let iconcell = detailsView.cellForItem(at: indexPath) as? DetailCollectionViewCell
+            iconcell?.checkmark.isHidden = false
             image = details[1][indexPath.item] as! String
         }
-        
+    
         symbolImage.image = sendBackSymbol(imageName: (image ?? "folder"), color: color ?? UIColor.systemGray)
     }
 
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+  
+            let colorcell = detailsView.cellForItem(at: indexPath) as? ColorCollectionViewCell
+            colorcell?.checkmark.isHidden = true
+        } else {
+            
+          let iconcell = detailsView.cellForItem(at: indexPath) as? DetailCollectionViewCell
+            iconcell?.checkmark.isHidden = true
+        }
+    }
+    
     @objc func cancelButtonTapped(sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
@@ -116,4 +136,6 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         return header
     }
+    
+    
 }
