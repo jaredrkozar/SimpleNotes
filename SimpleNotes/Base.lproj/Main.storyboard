@@ -184,7 +184,7 @@
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                     <connections>
-                                        <action selector="selectFolderButton:" destination="WHD-yu-wGj" eventType="touchUpInside" id="Bzv-L2-idG"/>
+                                        <action selector="selectFolderButton:" destination="WHD-yu-wGj" eventType="touchUpInside" id="qAO-rl-ztN"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -277,9 +277,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aXY-tL-c3R">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aXY-tL-c3R" customClass="DrawingView" customModule="SimpleNotes" customModuleProvider="target">
                                 <rect key="frame" x="30" y="282" width="354" height="580"/>
-                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="580" id="Lh0-Mt-5D4"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="2000" id="vWF-Bv-Sye"/>
@@ -330,7 +330,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="noteContents" destination="aXY-tL-c3R" id="y6C-t3-phG"/>
+                        <outlet property="drawingVIew" destination="aXY-tL-c3R" id="gXa-R8-Oxc"/>
                         <outlet property="noteDateField" destination="Xdz-td-Z9N" id="sdW-pw-0qM"/>
                         <outlet property="noteTagsField" destination="jmt-Fj-bTW" id="lEw-Jq-7MN"/>
                         <outlet property="noteTitleField" destination="ulo-95-Tbu" id="jpI-0e-u0I"/>
@@ -525,9 +525,6 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

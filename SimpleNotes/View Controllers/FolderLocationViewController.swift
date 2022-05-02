@@ -27,7 +27,7 @@ class FolderLocationViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
 
         if location == .googledrive {
-            print("DDDDD")
+           
             GoogleInteractor().fetchFiles(folderID: currentfolder ?? "root", onCompleted: {
                 (files, error) in
                 self.allFiles = files!
@@ -82,9 +82,13 @@ class FolderLocationViewController: UITableViewController {
             vc.location = location
             vc.currentfolder = selectedFile.folderID
             self.navigationController?.pushViewController(vc, animated: true)
-            
-           
         }
     }
 
+    @IBAction func selectFolderButton(_ sender: Any) {
+        
+        if let presenter = presentingViewController as? NoteShareSettingsViewController {
+            presenter.folderID = currentfolder ?? "root"
+        }
+    }
 }

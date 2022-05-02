@@ -47,6 +47,17 @@
 		7FE45082281A56F40034928B /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45081281A56F40034928B /* CollectionReusableView.swift */; };
 		7FE45085281A67E20034928B /* ColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45083281A67E20034928B /* ColorCollectionViewCell.swift */; };
 		7FE45086281A67E20034928B /* ColorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FE45084281A67E20034928B /* ColorCollectionViewCell.xib */; };
+		7FE45089281E2A460034928B /* DrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45088281E2A460034928B /* DrawingView.swift */; };
+		7FE4508B281E2A8C0034928B /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE4508A281E2A8C0034928B /* Line.swift */; };
+		7FE4508D281E2AAB0034928B /* Brush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE4508C281E2AAB0034928B /* Brush.swift */; };
+		7FE4508F281E2B3E0034928B /* CustomTextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE4508E281E2B3E0034928B /* CustomTextBox.swift */; };
+		7FE45091281E2BE90034928B /* ObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45090281E2BE90034928B /* ObjectView.swift */; };
+		7FE45094281E2CE20034928B /* PenTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45093281E2CE20034928B /* PenTool.swift */; };
+		7FE45096281E2E860034928B /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45095281E2E860034928B /* CustomImageView.swift */; };
+		7FE45098281E30740034928B /* ResizableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45097281E30740034928B /* ResizableButton.swift */; };
+		7FE4509A281E30A00034928B /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45099281E30A00034928B /* HelperFunctions.swift */; };
+		7FE4509C281E50C80034928B /* CustomSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE4509B281E50C80034928B /* CustomSelectionView.swift */; };
+		7FE4509E281EEE760034928B /* TextTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE4509D281EEE760034928B /* TextTool.swift */; };
 		7FEBEC6F276135DA0066F0C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEBEC6E276135DA0066F0C0 /* AppDelegate.swift */; };
 		7FEBEC71276135DA0066F0C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEBEC70276135DA0066F0C0 /* SceneDelegate.swift */; };
 		7FEBEC73276135DA0066F0C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEBEC72276135DA0066F0C0 /* ViewController.swift */; };
@@ -61,7 +72,6 @@
 		7FF31CCE2799E04F00923AE3 /* DropboxInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF31CCD2799E04F00923AE3 /* DropboxInteractor.swift */; };
 		7FF892E527A3D2070030588B /* AllTags+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF892E327A3D2070030588B /* AllTags+CoreDataClass.swift */; };
 		7FF892E627A3D2070030588B /* AllTags+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF892E427A3D2070030588B /* AllTags+CoreDataProperties.swift */; };
-		7FF892E827A4BB4A0030588B /* CustomTextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF892E727A4BB4A0030588B /* CustomTextBox.swift */; };
 		7FF892ED27A4C2F90030588B /* TextBox+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF892E927A4C2F90030588B /* TextBox+CoreDataClass.swift */; };
 		7FF892EE27A4C2F90030588B /* TextBox+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF892EA27A4C2F90030588B /* TextBox+CoreDataProperties.swift */; };
 		7FF892EF27A4C2F90030588B /* Note+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF892EB27A4C2F90030588B /* Note+CoreDataClass.swift */; };
@@ -131,6 +141,17 @@
 		7FE45081281A56F40034928B /* CollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectionReusableView.swift; path = SimpleNotes/CollectionReusableView.swift; sourceTree = SOURCE_ROOT; };
 		7FE45083281A67E20034928B /* ColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		7FE45084281A67E20034928B /* ColorCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorCollectionViewCell.xib; sourceTree = "<group>"; };
+		7FE45088281E2A460034928B /* DrawingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingView.swift; sourceTree = "<group>"; };
+		7FE4508A281E2A8C0034928B /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		7FE4508C281E2AAB0034928B /* Brush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brush.swift; sourceTree = "<group>"; };
+		7FE4508E281E2B3E0034928B /* CustomTextBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextBox.swift; sourceTree = "<group>"; };
+		7FE45090281E2BE90034928B /* ObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectView.swift; sourceTree = "<group>"; };
+		7FE45093281E2CE20034928B /* PenTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenTool.swift; sourceTree = "<group>"; };
+		7FE45095281E2E860034928B /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
+		7FE45097281E30740034928B /* ResizableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizableButton.swift; sourceTree = "<group>"; };
+		7FE45099281E30A00034928B /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
+		7FE4509B281E50C80034928B /* CustomSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSelectionView.swift; sourceTree = "<group>"; };
+		7FE4509D281EEE760034928B /* TextTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTool.swift; sourceTree = "<group>"; };
 		7FEBEC6B276135DA0066F0C0 /* SimpleNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FEBEC6E276135DA0066F0C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7FEBEC70276135DA0066F0C0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -149,7 +170,6 @@
 		7FF31CCD2799E04F00923AE3 /* DropboxInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxInteractor.swift; sourceTree = "<group>"; };
 		7FF892E327A3D2070030588B /* AllTags+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AllTags+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		7FF892E427A3D2070030588B /* AllTags+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AllTags+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		7FF892E727A4BB4A0030588B /* CustomTextBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextBox.swift; sourceTree = "<group>"; };
 		7FF892E927A4C2F90030588B /* TextBox+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextBox+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		7FF892EA27A4C2F90030588B /* TextBox+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextBox+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		7FF892EB27A4C2F90030588B /* Note+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -229,7 +249,6 @@
 			children = (
 				7FE45081281A56F40034928B /* CollectionReusableView.swift */,
 				7F376601278A087900A107FF /* CustomButton.swift */,
-				7FF892E727A4BB4A0030588B /* CustomTextBox.swift */,
 				7F53DAA9279CC36C006789F6 /* AlertController.swift */,
 				7F53DAA7279BEF62006789F6 /* CloudServiceFiles.swift */,
 				7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */,
@@ -300,6 +319,32 @@
 			path = "Core Data";
 			sourceTree = "<group>";
 		};
+		7FE45087281E29B40034928B /* Drawing */ = {
+			isa = PBXGroup;
+			children = (
+				7FE45092281E2CCB0034928B /* Tools */,
+				7FE45088281E2A460034928B /* DrawingView.swift */,
+				7FE45090281E2BE90034928B /* ObjectView.swift */,
+				7FE4508A281E2A8C0034928B /* Line.swift */,
+				7FE4508C281E2AAB0034928B /* Brush.swift */,
+				7FE4508E281E2B3E0034928B /* CustomTextBox.swift */,
+				7FE45097281E30740034928B /* ResizableButton.swift */,
+				7FE45095281E2E860034928B /* CustomImageView.swift */,
+				7FE4509B281E50C80034928B /* CustomSelectionView.swift */,
+				7FE45099281E30A00034928B /* HelperFunctions.swift */,
+			);
+			path = Drawing;
+			sourceTree = "<group>";
+		};
+		7FE45092281E2CCB0034928B /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				7FE45093281E2CE20034928B /* PenTool.swift */,
+				7FE4509D281EEE760034928B /* TextTool.swift */,
+			);
+			path = Tools;
+			sourceTree = "<group>";
+		};
 		7FEBEC62276135DA0066F0C0 = {
 			isa = PBXGroup;
 			children = (
@@ -331,6 +376,7 @@
 				7F8BBDFB276ED795005B07C1 /* Extensions.swift */,
 				7FEBEC74276135DA0066F0C0 /* Main.storyboard */,
 				7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */,
+				7FE45087281E29B40034928B /* Drawing */,
 				7F376618278BC78A00A107FF /* Sharing */,
 				7F8358F427792493007428A8 /* Core Data */,
 				7F498B58277571CF00202413 /* View Controllers */,
@@ -644,35 +690,43 @@
 				7FE45082281A56F40034928B /* CollectionReusableView.swift in Sources */,
 				7FF892E527A3D2070030588B /* AllTags+CoreDataClass.swift in Sources */,
 				7FC55DA12792ADEB001DDFD5 /* TableRowCell.swift in Sources */,
+				7FE4508F281E2B3E0034928B /* CustomTextBox.swift in Sources */,
 				7F498AC12771656900202413 /* DetailCollectionViewCell.swift in Sources */,
+				7FE45094281E2CE20034928B /* PenTool.swift in Sources */,
 				7FEBEC73276135DA0066F0C0 /* ViewController.swift in Sources */,
 				7FF892EF27A4C2F90030588B /* Note+CoreDataClass.swift in Sources */,
 				7FF892ED27A4C2F90030588B /* TextBox+CoreDataClass.swift in Sources */,
+				7FE4509E281EEE760034928B /* TextTool.swift in Sources */,
 				7FEBEC6F276135DA0066F0C0 /* AppDelegate.swift in Sources */,
 				7F11DAB5279F351F0053D2FB /* Tags+CoreDataClass.swift in Sources */,
 				7F376630278E6A8500A107FF /* APIInteractor.swift in Sources */,
 				7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */,
 				7FEBEC71276135DA0066F0C0 /* SceneDelegate.swift in Sources */,
-				7FF892E827A4BB4A0030588B /* CustomTextBox.swift in Sources */,
+				7FE45089281E2A460034928B /* DrawingView.swift in Sources */,
 				7F53DAA8279BEF62006789F6 /* CloudServiceFiles.swift in Sources */,
 				7FE45085281A67E20034928B /* ColorCollectionViewCell.swift in Sources */,
 				7F37660F278A52DA00A107FF /* SharingLocation.swift in Sources */,
+				7FE4509A281E30A00034928B /* HelperFunctions.swift in Sources */,
 				7F11DAB6279F351F0053D2FB /* Tags+CoreDataProperties.swift in Sources */,
 				7FB7C29B2815155F006C9FE2 /* HoldingClass.swift in Sources */,
 				7F37661A278BC7B400A107FF /* PDFCreator.swift in Sources */,
 				7F8BBDF1276D6A98005B07C1 /* ReusableTableView.swift in Sources */,
 				7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */,
+				7FE45096281E2E860034928B /* CustomImageView.swift in Sources */,
 				7FEBECA2276136280066F0C0 /* NoteTableViewCell.swift in Sources */,
+				7FE4508B281E2A8C0034928B /* Line.swift in Sources */,
 				7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */,
 				7FF892E627A3D2070030588B /* AllTags+CoreDataProperties.swift in Sources */,
 				7F498AC627718CAA00202413 /* TagTableViewCell.swift in Sources */,
 				7F376617278B59B800A107FF /* SendToOtherApp.swift in Sources */,
+				7FE4509C281E50C80034928B /* CustomSelectionView.swift in Sources */,
 				7F498B572775719E00202413 /* CoreData.swift in Sources */,
 				7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */,
 				7F53DAA6279BA51B006789F6 /* AccountSettingsViewController.swift in Sources */,
 				7F376602278A087900A107FF /* CustomButton.swift in Sources */,
 				7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */,
 				7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */,
+				7FE45098281E30740034928B /* ResizableButton.swift in Sources */,
 				7F53DAAA279CC36C006789F6 /* AlertController.swift in Sources */,
 				7FF892F027A4C2F90030588B /* Note+CoreDataProperties.swift in Sources */,
 				7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */,
@@ -680,9 +734,11 @@
 				7F53DAAE279D4B75006789F6 /* TagsTableViewController.swift in Sources */,
 				7F53DAAC279D4B09006789F6 /* TabBarController.swift in Sources */,
 				7FF892EE27A4C2F90030588B /* TextBox+CoreDataProperties.swift in Sources */,
+				7FE4508D281E2AAB0034928B /* Brush.swift in Sources */,
 				7F37662E278E666100A107FF /* GoogleInteractor.swift in Sources */,
 				7F376613278AC3CD00A107FF /* SendEmail.swift in Sources */,
 				7F37661E278D40F700A107FF /* FolderLocationViewController.swift in Sources */,
+				7FE45091281E2BE90034928B /* ObjectView.swift in Sources */,
 				7F53DAB0279D4CAD006789F6 /* SidebarViewController.swift in Sources */,
 				7FF31CCE2799E04F00923AE3 /* DropboxInteractor.swift in Sources */,
 			);

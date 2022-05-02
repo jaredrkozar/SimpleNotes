@@ -12,10 +12,18 @@ class NoteShareSettingsViewController: UITableViewController {
     
     @IBOutlet var sendNoteButton: CustomButton!
 
-    var sharingLocation: SharingLocation?
     var format: SharingType?
     var currentNote: Note?
     var currentNoteView: UIView!
+    var sharingLocation: SharingLocation?
+    
+    var currentLocation: APIInteractor {
+        if self.sharingLocation == .googledrive {
+            return GoogleInteractor()
+        } else {
+            return DropboxInteractor()
+        }
+    }
     
     let google = GoogleInteractor()
     let dropbox = DropboxInteractor()
@@ -30,7 +38,7 @@ class NoteShareSettingsViewController: UITableViewController {
     
         view.backgroundColor = UIColor.systemBackground
         tableView.reloadData()
-        
+
         format = .pdf
     
     }
@@ -61,21 +69,12 @@ class NoteShareSettingsViewController: UITableViewController {
             
         } else if indexPath.section == 1 {
 
-            if google.isSignedIn == false && sharingLocation == .googledrive {
-                google.signIn(vc: self)
-            } else if  dropbox.isSignedIn == false && sharingLocation == .dropbox {
-                dropbox.signIn(vc: self)
-            } else if google.isSignedIn == true && sharingLocation == .googledrive {
+            if currentLocation.isSignedIn == false {
+                currentLocation.signIn(vc: self)
+            } else {
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "folderLocationsVC") as! FolderLocationViewController
                        let navController = UINavigationController(rootViewController: vc)
-                vc.location = .googledrive
-                
-                self.navigationController?.present(navController, animated: true, completion: nil)
-            } else if dropbox.isSignedIn == true && sharingLocation == .dropbox {
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "folderLocationsVC") as! FolderLocationViewController
-                       let navController = UINavigationController(rootViewController: vc)
-                       vc.currentfolder = "root"
-                vc.location = .dropbox
+                vc.location = sharingLocation
                 
                 self.navigationController?.present(navController, animated: true, completion: nil)
             }
@@ -86,25 +85,16 @@ class NoteShareSettingsViewController: UITableViewController {
     @IBAction func didTapExportButton(_ sender: Any) {
         switch sharingLocation {
             case .email:
-            sendEmail(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: currentNoteView.createPDF() as Data)
+                sendEmail(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: currentNoteView.createPDF() as Data)
             case .messages:
-            sendText(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: currentNoteView.createPDF() as Data)
+                sendText(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: currentNoteView.createPDF() as Data)
             case .otherapps:
             
-            sendToOtherApps(data: [currentNoteView.createPDF(), currentNote?.title! ?? ""])
+                sendToOtherApps(data: [currentNoteView.createPDF(), currentNote?.title! ?? ""])
             case .googledrive:
-            if google.isSignedIn {
-                    google.signIn(vc: self)
-                google.uploadFile(note: currentNoteView.createPDF() as Data, noteName: (currentNote?.title)!, folderID: folderID ?? nil)
-                } else {
-                    google.signIn(vc: self)
-                }
-        case .dropbox:
-            if dropbox.isSignedIn == true {
-                dropbox.uploadFile(note: currentNoteView.createPDF() as Data, noteName: (currentNote?.title)!, folderID: folderID ?? "/")
-            } else {
-                dropbox.signIn(vc: self)
-            }
+                uploadFileToCloud(defaultFolder: "root")
+            case .dropbox:
+                uploadFileToCloud(defaultFolder: "/")
             default:
                 break
         }
@@ -132,6 +122,14 @@ class NoteShareSettingsViewController: UITableViewController {
                 break
         }
         return shouldHideSection
+    }
+    
+    func uploadFileToCloud(defaultFolder: String) {
+        if currentLocation.isSignedIn {
+            currentLocation.uploadFile(note: currentNoteView.createPDF() as Data, noteName: (currentNote?.title)!, folderID: folderID ?? defaultFolder)
+        } else {
+            currentLocation.signIn(vc: self)
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="298px" height="509px" viewBox="0 0 298 509" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Untitled 2</title>
+    <g id="eraser" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" stroke="#FFFFFF" stroke-width="15" x="7.5" y="7.5" width="283" height="494" rx="40"></rect>
+        <line x1="11.5" y1="382.5" x2="286.5" y2="382.5" id="Line" stroke="#FFFFFF" stroke-width="15" stroke-linecap="square"></line>
+    </g>
+</svg>

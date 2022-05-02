@@ -13,7 +13,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet var noteTitleField: UITextField!
     @IBOutlet var noteDateField: UIDatePicker!
     @IBOutlet var noteTagsField: WSTagsField!
-    @IBOutlet var noteContents: UIView!
+    @IBOutlet var drawingVIew: DrawingView!
     
     var timer: Timer?
     
@@ -23,27 +23,13 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
     
     var textBoxes = [CustomTextBox]()
     
-    @objc func tappedScreen(_ sender: UITapGestureRecognizer) {
-        let textbox = newTextBox(point: sender.location(in: self.view), text: "")
-        textbox.becomeFirstResponder()
-        view.addSubview(textbox)
-        textBoxes.append(textbox)
-    }
-    
-    func newTextBox(point: CGPoint, text: String) -> CustomTextBox {
-        let textview = CustomTextBox(frame: CGRect(x: point.x, y: point.y, width: 100, height: 100), textContainer: nil)
-        return textview
-        
-    }
-                                     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedScreen(_:)))
-        noteContents.addGestureRecognizer(tapRecognizer)
-        
+        drawingVIew.tool = .pen
+  
         noteTitleField.backgroundColor = UIColor.systemGray5
         noteTitleField.layer.cornerRadius = 6.0
         noteTitleField.text = currentNote?.title ?? ""
@@ -74,8 +60,15 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
         
         let addMediaButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "plus"), primaryAction: nil, menu: shareButtonTapped())
         
+        let highlighterTool = UIBarButtonItem(title: nil, image: UIImage(named: "Highlighter"), primaryAction: nil, menu: shareButtonTapped())
+        
+        let eraserTool = UIBarButtonItem(title: nil, image: UIImage(named: "Eraser"), primaryAction: nil, menu: shareButtonTapped())
+        
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .large)
+        
         if isEditingNote == true {
             title = "Edit Note"
+            
             self.navigationItem.rightBarButtonItems = [shareButton, editTags]
             timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(autoSaveNote), userInfo: nil, repeats: true)
         } else {
@@ -121,6 +114,10 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    @objc func printLetter() {
+        print("Fdkfkfkfkfkf")
+    }
+    
     func shareButtonTapped() -> UIMenu {
 
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "shareNoteVC") as! NoteShareSettingsViewController
@@ -148,7 +145,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
                     return
                 }
                 
-                vc.currentNoteView = self.noteContents
+                vc.currentNoteView = self.drawingVIew
                 vc.currentNote = self.currentNote
                 vc.sharingLocation = location
                 

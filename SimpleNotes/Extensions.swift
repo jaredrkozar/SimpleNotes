@@ -13,6 +13,15 @@ var currentNote: Note?
 
 public var currentDevice: Device?
 
+public enum Tools {
+    case pen
+    case highlighter
+    case eraser
+    case lasso
+    case text
+    case hand
+}
+
 public enum Device {
     case iphone
     case ipad
@@ -31,6 +40,12 @@ func sendBackSymbol(imageName: String, color: UIColor) -> UIImage {
 
 extension UIView {
 
+    func moveBy(x: CGFloat, y: CGFloat)
+    {
+        self.frame.origin = CGPoint(x: self.frame.origin.x + x, y: self.frame.origin.y + y)
+    }
+
+    
     func createPDF() -> NSMutableData
     {
         let pdfData = NSMutableData()

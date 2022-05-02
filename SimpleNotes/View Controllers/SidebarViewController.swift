@@ -20,12 +20,13 @@ class SidebarViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         configureHierarchy()
         fetchTags()
-        collectionView.selectItem(at: IndexPath(row: 0, section: 0),
-                                         animated: false,
-                                         scrollPosition: UICollectionView.ScrollPosition.centeredVertically)
         NotificationCenter.default.addObserver(self, selector: #selector(configureDataSource(_:)), name: NSNotification.Name( "configureDataSource"), object: nil)
         NotificationCenter.default.post(name: Notification.Name( "configureDataSource"), object: nil)
 
+        
+        collectionView.selectItem(at: IndexPath(item: 0, section: 0),
+                                         animated: false,
+                                         scrollPosition: UICollectionView.ScrollPosition.centeredVertically)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -156,11 +157,8 @@ extension SidebarViewController: UICollectionViewDelegate {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
             let navController = UINavigationController(rootViewController: vc)
             vc.viewAppeared(currentTag: nil)
-            self.navigationController?.present(navController, animated: true, completion: nil)
+            splitViewController?.setViewController(navController, for: .supplementary)
         }
-        
-        splitViewController?.setViewController(ViewController(), for: .supplementary)
-        
         
         view.window?.windowScene?.title = tabsItems[indexPath.row].title
     
