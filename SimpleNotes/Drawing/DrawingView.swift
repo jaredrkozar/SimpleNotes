@@ -20,31 +20,18 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate 
     
     public var tool: Tools?
     
-    private var selectedTool: Tool {
+    public var selectedTool: Tool {
         if self.tool == .pen {
-            return PenTool()
+            return  currentPen ?? PenTool(width: 4.0, color: UIColor.systemBlue, opacity: 1.0, blendMode: .normal)
         } else if self.tool == .highlighter {
-            return PenTool()
+            return currentHighlighter ?? PenTool(width: 4.0, color: UIColor.systemYellow, opacity: 0.8, blendMode: .normal)
         } else {
             return PenTool()
         }
     }
     
-    private var selectedBrush: Brush {
-        if self.tool == .pen {
-            return currentPenSettings
-        } else if self.tool == .highlighter {
-            return currentHighlighterSettings
-        } else {
-            return currentPenSettings
-        }
-    }
-    
-    public var currentPenSettings = Brush(color: UIColor.green, width: 4.0, strokeType: .dotted, toolType: .pen)
-    public var currentHighlighterSettings = Brush(color: UIColor.blue, width: 9.0, strokeType: .dashed, toolType: .pen)
-    public var currentEraserSettings = Brush(width: 1.0, toolType: .eraser)
-    
-    public var currentBrush: Brush?
+    public var currentPen: PenTool?
+    public var currentHighlighter: PenTool?
     
     private var keyboardIsOpen: Bool = false
     
@@ -308,8 +295,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate 
         setTouchPoints(touch)
         
         shapeFirstPoint = touch.location(in: self)
-        print(selectedBrush.width)
-        lines.append(Line(color: (selectedBrush.color)!, width: (selectedBrush.width)! , opacity: (selectedBrush.opacity)!, blendMode: selectedBrush.blendMode ?? .normal, path: UIBezierPath(), type: .drawing, strokeType: selectedBrush.strokeType))
+        lines.append(Line(color: (selectedTool.color), width: (selectedTool.width) , opacity: (selectedTool.opacity), blendMode: selectedTool.blendMode ?? .normal, path: UIBezierPath(), type: .drawing, strokeType: selectedTool.strokeType))
     }
 
     open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
