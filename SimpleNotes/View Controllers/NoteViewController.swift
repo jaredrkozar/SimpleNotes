@@ -28,8 +28,8 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // Do any additional setup after loading the view.
         
-        drawingVIew.tool = .pen
-  
+        drawingVIew.tool = .highlighter
+        drawingVIew.selectedBrush.width = 1.0
         noteTitleField.backgroundColor = UIColor.systemGray5
         noteTitleField.layer.cornerRadius = 6.0
         noteTitleField.text = currentNote?.title ?? ""

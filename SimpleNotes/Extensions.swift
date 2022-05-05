@@ -13,6 +13,12 @@ var currentNote: Note?
 
 public var currentDevice: Device?
 
+public enum StrokeTypes {
+    case normal
+    case dotted
+    case dashed
+}
+
 public enum Tools {
     case pen
     case highlighter

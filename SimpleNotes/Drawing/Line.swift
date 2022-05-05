@@ -15,6 +15,7 @@ public struct Line: Equatable {
     var path: UIBezierPath
     var type: DrawingType
     var fillColor: UIColor?
+    var strokeType: StrokeTypes?
 }
 
 

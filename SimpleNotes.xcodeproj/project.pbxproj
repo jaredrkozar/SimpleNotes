@@ -44,12 +44,13 @@
 		7FC55DA12792ADEB001DDFD5 /* TableRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */; };
 		7FC55DA22792ADEB001DDFD5 /* TableRowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FC55DA02792ADEB001DDFD5 /* TableRowCell.xib */; };
 		7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55DA327939E49001DDFD5 /* MimeTypes.swift */; };
+		7FD82DCB28233AE500ECCB3B /* Brush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD82DCA28233AE500ECCB3B /* Brush.swift */; };
 		7FE45082281A56F40034928B /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45081281A56F40034928B /* CollectionReusableView.swift */; };
 		7FE45085281A67E20034928B /* ColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45083281A67E20034928B /* ColorCollectionViewCell.swift */; };
 		7FE45086281A67E20034928B /* ColorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FE45084281A67E20034928B /* ColorCollectionViewCell.xib */; };
 		7FE45089281E2A460034928B /* DrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45088281E2A460034928B /* DrawingView.swift */; };
 		7FE4508B281E2A8C0034928B /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE4508A281E2A8C0034928B /* Line.swift */; };
-		7FE4508D281E2AAB0034928B /* Brush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE4508C281E2AAB0034928B /* Brush.swift */; };
+		7FE4508D281E2AAB0034928B /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE4508C281E2AAB0034928B /* Tool.swift */; };
 		7FE4508F281E2B3E0034928B /* CustomTextBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE4508E281E2B3E0034928B /* CustomTextBox.swift */; };
 		7FE45091281E2BE90034928B /* ObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45090281E2BE90034928B /* ObjectView.swift */; };
 		7FE45094281E2CE20034928B /* PenTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45093281E2CE20034928B /* PenTool.swift */; };
@@ -138,12 +139,13 @@
 		7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableRowCell.swift; sourceTree = "<group>"; };
 		7FC55DA02792ADEB001DDFD5 /* TableRowCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableRowCell.xib; sourceTree = "<group>"; };
 		7FC55DA327939E49001DDFD5 /* MimeTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypes.swift; sourceTree = "<group>"; };
+		7FD82DCA28233AE500ECCB3B /* Brush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brush.swift; sourceTree = "<group>"; };
 		7FE45081281A56F40034928B /* CollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectionReusableView.swift; path = SimpleNotes/CollectionReusableView.swift; sourceTree = SOURCE_ROOT; };
 		7FE45083281A67E20034928B /* ColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		7FE45084281A67E20034928B /* ColorCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorCollectionViewCell.xib; sourceTree = "<group>"; };
 		7FE45088281E2A460034928B /* DrawingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingView.swift; sourceTree = "<group>"; };
 		7FE4508A281E2A8C0034928B /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
-		7FE4508C281E2AAB0034928B /* Brush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brush.swift; sourceTree = "<group>"; };
+		7FE4508C281E2AAB0034928B /* Tool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
 		7FE4508E281E2B3E0034928B /* CustomTextBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextBox.swift; sourceTree = "<group>"; };
 		7FE45090281E2BE90034928B /* ObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectView.swift; sourceTree = "<group>"; };
 		7FE45093281E2CE20034928B /* PenTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PenTool.swift; sourceTree = "<group>"; };
@@ -326,12 +328,13 @@
 				7FE45088281E2A460034928B /* DrawingView.swift */,
 				7FE45090281E2BE90034928B /* ObjectView.swift */,
 				7FE4508A281E2A8C0034928B /* Line.swift */,
-				7FE4508C281E2AAB0034928B /* Brush.swift */,
+				7FE4508C281E2AAB0034928B /* Tool.swift */,
 				7FE4508E281E2B3E0034928B /* CustomTextBox.swift */,
 				7FE45097281E30740034928B /* ResizableButton.swift */,
 				7FE45095281E2E860034928B /* CustomImageView.swift */,
 				7FE4509B281E50C80034928B /* CustomSelectionView.swift */,
 				7FE45099281E30A00034928B /* HelperFunctions.swift */,
+				7FD82DCA28233AE500ECCB3B /* Brush.swift */,
 			);
 			path = Drawing;
 			sourceTree = "<group>";
@@ -688,6 +691,7 @@
 			files = (
 				7F376615278B569D00A107FF /* SendText.swift in Sources */,
 				7FE45082281A56F40034928B /* CollectionReusableView.swift in Sources */,
+				7FD82DCB28233AE500ECCB3B /* Brush.swift in Sources */,
 				7FF892E527A3D2070030588B /* AllTags+CoreDataClass.swift in Sources */,
 				7FC55DA12792ADEB001DDFD5 /* TableRowCell.swift in Sources */,
 				7FE4508F281E2B3E0034928B /* CustomTextBox.swift in Sources */,
@@ -734,7 +738,7 @@
 				7F53DAAE279D4B75006789F6 /* TagsTableViewController.swift in Sources */,
 				7F53DAAC279D4B09006789F6 /* TabBarController.swift in Sources */,
 				7FF892EE27A4C2F90030588B /* TextBox+CoreDataProperties.swift in Sources */,
-				7FE4508D281E2AAB0034928B /* Brush.swift in Sources */,
+				7FE4508D281E2AAB0034928B /* Tool.swift in Sources */,
 				7F37662E278E666100A107FF /* GoogleInteractor.swift in Sources */,
 				7F376613278AC3CD00A107FF /* SendEmail.swift in Sources */,
 				7F37661E278D40F700A107FF /* FolderLocationViewController.swift in Sources */,

@@ -20,15 +20,31 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate 
     
     public var tool: Tools?
     
-    var selectedTool: Brush {
+    var selectedTool: Tool {
         if self.tool == .pen {
             return PenTool()
-        } else if self.tool == .lasso {
+        } else if self.tool == .highlighter {
             return PenTool()
         } else {
             return PenTool()
         }
     }
+    
+    var selectedBrush: Brush {
+        if self.tool == .pen {
+            return currentPenSettings
+        } else if self.tool == .highlighter {
+            return Brush(color: .systemBlue, width: 9.0, strokeType: .dotted, toolType: .pen)
+        } else {
+            return currentPenSettings
+        }
+    }
+    
+    public var currentPenSettings = Brush(color: UIColor.green, width: 4.0, strokeType: .dotted, toolType: .pen)
+    public var currentHighlighterSettings = Brush(color: UIColor.blue, width: 9.0, strokeType: .dashed, toolType: .pen)
+    public var currentEraserSettings = Brush(width: 1.0, toolType: .eraser)
+    
+    public var currentBrush: Brush?
     
     private var keyboardIsOpen: Bool = false
     
@@ -83,9 +99,20 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate 
         
         for line in lines {
             
-            context.setLineCap(.round)
             context.setBlendMode(line.blendMode )
-      
+            context.setAlpha(line.opacity)
+            
+            switch line.strokeType {
+                case .dotted:
+                line.path.setLineDash([1, 16.0], count: 2, phase: 0.0)
+                line.path.lineCapStyle = .round
+                case .dashed:
+                line.path.setLineDash([1, 16.0], count: 2, phase: 0.0)
+                line.path.lineCapStyle = .square
+            case .none, .normal:
+                line.path.lineCapStyle = .round
+            }
+            
             switch line.type {
             case .drawing:
                 line.path.lineWidth = line.width
@@ -205,6 +232,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate 
         } else {
             if tool == .text {
                 selectedTool.drawingView?.tappedScreen(sender)
+            
             } else if tool == .eraser {
                 let inLines = self.returnLines(point: sender.location(in: self))
     //            lines.removeAll(where: {inLines.contains($0)})
@@ -280,8 +308,8 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate 
         setTouchPoints(touch)
         
         shapeFirstPoint = touch.location(in: self)
-        
-        lines.append(Line(color: selectedTool.color , width: selectedTool.width , opacity: selectedTool.opacity , blendMode: selectedTool.blendMode , path: UIBezierPath(), type: .drawing))
+        print(selectedBrush.width)
+        lines.append(Line(color: (selectedBrush.color)!, width: (selectedBrush.width)! , opacity: (selectedBrush.opacity)!, blendMode: selectedBrush.blendMode ?? .normal, path: UIBezierPath(), type: .drawing, strokeType: selectedBrush.strokeType))
     }
 
     open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
