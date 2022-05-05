@@ -20,7 +20,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate 
     
     public var tool: Tools?
     
-    var selectedTool: Tool {
+    private var selectedTool: Tool {
         if self.tool == .pen {
             return PenTool()
         } else if self.tool == .highlighter {
@@ -30,11 +30,11 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate 
         }
     }
     
-    var selectedBrush: Brush {
+    private var selectedBrush: Brush {
         if self.tool == .pen {
             return currentPenSettings
         } else if self.tool == .highlighter {
-            return Brush(color: .systemBlue, width: 9.0, strokeType: .dotted, toolType: .pen)
+            return currentHighlighterSettings
         } else {
             return currentPenSettings
         }
@@ -107,7 +107,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate 
                 line.path.setLineDash([1, 16.0], count: 2, phase: 0.0)
                 line.path.lineCapStyle = .round
                 case .dashed:
-                line.path.setLineDash([1, 16.0], count: 2, phase: 0.0)
+                line.path.setLineDash([1, 30.0], count: 2, phase: 0.0)
                 line.path.lineCapStyle = .square
             case .none, .normal:
                 line.path.lineCapStyle = .round

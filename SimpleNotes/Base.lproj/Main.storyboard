@@ -307,6 +307,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JiE-Wa-o5W">
+                                <rect key="frame" x="76" y="247" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Pen"/>
+                                <connections>
+                                    <action selector="penButton:" destination="V1M-Cw-dBX" eventType="touchUpInside" id="Tyb-Nt-Ou3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A5e-nm-fo5">
+                                <rect key="frame" x="143" y="242" width="139" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="HighlighterButton"/>
+                                <connections>
+                                    <action selector="highlighter:" destination="V1M-Cw-dBX" eventType="touchUpInside" id="Tah-IN-zwK"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="lAN-CM-DWr"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -338,7 +356,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wlR-ck-Kws" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4554" y="3662"/>
+            <point key="canvasLocation" x="4553.623188405797" y="3661.6071428571427"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="v5Y-as-p05">

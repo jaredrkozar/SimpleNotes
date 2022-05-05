@@ -29,7 +29,8 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
         // Do any additional setup after loading the view.
         
         drawingVIew.tool = .highlighter
-        drawingVIew.selectedBrush.width = 1.0
+        drawingVIew.selectedBrush.width = 14.0
+        
         noteTitleField.backgroundColor = UIColor.systemGray5
         noteTitleField.layer.cornerRadius = 6.0
         noteTitleField.text = currentNote?.title ?? ""
@@ -157,4 +158,11 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
         
     }
     
+    @IBAction func penButton(_ sender: Any) {
+        drawingVIew.tool = .pen
+    }
+    @IBAction func highlighter(_ sender: Any) {
+        drawingVIew.tool = .highlighter
+        drawingVIew.selectedBrush.color = .systemRed
+    }
 }
