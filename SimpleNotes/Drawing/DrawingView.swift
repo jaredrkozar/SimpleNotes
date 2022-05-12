@@ -12,7 +12,7 @@ import UIKit
     func currentTextBoxColor() -> UIColor
 }
 
-open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate {
+open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UIScrollViewDelegate {
 
     public weak var delegate: DrawingViewDelegate?
     
@@ -34,6 +34,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate 
     public var currentHighlighter: PenTool?
     
     private var keyboardIsOpen: Bool = false
+    private var scrollView = UIScrollView()
     
     public var canCreateTextBox: Bool = true
     private var isSelectingLine: Bool = false
@@ -69,6 +70,28 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate 
                     
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        // Setup scroll view
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.minimumZoomScale = 1
+        scrollView.maximumZoomScale = 3
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.delegate = NoteViewController()
+        scrollView.bouncesZoom = false
+        scrollView.scrollsToTop = true
+        scrollView.bounces = false
+        scrollView.contentSize = self.frame.size
+        self.addSubview(scrollView)
+        
+        scrollView.backgroundColor = .brown
+
+        NSLayoutConstraint.activate([
+            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: self.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tappedScreen(_:)))
         self.addGestureRecognizer(tapGesture)
@@ -394,5 +417,9 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate 
         currentView?.isNotCurrentView()
         canCreateTextBox = true
         self.endEditing(true)
+    }
+    
+    public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return self
     }
 }

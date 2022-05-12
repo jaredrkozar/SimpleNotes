@@ -20,7 +20,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if currentDevice == .iphone {
+        if currentDevice == .iphone || self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.compact {
             viewAppeared(currentTag: nil)
         }
     }

@@ -8,7 +8,7 @@
 import UIKit
 import WSTagsField
 
-class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
+class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrollViewDelegate {
 
     @IBOutlet var noteTitleField: UITextField!
     @IBOutlet var noteDateField: UIDatePicker!
@@ -28,10 +28,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // Do any additional setup after loading the view.
         
-        drawingVIew.tool = .highlighter
-        drawingVIew.currentPen = PenTool(width: 10.0, color: UIColor.systemBlue, opacity: 1.0, blendMode: .normal)
-        drawingVIew.currentHighlighter = PenTool(width: 10.0, color: UIColor.systemYellow, opacity: 1.0, blendMode: .normal)
-        drawingVIew.currentHighlighter?.color = UIColor.red
+        drawingVIew.tool = .pen
         
         noteTitleField.backgroundColor = UIColor.systemGray5
         noteTitleField.layer.cornerRadius = 6.0
@@ -60,27 +57,40 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
         
         let redoButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.uturn.forward"), primaryAction: nil, menu: shareButtonTapped())
                                          
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .default)
         
-        let addMediaButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "plus"), primaryAction: nil, menu: shareButtonTapped())
+        let penButton = UIButton()
+        penButton.setImage(UIImage(systemName: "pin", withConfiguration: largeConfig), for: .normal)
+        penButton.addTarget(self, action: #selector(penTool(sender:)), for: .touchUpInside)
+        penButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+       
+        let highlighterButton = UIButton()
+        highlighterButton.setImage(UIImage(systemName: "folder", withConfiguration: largeConfig), for: .normal)
+        highlighterButton.addTarget(self, action: #selector(highlighterTool(sender:)), for: .touchUpInside)
+        highlighterButton.frame = CGRect(x: 60, y: 0, width: 44, height: 44)
         
-        let highlighterTool = UIBarButtonItem(title: nil, image: UIImage(named: "Highlighter"), primaryAction: nil, menu: shareButtonTapped())
+        let toolsView = UIView()
+        toolsView.addSubview(penButton)
+        toolsView.addSubview(highlighterButton)
+        toolsView.frame = CGRect(x: 0, y: 0, width: 100, height: 44)
         
-        let eraserTool = UIBarButtonItem(title: nil, image: UIImage(named: "Eraser"), primaryAction: nil, menu: shareButtonTapped())
-        
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .large)
-        
+        self.navigationItem.titleView = toolsView
         if isEditingNote == true {
-            title = "Edit Note"
             
             self.navigationItem.rightBarButtonItems = [shareButton, editTags]
             timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(autoSaveNote), userInfo: nil, repeats: true)
         } else {
-            title = "New Note"
             self.navigationItem.leftBarButtonItems = [cancel]
             self.navigationItem.rightBarButtonItems = [saveNote, editTags]
         }
     }
     
+    @objc func showPenMenu(sender: UIButton) {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "penMenu") as! ToolOptionsViewController
+        let navController = UINavigationController(rootViewController: vc)
+    
+        present(navController, animated: true, completion: nil)
+    }
     @objc func cancelButtonTapped(sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
@@ -115,10 +125,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
         case .none:
             return
         }
-    }
-    
-    @objc func printLetter() {
-        print("Fdkfkfkfkfkf")
     }
     
     func shareButtonTapped() -> UIMenu {
@@ -160,11 +166,26 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate {
         
     }
     
-    @IBAction func penButton(_ sender: Any) {
-        drawingVIew.tool = .pen
+    @objc func penTool(sender: UIButton) {
+        if drawingVIew.tool == .pen {
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "penMenu") as! ToolOptionsViewController
+            let navigationController = UINavigationController(rootViewController: vc)
+            self.present(navigationController, animated: true)
+        } else {
+            drawingVIew.tool = .pen
+        }
         
     }
-    @IBAction func highlighter(_ sender: Any) {
-        drawingVIew.tool = .highlighter
+    
+    @objc func highlighterTool(sender: UIButton) {
+        if drawingVIew.tool == .highlighter {
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "penMenu") as! ToolOptionsViewController
+            let navigationController = UINavigationController(rootViewController: vc)
+            self.present(navigationController, animated: true)
+        } else {
+            drawingVIew.tool = .highlighter
+        }
+        
     }
+    
 }

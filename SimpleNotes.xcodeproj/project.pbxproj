@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1197BA6F1902435A622C74E4 /* Pods_SimpleNotes_SimpleNotesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A3152DECD2FC30763295899 /* Pods_SimpleNotes_SimpleNotesUITests.framework */; };
 		5BBB5572D47E81F29B170B17 /* Pods_SimpleNotesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7042E8EED9EB51C046B04E5F /* Pods_SimpleNotesTests.framework */; };
+		7F0F03E7282C368D00A6B404 /* ToolOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */; };
 		7F11DAB5279F351F0053D2FB /* Tags+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F11DAB3279F351F0053D2FB /* Tags+CoreDataClass.swift */; };
 		7F11DAB6279F351F0053D2FB /* Tags+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F11DAB4279F351F0053D2FB /* Tags+CoreDataProperties.swift */; };
 		7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3765FF278A078B00A107FF /* NoteShareSettingsViewController.swift */; };
@@ -104,6 +105,7 @@
 		189183331E805F1AA8E2B51C /* Pods-SimpleNotesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotesTests.release.xcconfig"; path = "Target Support Files/Pods-SimpleNotesTests/Pods-SimpleNotesTests.release.xcconfig"; sourceTree = "<group>"; };
 		56828E4856EFDEE31B2D4DC2 /* Pods-SimpleNotesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotesTests.debug.xcconfig"; path = "Target Support Files/Pods-SimpleNotesTests/Pods-SimpleNotesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7042E8EED9EB51C046B04E5F /* Pods_SimpleNotesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleNotesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolOptionsViewController.swift; sourceTree = "<group>"; };
 		7F11DAB3279F351F0053D2FB /* Tags+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tags+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		7F11DAB4279F351F0053D2FB /* Tags+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tags+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		7F3765FF278A078B00A107FF /* NoteShareSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteShareSettingsViewController.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				7F498AA9276FC22100202413 /* NoteViewController.swift */,
+				7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */,
 				7F53DAAB279D4B09006789F6 /* TabBarController.swift */,
 				7F53DAAD279D4B75006789F6 /* TagsTableViewController.swift */,
 				7F53DAAF279D4CAD006789F6 /* SidebarViewController.swift */,
@@ -694,6 +697,7 @@
 				7FD82DCB28233AE500ECCB3B /* Brush.swift in Sources */,
 				7FF892E527A3D2070030588B /* AllTags+CoreDataClass.swift in Sources */,
 				7FC55DA12792ADEB001DDFD5 /* TableRowCell.swift in Sources */,
+				7F0F03E7282C368D00A6B404 /* ToolOptionsViewController.swift in Sources */,
 				7FE4508F281E2B3E0034928B /* CustomTextBox.swift in Sources */,
 				7F498AC12771656900202413 /* DetailCollectionViewCell.swift in Sources */,
 				7FE45094281E2CE20034928B /* PenTool.swift in Sources */,
