@@ -27,6 +27,13 @@ class ToolOptionsViewController: UIViewController, UICollectionViewDataSource, U
         
         let nib = UINib(nibName: "LineTypeCollectionViewCell", bundle: nil)
         lineTypeCollectionView.register(nib, forCellWithReuseIdentifier: "lineTypeCell")
+       
+        colorCollectionView.allowsSelection = true
+        sizeCollectionView.allowsSelection = true
+        lineTypeCollectionView.allowsSelection = true
+        colorCollectionView.allowsMultipleSelection = false
+        sizeCollectionView.allowsMultipleSelection = false
+        lineTypeCollectionView.allowsMultipleSelection = false
         
         colorCollectionView.delegate = self
         colorCollectionView.dataSource = self
@@ -58,11 +65,11 @@ class ToolOptionsViewController: UIViewController, UICollectionViewDataSource, U
             let cell = sizeCollectionView.dequeueReusableCell(withReuseIdentifier: "sizeCell", for: indexPath) as! ColorCollectionViewCell
             
             let circle = CAShapeLayer()
-           
+            circle.fillColor = UIColor.label.cgColor
             circle.path = UIBezierPath(arcCenter: CGPoint(x: cell.bounds.size.width * 0.5, y: cell.bounds.size.width * 0.5), radius: sizes[indexPath.item], startAngle: 0.0, endAngle: .pi * 2, clockwise: true).cgPath
-   
+            cell.layer.cornerRadius = 9.0
+            cell.backgroundColor = .systemGray5
             cell.layer.addSublayer(circle)
-            cell.backgroundColor = .gray
    
             return cell
         }  else if(collectionView == lineTypeCollectionView){
@@ -80,25 +87,63 @@ class ToolOptionsViewController: UIViewController, UICollectionViewDataSource, U
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if(collectionView == colorCollectionView) {
+            if let cell = colorCollectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
+                cell.layer.borderColor = colors[indexPath.item]?.darker(by: 40.0)?.cgColor
+                cell.layer.borderWidth = 5.0
+                }
+            
             UserDefaults.standard.set(colors[indexPath.item]?.toHex, forKey: "changedColor")
             NotificationCenter.default.post(name: Notification.Name( "changedColor"), object: nil)
         } else if(collectionView == sizeCollectionView) {
 
+            if let cell = sizeCollectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
+                cell.layer.borderColor = UIColor.gray.cgColor
+                cell.layer.borderWidth = 5.0
+                }
+            
             UserDefaults.standard.set(sizes[indexPath.item], forKey: "changedWidth")
             NotificationCenter.default.post(name: Notification.Name( "changedWidth"), object: nil)
         }  else if(collectionView == lineTypeCollectionView){
-            print(indexPath.item)
+            if let cell = collectionView.cellForItem(at: indexPath) as? LineTypeCollectionViewCell {
+                cell.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.35)
+                cell.layer.borderColor = UIColor.systemBlue.darker(by: 10.0)?.cgColor
+                cell.layer.borderWidth = 5.0
+                }
+
+            
+            
             if(indexPath.item==0) {
                 UserDefaults.standard.set(StrokeTypes.normal.rawValue, forKey: "changedStrokeType")
             } else if indexPath.item==1 {
-                UserDefaults.standard.set(StrokeTypes.dotted.rawValue, forKey: "changedStrokeType")
-                
-            } else if indexPath.item==1 {
                 UserDefaults.standard.set(StrokeTypes.dashed.rawValue, forKey: "changedStrokeType")
+                
+            } else if indexPath.item==2 {
+                UserDefaults.standard.set(StrokeTypes.dotted.rawValue, forKey: "changedStrokeType")
             }
             
             NotificationCenter.default.post(name: Notification.Name( "changedStrokeType"), object: nil)
             
+        } else {
+            return
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if(collectionView == colorCollectionView) {
+            if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
+                cell.layer.borderWidth = 0.0
+                }
+        } else if(collectionView == sizeCollectionView) {
+
+            if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
+                cell.backgroundColor = UIColor.systemGray5
+                cell.layer.borderWidth = 0.0
+                }
+        }  else if(collectionView == lineTypeCollectionView){
+            if let cell = collectionView.cellForItem(at: indexPath) as? LineTypeCollectionViewCell {
+                cell.backgroundColor = UIColor.systemGray5
+                cell.layer.borderWidth = 0.0
+                }
         } else {
             return
         }

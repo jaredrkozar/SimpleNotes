@@ -114,7 +114,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
             
             switch line.strokeType {
                 case .dotted:
-                line.path.setLineDash([1, 16.0], count: 2, phase: 0.0)
+                line.path.setLineDash([1, 30.0], count: 2, phase: 0.0)
                 line.path.lineCapStyle = .round
                 case .dashed:
                 line.path.setLineDash([1, 30.0], count: 2, phase: 0.0)
