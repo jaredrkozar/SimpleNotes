@@ -7,40 +7,45 @@
 
 import UIKit
 
-class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIColorPickerViewControllerDelegate {
     let detailIcons = UIImage.SymbolConfiguration(pointSize: 30.0, weight: .regular, scale: .large)
     
     @IBOutlet var tagNameField: UITextField!
     @IBOutlet var symbolImage: UIImageView!
-    @IBOutlet var detailsView: UICollectionView!
+    
+    @IBOutlet var colorCollectionView: UICollectionView!
+    @IBOutlet var iconCOllectionView: UICollectionView!
     var currentTag: AllTags?
     var colorCell = "colorCell"
     var iconCell = "iconCell"
     
     var image: String?
-    var color: UIColor?
+    var selectedColor: UIColor?
     var name: String?
 
     var isEditingTag: Bool?
     
-    let details = [[UIColor.systemRed, UIColor.systemOrange, UIColor.systemYellow, UIColor.systemGreen, UIColor.systemBlue, UIColor.systemCyan, UIColor.systemPurple, UIColor.systemIndigo, UIColor.systemPink, UIColor(named: "Red")], ["folder", "tray", "externaldrive", "doc", "doc.plaintext", "note.text", "book", "book.closed", "ticket", "link", "person", "person.crop.circle", "person.crop.square", "sun.max", "moon", "umbrella", "thermometer", "cloud.moon", "mic", "loupe", "magnifyingglass", "square", "circle", "eye", "tshirt", "eyeglasses", "facemask", "message", "bubble.right", "quote.bubble", "star.bubble", "exclamationmark.bubble", "plus.bubble", "checkmark.bubble"]]
-      
+    let colors = [UIColor.systemRed, UIColor.systemOrange, UIColor.systemYellow, UIColor.systemGreen, UIColor.systemBlue, UIColor.systemCyan, UIColor.systemPurple, UIColor.systemIndigo, UIColor.systemPink, UIColor.systemGray5]
+      let icons = ["folder", "tray", "externaldrive", "doc", "doc.plaintext", "note.text", "book", "book.closed", "ticket", "link", "person", "person.crop.circle", "person.crop.square", "sun.max", "moon", "umbrella", "thermometer", "cloud.moon", "mic", "loupe", "magnifyingglass", "square", "circle", "eye", "tshirt", "eyeglasses", "facemask", "message", "bubble.right", "quote.bubble", "star.bubble", "exclamationmark.bubble", "plus.bubble", "checkmark.bubble"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        let nib = UINib(nibName: "DetailCollectionViewCell", bundle: nil)
-        detailsView.register(nib, forCellWithReuseIdentifier: "DetailCollectionViewCell")
-        
         let colorCell = UINib(nibName: "ColorCollectionViewCell", bundle: nil)
-        detailsView.register(colorCell, forCellWithReuseIdentifier: "ColorCollectionViewCell")
+        colorCollectionView.register(colorCell, forCellWithReuseIdentifier: "ColorCollectionViewCell")
+        iconCOllectionView.register(colorCell, forCellWithReuseIdentifier: "ColorCollectionViewCell")
         
-        detailsView.allowsMultipleSelection = false
-        detailsView.delegate = self
-        detailsView.dataSource = self
-        detailsView.remembersLastFocusedIndexPath = true
+        colorCollectionView.allowsSelection = true
+        colorCollectionView.allowsMultipleSelection = false
+        colorCollectionView.delegate = self
+        colorCollectionView.dataSource = self
+        
+        iconCOllectionView.allowsSelection = true
+        iconCOllectionView.allowsMultipleSelection = false
+        iconCOllectionView.delegate = self
+        iconCOllectionView.dataSource = self
         
         let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
 
@@ -51,60 +56,86 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         self.navigationItem.leftBarButtonItems = [cancelButton]
         
         tagNameField.text = name
-        symbolImage.image = sendBackSymbol(imageName: image ?? "folder", color: color ?? UIColor.systemBlue)
-        
-        detailsView.register(CollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader , withReuseIdentifier: CollectionReusableView.identifier)
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return details.count
+        symbolImage.image = sendBackSymbol(imageName: image ?? "folder", color: selectedColor ?? UIColor.systemBlue)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return details[section].count
+        if(collectionView==colorCollectionView) {
+            return colors.count
+        } else {
+            return icons.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if indexPath.section == 0 {
-            let cell = detailsView.dequeueReusableCell(withReuseIdentifier: "ColorCollectionViewCell", for: indexPath) as! ColorCollectionViewCell
+        if(collectionView==colorCollectionView) {
+            var cell = colorCollectionView.dequeueReusableCell(withReuseIdentifier: "ColorCollectionViewCell", for: indexPath) as! ColorCollectionViewCell
             cell.layer.cornerRadius = 12.0
-            cell.backgroundColor = details[0][indexPath.item] as? UIColor
+            cell.backgroundColor = colors[indexPath.item]
             
+            if indexPath.item == colors.count - 1 {
+                cell.icon.image = UIImage(systemName: "plus", withConfiguration: detailIcons)
+                cell.icon.tintColor = .label
+            }
             return cell
         } else {
-            let cell = detailsView.dequeueReusableCell(withReuseIdentifier: "DetailCollectionViewCell", for: indexPath) as! DetailCollectionViewCell
-
-            cell.detailImageView.image =  sendBackSymbol(imageName: details[1][indexPath.item] as! String, color: UIColor.systemGray)
+            let cell = iconCOllectionView.dequeueReusableCell(withReuseIdentifier: "ColorCollectionViewCell", for: indexPath) as! ColorCollectionViewCell
+            cell.layer.cornerRadius = 9.0
+            cell.backgroundColor = .green
+            cell.icon.image = UIImage(systemName: icons[indexPath.item], withConfiguration: detailIcons)
+            cell.icon.tintColor = selectedColor
+            
             return cell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
+        if(collectionView==colorCollectionView) {
   
-            let colorcell = detailsView.cellForItem(at: indexPath) as? ColorCollectionViewCell
-            colorcell?.checkmark.isHidden = false
-            color = details[0][indexPath.item] as! UIColor
+            if indexPath.item != colors.count - 1 {
+                if let cell = colorCollectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
+                    cell.layer.borderColor = colors[indexPath.item].darker(by: 40.0)?.cgColor
+                    cell.layer.borderWidth = 5.0
+                    }
+                
+                selectedColor = colors[indexPath.item] as! UIColor
+            } else {
+                let colorPicker = UIColorPickerViewController()
+                colorPicker.selectedColor = selectedColor!
+                colorPicker.supportsAlpha = false
+                colorPicker.delegate = self
+                colorPicker.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "pin"), style: .done, target: nil, action: nil)
+                present(colorPicker, animated: true)
+            }
         } else {
             
-          let iconcell = detailsView.cellForItem(at: indexPath) as? DetailCollectionViewCell
-            iconcell?.checkmark.isHidden = false
-            image = details[1][indexPath.item] as! String
+            
+                      if let cell = iconCOllectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
+                          cell.layer.borderColor = UIColor.gray.cgColor
+                          cell.layer.borderWidth = 5.0
+                          }
+            
+          let iconcell = iconCOllectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell
+            image = icons[indexPath.item] as! String
         }
     
-        symbolImage.image = sendBackSymbol(imageName: (image ?? "folder"), color: color ?? UIColor.systemGray)
+        symbolImage.image = sendBackSymbol(imageName: (image ?? "folder"), color: selectedColor ?? UIColor.systemGray)
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
+        if(collectionView==colorCollectionView){
   
-            let colorcell = detailsView.cellForItem(at: indexPath) as? ColorCollectionViewCell
-            colorcell?.checkmark.isHidden = true
+            if let cell = colorCollectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
+                
+                cell.layer.borderWidth = 0.0
+                }
         } else {
             
-          let iconcell = detailsView.cellForItem(at: indexPath) as? DetailCollectionViewCell
-            iconcell?.checkmark.isHidden = true
+            if let cell = iconCOllectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
+                
+                cell.layer.borderWidth = 0.0
+            }
         }
     }
     
@@ -114,9 +145,10 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     @objc func doneButtonTapped(sender: UIBarButtonItem) {
         if isEditingTag == true {
-            saveTag(currentTag: currentTag, name: tagNameField.text!, symbol: image!, color: (color?.toHex)!)
+            saveTag(currentTag: currentTag, name: tagNameField.text!, symbol: image!, color: (selectedColor?.toHex)!)
         } else {
-            saveTag(currentTag: nil, name: tagNameField.text!, symbol: image!, color: (color?.toHex)!)
+            
+            saveTag(currentTag: nil, name: tagNameField.text!, symbol: image ?? "folder", color: (selectedColor?.toHex)!)
         }
         
         
@@ -137,5 +169,9 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         return header
     }
     
+    func colorPickerViewController(_ viewController: UIColorPickerViewController, didSelect color: UIColor, continuously: Bool) {
+        selectedColor = color
+        symbolImage.image = sendBackSymbol(imageName: (image ?? "folder"), color: selectedColor!)
+    }
     
 }

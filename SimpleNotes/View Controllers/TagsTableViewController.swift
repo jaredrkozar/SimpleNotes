@@ -75,7 +75,7 @@ class TagsTableViewController: UITableViewController {
                   let navController = UINavigationController(rootViewController: vc)
                   vc.isEditingTag = true
                   vc.currentTag = tags[indexPath.row]
-                  vc.color = UIColor(hex: tags[indexPath.row].color!)
+                  vc.selectedColor = UIColor(hex: tags[indexPath.row].color!)
                   vc.image = tags[indexPath.row].symbol
                   vc.name = tags[indexPath.row].name
                   vc.isEditingTag = true
