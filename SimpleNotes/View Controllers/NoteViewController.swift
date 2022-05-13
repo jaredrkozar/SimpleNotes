@@ -29,6 +29,8 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         // Do any additional setup after loading the view.
         
         drawingVIew.tool = .pen
+        drawingVIew.currentPen = PenTool(width: 20.0, color: .systemPink, opacity: 1.0, blendMode: .normal, strokeType: .normal)
+        drawingVIew.currentHighlighter = PenTool(width: 20.0, color: .systemYellow, opacity: 0.6, blendMode: .normal, strokeType: .normal)
         
         noteTitleField.backgroundColor = UIColor.systemGray5
         noteTitleField.layer.cornerRadius = 6.0
@@ -75,6 +77,14 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         toolsView.frame = CGRect(x: 0, y: 0, width: 100, height: 44)
         
         self.navigationItem.titleView = toolsView
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(changeStrokeType(notification:)), name: Notification.Name("changedStrokeType"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(changeSize(notification:)), name: Notification.Name("changedWidth"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(changeColor(notification:)), name: Notification.Name("changedColor"), object: nil)
+        
+        
         if isEditingNote == true {
             
             self.navigationItem.rightBarButtonItems = [shareButton, editTags]
@@ -188,4 +198,28 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
     }
     
+    @objc func changeStrokeType(notification: Notification) {
+        if drawingVIew.tool == .pen {
+            drawingVIew.currentPen?.strokeType = StrokeTypes(rawValue: UserDefaults.standard.integer(forKey: "changedStrokeType")) ?? .normal
+            
+        } else {
+            drawingVIew.currentHighlighter?.strokeType = StrokeTypes(rawValue: UserDefaults.standard.integer(forKey: "changedStrokeType")) ?? .normal
+        }
+    }
+    
+    @objc func changeColor(notification: Notification) {
+        if drawingVIew.tool == .pen {
+            drawingVIew.currentPen?.color = UIColor(hex: UserDefaults.standard.string(forKey: "changedColor")!)!
+        } else {
+            drawingVIew.currentHighlighter?.color = UIColor(hex: UserDefaults.standard.string(forKey: "changedColor")!)!
+        }
+    }
+    
+    @objc func changeSize(notification: Notification) {
+        if drawingVIew.tool == .pen {
+            drawingVIew.currentPen?.width = UserDefaults.standard.double(forKey: "changedWidth") 
+        } else {
+            drawingVIew.currentHighlighter?.width = UserDefaults.standard.double(forKey: "changedWidth") 
+        }
+    }
 }

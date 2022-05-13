@@ -22,9 +22,9 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
     
     public var selectedTool: Tool {
         if self.tool == .pen {
-            return  currentPen ?? PenTool(width: 4.0, color: UIColor.systemBlue, opacity: 1.0, blendMode: .normal)
+            return  currentPen ?? PenTool(width: 4.0, color: UIColor.systemBlue, opacity: 1.0, blendMode: .normal, strokeType: .normal)
         } else if self.tool == .highlighter {
-            return currentHighlighter ?? PenTool(width: 4.0, color: UIColor.systemYellow, opacity: 0.8, blendMode: .normal)
+            return currentHighlighter ?? PenTool(width: 4.0, color: UIColor.systemYellow, opacity: 0.8, blendMode: .normal, strokeType: .normal)
         } else {
             return PenTool()
         }

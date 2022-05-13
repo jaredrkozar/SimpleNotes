@@ -26,7 +26,7 @@ public class PenTool: Tool {
         self.strokeType = .normal
     }
     
-    init(width: Double, color: UIColor, opacity: Double, blendMode: CGBlendMode) {
+    init(width: Double, color: UIColor, opacity: Double, blendMode: CGBlendMode, strokeType: StrokeTypes) {
         self.width = width
         self.blendMode = blendMode
         self.opacity = opacity

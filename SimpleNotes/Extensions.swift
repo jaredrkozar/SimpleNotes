@@ -14,7 +14,7 @@ var currentNote: Note?
 
 public var currentDevice: Device?
 
-public enum StrokeTypes {
+public enum StrokeTypes: Int {
     case normal
     case dotted
     case dashed

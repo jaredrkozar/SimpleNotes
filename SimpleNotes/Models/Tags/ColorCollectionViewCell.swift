@@ -14,9 +14,11 @@ class ColorCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         
+        if checkmark != nil {
         checkmark.image = UIImage(systemName: "checkmark.circle.fill")?.withTintColor(UIColor.white, renderingMode: .alwaysOriginal)
+            checkmark.isHidden = true
+        }
         
-        checkmark.isHidden = true
     }
     
     func setSelected() {

@@ -10,6 +10,8 @@
 		1197BA6F1902435A622C74E4 /* Pods_SimpleNotes_SimpleNotesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A3152DECD2FC30763295899 /* Pods_SimpleNotes_SimpleNotesUITests.framework */; };
 		5BBB5572D47E81F29B170B17 /* Pods_SimpleNotesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7042E8EED9EB51C046B04E5F /* Pods_SimpleNotesTests.framework */; };
 		7F0F03E7282C368D00A6B404 /* ToolOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */; };
+		7F0F03EE282E4B8000A6B404 /* LineTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0F03EC282E4B8000A6B404 /* LineTypeCollectionViewCell.swift */; };
+		7F0F03EF282E4B8000A6B404 /* LineTypeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F0F03ED282E4B8000A6B404 /* LineTypeCollectionViewCell.xib */; };
 		7F11DAB5279F351F0053D2FB /* Tags+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F11DAB3279F351F0053D2FB /* Tags+CoreDataClass.swift */; };
 		7F11DAB6279F351F0053D2FB /* Tags+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F11DAB4279F351F0053D2FB /* Tags+CoreDataProperties.swift */; };
 		7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3765FF278A078B00A107FF /* NoteShareSettingsViewController.swift */; };
@@ -106,6 +108,8 @@
 		56828E4856EFDEE31B2D4DC2 /* Pods-SimpleNotesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotesTests.debug.xcconfig"; path = "Target Support Files/Pods-SimpleNotesTests/Pods-SimpleNotesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7042E8EED9EB51C046B04E5F /* Pods_SimpleNotesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleNotesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolOptionsViewController.swift; sourceTree = "<group>"; };
+		7F0F03EC282E4B8000A6B404 /* LineTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineTypeCollectionViewCell.swift; sourceTree = "<group>"; };
+		7F0F03ED282E4B8000A6B404 /* LineTypeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LineTypeCollectionViewCell.xib; sourceTree = "<group>"; };
 		7F11DAB3279F351F0053D2FB /* Tags+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tags+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		7F11DAB4279F351F0053D2FB /* Tags+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tags+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		7F3765FF278A078B00A107FF /* NoteShareSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteShareSettingsViewController.swift; sourceTree = "<group>"; };
@@ -270,6 +274,8 @@
 		7F498ACA27718ECB00202413 /* Tags */ = {
 			isa = PBXGroup;
 			children = (
+				7F0F03EC282E4B8000A6B404 /* LineTypeCollectionViewCell.swift */,
+				7F0F03ED282E4B8000A6B404 /* LineTypeCollectionViewCell.xib */,
 				7F498ABF2771656900202413 /* DetailCollectionViewCell.swift */,
 				7FE45083281A67E20034928B /* ColorCollectionViewCell.swift */,
 				7FE45084281A67E20034928B /* ColorCollectionViewCell.xib */,
@@ -524,6 +530,7 @@
 			files = (
 				7F498AC727718CAA00202413 /* TagTableViewCell.xib in Resources */,
 				7FE45086281A67E20034928B /* ColorCollectionViewCell.xib in Resources */,
+				7F0F03EF282E4B8000A6B404 /* LineTypeCollectionViewCell.xib in Resources */,
 				7FEBEC7B276135DC0066F0C0 /* LaunchScreen.storyboard in Resources */,
 				7FEBEC78276135DC0066F0C0 /* Assets.xcassets in Resources */,
 				7FEBEC76276135DA0066F0C0 /* Main.storyboard in Resources */,
@@ -712,6 +719,7 @@
 				7FEBEC71276135DA0066F0C0 /* SceneDelegate.swift in Sources */,
 				7FE45089281E2A460034928B /* DrawingView.swift in Sources */,
 				7F53DAA8279BEF62006789F6 /* CloudServiceFiles.swift in Sources */,
+				7F0F03EE282E4B8000A6B404 /* LineTypeCollectionViewCell.swift in Sources */,
 				7FE45085281A67E20034928B /* ColorCollectionViewCell.swift in Sources */,
 				7F37660F278A52DA00A107FF /* SharingLocation.swift in Sources */,
 				7FE4509A281E30A00034928B /* HelperFunctions.swift in Sources */,
