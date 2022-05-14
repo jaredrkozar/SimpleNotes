@@ -141,11 +141,12 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     @objc func doneButtonTapped(sender: UIBarButtonItem) {
+       
         if isEditingTag == true {
             saveTag(currentTag: currentTag, name: tagNameField.text!, symbol: image!, color: (selectedColor?.toHex)!)
         } else {
             
-            saveTag(currentTag: nil, name: tagNameField.text!, symbol: image ?? "folder1", color: (selectedColor?.toHex)!)
+            saveTag(currentTag: nil, name: tagNameField.text!, symbol: image ?? "folder", color: (selectedColor?.toHex)!)
         }
         
         
