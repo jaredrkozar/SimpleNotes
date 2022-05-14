@@ -96,7 +96,7 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fQ6-Ug-scP">
                                 <rect key="frame" x="107" y="70" width="239" height="200"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="TlO-rV-QxN"/>
+                                    <constraint firstAttribute="height" constant="200" id="yaZ-dR-2cw"/>
                                 </constraints>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bKo-hS-a0z">
@@ -105,7 +105,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JNL-pP-bIe">
-                                <rect key="frame" x="12" y="410" width="381" height="412"/>
+                                <rect key="frame" x="12" y="420" width="381" height="402"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="I7a-df-g28">
                                     <size key="itemSize" width="70" height="70"/>
@@ -125,14 +125,11 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="scZ-7h-aiA">
-                                <rect key="frame" x="107" y="364" width="177" height="31"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="PGh-Ja-A77"/>
-                                </constraints>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="scZ-7h-aiA">
+                                <rect key="frame" x="76" y="364" width="262" height="32"/>
                                 <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
+                                    <segment title="Color"/>
+                                    <segment title="Icon"/>
                                 </segments>
                                 <connections>
                                     <action selector="changedSegment:" destination="0K5-WK-Wek" eventType="valueChanged" id="CXZ-DS-UeY"/>
@@ -142,18 +139,19 @@
                         <viewLayoutGuide key="safeArea" id="OrX-8x-tb4"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="OrX-8x-tb4" firstAttribute="trailing" secondItem="fQ6-Ug-scP" secondAttribute="trailing" constant="68" id="05V-dj-VhK"/>
-                            <constraint firstItem="OrX-8x-tb4" firstAttribute="trailing" secondItem="JNL-pP-bIe" secondAttribute="trailing" constant="21" id="8Le-sZ-ql1"/>
-                            <constraint firstItem="fQ6-Ug-scP" firstAttribute="leading" secondItem="OrX-8x-tb4" secondAttribute="leading" constant="107" id="EKh-Ku-RgG"/>
-                            <constraint firstItem="bKo-hS-a0z" firstAttribute="leading" secondItem="OrX-8x-tb4" secondAttribute="leading" constant="80" id="EX9-QU-K9k"/>
-                            <constraint firstItem="fQ6-Ug-scP" firstAttribute="top" secondItem="OrX-8x-tb4" secondAttribute="top" constant="26" id="OJN-QR-pYb"/>
-                            <constraint firstItem="bKo-hS-a0z" firstAttribute="top" secondItem="fQ6-Ug-scP" secondAttribute="bottom" constant="18" id="PCh-vJ-P8p"/>
-                            <constraint firstItem="bKo-hS-a0z" firstAttribute="centerX" secondItem="m1L-BI-KhG" secondAttribute="centerX" id="Ubv-sv-ovY"/>
-                            <constraint firstItem="JNL-pP-bIe" firstAttribute="top" secondItem="scZ-7h-aiA" secondAttribute="bottom" constant="20" id="i2X-jG-7LG"/>
-                            <constraint firstItem="OrX-8x-tb4" firstAttribute="bottom" secondItem="JNL-pP-bIe" secondAttribute="bottom" constant="40" id="maC-xR-2e2"/>
-                            <constraint firstItem="scZ-7h-aiA" firstAttribute="leading" secondItem="OrX-8x-tb4" secondAttribute="leading" constant="124" id="qB6-wS-rPL"/>
-                            <constraint firstItem="scZ-7h-aiA" firstAttribute="top" secondItem="bKo-hS-a0z" secondAttribute="bottom" constant="38" id="qS5-t9-CU1"/>
-                            <constraint firstItem="JNL-pP-bIe" firstAttribute="leading" secondItem="OrX-8x-tb4" secondAttribute="leading" constant="12" id="sdX-EW-X2Q"/>
+                            <constraint firstItem="fQ6-Ug-scP" firstAttribute="top" secondItem="OrX-8x-tb4" secondAttribute="top" constant="26" id="0pK-u5-dpz"/>
+                            <constraint firstItem="scZ-7h-aiA" firstAttribute="top" secondItem="bKo-hS-a0z" secondAttribute="bottom" constant="42" id="Fs3-5c-heC"/>
+                            <constraint firstItem="JNL-pP-bIe" firstAttribute="leading" secondItem="OrX-8x-tb4" secondAttribute="leading" constant="12" id="Kj4-wp-1Cg"/>
+                            <constraint firstItem="fQ6-Ug-scP" firstAttribute="leading" secondItem="OrX-8x-tb4" secondAttribute="leading" constant="107" id="OPd-F6-b0g"/>
+                            <constraint firstItem="bKo-hS-a0z" firstAttribute="centerX" secondItem="scZ-7h-aiA" secondAttribute="centerX" id="bJU-oT-zaf"/>
+                            <constraint firstItem="bKo-hS-a0z" firstAttribute="top" secondItem="fQ6-Ug-scP" secondAttribute="bottom" constant="18" id="c32-Cd-dpb"/>
+                            <constraint firstItem="OrX-8x-tb4" firstAttribute="trailing" secondItem="fQ6-Ug-scP" secondAttribute="trailing" constant="68" id="c9W-Ei-eQc"/>
+                            <constraint firstItem="bKo-hS-a0z" firstAttribute="centerX" secondItem="m1L-BI-KhG" secondAttribute="centerX" id="fJd-RZ-T4w"/>
+                            <constraint firstItem="JNL-pP-bIe" firstAttribute="top" secondItem="scZ-7h-aiA" secondAttribute="bottom" constant="25" id="oAI-44-iod"/>
+                            <constraint firstItem="bKo-hS-a0z" firstAttribute="leading" secondItem="OrX-8x-tb4" secondAttribute="leading" constant="80" id="rNB-4o-whG"/>
+                            <constraint firstItem="OrX-8x-tb4" firstAttribute="bottom" secondItem="JNL-pP-bIe" secondAttribute="bottom" constant="40" id="rPy-cZ-Pb1"/>
+                            <constraint firstItem="OrX-8x-tb4" firstAttribute="trailing" secondItem="JNL-pP-bIe" secondAttribute="trailing" constant="21" id="ufz-4n-0S5"/>
+                            <constraint firstItem="scZ-7h-aiA" firstAttribute="leading" secondItem="OrX-8x-tb4" secondAttribute="leading" constant="76" id="zhj-TC-uWD"/>
                         </constraints>
                     </view>
                     <connections>
