@@ -10,11 +10,11 @@ import UIKit
 class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIColorPickerViewControllerDelegate {
     let detailIcons = UIImage.SymbolConfiguration(pointSize: 30.0, weight: .regular, scale: .large)
     
+    @IBOutlet var segmentedControl: UISegmentedControl!
     @IBOutlet var tagNameField: UITextField!
     @IBOutlet var symbolImage: UIImageView!
     
-    @IBOutlet var colorCollectionView: UICollectionView!
-    @IBOutlet var iconCOllectionView: UICollectionView!
+    @IBOutlet var collectionView: UICollectionView!
     var currentTag: AllTags?
     var colorCell = "colorCell"
     var iconCell = "iconCell"
@@ -25,7 +25,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     var isEditingTag: Bool?
     
-    let colors = [UIColor.systemRed, UIColor.systemOrange, UIColor.systemYellow, UIColor.systemGreen, UIColor.systemBlue, UIColor.systemCyan, UIColor.systemPurple, UIColor.systemIndigo, UIColor.systemPink, UIColor.systemGray5]
+    var colors = [UIColor.systemRed, UIColor.systemOrange, UIColor.systemYellow, UIColor.systemGreen, UIColor.systemBlue, UIColor.systemCyan, UIColor.systemPurple, UIColor.systemIndigo, UIColor.systemPink, UIColor.systemGray5]
       let icons = ["folder", "tray", "externaldrive", "doc", "doc.plaintext", "note.text", "book", "book.closed", "ticket", "link", "person", "person.crop.circle", "person.crop.square", "sun.max", "moon", "umbrella", "thermometer", "cloud.moon", "mic", "loupe", "magnifyingglass", "square", "circle", "eye", "tshirt", "eyeglasses", "facemask", "message", "bubble.right", "quote.bubble", "star.bubble", "exclamationmark.bubble", "plus.bubble", "checkmark.bubble"]
     
     override func viewDidLoad() {
@@ -34,18 +34,12 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         // Do any additional setup after loading the view.
         
         let colorCell = UINib(nibName: "ColorCollectionViewCell", bundle: nil)
-        colorCollectionView.register(colorCell, forCellWithReuseIdentifier: "ColorCollectionViewCell")
-        iconCOllectionView.register(colorCell, forCellWithReuseIdentifier: "ColorCollectionViewCell")
-        
-        colorCollectionView.allowsSelection = true
-        colorCollectionView.allowsMultipleSelection = false
-        colorCollectionView.delegate = self
-        colorCollectionView.dataSource = self
-        
-        iconCOllectionView.allowsSelection = true
-        iconCOllectionView.allowsMultipleSelection = false
-        iconCOllectionView.delegate = self
-        iconCOllectionView.dataSource = self
+        collectionView.register(colorCell, forCellWithReuseIdentifier: "colorCell")
+        segmentedControl.selectedSegmentIndex = 0
+        collectionView.allowsSelection = true
+        collectionView.allowsMultipleSelection = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
         let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
 
@@ -59,8 +53,12 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         symbolImage.image = sendBackSymbol(imageName: image ?? "folder", color: selectedColor ?? UIColor.systemBlue)
     }
     
+    @IBAction func changedSegment(_ sender: UISegmentedControl) {
+        collectionView.reloadData()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if(collectionView==colorCollectionView) {
+        if(segmentedControl.selectedSegmentIndex==0) {
             return colors.count
         } else {
             return icons.count
@@ -68,33 +66,33 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath) as! ColorCollectionViewCell
+        cell.layer.cornerRadius = 9.0
+        switch segmentedControl.selectedSegmentIndex {
+            case 0:
         
-        if(collectionView==colorCollectionView) {
-            var cell = colorCollectionView.dequeueReusableCell(withReuseIdentifier: "ColorCollectionViewCell", for: indexPath) as! ColorCollectionViewCell
-            cell.layer.cornerRadius = 12.0
-            cell.backgroundColor = colors[indexPath.item]
+                cell.backgroundColor = colors[indexPath.item]
+            cell.icon.image = nil
             
-            if indexPath.item == colors.count - 1 {
-                cell.icon.image = UIImage(systemName: "plus", withConfiguration: detailIcons)
-                cell.icon.tintColor = .label
-            }
-            return cell
-        } else {
-            let cell = iconCOllectionView.dequeueReusableCell(withReuseIdentifier: "ColorCollectionViewCell", for: indexPath) as! ColorCollectionViewCell
-            cell.layer.cornerRadius = 9.0
-            cell.backgroundColor = .green
-            cell.icon.image = UIImage(systemName: icons[indexPath.item], withConfiguration: detailIcons)
-            cell.icon.tintColor = selectedColor
+            case 1:
             
-            return cell
+            cell.backgroundColor = .systemGray5
+            
+                cell.icon.image = UIImage(systemName: icons[indexPath.item], withConfiguration: detailIcons)
+                cell.icon.tintColor = selectedColor
+        
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ColorCollectionViewCell", for: indexPath) as! ColorCollectionViewCell
+
         }
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if(collectionView==colorCollectionView) {
+        if(segmentedControl.selectedSegmentIndex==0) {
   
             if indexPath.item != colors.count - 1 {
-                if let cell = colorCollectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
+                if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
                     cell.layer.borderColor = colors[indexPath.item].darker(by: 40.0)?.cgColor
                     cell.layer.borderWidth = 5.0
                     }
@@ -111,12 +109,12 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         } else {
             
             
-                      if let cell = iconCOllectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
+                      if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
                           cell.layer.borderColor = UIColor.gray.cgColor
                           cell.layer.borderWidth = 5.0
                           }
             
-          let iconcell = iconCOllectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell
+          let iconcell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell
             image = icons[indexPath.item] as! String
         }
     
@@ -124,15 +122,15 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if(collectionView==colorCollectionView){
-  
-            if let cell = colorCollectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
+        if(segmentedControl.selectedSegmentIndex==0){
+            print(")00000")
+            if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
                 
                 cell.layer.borderWidth = 0.0
                 }
         } else {
-            
-            if let cell = iconCOllectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
+            print(")111111")
+            if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
                 
                 cell.layer.borderWidth = 0.0
             }
@@ -148,7 +146,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
             saveTag(currentTag: currentTag, name: tagNameField.text!, symbol: image!, color: (selectedColor?.toHex)!)
         } else {
             
-            saveTag(currentTag: nil, name: tagNameField.text!, symbol: image ?? "folder", color: (selectedColor?.toHex)!)
+            saveTag(currentTag: nil, name: tagNameField.text!, symbol: image ?? "folder1", color: (selectedColor?.toHex)!)
         }
         
         
@@ -171,7 +169,9 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func colorPickerViewController(_ viewController: UIColorPickerViewController, didSelect color: UIColor, continuously: Bool) {
         selectedColor = color
+        colors.append(selectedColor!)
         symbolImage.image = sendBackSymbol(imageName: (image ?? "folder"), color: selectedColor!)
+        collectionView.reloadData()
     }
     
 }
