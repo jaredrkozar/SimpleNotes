@@ -54,6 +54,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     @IBAction func changedSegment(_ sender: UISegmentedControl) {
+        
         collectionView.reloadData()
     }
     
@@ -123,13 +124,11 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if(segmentedControl.selectedSegmentIndex==0){
-            print(")00000")
             if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
                 
                 cell.layer.borderWidth = 0.0
                 }
         } else {
-            print(")111111")
             if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
                 
                 cell.layer.borderWidth = 0.0
@@ -168,10 +167,16 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func colorPickerViewController(_ viewController: UIColorPickerViewController, didSelect color: UIColor, continuously: Bool) {
+        
         selectedColor = color
-        colors.append(selectedColor!)
+        
         symbolImage.image = sendBackSymbol(imageName: (image ?? "folder"), color: selectedColor!)
-        collectionView.reloadData()
+        
+        if continuously == false {
+            
+            colors.insert(selectedColor!, at: colors.count - 1)
+            collectionView.reloadData()
+        }
     }
     
 }

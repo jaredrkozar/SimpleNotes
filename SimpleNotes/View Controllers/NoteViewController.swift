@@ -60,9 +60,12 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         let redoButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.uturn.forward"), primaryAction: nil, menu: shareButtonTapped())
                                          
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .default)
-        
+        var config = UIImage.SymbolConfiguration(paletteColors: [.systemBlue, .systemYellow])
+
+        var newconfig = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 42.0)))
+
         let penButton = UIButton()
-        penButton.setImage(UIImage(systemName: "pin", withConfiguration: largeConfig), for: .normal)
+        penButton.setImage(UIImage(named: "penIcon")?.applyingSymbolConfiguration(newconfig), for: .normal)
         penButton.addTarget(self, action: #selector(penTool(sender:)), for: .touchUpInside)
         penButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
        
