@@ -37,16 +37,18 @@ func createNote() -> Note {
     newNote.date = Date()
     newNote.title = ""
     newNote.tags = []
+    newNote.isLocked = false
     return newNote
 }
 
-func saveNote(currentNote: Note?, title: String, textboxes: [CustomTextBox], date: Date, tags: [String]) {
+func saveNote(currentNote: Note?, title: String, textboxes: [CustomTextBox], date: Date, tags: [String], isLocked: Bool) {
    
     let newNote = currentNote ?? Note(context: context)
 
     newNote.title = title
     newNote.date = date
     newNote.noteID = UUID().uuidString
+    newNote.isLocked = isLocked
     var tagset = Set<Tags>()
     
     for tag in tags {

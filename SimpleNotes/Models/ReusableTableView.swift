@@ -23,8 +23,11 @@ class ReusableTableView: NSObject, UITableViewDataSource, UITableViewDelegate {
         
         let singlenote = listofnotes[indexPath.row]
 
-        cell.noteTitle.text = singlenote.title
-
+        if singlenote.isLocked == true {
+            cell.noteTitle.text = "Note Locked"
+        } else {
+            cell.noteTitle.text = singlenote.title
+        }
         cell.noteDate.text = singlenote.date!.formatted()
         
         cell.noteTags.addTags((singlenote.tags?.map({"\(String(describing: ($0 as AnyObject).name!))"})) ?? [])

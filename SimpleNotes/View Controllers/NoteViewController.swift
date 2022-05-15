@@ -15,6 +15,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     @IBOutlet var noteTagsField: WSTagsField!
     @IBOutlet var drawingVIew: DrawingView!
     
+    var isNoteLocked: Bool?
     var timer: Timer?
     
     var isEditingNote: Bool = false
@@ -113,7 +114,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     }
     
     @objc func autoSaveNote() {
-        saveNote(currentNote: currentNote, title: noteTitleField.text!, textboxes: textBoxes, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}))
+        saveNote(currentNote: currentNote, title: noteTitleField.text!, textboxes: textBoxes, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}), isLocked: isNoteLocked ?? false)
         
         NotificationCenter.default.post(name: Notification.Name("UpdateNotesTable"), object: nil)
         
@@ -232,8 +233,21 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             self.present(navController, animated: true, completion: nil)
         })
 
+        var lockNote = UIAction(title: "Lock Note", subtitle: "", image: UIImage(systemName: "lock"), identifier: .none, discoverabilityTitle: "", attributes: [], state: .off, handler: {_ in
+            LockNote().authenticate(folderID: "DDDDD", onCompleted: {result, error in
+                if error == nil {
+                    if self.isNoteLocked == true {
+                        self.isNoteLocked = false
+                    } else {
+                        self.isNoteLocked = true
+                    }
+                   
+                } else {
+                    CustomAlert.showAlert(title: "Face ID Error", message: error.debugDescription)
+                }
+            })
+        })
         
-        
-        return UIMenu(title: "", children: [shareButtonTapped(menuOption: []), showTags])
+        return UIMenu(title: "", children: [shareButtonTapped(menuOption: []), lockNote, showTags])
     }
 }

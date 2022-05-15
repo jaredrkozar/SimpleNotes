@@ -14,6 +14,7 @@
 		7F0F03EF282E4B8000A6B404 /* LineTypeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F0F03ED282E4B8000A6B404 /* LineTypeCollectionViewCell.xib */; };
 		7F11DAB5279F351F0053D2FB /* Tags+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F11DAB3279F351F0053D2FB /* Tags+CoreDataClass.swift */; };
 		7F11DAB6279F351F0053D2FB /* Tags+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F11DAB4279F351F0053D2FB /* Tags+CoreDataProperties.swift */; };
+		7F2FE9232830AE4A006777DE /* LockNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2FE9222830AE49006777DE /* LockNote.swift */; };
 		7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3765FF278A078B00A107FF /* NoteShareSettingsViewController.swift */; };
 		7F376602278A087900A107FF /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376601278A087900A107FF /* CustomButton.swift */; };
 		7F37660F278A52DA00A107FF /* SharingLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37660E278A52DA00A107FF /* SharingLocation.swift */; };
@@ -112,6 +113,7 @@
 		7F0F03ED282E4B8000A6B404 /* LineTypeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LineTypeCollectionViewCell.xib; sourceTree = "<group>"; };
 		7F11DAB3279F351F0053D2FB /* Tags+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tags+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		7F11DAB4279F351F0053D2FB /* Tags+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tags+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		7F2FE9222830AE49006777DE /* LockNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockNote.swift; sourceTree = "<group>"; };
 		7F3765FF278A078B00A107FF /* NoteShareSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteShareSettingsViewController.swift; sourceTree = "<group>"; };
 		7F376601278A087900A107FF /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		7F37660E278A52DA00A107FF /* SharingLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingLocation.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				7FE45081281A56F40034928B /* CollectionReusableView.swift */,
+				7F2FE9222830AE49006777DE /* LockNote.swift */,
 				7F376601278A087900A107FF /* CustomButton.swift */,
 				7F53DAA9279CC36C006789F6 /* AlertController.swift */,
 				7F53DAA7279BEF62006789F6 /* CloudServiceFiles.swift */,
@@ -721,6 +724,7 @@
 				7F53DAA8279BEF62006789F6 /* CloudServiceFiles.swift in Sources */,
 				7F0F03EE282E4B8000A6B404 /* LineTypeCollectionViewCell.swift in Sources */,
 				7FE45085281A67E20034928B /* ColorCollectionViewCell.swift in Sources */,
+				7F2FE9232830AE4A006777DE /* LockNote.swift in Sources */,
 				7F37660F278A52DA00A107FF /* SharingLocation.swift in Sources */,
 				7FE4509A281E30A00034928B /* HelperFunctions.swift in Sources */,
 				7F11DAB6279F351F0053D2FB /* Tags+CoreDataProperties.swift in Sources */,

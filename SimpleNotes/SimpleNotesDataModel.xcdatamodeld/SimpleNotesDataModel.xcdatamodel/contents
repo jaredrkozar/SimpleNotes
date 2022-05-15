@@ -7,6 +7,7 @@
     </entity>
     <entity name="Note" representedClassName="Note" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="isLocked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="noteID" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tags" inverseName="notes" inverseEntity="Tags"/>
@@ -29,7 +30,7 @@
     </entity>
     <elements>
         <element name="AllTags" positionX="-143.2405395507812" positionY="-105.2455444335938" width="128" height="74"/>
-        <element name="Note" positionX="-45" positionY="18" width="128" height="104"/>
+        <element name="Note" positionX="-45" positionY="18" width="128" height="119"/>
         <element name="Tags" positionX="-90" positionY="-18" width="128" height="59"/>
         <element name="TextBox" positionX="-90" positionY="-9" width="128" height="89"/>
     </elements>
