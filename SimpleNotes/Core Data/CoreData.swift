@@ -32,6 +32,14 @@ func fetchTags() {
     }
 }
 
+func createNote() -> Note {
+    let newNote = Note(context: context)
+    newNote.date = Date()
+    newNote.title = ""
+    newNote.tags = []
+    return newNote
+}
+
 func saveNote(currentNote: Note?, title: String, textboxes: [CustomTextBox], date: Date, tags: [String]) {
    
     let newNote = currentNote ?? Note(context: context)

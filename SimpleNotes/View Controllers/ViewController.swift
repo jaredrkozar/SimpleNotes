@@ -47,9 +47,20 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     @objc func addNote(sender: UIBarButtonItem) {
   
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newNoteVC") as! NoteViewController
+        
         vc.isEditingNote = false
-        let navController = UINavigationController(rootViewController: vc)
-        self.navigationController?.present(navController, animated: true, completion: nil)
+        vc.currentNote = createNote()
+        
+        switch currentDevice {
+        case .ipad, .mac:
+                splitViewController?.setViewController(vc, for: .secondary)
+            
+            showDetailViewController(vc, sender: true)
+        case .iphone:
+                navigationController?.pushViewController(vc, animated: true)
+        case .none:
+            return
+        }
     }
 
     @objc func settingsScreen(sender: UIButton) {

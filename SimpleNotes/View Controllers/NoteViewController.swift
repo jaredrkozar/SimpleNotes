@@ -44,8 +44,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         noteTagsField.addTags((currentNote?.tags?.map({"\(String(describing: ($0 as AnyObject).name!))"})) ?? [String]())
         
         noteDateField.date = currentNote?.date ?? Date.now
-  
-        let saveNote = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveNoteButtonTapped))
         
         let editTags = UIBarButtonItem(image: UIImage(systemName: "tag"), style: .plain, target: self, action: #selector(editTagsButtonTapped))
         
@@ -88,14 +86,8 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         NotificationCenter.default.addObserver(self, selector: #selector(changeColor(notification:)), name: Notification.Name("changedColor"), object: nil)
         
         
-        if isEditingNote == true {
-            
-            self.navigationItem.rightBarButtonItems = [shareButton, editTags]
-            timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(autoSaveNote), userInfo: nil, repeats: true)
-        } else {
-            self.navigationItem.leftBarButtonItems = [cancel]
-            self.navigationItem.rightBarButtonItems = [saveNote, editTags]
-        }
+        self.navigationItem.rightBarButtonItems = [shareButton, editTags]
+        timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(autoSaveNote), userInfo: nil, repeats: true)
     }
     
     @objc func showPenMenu(sender: UIButton) {
@@ -108,16 +100,12 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func saveNoteButtonTapped(sender: UIBarButtonItem) {
-        saveNote(currentNote: nil, title: noteTitleField.text!, textboxes: textBoxes, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}))
-
+    @objc func autoSaveNote() {
+        saveNote(currentNote: currentNote, title: noteTitleField.text!, textboxes: textBoxes, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}))
+        
         NotificationCenter.default.post(name: Notification.Name("UpdateNotesTable"), object: nil)
         
         dismiss(animated: true, completion: nil)
-    }
-
-    @objc func autoSaveNote() {
-        saveNote(currentNote: currentNote, title: noteTitleField.text!, textboxes: textBoxes, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}))
     }
     
     
