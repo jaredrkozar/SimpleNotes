@@ -49,14 +49,16 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
         let cancel = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped))
         
-        let shareButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "square.and.arrow.up"), primaryAction: nil, menu: shareButtonTapped())
+        let shareButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "square.and.arrow.up"), primaryAction: nil, menu: shareButtonTapped(menuOption: .displayInline))
         
         let flexibleSPace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
-        let undoButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.uturn.backward"), primaryAction: nil, menu: shareButtonTapped())
+        let undoButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.uturn.backward"), primaryAction: nil, menu: nil)
         
-        let redoButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.uturn.forward"), primaryAction: nil, menu: shareButtonTapped())
-                                         
+        let redoButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.uturn.forward"), primaryAction: nil, menu: nil)
+                                            
+        let moreButton = UIBarButtonItem(title: "More", image: UIImage(systemName: "ellipsis.circle"), primaryAction: nil, menu: moreButtonTapped())
+
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .default)
         var config = UIImage.SymbolConfiguration(paletteColors: [.systemBlue, .systemYellow])
 
@@ -79,14 +81,23 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
         self.navigationItem.titleView = toolsView
         
+        switch currentDevice {
+        case .iphone:
+            self.navigationItem.titleView = toolsView
+            self.navigationItem.rightBarButtonItem = moreButton
+        case .ipad, .mac:
+            self.navigationItem.titleView = toolsView
+            self.navigationItem.leftBarButtonItem = shareButton
+        case .none:
+            return
+        }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(changeStrokeType(notification:)), name: Notification.Name("changedStrokeType"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(changeSize(notification:)), name: Notification.Name("changedWidth"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(changeColor(notification:)), name: Notification.Name("changedColor"), object: nil)
         
-        
-        self.navigationItem.rightBarButtonItems = [shareButton, editTags]
         timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(autoSaveNote), userInfo: nil, repeats: true)
     }
     
@@ -96,6 +107,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
         present(navController, animated: true, completion: nil)
     }
+    
     @objc func cancelButtonTapped(sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
@@ -105,7 +117,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
         NotificationCenter.default.post(name: Notification.Name("UpdateNotesTable"), object: nil)
         
-        dismiss(animated: true, completion: nil)
     }
     
     
@@ -128,12 +139,10 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         }
     }
     
-    func shareButtonTapped() -> UIMenu {
-
+    func shareButtonTapped(menuOption: UIMenu.Options) -> UIMenu {
+        var locations = [UIAction]()
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "shareNoteVC") as! NoteShareSettingsViewController
         let navigationController = UINavigationController(rootViewController: vc)
-        
-        var locations = [UIAction]()
         
         for location in SharingLocation.allCases {
             locations.append( UIAction(title: "\(location.viewTitle)", image: location.icon, identifier: nil, attributes: []) { _ in
@@ -163,7 +172,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
              })
           }
         
-        return UIMenu(title: "Share Note", subtitle: nil, image: nil, identifier: nil, options: [], children: locations)
+        return UIMenu(title: "Share Note", subtitle: nil, image: nil, identifier: nil, options: menuOption, children: locations)
         
     }
     
@@ -210,7 +219,21 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         if drawingVIew.tool == .pen {
             drawingVIew.currentPen?.width = UserDefaults.standard.double(forKey: "changedWidth") 
         } else {
-            drawingVIew.currentHighlighter?.width = UserDefaults.standard.double(forKey: "changedWidth") 
+            drawingVIew.currentHighlighter?.width = UserDefaults.standard.double(forKey: "changedWidth")
         }
+    }
+    
+    @objc func moreButtonTapped() -> UIMenu {
+        var showTags = UIAction(title: "Tags", subtitle: "", image: UIImage(systemName: "tag"), identifier: .none, discoverabilityTitle: "", attributes: [], state: .off, handler: {_ in
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
+            let navController = UINavigationController(rootViewController: vc)
+            vc.newNoteVC = self.noteTagsField
+            
+            self.present(navController, animated: true, completion: nil)
+        })
+
+        
+        
+        return UIMenu(title: "", children: [shareButtonTapped(menuOption: []), showTags])
     }
 }
