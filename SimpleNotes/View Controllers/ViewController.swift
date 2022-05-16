@@ -48,8 +48,8 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
   
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newNoteVC") as! NoteViewController
         
-        vc.isEditingNote = false
         vc.currentNote = createNote()
+        vc.isNoteLocked = false
         
         switch currentDevice {
         case .ipad, .mac:
@@ -72,7 +72,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if dataSource.listofnotes[indexPath.row].isLocked == true {
            
-            LockNote().authenticate(folderID: "DDDDD", onCompleted: {result, error in
+            LockNote().authenticate(title: "View this note", onCompleted: {result, error in
                 if error == nil {
                     self.showNote(note: self.dataSource.listofnotes[indexPath.row])
                 } else {
@@ -90,7 +90,6 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     func showNote(note: Note) {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newNoteVC") as! NoteViewController
         
-        vc.isEditingNote = true
         vc.currentNote = note
         vc.isNoteLocked = note.isLocked
         
@@ -127,7 +126,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                 attributes: .destructive) { [self] _ in
                     
                     if dataSource.listofnotes[indexPath.row].isLocked == true {
-                        LockNote().authenticate(folderID: "DDDDD", onCompleted: {result, error in
+                        LockNote().authenticate(title: "Delete this note", onCompleted: {result, error in
                             if error == nil {
                                 deleteNote(note: dataSource.listofnotes[indexPath.row])
                                 

@@ -18,11 +18,11 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     var isNoteLocked: Bool?
     var timer: Timer?
     
-    var isEditingNote: Bool = false
-    
     var currentNote: Note?
     
     var textBoxes = [CustomTextBox]()
+    
+    var moreButton: UIBarButtonItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,9 +58,10 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
         let redoButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.uturn.forward"), primaryAction: nil, menu: nil)
                                             
-        let moreButton = UIBarButtonItem(title: "More", image: UIImage(systemName: "ellipsis.circle"), primaryAction: nil, menu: moreButtonTapped())
-
+        moreButton = UIBarButtonItem(title: "More", image: UIImage(systemName: "ellipsis.circle"), primaryAction: nil, menu: moreButtonTapped())
+        
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .default)
+        
         var config = UIImage.SymbolConfiguration(paletteColors: [.systemBlue, .systemYellow])
 
         var newconfig = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 42.0)))
@@ -225,6 +226,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     }
     
     @objc func moreButtonTapped() -> UIMenu {
+        print(self.isNoteLocked)
         var showTags = UIAction(title: "Tags", subtitle: "", image: UIImage(systemName: "tag"), identifier: .none, discoverabilityTitle: "", attributes: [], state: .off, handler: {_ in
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
             let navController = UINavigationController(rootViewController: vc)
@@ -232,16 +234,17 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             
             self.present(navController, animated: true, completion: nil)
         })
-
-        var lockNote = UIAction(title: "Lock Note", subtitle: "", image: UIImage(systemName: "lock"), identifier: .none, discoverabilityTitle: "", attributes: [], state: .off, handler: {_ in
-            LockNote().authenticate(folderID: "DDDDD", onCompleted: {result, error in
+        
+        let lockTitle = self.isNoteLocked! ? "Unlock note" : "Lock note"
+        let lockImage = self.isNoteLocked! ? "lock.open" : "lock"
+        
+        var lockNote = UIAction(title: lockTitle, subtitle: "", image: UIImage(systemName: lockImage), identifier: .none, discoverabilityTitle: "", attributes: [], state: .off, handler: {_ in
+            LockNote().authenticate(title: self.isNoteLocked! ? "Lock this note" : "Unlock this note", onCompleted: {result, error in
+                
                 if error == nil {
-                    if self.isNoteLocked == true {
-                        self.isNoteLocked = false
-                    } else {
-                        self.isNoteLocked = true
-                    }
-                   
+                    
+                    self.isNoteLocked = !self.isNoteLocked!
+                    self.moreButton?.menu = self.moreButtonTapped()
                 } else {
                     CustomAlert.showAlert(title: "Face ID Error", message: error.debugDescription)
                 }
