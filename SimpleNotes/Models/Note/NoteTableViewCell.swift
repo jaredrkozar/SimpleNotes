@@ -29,9 +29,6 @@ class NoteTableViewCell: UITableViewCell {
         noteTags.numberOfLines = 1
         
         noteTags.backgroundColor = .clear
-        noteText.isSelectable = false
-        noteText.isEditable = false
-        noteText.backgroundColor = .clear
         
     }
 

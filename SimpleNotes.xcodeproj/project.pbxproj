@@ -29,8 +29,6 @@
 		7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AA9276FC22100202413 /* NoteViewController.swift */; };
 		7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */; };
 		7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498ABD2771624200202413 /* NewTagViewController.swift */; };
-		7F498AC12771656900202413 /* DetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498ABF2771656900202413 /* DetailCollectionViewCell.swift */; };
-		7F498AC22771656900202413 /* DetailCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F498AC02771656900202413 /* DetailCollectionViewCell.xib */; };
 		7F498AC627718CAA00202413 /* TagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AC427718CAA00202413 /* TagTableViewCell.swift */; };
 		7F498AC727718CAA00202413 /* TagTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F498AC527718CAA00202413 /* TagTableViewCell.xib */; };
 		7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B0B27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld */; };
@@ -128,8 +126,6 @@
 		7F498AA9276FC22100202413 /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTagsTableViewController.swift; sourceTree = "<group>"; };
 		7F498ABD2771624200202413 /* NewTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTagViewController.swift; sourceTree = "<group>"; };
-		7F498ABF2771656900202413 /* DetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCollectionViewCell.swift; sourceTree = "<group>"; };
-		7F498AC02771656900202413 /* DetailCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailCollectionViewCell.xib; sourceTree = "<group>"; };
 		7F498AC427718CAA00202413 /* TagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTableViewCell.swift; sourceTree = "<group>"; };
 		7F498AC527718CAA00202413 /* TagTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagTableViewCell.xib; sourceTree = "<group>"; };
 		7F498B0C27722F4E00202413 /* SimpleNotesDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleNotesDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -279,10 +275,8 @@
 			children = (
 				7F0F03EC282E4B8000A6B404 /* LineTypeCollectionViewCell.swift */,
 				7F0F03ED282E4B8000A6B404 /* LineTypeCollectionViewCell.xib */,
-				7F498ABF2771656900202413 /* DetailCollectionViewCell.swift */,
 				7FE45083281A67E20034928B /* ColorCollectionViewCell.swift */,
 				7FE45084281A67E20034928B /* ColorCollectionViewCell.xib */,
-				7F498AC02771656900202413 /* DetailCollectionViewCell.xib */,
 				7F498AC427718CAA00202413 /* TagTableViewCell.swift */,
 				7F498AC527718CAA00202413 /* TagTableViewCell.xib */,
 			);
@@ -538,7 +532,6 @@
 				7FEBEC78276135DC0066F0C0 /* Assets.xcassets in Resources */,
 				7FEBEC76276135DA0066F0C0 /* Main.storyboard in Resources */,
 				7FEBECA3276136280066F0C0 /* NoteTableViewCell.xib in Resources */,
-				7F498AC22771656900202413 /* DetailCollectionViewCell.xib in Resources */,
 				7FC55DA22792ADEB001DDFD5 /* TableRowCell.xib in Resources */,
 				7FC55D962791372D001DDFD5 /* GoogleService-Info.plist in Resources */,
 			);
@@ -709,7 +702,6 @@
 				7FC55DA12792ADEB001DDFD5 /* TableRowCell.swift in Sources */,
 				7F0F03E7282C368D00A6B404 /* ToolOptionsViewController.swift in Sources */,
 				7FE4508F281E2B3E0034928B /* CustomTextBox.swift in Sources */,
-				7F498AC12771656900202413 /* DetailCollectionViewCell.swift in Sources */,
 				7FE45094281E2CE20034928B /* PenTool.swift in Sources */,
 				7FEBEC73276135DA0066F0C0 /* ViewController.swift in Sources */,
 				7FF892EF27A4C2F90030588B /* Note+CoreDataClass.swift in Sources */,
