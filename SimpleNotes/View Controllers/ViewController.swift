@@ -10,9 +10,10 @@ import UIKit
 class ViewController: UITableViewController, UINavigationControllerDelegate {
     
     var dataSource = ReusableTableView()
+    var currentTag: String?
     
-    func viewAppeared(currentTag: String?) {
-        fetchNotes(tag: currentTag)
+    func viewAppeared() {
+        fetchNotes(tag: currentTag, sortOption: .titleAscending)
         
         tableView.dataSource = dataSource
         dataSource.listofnotes = notes
@@ -21,9 +22,10 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         if currentDevice == .iphone || self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.compact {
-            viewAppeared(currentTag: nil)
+            viewAppeared()
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -40,7 +42,15 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         
         let settings = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsScreen))
 
-        self.navigationItem.rightBarButtonItems = [addNote, settings]
+        let viewOptions = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.up.arrow.down"), primaryAction: nil, menu: viewOptionsMenu())
+        
+        self.navigationItem.rightBarButtonItems = [addNote, viewOptions]
+        self.navigationItem.leftBarButtonItem = settings
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
     }
     
@@ -149,5 +159,23 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
             
             return UIMenu(title: "", children: [editAction, deleteAction])
         }
+    }
+    
+    func viewOptionsMenu() -> UIMenu {
+        var options = [UIAction]()
+        
+        for sort in sortOptions.allCases {
+            options.append(UIAction(title: "\(sort.title)", image: nil, identifier: .none, discoverabilityTitle: "View Options", attributes: [], state: .on, handler: {_ in
+                
+                fetchNotes(tag: self.currentTag, sortOption: sort)
+                
+                self.tableView.dataSource = self.dataSource
+                self.dataSource.listofnotes = notes
+                self.tableView.reloadData()
+                
+            }))
+        }
+        return UIMenu(title: "Share Note", subtitle: nil, image: nil, identifier: nil, options: .singleSelection, children: options)
+        
     }
 }

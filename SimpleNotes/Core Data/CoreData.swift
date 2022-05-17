@@ -78,8 +78,10 @@ func saveNote(currentNote: Note?, title: String, textboxes: [CustomTextBox], dat
     }
 }
 
-func fetchNotes(tag: String?) {
+func fetchNotes(tag: String?, sortOption: sortOptions?) {
     let request = Note.fetchRequest() as NSFetchRequest<Note>
+    let sort = NSSortDescriptor(key: sortOption?.sortType, ascending: sortOption!.ascending)
+    request.sortDescriptors = [sort]
     
     if tag != nil {
         request.predicate = NSPredicate(format:  "tags.name CONTAINS[c] %@", tag!)

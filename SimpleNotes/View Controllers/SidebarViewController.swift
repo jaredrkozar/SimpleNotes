@@ -150,13 +150,15 @@ extension SidebarViewController: UICollectionViewDelegate {
         if indexPath.section != 0 {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
             let navController = UINavigationController(rootViewController: vc)
-            vc.viewAppeared(currentTag: tagsItems[indexPath.row - 1].title)
+            vc.currentTag = tagsItems[indexPath.row - 1].title
+            vc.viewAppeared()
             self.navigationController?.present(navController, animated: true, completion: nil)
             
         } else {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
+
             let navController = UINavigationController(rootViewController: vc)
-            vc.viewAppeared(currentTag: nil)
+            vc.viewAppeared()
             splitViewController?.setViewController(navController, for: .supplementary)
         }
         

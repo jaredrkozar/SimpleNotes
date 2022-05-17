@@ -61,8 +61,9 @@ class TagsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
         let navController = UINavigationController(rootViewController: vc)
-        vc.viewAppeared(currentTag: tags[indexPath.row].name)
-        self.navigationController?.present(navController, animated: true, completion: nil)
+        vc.currentTag = tags[indexPath.row].name
+        vc.viewAppeared()
+        self.navigationController?.pushViewController(vc, animated: true)
         
     }
     override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {

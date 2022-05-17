@@ -20,6 +20,68 @@ public enum StrokeTypes: Int {
     case dashed
 }
 
+public enum sortOptions: CaseIterable {
+    case titleAscending
+    case titleDescending
+    case dateAscending
+    case dateDescending
+    
+    var title: String {
+        switch self {
+        case .dateAscending:
+            return "Date (Ascending)"
+        case .dateDescending:
+            return "Date (Descending)"
+        case .titleAscending:
+            return "Title (Ascending)"
+        case .titleDescending:
+            return "Title (Descending)"
+        
+        }
+    }
+    
+    var sortType: String {
+        switch self {
+        case .titleAscending, .titleDescending:
+            return "title"
+        case .dateAscending, .dateDescending:
+            return "date"
+        }
+    }
+    var ascending: Bool {
+        switch self {
+        case .dateAscending, .titleAscending:
+            return true
+        case .dateDescending, .titleDescending:
+            return false
+        }
+    }
+}
+
+public enum viewOptions: CaseIterable {
+    case grid
+    case list
+    
+    var title: String {
+        switch self {
+        case .grid:
+            return "Grid"
+        case .list:
+            return "List"
+        
+        }
+    }
+    
+    var icon: String {
+        switch self {
+        case .grid:
+            return "square.grid.2x2"
+        case .list:
+            return "list.bullet"
+        }
+    }
+}
+
 public enum Tools {
     case pen
     case highlighter

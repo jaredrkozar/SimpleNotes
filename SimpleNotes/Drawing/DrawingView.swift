@@ -71,7 +71,6 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
     private let forceSensitivity: CGFloat = 9.0
                     
     func setup() {
-        print("DKDKDKDKDKDKKD")
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedScreen(_:)))
           self.addGestureRecognizer(tapGesture)
           self.layer.drawsAsynchronously = true
