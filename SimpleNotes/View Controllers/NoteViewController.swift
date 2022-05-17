@@ -28,9 +28,10 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        
+        drawingVIew.setup()
         drawingVIew.tool = .pen
         drawingVIew.currentPen = PenTool(width: 20.0, color: .systemPink, opacity: 1.0, blendMode: .normal, strokeType: .normal)
+        
         drawingVIew.currentHighlighter = PenTool(width: 20.0, color: .systemYellow, opacity: 0.6, blendMode: .normal, strokeType: .normal)
         
         noteTitleField.backgroundColor = UIColor.systemGray5

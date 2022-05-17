@@ -53,7 +53,6 @@ class CustomTextBox: UITextView, UIGestureRecognizerDelegate, ObjectView {
         self.layer.borderWidth = 1.5
         self.backgroundColor = UIColor.clear
    
-        print(self.center)
         self.addSubview(moveIconImage)
         moveIconImage.isHidden = true
     

@@ -70,36 +70,15 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
     
     private let forceSensitivity: CGFloat = 9.0
                     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        // Setup scroll view
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.minimumZoomScale = 1
-        scrollView.maximumZoomScale = 3
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.delegate = NoteViewController()
-        scrollView.bouncesZoom = false
-        scrollView.scrollsToTop = true
-        scrollView.bounces = false
-        scrollView.contentSize = self.frame.size
-        self.addSubview(scrollView)
-        
-        scrollView.backgroundColor = .brown
-
-        NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            scrollView.topAnchor.constraint(equalTo: self.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tappedScreen(_:)))
-        self.addGestureRecognizer(tapGesture)
-        self.layer.drawsAsynchronously = true
+    func setup() {
+        print("DKDKDKDKDKDKKD")
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedScreen(_:)))
+          self.addGestureRecognizer(tapGesture)
+          self.layer.drawsAsynchronously = true
+        print(self)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
+              NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
+
     }
     
     open override func draw(_ rect: CGRect) {
@@ -230,7 +209,8 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
     }
     
     @objc func tappedScreen(_ sender: UITapGestureRecognizer) {
-
+        print("dkdkddkdkkdkdkdkdkdkdTAP")
+        print(keyboardIsOpen)
         if currentView?.isMoving == true || currentView?.isResizing == true || isSelectingLine == true {
             currentView?.moveIconImage.isHidden = true
             canCreateTextBox = true
