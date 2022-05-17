@@ -162,10 +162,11 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     }
     
     func viewOptionsMenu() -> UIMenu {
-        var options = [UIAction]()
+        var sortoptions = [UIAction]()
+        var viewoptions = [UIAction]()
         
         for sort in sortOptions.allCases {
-            options.append(UIAction(title: "\(sort.title)", image: nil, identifier: .none, discoverabilityTitle: "View Options", attributes: [], state: .on, handler: {_ in
+            sortoptions.append(UIAction(title: "\(sort.title)", image: nil, identifier: .none, discoverabilityTitle: "Sort Options", attributes: [], state: .on, handler: {_ in
                 
                 fetchNotes(tag: self.currentTag, sortOption: sort)
                 
@@ -175,7 +176,21 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                 
             }))
         }
-        return UIMenu(title: "Share Note", subtitle: nil, image: nil, identifier: nil, options: .singleSelection, children: options)
+        
+        for view in viewOptions.allCases {
+            viewoptions.append(UIAction(title: "\(view.title)", image: UIImage(systemName: "\(view.icon)"), identifier: .none, discoverabilityTitle: "View Options", attributes: [], state: .on, handler: {_ in
+                
+               print("FLLFLFLFL")
+                
+            }))
+        }
+        
+        
+        let sortOptionsMenu = UIMenu(title: "", subtitle: nil, image: nil, identifier: nil, options: .displayInline, children: sortoptions)
+        
+        let viewOptionsMenu = UIMenu(title: "", subtitle: nil, image: nil, identifier: nil, options: .displayInline, children: viewoptions)
+        
+        return UIMenu(title: "View Options", image: nil, identifier: nil, options: .singleSelection, children: [viewOptionsMenu, sortOptionsMenu])
         
     }
 }
