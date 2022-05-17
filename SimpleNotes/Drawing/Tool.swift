@@ -15,5 +15,5 @@ public protocol Tool {
     var strokeType: StrokeTypes { get set }
     var drawingView: DrawingView? { get }
     
-    func moved(currentPath: Line, previousPoint: CGPoint, midpoint1: CGPoint, midpoint2: CGPoint) -> Line?
+    func moved(currentPath: UIBezierPath, previousPoint: CGPoint, midpoint1: CGPoint, midpoint2: CGPoint) -> UIBezierPath?
 }

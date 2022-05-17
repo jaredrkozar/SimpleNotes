@@ -25,6 +25,8 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
             return  currentPen ?? PenTool(width: 4.0, color: UIColor.systemBlue, opacity: 1.0, blendMode: .normal, strokeType: .normal)
         } else if self.tool == .highlighter {
             return currentHighlighter ?? PenTool(width: 4.0, color: UIColor.systemYellow, opacity: 0.8, blendMode: .normal, strokeType: .normal)
+        } else if self.tool == .text {
+            return TextTool()
         } else {
             return PenTool()
         }
@@ -327,9 +329,9 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
         getTouchPoints(touch)
         
         if tool != .text {
-            if let currentPath = lines.popLast() {
-               
-                lines.append(selectedTool.moved(currentPath: currentPath, previousPoint:  CGPoint(x: previousPoint!.x, y: previousPoint!.y), midpoint1: CGPoint(x: getMidPoints().0.x, y: getMidPoints().0.y), midpoint2: CGPoint(x: getMidPoints().1.x, y: getMidPoints().1.y))!)
+            if var currentPath = lines.popLast() {
+                currentPath.path = selectedTool.moved(currentPath: currentPath.path, previousPoint:  CGPoint(x: previousPoint!.x, y: previousPoint!.y), midpoint1: CGPoint(x: getMidPoints().0.x, y: getMidPoints().0.y), midpoint2: CGPoint(x: getMidPoints().1.x, y: getMidPoints().1.y))!
+                lines.append(currentPath)
                 print(lines.count)
                 setNeedsDisplay()
            }
@@ -340,8 +342,9 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
                     setNeedsDisplay()
                 }
                 
-                var newLine = Line(color: UIColor.green, width: 5.0, opacity: 1.0, blendMode: .normal, path: UIBezierPath(), type: .shape, fillColor: UIColor.brown)
-                newLine.path = addshape(shape: .rect)
+                var newLine = Line(color: UIColor.systemBlue, width: 2.0, opacity: 1.0, blendMode: .normal, path: UIBezierPath(), type: .drawing, fillColor: UIColor.brown)
+                print(selectedTool)
+                newLine.path = selectedTool.moved(currentPath: newLine.path, previousPoint: shapeFirstPoint!, midpoint1: currentPoint!, midpoint2: currentPoint!)!
                 lines.append(newLine)
             }
         }

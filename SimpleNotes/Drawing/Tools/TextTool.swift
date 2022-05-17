@@ -18,12 +18,9 @@ class TextTool: Tool {
     
     var blendMode: CGBlendMode = .clear
     
-    func moved(currentPath: Line, previousPoint: CGPoint, midpoint1: CGPoint, midpoint2: CGPoint) -> Line? {
-        return nil
-    }
-    
-    func moved(currentPath: Line) -> Line {
-        return currentPath
+    func moved(currentPath: UIBezierPath, previousPoint: CGPoint, midpoint1: CGPoint, midpoint2: CGPoint) -> UIBezierPath? {
+        
+        return UIBezierPath(rect: CGRect(x: previousPoint.x, y: previousPoint.y, width: midpoint1.x - previousPoint.x, height: midpoint1.y - previousPoint.y))
     }
     
     var drawingView: DrawingView?

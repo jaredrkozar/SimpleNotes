@@ -195,7 +195,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             let navigationController = UINavigationController(rootViewController: vc)
             self.present(navigationController, animated: true)
         } else {
-            drawingVIew.tool = .highlighter
+            drawingVIew.tool = .text
         }
         
     }
