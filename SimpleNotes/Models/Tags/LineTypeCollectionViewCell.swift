@@ -15,6 +15,8 @@ class LineTypeCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        lineName.font = UIFont.systemFont(ofSize: 20, weight: .bold)
     }
 
 }

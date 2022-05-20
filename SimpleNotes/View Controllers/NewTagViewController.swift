@@ -68,7 +68,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath) as! ColorCollectionViewCell
-        cell.layer.cornerRadius = 9.0
+        cell.layer.cornerRadius = Constants.cornerRadius
         switch segmentedControl.selectedSegmentIndex {
             case 0:
         
@@ -95,7 +95,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
             if indexPath.item != colors.count - 1 {
                 if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
                     cell.layer.borderColor = colors[indexPath.item].darker(by: 40.0)?.cgColor
-                    cell.layer.borderWidth = 5.0
+                    cell.layer.borderWidth = Constants.borderWidth
                     }
                 
                 selectedColor = colors[indexPath.item] as! UIColor
@@ -112,7 +112,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
             
                       if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
                           cell.layer.borderColor = UIColor.gray.cgColor
-                          cell.layer.borderWidth = 5.0
+                          cell.layer.borderWidth = Constants.borderWidth
                           }
             
           let iconcell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell

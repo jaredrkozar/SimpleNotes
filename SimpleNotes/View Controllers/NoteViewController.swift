@@ -183,6 +183,13 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         if drawingVIew.tool == .pen {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "penMenu") as! ToolOptionsViewController
             let navigationController = UINavigationController(rootViewController: vc)
+            if currentDevice == .iphone {
+                if let picker = navigationController.presentationController as? UISheetPresentationController {
+                picker.detents = [.medium()]
+                picker.prefersGrabberVisible = true
+                picker.preferredCornerRadius = 5.0
+                }
+            }
             self.present(navigationController, animated: true)
         } else {
             drawingVIew.tool = .pen
@@ -227,7 +234,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     }
     
     @objc func moreButtonTapped() -> UIMenu {
-        print(self.isNoteLocked)
+    
         var showTags = UIAction(title: "Tags", subtitle: "", image: UIImage(systemName: "tag"), identifier: .none, discoverabilityTitle: "", attributes: [], state: .off, handler: {_ in
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
             let navController = UINavigationController(rootViewController: vc)

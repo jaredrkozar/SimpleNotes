@@ -88,7 +88,27 @@ public enum Tools {
     case eraser
     case lasso
     case text
+    case shape
     case hand
+    
+    var name: String {
+        switch self {
+        case .pen:
+            return "Pen"
+        case .highlighter:
+            return "Highlighter"
+        case .eraser:
+            return "Eraser"
+        case .lasso:
+            return "Lasso"
+        case .text:
+            return "Text"
+        case .shape:
+            return "Shape"
+        case .hand:
+            return "Hand"
+        }
+    }
 }
 
 public enum Device {
