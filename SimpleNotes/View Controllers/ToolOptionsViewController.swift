@@ -9,16 +9,46 @@ import UIKit
 
 class ToolOptionsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
-    var layout: UICollectionViewFlowLayout {
+    var layoutLineType: UICollectionViewFlowLayout {
         let cellLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         cellLayout.itemSize = CGSize(width: 50, height: 50)
         cellLayout.scrollDirection = .vertical
         return cellLayout
     }
     
-    var colorCollectionView: UICollectionView?
-    var sizeCollectionView: UICollectionView?
-    var lineTypeCollectionView: UICollectionView?
+    let colorCollectionView: UICollectionView = {
+        let colorCollectionView = UICollectionView(frame: CGRect(x: 10, y: 60, width: Constants.screenWidth - 15, height: 300), collectionViewLayout: UICollectionViewFlowLayout())
+        let colorcell = UINib(nibName: "ColorCollectionViewCell", bundle: nil)
+        colorCollectionView.register(colorcell, forCellWithReuseIdentifier: "ColorCollectionViewCell")
+        colorCollectionView.allowsSelection = true
+        colorCollectionView.allowsMultipleSelection = false
+        return colorCollectionView
+    }()
+    
+    var sizeCollectionView: UICollectionView = {
+        
+        let sizeCollectionView = UICollectionView(frame: CGRect(x: 10, y: 200, width: Constants.screenWidth - 20, height: 300), collectionViewLayout: UICollectionViewFlowLayout())
+        let sizecell = UINib(nibName: "ColorCollectionViewCell", bundle: nil)
+        sizeCollectionView.register(sizecell, forCellWithReuseIdentifier: "ColorCollectionViewCell")
+        sizeCollectionView.allowsSelection = true
+        sizeCollectionView.allowsMultipleSelection = false
+        return sizeCollectionView
+    }()
+    
+    var lineTypeCollectionView: UICollectionView = {
+        
+        let lineTypeLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        lineTypeLayout.itemSize = CGSize(width: 210, height: 90)
+        lineTypeLayout.scrollDirection = .horizontal
+        
+        let lineTypeCollectionView = UICollectionView(frame: CGRect(x: 5, y: 320, width: Constants.screenWidth, height: 90), collectionViewLayout: lineTypeLayout)
+        let lineCell = UINib(nibName: "LineTypeCollectionViewCell", bundle: nil)
+        lineTypeCollectionView.register(lineCell, forCellWithReuseIdentifier: "LineTypeCollectionViewCell")
+       
+        lineTypeCollectionView.allowsSelection = true
+        lineTypeCollectionView.allowsMultipleSelection = false
+        return lineTypeCollectionView
+    }()
     
     var drawingview: DrawingView?
     
@@ -33,59 +63,19 @@ class ToolOptionsViewController: UIViewController, UICollectionViewDataSource, U
         title = "Pen Settings"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .done, target: self, action: #selector(toggleFavoriteTool))
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 50, height: 50)
-        layout.scrollDirection = .vertical
-        colorCollectionView?.backgroundColor = .gray
-        if currentDevice == .iphone {
-            
-            colorCollectionView = UICollectionView(frame: CGRect(x: 10, y: 60, width: Constants.screenWidth - 15, height: 300), collectionViewLayout: layout)
 
-            
-        }
-        let colorcell = UINib(nibName: "ColorCollectionViewCell", bundle: nil)
-        colorCollectionView!.register(colorcell, forCellWithReuseIdentifier: "ColorCollectionViewCell")
-        view.addSubview(colorCollectionView!)
-        colorCollectionView!.allowsSelection = true
-        colorCollectionView?.allowsMultipleSelection = false
+        view.addSubview(colorCollectionView)
+   
+        view.addSubview(sizeCollectionView)
+
+        view.addSubview(lineTypeCollectionView)
         
-        sizeCollectionView?.backgroundColor = .gray
-        if currentDevice == .iphone {
-            
-            sizeCollectionView = UICollectionView(frame: CGRect(x: 10, y: 200, width: Constants.screenWidth - 20, height: 300), collectionViewLayout: layout)
-            
-        }
-        
-        let sizecell = UINib(nibName: "ColorCollectionViewCell", bundle: nil)
-        sizeCollectionView!.register(sizecell, forCellWithReuseIdentifier: "ColorCollectionViewCell")
-        view.addSubview(sizeCollectionView!)
-       
-        sizeCollectionView!.allowsSelection = true
-        sizeCollectionView?.allowsMultipleSelection = false
-        
-        lineTypeCollectionView?.backgroundColor = .gray
-        let lineTypeLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        lineTypeLayout.itemSize = CGSize(width: 210, height: 90)
-        lineTypeLayout.scrollDirection = .horizontal
-        if currentDevice == .iphone {
-            
-            lineTypeCollectionView = UICollectionView(frame: CGRect(x: 5, y: 320, width: Constants.screenWidth, height: 90), collectionViewLayout: lineTypeLayout)
-            
-        }
-        
-        let lineCell = UINib(nibName: "LineTypeCollectionViewCell", bundle: nil)
-        lineTypeCollectionView!.register(lineCell, forCellWithReuseIdentifier: "LineTypeCollectionViewCell")
-        view.addSubview(lineTypeCollectionView!)
-       
-        lineTypeCollectionView!.allowsSelection = true
-        lineTypeCollectionView?.allowsMultipleSelection = false
-        
-        colorCollectionView?.delegate = self
-        colorCollectionView?.dataSource = self
-        sizeCollectionView!.delegate = self
-        sizeCollectionView!.dataSource = self
-        lineTypeCollectionView?.delegate = self
-        lineTypeCollectionView?.dataSource = self
+        colorCollectionView.delegate = self
+        colorCollectionView.dataSource = self
+        sizeCollectionView.delegate = self
+        sizeCollectionView.dataSource = self
+        lineTypeCollectionView.delegate = self
+        lineTypeCollectionView.dataSource = self
         
     }
     
@@ -106,13 +96,13 @@ class ToolOptionsViewController: UIViewController, UICollectionViewDataSource, U
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if(collectionView == colorCollectionView) {
-            let cell = colorCollectionView?.dequeueReusableCell(withReuseIdentifier: "ColorCollectionViewCell", for: indexPath) as! ColorCollectionViewCell
+            let cell = colorCollectionView.dequeueReusableCell(withReuseIdentifier: "ColorCollectionViewCell", for: indexPath) as! ColorCollectionViewCell
             
             cell.backgroundColor = colors[indexPath.item]
             cell.layer.cornerRadius = Constants.cornerRadius
             return cell
         } else if(collectionView == sizeCollectionView) {
-            let cell = sizeCollectionView?.dequeueReusableCell(withReuseIdentifier: "ColorCollectionViewCell", for: indexPath) as! ColorCollectionViewCell
+            let cell = sizeCollectionView.dequeueReusableCell(withReuseIdentifier: "ColorCollectionViewCell", for: indexPath) as! ColorCollectionViewCell
             
             let circle = CAShapeLayer()
             circle.fillColor = UIColor.label.cgColor
@@ -123,21 +113,21 @@ class ToolOptionsViewController: UIViewController, UICollectionViewDataSource, U
    
             return cell
         }  else if(collectionView == lineTypeCollectionView){
-            let cell = lineTypeCollectionView?.dequeueReusableCell(withReuseIdentifier: "LineTypeCollectionViewCell", for: indexPath) as! LineTypeCollectionViewCell
+            let cell = lineTypeCollectionView.dequeueReusableCell(withReuseIdentifier: "LineTypeCollectionViewCell", for: indexPath) as! LineTypeCollectionViewCell
             cell.backgroundColor = .systemGray5
             cell.layer.cornerRadius = Constants.cornerRadius
             cell.lineImage.image = UIImage(named: lineTypes[indexPath.item][0])
             cell.lineName.text = lineTypes[indexPath.item][1]
             return cell
         } else {
-            let cell = lineTypeCollectionView?.dequeueReusableCell(withReuseIdentifier: "lineTypeCell", for: indexPath) as! LineTypeCollectionViewCell
+            let cell = lineTypeCollectionView.dequeueReusableCell(withReuseIdentifier: "lineTypeCell", for: indexPath) as! LineTypeCollectionViewCell
             return cell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if(collectionView == colorCollectionView) {
-            if let cell = colorCollectionView?.cellForItem(at: indexPath) as? ColorCollectionViewCell {
+            if let cell = colorCollectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
                 cell.layer.borderColor = colors[indexPath.item]?.darker(by: 40.0)?.cgColor
                 cell.layer.borderWidth = Constants.borderWidth
                 }
@@ -146,7 +136,7 @@ class ToolOptionsViewController: UIViewController, UICollectionViewDataSource, U
             NotificationCenter.default.post(name: Notification.Name( "changedColor"), object: nil)
         } else if(collectionView == sizeCollectionView) {
 
-            if let cell = sizeCollectionView!.cellForItem(at: indexPath) as? ColorCollectionViewCell {
+            if let cell = sizeCollectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
                 cell.layer.borderColor = UIColor.gray.cgColor
                 cell.layer.borderWidth = Constants.borderWidth
                 }
