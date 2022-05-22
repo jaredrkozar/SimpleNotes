@@ -14,6 +14,9 @@ import AppAuth
 
 class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
     
+    var defaultFolder: String = "root"
+    
+    
     var driveService = GTLRDriveService()
     
     var driveUser: GIDGoogleUser?
@@ -91,16 +94,25 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
 
     func uploadFile(note: Data, noteName: String, folderID: String?) {
         
+        
+        GIDSignIn.sharedInstance().restorePreviousSignIn()
+       
+        driveService.apiKey = "AIzaSyBz0NAnojMb8LOmWUlEIHWTHvljk4Yboaw"
+        driveService.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
+        GIDSignIn.sharedInstance().clientID = clientID
+ 
+        
         let file = GTLRDrive_File()
         file.name = noteName
-       
+        file.parents = ["root"]
         let params = GTLRUploadParameters(data: note, mimeType: "application/pdf")
        params.shouldUploadWithSingleRequest = true
   
        let upload = GTLRDriveQuery_FilesCreate.query(withObject: file, uploadParameters: params)
+        upload.fields = "id"
         
        self.driveService.executeQuery(upload, completionHandler:  { (response, result, error) in
-      
+           
            guard error == nil else {
                CustomAlert.showAlert(title: "An error occured while fetching the files", message:  error?.localizedDescription)
                return

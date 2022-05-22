@@ -133,6 +133,16 @@ func sendBackSymbol(imageName: String, color: UIColor) -> UIImage {
 
 extension UIView {
 
+    func findViewController() -> UIViewController? {
+        if let nextResponder = self.next as? UIViewController {
+            return nextResponder
+        } else if let nextResponder = self.next as? UIView {
+            return nextResponder.findViewController()
+        } else {
+            return nil
+        }
+    }
+    
     func moveBy(x: CGFloat, y: CGFloat)
     {
         self.frame.origin = CGPoint(x: self.frame.origin.x + x, y: self.frame.origin.y + y)

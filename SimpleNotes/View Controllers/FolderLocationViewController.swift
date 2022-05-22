@@ -91,8 +91,9 @@ class FolderLocationViewController: UITableViewController {
     }
 
     @objc func selectFolderButton(_ sender: UIBarButtonItem) {
-        let presenter = self.presentingViewController?.parent as? NoteShareSettingsViewController
-        presenter?.folderID = "currentfolder"
+        print(currentfolder)
+        let presenter = self.presentingViewController?.children.last as? NoteShareSettingsViewController
+        presenter?.folderID = currentfolder
         
         self.dismiss(animated: true)
     }

@@ -57,11 +57,7 @@ class NoteShareSettingsViewController: UITableViewController {
             return super.tableView(tableView, numberOfRowsInSection: section) // Use the default number of rows for other sections
         }
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        print(folderID)
-        print("DLDLDLLDLDLD")
-    }
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             if indexPath.row == 0 {
@@ -78,15 +74,15 @@ class NoteShareSettingsViewController: UITableViewController {
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "folderLocationsVC") as! FolderLocationViewController
                        let navController = UINavigationController(rootViewController: vc)
                 vc.location = sharingLocation
-                
-                present(navController, animated: true, completion: nil)
+                vc.currentfolder = currentLocation.defaultFolder
+                self.navigationController?.present(navController, animated: true, completion: nil)
             }
         }
         
     }
     
     @IBAction func didTapExportButton(_ sender: Any) {
-        print(folderID)
+        
         switch sharingLocation {
             case .email:
                 sendEmail(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: currentNoteView)
@@ -95,10 +91,9 @@ class NoteShareSettingsViewController: UITableViewController {
             case .otherapps:
             
                 sendToOtherApps(data: [currentNoteView, currentNote?.title! ?? ""])
-            case .googledrive:
-                uploadFileToCloud(defaultFolder: "root")
-            case .dropbox:
-                uploadFileToCloud(defaultFolder: "/")
+        case .googledrive, .dropbox:
+     
+            uploadFileToCloud(folder: folderID ?? currentLocation.defaultFolder)
             default:
                 break
         }
@@ -128,10 +123,10 @@ class NoteShareSettingsViewController: UITableViewController {
         return shouldHideSection
     }
     
-    func uploadFileToCloud(defaultFolder: String) {
-      
+    func uploadFileToCloud(folder: String) {
+      print(folder)
         if currentLocation.isSignedIn {
-            currentLocation.uploadFile(note: currentNoteView, noteName: (currentNote?.title)!, folderID: folderID ?? defaultFolder)
+            currentLocation.uploadFile(note: currentNoteView, noteName: (currentNote?.title)!, folderID: folder)
         } else {
             currentLocation.signIn(vc: self)
         }

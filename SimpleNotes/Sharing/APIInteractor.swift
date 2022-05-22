@@ -13,6 +13,7 @@ protocol APIInteractor {
     
     var isSignedIn: Bool { get }
     
+    var defaultFolder: String { get }
     func signOut()
     
     func fetchFiles(folderID: String, onCompleted: @escaping ([CloudServiceFiles]?, Error?) -> ())

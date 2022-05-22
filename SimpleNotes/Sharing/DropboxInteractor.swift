@@ -9,6 +9,8 @@ import UIKit
 import SwiftyDropbox
 
 class DropboxInteractor: APIInteractor {
+    var defaultFolder: String = "/"
+    
     
     var filesInFolder = [CloudServiceFiles]()
     let client = DropboxClientsManager.authorizedClient
