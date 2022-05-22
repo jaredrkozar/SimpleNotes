@@ -124,7 +124,7 @@ class NoteShareSettingsViewController: UITableViewController {
     }
     
     func uploadFileToCloud(folder: String) {
-      print(folder)
+
         if currentLocation.isSignedIn {
             currentLocation.uploadFile(note: currentNoteView, noteName: (currentNote?.title)!, folderID: folder)
         } else {

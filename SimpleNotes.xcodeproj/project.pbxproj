@@ -47,6 +47,7 @@
 		7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55DA327939E49001DDFD5 /* MimeTypes.swift */; };
 		7FC7FB6D2836D5C100CE483E /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7FB6C2836D5C100CE483E /* CustomButton.swift */; };
 		7FC7FB6F2837F74000CE483E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7FB6E2837F74000CE483E /* Constants.swift */; };
+		7FC7FB71283A0C4B00CE483E /* TintPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7FB70283A0C4A00CE483E /* TintPickerViewController.swift */; };
 		7FD82DCB28233AE500ECCB3B /* Brush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD82DCA28233AE500ECCB3B /* Brush.swift */; };
 		7FE45082281A56F40034928B /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45081281A56F40034928B /* CollectionReusableView.swift */; };
 		7FE45085281A67E20034928B /* ColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45083281A67E20034928B /* ColorCollectionViewCell.swift */; };
@@ -145,6 +146,7 @@
 		7FC55DA327939E49001DDFD5 /* MimeTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypes.swift; sourceTree = "<group>"; };
 		7FC7FB6C2836D5C100CE483E /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		7FC7FB6E2837F74000CE483E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7FC7FB70283A0C4A00CE483E /* TintPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TintPickerViewController.swift; sourceTree = "<group>"; };
 		7FD82DCA28233AE500ECCB3B /* Brush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brush.swift; sourceTree = "<group>"; };
 		7FE45081281A56F40034928B /* CollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectionReusableView.swift; path = SimpleNotes/CollectionReusableView.swift; sourceTree = SOURCE_ROOT; };
 		7FE45083281A67E20034928B /* ColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 			children = (
 				7F498AA9276FC22100202413 /* NoteViewController.swift */,
 				7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */,
+				7FC7FB70283A0C4A00CE483E /* TintPickerViewController.swift */,
 				7F53DAAB279D4B09006789F6 /* TabBarController.swift */,
 				7F53DAAD279D4B75006789F6 /* TagsTableViewController.swift */,
 				7F53DAAF279D4CAD006789F6 /* SidebarViewController.swift */,
@@ -751,6 +754,7 @@
 				7FF892EE27A4C2F90030588B /* TextBox+CoreDataProperties.swift in Sources */,
 				7FE4508D281E2AAB0034928B /* Tool.swift in Sources */,
 				7F37662E278E666100A107FF /* GoogleInteractor.swift in Sources */,
+				7FC7FB71283A0C4B00CE483E /* TintPickerViewController.swift in Sources */,
 				7FC7FB6D2836D5C100CE483E /* CustomButton.swift in Sources */,
 				7F376613278AC3CD00A107FF /* SendEmail.swift in Sources */,
 				7F37661E278D40F700A107FF /* FolderLocationViewController.swift in Sources */,

@@ -25,7 +25,6 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     var isEditingTag: Bool?
     
-    var colors = [UIColor.systemRed, UIColor.systemOrange, UIColor.systemYellow, UIColor.systemGreen, UIColor.systemBlue, UIColor.systemCyan, UIColor.systemPurple, UIColor.systemIndigo, UIColor.systemPink, UIColor.systemGray5]
       let icons = ["folder", "tray", "externaldrive", "doc", "doc.plaintext", "note.text", "book", "book.closed", "ticket", "link", "person", "person.crop.circle", "person.crop.square", "sun.max", "moon", "umbrella", "thermometer", "cloud.moon", "mic", "loupe", "magnifyingglass", "square", "circle", "eye", "tshirt", "eyeglasses", "facemask", "message", "bubble.right", "quote.bubble", "star.bubble", "exclamationmark.bubble", "plus.bubble", "checkmark.bubble"]
     
     override func viewDidLoad() {
@@ -34,7 +33,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         // Do any additional setup after loading the view.
         
         let colorCell = UINib(nibName: "ColorCollectionViewCell", bundle: nil)
-        collectionView.register(colorCell, forCellWithReuseIdentifier: "colorCell")
+        collectionView.register(colorCell, forCellWithReuseIdentifier: "ColorCollectionViewCell")
         segmentedControl.selectedSegmentIndex = 0
         collectionView.allowsSelection = true
         collectionView.allowsMultipleSelection = false
@@ -60,19 +59,19 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if(segmentedControl.selectedSegmentIndex==0) {
-            return colors.count
+            return Constants.colors.count
         } else {
             return icons.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath) as! ColorCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ColorCollectionViewCell", for: indexPath) as! ColorCollectionViewCell
         cell.layer.cornerRadius = Constants.cornerRadius
         switch segmentedControl.selectedSegmentIndex {
             case 0:
         
-                cell.backgroundColor = colors[indexPath.item]
+            cell.backgroundColor = Constants.colors[indexPath.item]
             cell.icon.image = nil
             
             case 1:
@@ -92,13 +91,13 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if(segmentedControl.selectedSegmentIndex==0) {
   
-            if indexPath.item != colors.count - 1 {
+            if indexPath.item != Constants.colors.count - 1 {
                 if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
-                    cell.layer.borderColor = colors[indexPath.item].darker(by: 40.0)?.cgColor
+                    cell.layer.borderColor = Constants.colors[indexPath.item].darker(by: 40.0)?.cgColor
                     cell.layer.borderWidth = Constants.borderWidth
                     }
                 
-                selectedColor = colors[indexPath.item] as! UIColor
+                selectedColor = Constants.colors[indexPath.item] as! UIColor
             } else {
                 let colorPicker = UIColorPickerViewController()
                 colorPicker.selectedColor = selectedColor!
@@ -175,7 +174,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         if continuously == false {
             
-            colors.insert(selectedColor!, at: colors.count - 1)
+            Constants.colors.insert(selectedColor!, at: Constants.colors.count - 1)
             collectionView.reloadData()
         }
     }
