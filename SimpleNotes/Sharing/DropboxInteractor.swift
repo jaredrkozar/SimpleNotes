@@ -15,7 +15,7 @@ class DropboxInteractor: APIInteractor {
 
     func fetchFiles(folderID: String, onCompleted: @escaping ([CloudServiceFiles]?, Error?) -> ()) {
         
-        client!.files.listFolder(path: folderID ?? "").response { [self] response, error in
+        client!.files.listFolder(path: "").response { [self] response, error in
             if let result = response {
         
                 for file in result.entries {

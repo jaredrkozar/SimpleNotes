@@ -14,7 +14,7 @@ class NoteShareSettingsViewController: UITableViewController {
 
     var format: SharingType?
     var currentNote: Note?
-    var currentNoteView: UIView!
+    var currentNoteView: Data!
     var sharingLocation: SharingLocation?
     
     var currentLocation: APIInteractor {
@@ -40,7 +40,6 @@ class NoteShareSettingsViewController: UITableViewController {
         tableView.reloadData()
 
         format = .pdf
-    
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -59,6 +58,10 @@ class NoteShareSettingsViewController: UITableViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        print(folderID)
+        print("DLDLDLLDLDLD")
+    }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             if indexPath.row == 0 {
@@ -76,21 +79,22 @@ class NoteShareSettingsViewController: UITableViewController {
                        let navController = UINavigationController(rootViewController: vc)
                 vc.location = sharingLocation
                 
-                self.navigationController?.present(navController, animated: true, completion: nil)
+                present(navController, animated: true, completion: nil)
             }
         }
         
     }
     
     @IBAction func didTapExportButton(_ sender: Any) {
+        print(folderID)
         switch sharingLocation {
             case .email:
-                sendEmail(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: currentNoteView.createPDF() as Data)
+                sendEmail(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: currentNoteView)
             case .messages:
-                sendText(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: currentNoteView.createPDF() as Data)
+                sendText(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: currentNoteView)
             case .otherapps:
             
-                sendToOtherApps(data: [currentNoteView.createPDF(), currentNote?.title! ?? ""])
+                sendToOtherApps(data: [currentNoteView, currentNote?.title! ?? ""])
             case .googledrive:
                 uploadFileToCloud(defaultFolder: "root")
             case .dropbox:
@@ -125,8 +129,9 @@ class NoteShareSettingsViewController: UITableViewController {
     }
     
     func uploadFileToCloud(defaultFolder: String) {
+      
         if currentLocation.isSignedIn {
-            currentLocation.uploadFile(note: currentNoteView.createPDF() as Data, noteName: (currentNote?.title)!, folderID: folderID ?? defaultFolder)
+            currentLocation.uploadFile(note: currentNoteView, noteName: (currentNote?.title)!, folderID: folderID ?? defaultFolder)
         } else {
             currentLocation.signIn(vc: self)
         }

@@ -14,6 +14,10 @@ var currentNote: Note?
 
 public var currentDevice: Device?
 
+protocol ModalHandler {
+    func modalDismissed()
+}
+
 public enum StrokeTypes: Int {
     case normal
     case dotted

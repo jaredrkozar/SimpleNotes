@@ -167,7 +167,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                     return
                 }
                 
-                vc.currentNoteView = self.drawingVIew
+                vc.currentNoteView = self.drawingVIew.createPDF() as Data
                 vc.currentNote = self.currentNote
                 vc.sharingLocation = location
                 

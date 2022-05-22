@@ -65,7 +65,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
  
          let query = GTLRDriveQuery_FilesList.query()
          query.pageSize = 100
-        print(folderID)
+
          query.q = "'\(folderID)' in parents and trashed=false"
         query.fields = "files(id,kind,mimeType,name,size,iconLink)"
         
@@ -79,7 +79,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
                 if let listOfFiles : [GTLRDrive_File] = filesList.files {
                     
                     for file in listOfFiles {
-                        print(file.name)
+               
                         self.filesInFolder.append(CloudServiceFiles(name: file.name!, type: self.getFileType(type: file.mimeType!), folderID: file.identifier!))
                     }
                     

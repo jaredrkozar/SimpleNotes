@@ -8,8 +8,9 @@
 import UIKit
 
 class FolderLocationViewController: UITableViewController {
+    
     var noteView: NoteViewController?
-    @IBOutlet var selectFolderButton: CustomButton!
+    
     var location: SharingLocation?
     var currentfolder: String?
     var allFiles = [CloudServiceFiles]()
@@ -22,6 +23,7 @@ class FolderLocationViewController: UITableViewController {
         let nib = UINib(nibName: "TableRowCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "TableRowCell")
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Select Folder", style: .done, target: self, action: #selector(selectFolderButton))
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -31,14 +33,16 @@ class FolderLocationViewController: UITableViewController {
             GoogleInteractor().fetchFiles(folderID: currentfolder ?? "root", onCompleted: {
                 (files, error) in
                 self.allFiles = files!
-                print(self.allFiles.count)
+                
                 self.tableView.reloadData()
                 
             })
         } else if location == .dropbox {
-            DropboxInteractor().fetchFiles(folderID: currentfolder ?? "", onCompleted: {
+            DropboxInteractor().fetchFiles(folderID: currentfolder ?? "/", onCompleted: {
                 (files, error) in
                 self.allFiles = files!
+                
+                self.tableView.reloadData()
                 
             })
         }
@@ -75,6 +79,7 @@ class FolderLocationViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         let selectedFile = allFiles[indexPath.row]
 
         if  selectedFile.type == .folder {
@@ -85,10 +90,11 @@ class FolderLocationViewController: UITableViewController {
         }
     }
 
-    @IBAction func selectFolderButton(_ sender: Any) {
+    @objc func selectFolderButton(_ sender: UIBarButtonItem) {
+        let presenter = self.presentingViewController?.parent as? NoteShareSettingsViewController
+        presenter?.folderID = "currentfolder"
         
-        if let presenter = presentingViewController as? NoteShareSettingsViewController {
-            presenter.folderID = currentfolder ?? "root"
-        }
+        self.dismiss(animated: true)
     }
+    
 }
