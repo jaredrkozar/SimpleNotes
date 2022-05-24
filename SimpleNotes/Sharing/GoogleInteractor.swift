@@ -92,8 +92,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         }
        }
 
-    func uploadFile(note: Data, noteName: String, folderID: String?) {
-        
+    func uploadFile(note: Data, noteName: String, folderID: String?, onCompleted: @escaping (Double, String?) -> ()) {
         
         GIDSignIn.sharedInstance().restorePreviousSignIn()
        
@@ -113,10 +112,12 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         
        self.driveService.executeQuery(upload, completionHandler:  { (response, result, error) in
            
-           guard error == nil else {
-               CustomAlert.showAlert(title: "An error occured while fetching the files", message:  error?.localizedDescription)
-               return
-           }}
+           self.driveService.uploadProgressBlock = { [weak self] _, uploaded, total in
+                   guard total > 0 else { return }
+                   let progress = Float(uploaded) / Float(total)
+               onCompleted(Double(progress), error?.localizedDescription)
+               }
+       }
        )
     }
     

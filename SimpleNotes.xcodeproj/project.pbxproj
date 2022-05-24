@@ -34,7 +34,7 @@
 		7F498B572775719E00202413 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B562775719E00202413 /* CoreData.swift */; };
 		7F53DAA6279BA51B006789F6 /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */; };
 		7F53DAA8279BEF62006789F6 /* CloudServiceFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAA7279BEF62006789F6 /* CloudServiceFiles.swift */; };
-		7F53DAAA279CC36C006789F6 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAA9279CC36C006789F6 /* AlertController.swift */; };
+		7F53DAAA279CC36C006789F6 /* ToastNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAA9279CC36C006789F6 /* ToastNotification.swift */; };
 		7F53DAAC279D4B09006789F6 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAAB279D4B09006789F6 /* TabBarController.swift */; };
 		7F53DAAE279D4B75006789F6 /* TagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAAD279D4B75006789F6 /* TagsTableViewController.swift */; };
 		7F53DAB0279D4CAD006789F6 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAAF279D4CAD006789F6 /* SidebarViewController.swift */; };
@@ -133,7 +133,7 @@
 		7F498B562775719E00202413 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		7F53DAA7279BEF62006789F6 /* CloudServiceFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudServiceFiles.swift; sourceTree = "<group>"; };
-		7F53DAA9279CC36C006789F6 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
+		7F53DAA9279CC36C006789F6 /* ToastNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastNotification.swift; sourceTree = "<group>"; };
 		7F53DAAB279D4B09006789F6 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		7F53DAAD279D4B75006789F6 /* TagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsTableViewController.swift; sourceTree = "<group>"; };
 		7F53DAAF279D4CAD006789F6 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
@@ -261,7 +261,7 @@
 				7FE45081281A56F40034928B /* CollectionReusableView.swift */,
 				7F2FE9222830AE49006777DE /* LockNote.swift */,
 				7FC7FB6C2836D5C100CE483E /* CustomButton.swift */,
-				7F53DAA9279CC36C006789F6 /* AlertController.swift */,
+				7F53DAA9279CC36C006789F6 /* ToastNotification.swift */,
 				7F53DAA7279BEF62006789F6 /* CloudServiceFiles.swift */,
 				7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */,
 				7FC55DA02792ADEB001DDFD5 /* TableRowCell.xib */,
@@ -745,7 +745,7 @@
 				7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */,
 				7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */,
 				7FE45098281E30740034928B /* ResizableButton.swift in Sources */,
-				7F53DAAA279CC36C006789F6 /* AlertController.swift in Sources */,
+				7F53DAAA279CC36C006789F6 /* ToastNotification.swift in Sources */,
 				7FF892F027A4C2F90030588B /* Note+CoreDataProperties.swift in Sources */,
 				7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */,
 				7F376626278E220D00A107FF /* SettingsViewController.swift in Sources */,

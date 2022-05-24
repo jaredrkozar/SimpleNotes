@@ -32,9 +32,6 @@ class DropboxInteractor: APIInteractor {
                 
                 onCompleted(self.filesInFolder, nil)
                 
-            } else {
-                
-                CustomAlert.showAlert(title: "An error occured while fetching the files", message:  error?.description)
             }
         }
 
@@ -65,20 +62,23 @@ class DropboxInteractor: APIInteractor {
         DropboxClientsManager.unlinkClients()
     }
     
-    func uploadFile(note: Data, noteName: String, folderID: String?) {
-
+    func uploadFile(note: Data, noteName: String, folderID: String?, onCompleted: @escaping (Double, String?) -> ()) {
+        var progress: Double?
         let newPath = folderID! + "/\(noteName).pdf"
-        client?.files.upload(path: newPath, mode: .add, autorename: true, clientModified: nil, mute: false, input: note).response{ response, error in
-                if let _ = response { // to enable use: if let metadata = response {
-                    
-                    CustomAlert.showAlert(title: "Successfully uploaded note", message:  "The note was successfully uploaded to Dropbox")
-                } else {
-                    
-                    CustomAlert.showAlert(title: "An error occured while uploading the note", message:  error?.description)
-                    
-                }
+        client?.files.upload(path: newPath, mode: .add, autorename: true, clientModified: nil, mute: false, input: note)
+            
+            .progress { progressData in
+                progress = progressData.fractionCompleted
             }
+        
+            .response(queue: DispatchQueue.global(qos: .userInteractive), completionHandler: { response, error in
+                if let _ = response {
+                    onCompleted(progress ?? 0.0, "D")
+                }
+               
+            })
     }
+    
     
     func getFileType(type: String) -> MimeTypes {
         let type = (type as NSString).pathExtension

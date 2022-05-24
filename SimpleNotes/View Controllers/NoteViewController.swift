@@ -27,6 +27,8 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.showToast(backgroundColor: .systemRed, image: UIImage(systemName: "pin")!, titleText: "DrorororororoororororDD", subtitleText: "DrororororoorDDD", progress: nil)
+        
         // Do any additional setup after loading the view.
         drawingVIew.setup()
         drawingVIew.tool = .pen
@@ -243,7 +245,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             self.present(navController, animated: true, completion: nil)
         })
         
-        let lockTitle = self.isNoteLocked! ? "Unlock note" : "Lock note"
+        let lockTitle = self.isNoteLocked ?? false ? "Unlock note" : "Lock note"
         let lockImage = self.isNoteLocked! ? "lock.open" : "lock"
         
         var lockNote = UIAction(title: lockTitle, subtitle: "", image: UIImage(systemName: lockImage), identifier: .none, discoverabilityTitle: "", attributes: [], state: .off, handler: {_ in
@@ -254,7 +256,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                     self.isNoteLocked = !self.isNoteLocked!
                     self.moreButton?.menu = self.moreButtonTapped()
                 } else {
-                    CustomAlert.showAlert(title: "Face ID Error", message: error.debugDescription)
+                    self.view.showToast(backgroundColor: .systemGray5, image: UIImage(systemName: "pin")!, titleText: "DDD", subtitleText: "DDDD", progress: nil)
                 }
             })
         })
