@@ -86,7 +86,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                 if error == nil {
                     self.showNote(note: self.dataSource.listofnotes[indexPath.row])
                 } else {
-                    self.view.showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDD", subtitleText: "DDD", progress: nil)
+                    ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: "DLDLDLDLD", progress: nil)
                 }
             })
             
@@ -144,7 +144,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                                 
                                 self.tableView.reloadData()
                             } else {
-                                self.view.showToast(backgroundColor: .systemGray5, image: UIImage(systemName: "pin")!, titleText: "DDD", subtitleText: "DDDD", progress: nil)
+                                ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: "DLDLDLDLD", progress: nil)
                             }
                         })
                         
