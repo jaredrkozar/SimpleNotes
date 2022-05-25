@@ -7,14 +7,14 @@
 
 import UIKit
 
-class ToastNotification: UIView, UIGestureRecognizerDelegate {
+class ToastNotification: UIView {
   
     private var imageView: UIImageView {
         let image = UIImageView()
         image.tintColor = UIColor.white
         image.frame = CGRect(x: 5, y: 10, width: 50, height: 50)
-        image.image = UIImage(systemName: "pin")
         image.preferredSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 30.0, weight: .regular, scale: .large)
+        image.image = UIImage(systemName: "pin")
         return image
     }
     
@@ -28,7 +28,6 @@ class ToastNotification: UIView, UIGestureRecognizerDelegate {
         self.layer.cornerRadius = Constants.cornerRadius
         self.alpha = 1.0
         
-        imageView.image = image
         self.addSubview(imageView)
         
         let titleLabel = UILabel()
@@ -40,7 +39,7 @@ class ToastNotification: UIView, UIGestureRecognizerDelegate {
         
         if progress == nil {
             let subtitleLabel = UILabel()
-            subtitleLabel.textColor = .secondaryLabel
+            subtitleLabel.textColor = .white
             subtitleLabel.font = UIFont.systemFont(ofSize: 20.0, weight: .regular)
             subtitleLabel.frame = CGRect(x: 65, y: 35, width: 45, height: 20)
             subtitleLabel.text = subtitleText
@@ -48,10 +47,20 @@ class ToastNotification: UIView, UIGestureRecognizerDelegate {
         } else {
             let progressView = UIProgressView()
             progressView.progress = 0.35
-            progressView.frame = CGRect(x: 65, y: 45, width: self.bounds.maxX - 65 - 15, height: 30)
+            progressView.frame = CGRect(x: 65, y: 45, width: self.bounds.maxX - 155, height: 30)
             progressView.progressTintColor = .white
             progressView.trackTintColor = backgroundColor.darker(by: 40.0)
             self.addSubview(progressView)
+            
+            let cancelButton = UIButton(type: .system)
+            cancelButton.backgroundColor = backgroundColor.darker(by: 40.0)
+            cancelButton.frame = CGRect(x: self.bounds.maxX - 80, y: 10, width: 70, height: 50)
+            cancelButton.setTitle("Cancel", for: .normal)
+            cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+            cancelButton.target(forAction: #selector(cancelUpload), withSender: self)
+            cancelButton.layer.cornerRadius = Constants.cornerRadius
+            self.addSubview(cancelButton)
+            
         }
         
         window?.addSubview(self)
@@ -72,5 +81,10 @@ class ToastNotification: UIView, UIGestureRecognizerDelegate {
             
         }
         
+    }
+    
+    
+    @objc func cancelUpload(sender: UIButton) {
+        sender.backgroundColor = .red
     }
 }

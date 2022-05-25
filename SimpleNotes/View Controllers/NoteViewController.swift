@@ -27,7 +27,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: "DLDLDLDLD", progress: nil)
+        ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: nil, progress: 4.0)
         
         // Do any additional setup after loading the view.
         drawingVIew.setup()
@@ -256,7 +256,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                     self.isNoteLocked = !self.isNoteLocked!
                     self.moreButton?.menu = self.moreButtonTapped()
                 } else {
-                    ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: "DLDLDLDLD", progress: nil)
+                    ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: nil, progress: 4.0)
                 }
             })
         })

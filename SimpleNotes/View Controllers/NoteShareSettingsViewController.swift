@@ -128,7 +128,8 @@ class NoteShareSettingsViewController: UITableViewController {
         if currentLocation.isSignedIn {
             currentLocation.uploadFile(note: currentNoteView, noteName: (currentNote?.title)!, folderID: folder, onCompleted: {progress,error in
                 
-                ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: "DLDLDLDLD", progress: nil)
+                let notic = ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: "DLDLDLDLD", progress: nil)
+        
             
             })
         } else {

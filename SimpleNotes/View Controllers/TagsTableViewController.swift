@@ -42,7 +42,7 @@ class TagsTableViewController: UITableViewController {
         cell.logOutButton.isHidden = true
         cell.background.backgroundColor = UIColor.clear
        
-        cell.icon.image = UIImage(systemName: tag.symbol!)?.withTintColor(UIColor.systemGreen, renderingMode: .alwaysOriginal)
+        cell.icon.image = UIImage(systemName: tag.symbol!)?.withTintColor(UIColor(hex: tag.color!)!, renderingMode: .alwaysOriginal)
         
         cell.name.text = tag.name
         
@@ -72,7 +72,7 @@ class TagsTableViewController: UITableViewController {
               title: "Edit Tags", image: UIImage(systemName: "tag")) { [self] _ in
                 //gets the current dimension and splits it up into 2 parts, and saves them so they can be shown in the text fields in editPresetViewController. The editPresetViewController is then shown via a popover
                   
-                  let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! NewTagViewController
+                  let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newTagVC") as! NewTagViewController
                   let navController = UINavigationController(rootViewController: vc)
                   vc.isEditingTag = true
                   vc.currentTag = tags[indexPath.row]
@@ -80,7 +80,6 @@ class TagsTableViewController: UITableViewController {
                   vc.image = tags[indexPath.row].symbol
                   vc.name = tags[indexPath.row].name
                   vc.isEditingTag = true
-                  
                   self.navigationController?.present(navController, animated: true, completion: nil)
                 
             }
