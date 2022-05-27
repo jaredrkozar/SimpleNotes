@@ -9,25 +9,24 @@ import UIKit
 import SwiftyDropbox
 
 class DropboxInteractor: APIInteractor {
-    var defaultFolder: String = "/"
-    
+    var defaultFolder: String = ""
     
     var filesInFolder = [CloudServiceFiles]()
     let client = DropboxClientsManager.authorizedClient
 
     func fetchFiles(folderID: String, onCompleted: @escaping ([CloudServiceFiles]?, Error?) -> ()) {
         
-        client!.files.listFolder(path: "").response { [self] response, error in
+        client!.files.listFolder(path: folderID).response { [self] response, error in
             if let result = response {
         
                 for file in result.entries {
-                    var isFolder: Bool = true
+                    var isFolder: Bool = false
                     
                     if file is Files.FileMetadata {
-                        isFolder = false
+                        isFolder = true
                     }
                 
-                    self.filesInFolder.append(CloudServiceFiles(name: file.name, type: self.getFileType(type: file.name), folderID: file.pathLower!))
+                    self.filesInFolder.append(CloudServiceFiles(name: file.name, type: isFolder ? self.getFileType(type: file.name) : .folder, folderID: file.pathLower!))
                 }
                 
                 onCompleted(self.filesInFolder, nil)
@@ -65,18 +64,7 @@ class DropboxInteractor: APIInteractor {
     func uploadFile(note: Data, noteName: String, folderID: String, onCompleted: @escaping (Double, String?) -> ()) {
         var progress: Double?
         let newPath = folderID + "/\(noteName).pdf"
-        client?.files.upload(path: newPath, mode: .add, autorename: true, clientModified: nil, mute: false, input: note)
-            
-            .progress { progressData in
-                progress = progressData.fractionCompleted
-            }
-        
-            .response(queue: DispatchQueue.global(qos: .userInteractive), completionHandler: { response, error in
-                if let _ = response {
-                    onCompleted(progress ?? 0.0, "D")
-                }
-               
-            })
+        client?.files.upload(path: newPath, mode: .add, autorename: true, clientModified: Date(), mute: true, propertyGroups: nil, strictConflict: true, input: note)
     }
     
     

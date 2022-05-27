@@ -27,7 +27,7 @@ class FolderLocationViewController: UITableViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-
+    
         if location == .googledrive {
            
             GoogleInteractor().fetchFiles(folderID: currentfolder ?? "root", onCompleted: {
