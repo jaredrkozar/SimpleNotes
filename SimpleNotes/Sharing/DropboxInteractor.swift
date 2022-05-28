@@ -62,9 +62,17 @@ class DropboxInteractor: APIInteractor {
     }
     
     func uploadFile(note: Data, noteName: String, folderID: String, onCompleted: @escaping (Double, String?) -> ()) {
-        var progress: Double?
+
         let newPath = folderID + "/\(noteName).pdf"
-        client?.files.upload(path: newPath, mode: .add, autorename: true, clientModified: Date(), mute: true, propertyGroups: nil, strictConflict: true, input: note)
+        var request = client?.files.upload(path: newPath, mode: .add, autorename: true, clientModified: Date(), mute: true, propertyGroups: nil, strictConflict: true, input: note)
+        
+            .response { response, error in
+                if let response = response {
+                    ToastNotification().showToast(backgroundColor: .systemGreen, image: UIImage(systemName: "checkmark.circle.fill")!, titleText: "File uploaded to Dropbox", subtitleText: "The note was successfully uplrmmrmrmrmr rkrkkrkrkrkrrk  rkrkrkkrkkrkrkr  rkrkrkrkrkkrr rkrkkrkrr oaded to Dropbox", progress: nil)
+                } else if let error = error {
+                    ToastNotification().showToast(backgroundColor: .systemGreen, image: UIImage(systemName: "exclamationmark.icloud")!, titleText: "Error uploading note to Dropbox", subtitleText: error.description, progress: nil)
+                }
+            }
     }
     
     

@@ -9,41 +9,57 @@ import UIKit
 
 class ToastNotification: UIView {
   
-    private var imageView: UIImageView {
+    lazy var imageView: UIImageView = {
         let image = UIImageView()
         image.tintColor = UIColor.white
         image.frame = CGRect(x: 5, y: 10, width: 50, height: 50)
         image.preferredSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 30.0, weight: .regular, scale: .large)
         image.image = UIImage(systemName: "pin")
         return image
-    }
+    }()
     
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 20.0, weight: .bold)
+        label.frame = CGRect(x: 65, y: 10, width: UIScreen.main.nativeBounds.width - 45, height: 40)
+        return label
+    }()
+    
+    lazy var subtitleLabel: UITextView = {
+        let label = UITextView()
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 20.0, weight: .regular)
+        
+        //shouldnt call sizeToFit because it sizeToFit has increase cpu usage
+
+        label.backgroundColor = .clear
+        return label
+    }()
     
     func showToast(backgroundColor: UIColor, image: UIImage, titleText: String, subtitleText: String?, progress: Double?) {
         
         let window =  UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-        
-        self.frame = CGRect(x: 30, y: -70, width: Constants.screenWidth - 60, height: 70)
+
         self.backgroundColor = backgroundColor
         self.layer.cornerRadius = Constants.cornerRadius
         self.alpha = 1.0
         
         self.addSubview(imageView)
         
-        let titleLabel = UILabel()
-        titleLabel.textColor = .white
-        titleLabel.font = UIFont.systemFont(ofSize: 20.0, weight: .bold)
-        titleLabel.frame = CGRect(x: 65, y: 10, width: UIScreen.main.nativeBounds.width - 45, height: 20)
         titleLabel.text = titleText
         self.addSubview(titleLabel)
         
         if progress == nil {
-            let subtitleLabel = UILabel()
-            subtitleLabel.textColor = .white
-            subtitleLabel.font = UIFont.systemFont(ofSize: 20.0, weight: .regular)
-            subtitleLabel.frame = CGRect(x: 65, y: 35, width: 45, height: 20)
             subtitleLabel.text = subtitleText
-            self.addSubview(subtitleLabel)
+            let width = Constants.screenWidth - 130
+            let height = subtitleLabel.systemLayoutSizeFitting(CGSize(width: width, height: UIView.layoutFittingCompressedSize.height), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel).height
+            subtitleLabel.frame = CGRect(x: titleLabel.frame.minX, y: titleLabel.frame.maxY, width: width, height: height)
+            
+            //have to add textview as a snapshot for some reason
+            let snapshot = subtitleLabel.snapshotView(afterScreenUpdates: true)
+            snapshot?.frame = subtitleLabel.frame
+            self.addSubview(snapshot!)
         } else {
             let progressView = UIProgressView()
             progressView.progress = 0.35
@@ -63,6 +79,8 @@ class ToastNotification: UIView {
             
         }
         
+        self.frame = CGRect(x: 30, y: -70, width: Constants.screenWidth - 60, height: subtitleLabel.frame.maxY + 10)
+
         window?.addSubview(self)
         
         UIView.animate(withDuration: 0.25, delay: 0.4, options: [.curveEaseIn, .beginFromCurrentState], animations: {
