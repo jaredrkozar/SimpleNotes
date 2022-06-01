@@ -74,9 +74,16 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     }
 
     @objc func settingsScreen(sender: UIButton) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "settingsVC") as! SettingsViewController
-        let navController = UINavigationController(rootViewController: vc)
-        self.navigationController?.present(navController, animated: true, completion: nil)
+        if currentDevice == .iphone {
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "settingsVC") as! SettingsViewController
+            let navController = UINavigationController(rootViewController: vc)
+            self.navigationController?.present(navController, animated: true, completion: nil)
+        } else {
+            let activity = NSUserActivity(activityType: "showSettings")
+            UIApplication.shared.requestSceneSessionActivation(nil, userActivity: activity, options: nil) { (error) in
+                print(error)
+            }
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -8,7 +8,7 @@
 import UIKit
 import WSTagsField
 
-class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrollViewDelegate {
+class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrollViewDelegate, UIPopoverPresentationControllerDelegate {
 
     @IBOutlet var noteTitleField: UITextField!
     @IBOutlet var noteDateField: UIDatePicker!
@@ -32,9 +32,9 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         // Do any additional setup after loading the view.
         drawingVIew.setup()
         drawingVIew.tool = .pen
-        drawingVIew.currentPen = PenTool(width: 20.0, color: .systemPink, opacity: 1.0, blendMode: .normal, strokeType: .normal)
+        drawingVIew.currentPen = PenTool(width: 20.0, color: .systemPink, opacity: 1.0, blendMode: .normal, strokeType: .dotted)
         
-        drawingVIew.currentHighlighter = PenTool(width: 20.0, color: .systemYellow, opacity: 0.6, blendMode: .normal, strokeType: .normal)
+        drawingVIew.currentHighlighter = PenTool(width: 20.0, color: .systemYellow, opacity: 0.6, blendMode: .normal, strokeType: .dashed)
         
         noteTitleField.backgroundColor = UIColor.systemGray5
         noteTitleField.layer.cornerRadius = 6.0
@@ -49,17 +49,8 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
         noteDateField.date = currentNote?.date ?? Date.now
         
-        let editTags = UIBarButtonItem(image: UIImage(systemName: "tag"), style: .plain, target: self, action: #selector(editTagsButtonTapped))
-        
-        let cancel = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped))
-        
         let shareButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "square.and.arrow.up"), primaryAction: nil, menu: shareButtonTapped(menuOption: .displayInline))
         
-        let flexibleSPace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
-        let undoButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.uturn.backward"), primaryAction: nil, menu: nil)
-        
-        let redoButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.uturn.forward"), primaryAction: nil, menu: nil)
                                             
         moreButton = UIBarButtonItem(title: "More", image: UIImage(systemName: "ellipsis.circle"), primaryAction: nil, menu: moreButtonTapped())
         
@@ -69,20 +60,51 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
 
         var newconfig = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 42.0)))
 
-        let penButton = UIButton()
-        penButton.setImage(UIImage(named: "penIcon")?.applyingSymbolConfiguration(newconfig), for: .normal)
-        penButton.addTarget(self, action: #selector(penTool(sender:)), for: .touchUpInside)
-        penButton.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+        //iPhone only tools
+        let currentTool = UIButton()
+        currentTool.setImage(UIImage(named: "penIcon")?.applyingSymbolConfiguration(newconfig), for: .normal)
+        currentTool.addTarget(self, action: #selector(penTool(sender:)), for: .touchUpInside)
+        currentTool.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
        
-        let highlighterButton = UIButton()
-        highlighterButton.setImage(UIImage(systemName: "folder", withConfiguration: largeConfig), for: .normal)
-        highlighterButton.addTarget(self, action: #selector(highlighterTool(sender:)), for: .touchUpInside)
-        highlighterButton.frame = CGRect(x: 60, y: 0, width: 44, height: 44)
+        let changeTool = UIButton()
+        changeTool.setImage(UIImage(systemName: "folder", withConfiguration: largeConfig), for: .normal)
+        changeTool.showsMenuAsPrimaryAction = true
+        changeTool.menu = changeToolsMenu()
+        changeTool.frame = CGRect(x: 60, y: 0, width: 44, height: 44)
+        
+        //iPad Tools
+        let penTool = UIButton()
+        penTool.setImage(UIImage(systemName: "pencil")?.applyingSymbolConfiguration(newconfig), for: .normal)
+        penTool.addTarget(self, action: #selector(penTool(sender:)), for: .touchUpInside)
+        penTool.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
+       
+        let highlighterTool = UIButton()
+        highlighterTool.setImage(UIImage(systemName: "highlighter", withConfiguration: largeConfig), for: .normal)
+        highlighterTool.showsMenuAsPrimaryAction = true
+        highlighterTool.addTarget(self, action: #selector(highlighterTool(sender:)), for: .touchUpInside)
+        highlighterTool.frame = CGRect(x: 60, y: 0, width: 44, height: 44)
+        
+        let eraserconfig = UIImage.SymbolConfiguration(paletteColors: [.systemBlue, .systemRed.withAlphaComponent(0.5), .systemBlue])
+        let colorLargeConfig = eraserconfig.applying(largeConfig)
+        
+        let eraserTool = UIButton()
+        eraserTool.setImage(UIImage(named: "eraserIcon")?.applyingSymbolConfiguration(colorLargeConfig), for: .normal)
+        
+        eraserTool.showsMenuAsPrimaryAction = true
+        eraserTool.addTarget(self, action: #selector(eraserTool(sender:)), for: .touchUpInside)
+        eraserTool.frame = CGRect(x: 100, y: 0, width: 44, height: 44)
         
         let toolsView = UIView()
-        toolsView.addSubview(penButton)
-        toolsView.addSubview(highlighterButton)
-        toolsView.frame = CGRect(x: 0, y: 0, width: 100, height: 44)
+        if currentDevice == .iphone {
+            toolsView.addSubview(currentTool)
+            toolsView.addSubview(changeTool)
+        } else {
+            toolsView.addSubview(penTool)
+            toolsView.addSubview(highlighterTool)
+            toolsView.addSubview(eraserTool)
+        }
+        print(navigationItem.rightBarButtonItem?.customView?.bounds.minX)
+        toolsView.frame = CGRect(x: 0, y: 0, width: 200, height: 44)
         
         self.navigationItem.titleView = toolsView
         
@@ -181,33 +203,54 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
     }
     
-    @objc func penTool(sender: UIButton) {
-        if drawingVIew.tool == .pen {
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "penMenu") as! ToolOptionsViewController
-            let navigationController = UINavigationController(rootViewController: vc)
-            if currentDevice == .iphone {
-                if let picker = navigationController.presentationController as? UISheetPresentationController {
-                picker.detents = [.medium()]
-                picker.prefersGrabberVisible = true
-                picker.preferredCornerRadius = 5.0
-                }
-            }
-            self.present(navigationController, animated: true)
-        } else {
-            drawingVIew.tool = .pen
-        }
+    func changeToolsMenu() -> UIMenu {
+        var toolsMenu = [UIAction]()
+        for tool in Tools.allCases {
+        
+            toolsMenu.append( UIAction(title: "\(tool.name)", image: nil, identifier: nil, attributes: []) { _ in
+
+                self.drawingVIew.tool = tool
+             })
+          }
+        
+        return UIMenu(title: "Share Note", subtitle: nil, image: nil, identifier: nil, options: .singleSelection, children: toolsMenu)
         
     }
     
-    @objc func highlighterTool(sender: UIButton) {
-        if drawingVIew.tool == .highlighter {
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "penMenu") as! ToolOptionsViewController
-            let navigationController = UINavigationController(rootViewController: vc)
-            self.present(navigationController, animated: true)
+    @objc func penTool(sender: UIButton) {
+        if currentDevice == .iphone {
+            presentSettingsStoryboard(identifier: "penMenu", source: sender)
         } else {
-            drawingVIew.tool = .text
+            if drawingVIew.tool == .pen {
+                presentSettingsStoryboard(identifier: "penMenu", source: sender)
+            } else {
+                drawingVIew.tool = .pen
+            }
         }
-        
+    }
+    
+    @objc func highlighterTool(sender: UIButton) {
+        if currentDevice == .iphone {
+            presentSettingsStoryboard(identifier: "penMenu", source: sender)
+        } else {
+            if drawingVIew.tool == .highlighter {
+                presentSettingsStoryboard(identifier: "penMenu", source: sender)
+            } else {
+                drawingVIew.tool = .highlighter
+            }
+        }
+    }
+    
+    @objc func eraserTool(sender: UIButton) {
+        if currentDevice == .iphone {
+            presentSettingsStoryboard(identifier: "penMenu", source: sender)
+        } else {
+            if drawingVIew.tool == .eraser {
+                presentSettingsStoryboard(identifier: "penMenu", source: sender)
+            } else {
+                drawingVIew.tool = .eraser
+            }
+        }
     }
     
     @objc func changeStrokeType(notification: Notification) {
@@ -262,5 +305,28 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         })
         
         return UIMenu(title: "", children: [shareButtonTapped(menuOption: []), lockNote, showTags])
+    }
+    
+    func presentSettingsStoryboard(identifier: String, source: UIButton) {
+        let vc = ToolOptionsViewController()
+        let navigationController = UINavigationController(rootViewController: vc)
+        if currentDevice == .iphone {
+            if let picker = navigationController.presentationController as? UISheetPresentationController {
+            picker.detents = [.medium()]
+            picker.prefersGrabberVisible = true
+            picker.preferredCornerRadius = 5.0
+            }
+        } else {
+            navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
+
+            if let popoverPresentationController = navigationController.popoverPresentationController {
+                     popoverPresentationController.permittedArrowDirections = .init([.up,.down])
+                     popoverPresentationController.sourceView = source
+                navigationController.preferredContentSize = CGSize(width: 535, height: 300)
+                    popoverPresentationController.sourceRect = CGRect(x: 1, y: 1, width: source.bounds.width, height: source.bounds.height)
+                     popoverPresentationController.delegate = self
+                 }
+        }
+        self.present(navigationController, animated: true)
     }
 }

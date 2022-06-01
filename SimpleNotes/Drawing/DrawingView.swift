@@ -20,11 +20,17 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
     
     public var tool: Tools?
     
+    private var selection: Line?
+    
     public var selectedTool: Tool {
         if self.tool == .pen {
             return  currentPen ?? PenTool(width: 4.0, color: UIColor.systemBlue, opacity: 1.0, blendMode: .normal, strokeType: .normal)
         } else if self.tool == .highlighter {
             return currentHighlighter ?? PenTool(width: 4.0, color: UIColor.systemYellow, opacity: 0.8, blendMode: .normal, strokeType: .normal)
+        } else if self.tool == .eraser {
+            return PenTool(width: 5.0, color: UIColor.gray, opacity: 1.0, blendMode: .clear, strokeType: .normal)
+        } else if self.tool == .lasso {
+            return currentLasso
         } else if self.tool == .text {
             return TextTool()
         } else {
@@ -34,7 +40,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
     
     public var currentPen: PenTool?
     public var currentHighlighter: PenTool?
-    
+    private var currentLasso = PenTool(width: 5.0, color: .systemBlue, opacity: 1.0, blendMode: .normal, strokeType: .dotted)
     private var keyboardIsOpen: Bool = false
     private var scrollView = UIScrollView()
     
@@ -74,7 +80,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedScreen(_:)))
           self.addGestureRecognizer(tapGesture)
           self.layer.drawsAsynchronously = true
-        print(self)
+
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
               NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
 
@@ -96,10 +102,10 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
                 case .dotted:
                 line.path.setLineDash([1, 30.0], count: 2, phase: 0.0)
                 line.path.lineCapStyle = .round
-                case .dashed:
+                case .dashed, .none:
                 line.path.setLineDash([1, 30.0], count: 2, phase: 0.0)
                 line.path.lineCapStyle = .square
-            case .none, .normal:
+            case .normal:
                 line.path.lineCapStyle = .round
             }
             
@@ -108,16 +114,11 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
                 line.path.lineWidth = line.width
                 line.color.setStroke()
                 line.path.stroke()
-            case .text:
-                line.path.lineWidth = line.width
-                shapeStrokeColor.setStroke()
-                shapeFillColor.setFill()
-                line.path.fill()
             case .shape:
                 line.path.lineWidth = line.width
-                shapeStrokeColor.setStroke()
-                shapeFillColor.setFill()
-                line.path.fill()
+                line.color.setStroke()
+                line.fillColor?.setFill()
+                line.path.stroke()
             }
         }
     }
@@ -293,7 +294,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
     }
     
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        print(selectedTool.strokeType)
         guard let touch = touches.first else {return}
         currentPoint = touch.location(in: self)
         setTouchPoints(touch)
@@ -311,7 +312,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
             if var currentPath = lines.popLast() {
                 currentPath.path = selectedTool.moved(currentPath: currentPath.path, previousPoint:  CGPoint(x: previousPoint!.x, y: previousPoint!.y), midpoint1: CGPoint(x: getMidPoints().0.x, y: getMidPoints().0.y), midpoint2: CGPoint(x: getMidPoints().1.x, y: getMidPoints().1.y))!
                 lines.append(currentPath)
-                print(lines.count)
+    
                 setNeedsDisplay()
            }
         } else {
@@ -321,8 +322,8 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
                     setNeedsDisplay()
                 }
                 
-                var newLine = Line(color: UIColor.systemBlue, width: 2.0, opacity: 1.0, blendMode: .normal, path: UIBezierPath(), type: .drawing, fillColor: UIColor.brown)
-                print(selectedTool)
+                var newLine = Line(color: .systemBlue, width: 2.0, opacity: 1.0, blendMode: .normal, path: UIBezierPath(), type: .shape, fillColor: .brown, strokeType: .normal)
+                
                 newLine.path = selectedTool.moved(currentPath: newLine.path, previousPoint: shapeFirstPoint!, midpoint1: currentPoint!, midpoint2: currentPoint!)!
                 lines.append(newLine)
             }
@@ -399,9 +400,5 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
         currentView?.isNotCurrentView()
         canCreateTextBox = true
         self.endEditing(true)
-    }
-    
-    public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return self
     }
 }

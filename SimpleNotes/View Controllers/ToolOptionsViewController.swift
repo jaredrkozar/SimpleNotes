@@ -9,16 +9,29 @@ import UIKit
 
 class ToolOptionsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
-    var layoutLineType: UICollectionViewFlowLayout {
+    var layoutLineType: UICollectionViewFlowLayout = {
         let cellLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         cellLayout.itemSize = CGSize(width: 50, height: 50)
         cellLayout.scrollDirection = .vertical
+        cellLayout.minimumInteritemSpacing = 1.0
         return cellLayout
-    }
+    }()
     
     let colorCollectionView: UICollectionView = {
-        let colorCollectionView = UICollectionView(frame: CGRect(x: 10, y: 60, width: Constants.screenWidth - 15, height: 300), collectionViewLayout: UICollectionViewFlowLayout())
+        let frame: CGRect?
+        
+        let cellLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        cellLayout.scrollDirection = .vertical
+        cellLayout.minimumInteritemSpacing = 0.5
+        
+        if currentDevice == .iphone {
+            frame = CGRect(x: 10, y: 60, width: Constants.screenWidth - 15, height: 300)
+        } else {
+            frame = CGRect(x: 275, y: 65, width: 250, height: 400)
+        }
+        let colorCollectionView = UICollectionView(frame: frame!, collectionViewLayout: cellLayout)
         let colorcell = UINib(nibName: "ColorCollectionViewCell", bundle: nil)
+        colorCollectionView.backgroundColor = .clear
         colorCollectionView.register(colorcell, forCellWithReuseIdentifier: "ColorCollectionViewCell")
         colorCollectionView.allowsSelection = true
         colorCollectionView.allowsMultipleSelection = false
@@ -26,9 +39,16 @@ class ToolOptionsViewController: UIViewController, UICollectionViewDataSource, U
     }()
     
     var sizeCollectionView: UICollectionView = {
+        let frame: CGRect?
+        if currentDevice == .iphone {
+            frame = CGRect(x: 10, y: 60, width: Constants.screenWidth - 15, height: 300)
+        } else {
+            frame = CGRect(x: 10, y: 65, width: 250, height: 300)
+        }
         
-        let sizeCollectionView = UICollectionView(frame: CGRect(x: 10, y: 200, width: Constants.screenWidth - 20, height: 300), collectionViewLayout: UICollectionViewFlowLayout())
+        let sizeCollectionView = UICollectionView(frame: frame!, collectionViewLayout: UICollectionViewFlowLayout())
         let sizecell = UINib(nibName: "ColorCollectionViewCell", bundle: nil)
+        sizeCollectionView.backgroundColor = .clear
         sizeCollectionView.register(sizecell, forCellWithReuseIdentifier: "ColorCollectionViewCell")
         sizeCollectionView.allowsSelection = true
         sizeCollectionView.allowsMultipleSelection = false
@@ -59,7 +79,8 @@ class ToolOptionsViewController: UIViewController, UICollectionViewDataSource, U
     var lineTypes = [["normalLine", "Normal"], ["dashedLine", "Dashed"], ["dottedLine", "Dotted"]]
     
     override func viewDidLoad() {
-        
+        print(self.view.bounds.width)
+        print(self.view.frame.width)
         title = "Pen Settings"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .done, target: self, action: #selector(toggleFavoriteTool))

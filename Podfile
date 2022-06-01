@@ -5,7 +5,7 @@ target 'SimpleNotes' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 	 pod 'GoogleAPIClientForREST/Drive'
-  	pod 'GoogleSignIn', '~> 5.0.2'
+  	pod 'GoogleSignIn'
 	pod 'WSTagsField'
 	pod 'SwiftyDropbox'
 pod 'GTMSessionFetcher'

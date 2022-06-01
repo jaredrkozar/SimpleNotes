@@ -24,12 +24,12 @@ class AccountSettingsViewController: UITableViewController {
     
     func configure() {
         models.append(Sections(title: "Advanced", settings: [
-            SettingsOptions(title: "Google Drive", option: "", icon: UIImage(named: "GoogleDrive"), iconBGColor: UIColor(named: "Blue")!) {
+            SettingsOptions(title: "Google Drive", option: "", icon: UIImage(named: "GoogleDrive"), iconBGColor: UIColor(named: "Blue")!, detailViewType: nil) {
                             
                 GoogleInteractor().signOut()
                 },
                         
-                SettingsOptions(title: "Dropbox", option: "", icon: UIImage(named: "Dropbox"), iconBGColor: UIColor(named: "LightBlue")!) {
+            SettingsOptions(title: "Dropbox", option: "", icon: UIImage(named: "Dropbox"), iconBGColor: UIColor(named: "LightBlue")!, detailViewType: nil) {
                   
                     DropboxInteractor().signOut()
                     
@@ -56,17 +56,7 @@ class AccountSettingsViewController: UITableViewController {
         
         let model = models[indexPath.section].settings[indexPath.row]
         
-        cell.logOutButton.isHidden = false
-        
-        cell.icon.image = model.icon?.withTintColor(UIColor.white)
-        cell.background.backgroundColor = model.iconBGColor
-        
-        cell.name.text = model.title
-        
-        cell.background.layer.cornerRadius = 9.0
-        cell.icon.tintColor = UIColor.white
-        cell.cellIndex = indexPath
-        cell.delegate = self
+        cell.configureCell(with: model)
 
         return cell
     }
@@ -80,21 +70,17 @@ extension AccountSettingsViewController: TableRowCellDelegate {
 
                 if GoogleInteractor().isSignedIn == true {
                     GoogleInteractor().signOut()
-                    cell.logOutButton.setTitle("Log In", for: .normal)
                 } else {
 
                     GoogleInteractor().signIn(vc: self)
-                    cell.logOutButton.setTitle("Log Out", for: .normal)
                     
                 }
             case 1:
             if DropboxInteractor().isSignedIn == true {
                 DropboxInteractor().signOut()
-                cell.logOutButton.setTitle("Log In", for: .normal)
         
                 } else {
                     DropboxInteractor().signIn(vc: self)
-                    cell.logOutButton.setTitle("Log Out", for: .normal)
                 }
         default:
             return

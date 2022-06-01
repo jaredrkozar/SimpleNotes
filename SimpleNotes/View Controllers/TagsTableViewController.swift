@@ -14,8 +14,7 @@ class TagsTableViewController: UITableViewController {
 
         // Do any additional setup after loading the view.
         
-        let nib = UINib(nibName: "TableRowCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "TableRowCell")
+        tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
         
         title = "Tags"
         
@@ -39,12 +38,7 @@ class TagsTableViewController: UITableViewController {
             fatalError("Unable to dequeue the settings cell.")
         }
         
-        cell.logOutButton.isHidden = true
-        cell.background.backgroundColor = UIColor.clear
-       
-        cell.icon.image = UIImage(systemName: tag.symbol!)?.withTintColor(UIColor(hex: tag.color!)!, renderingMode: .alwaysOriginal)
-        
-        cell.name.text = tag.name
+        cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", icon: UIImage(systemName: tag.symbol!)?.withTintColor(UIColor(hex: tag.color!)!, renderingMode: .alwaysOriginal), iconBGColor: nil, detailViewType: nil, handler: nil))
         
         
         return cell

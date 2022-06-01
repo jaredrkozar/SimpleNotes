@@ -21,7 +21,6 @@ public struct Line: Equatable {
 
 enum DrawingType {
     case shape
-    case text
     case drawing
 }
 

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02640A4828468ADB00160ED1 /* DefaultTextBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02640A4728468ADB00160ED1 /* DefaultTextBoxViewController.swift */; };
+		02640A4B2847BA9900160ED1 /* SettingsSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02640A4A2847BA9900160ED1 /* SettingsSceneDelegate.swift */; };
 		1197BA6F1902435A622C74E4 /* Pods_SimpleNotes_SimpleNotesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A3152DECD2FC30763295899 /* Pods_SimpleNotes_SimpleNotesUITests.framework */; };
 		5BBB5572D47E81F29B170B17 /* Pods_SimpleNotesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7042E8EED9EB51C046B04E5F /* Pods_SimpleNotesTests.framework */; };
 		7F0F03E7282C368D00A6B404 /* ToolOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */; };
@@ -43,7 +45,6 @@
 		7FB7C29B2815155F006C9FE2 /* HoldingClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */; };
 		7FC55D962791372D001DDFD5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */; };
 		7FC55DA12792ADEB001DDFD5 /* TableRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */; };
-		7FC55DA22792ADEB001DDFD5 /* TableRowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FC55DA02792ADEB001DDFD5 /* TableRowCell.xib */; };
 		7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55DA327939E49001DDFD5 /* MimeTypes.swift */; };
 		7FC7FB6D2836D5C100CE483E /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7FB6C2836D5C100CE483E /* CustomButton.swift */; };
 		7FC7FB6F2837F74000CE483E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7FB6E2837F74000CE483E /* Constants.swift */; };
@@ -102,6 +103,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02640A4728468ADB00160ED1 /* DefaultTextBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextBoxViewController.swift; sourceTree = "<group>"; };
+		02640A4A2847BA9900160ED1 /* SettingsSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSceneDelegate.swift; sourceTree = "<group>"; };
+		02640A4C2847C1A100160ED1 /* SimpleNotes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleNotes.entitlements; sourceTree = "<group>"; };
 		0C1A53E84B9AB4F3086B417C /* Pods-SimpleNotes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes.debug.xcconfig"; path = "Target Support Files/Pods-SimpleNotes/Pods-SimpleNotes.debug.xcconfig"; sourceTree = "<group>"; };
 		1176E2B00F40D0F68753D3F9 /* Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig"; path = "Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		15F95CAC11D6C63B056CB79F /* Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig"; path = "Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -142,7 +146,6 @@
 		7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingClass.swift; sourceTree = "<group>"; };
 		7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableRowCell.swift; sourceTree = "<group>"; };
-		7FC55DA02792ADEB001DDFD5 /* TableRowCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableRowCell.xib; sourceTree = "<group>"; };
 		7FC55DA327939E49001DDFD5 /* MimeTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypes.swift; sourceTree = "<group>"; };
 		7FC7FB6C2836D5C100CE483E /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		7FC7FB6E2837F74000CE483E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -217,6 +220,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02640A4628468ABB00160ED1 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				02640A4728468ADB00160ED1 /* DefaultTextBoxViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		02640A492847BA8400160ED1 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				7FEBEC70276135DA0066F0C0 /* SceneDelegate.swift */,
+				02640A4A2847BA9900160ED1 /* SettingsSceneDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
 		0481132D7C0C0C532551601A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,7 +284,6 @@
 				7F53DAA9279CC36C006789F6 /* ToastNotification.swift */,
 				7F53DAA7279BEF62006789F6 /* CloudServiceFiles.swift */,
 				7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */,
-				7FC55DA02792ADEB001DDFD5 /* TableRowCell.xib */,
 				7F8BBDF0276D6A98005B07C1 /* ReusableTableView.swift */,
 				7F37660E278A52DA00A107FF /* SharingLocation.swift */,
 				7FC55DA327939E49001DDFD5 /* MimeTypes.swift */,
@@ -300,6 +319,7 @@
 		7F498B58277571CF00202413 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				02640A4628468ABB00160ED1 /* Settings */,
 				7F498AA9276FC22100202413 /* NoteViewController.swift */,
 				7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */,
 				7FC7FB70283A0C4A00CE483E /* TintPickerViewController.swift */,
@@ -385,9 +405,10 @@
 		7FEBEC6D276135DA0066F0C0 /* SimpleNotes */ = {
 			isa = PBXGroup;
 			children = (
+				02640A4C2847C1A100160ED1 /* SimpleNotes.entitlements */,
 				7FEBEC6E276135DA0066F0C0 /* AppDelegate.swift */,
 				7F498B0B27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld */,
-				7FEBEC70276135DA0066F0C0 /* SceneDelegate.swift */,
+				02640A492847BA8400160ED1 /* Delegates */,
 				7F8BBDFB276ED795005B07C1 /* Extensions.swift */,
 				7FEBEC74276135DA0066F0C0 /* Main.storyboard */,
 				7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */,
@@ -538,7 +559,6 @@
 				7FEBEC78276135DC0066F0C0 /* Assets.xcassets in Resources */,
 				7FEBEC76276135DA0066F0C0 /* Main.storyboard in Resources */,
 				7FEBECA3276136280066F0C0 /* NoteTableViewCell.xib in Resources */,
-				7FC55DA22792ADEB001DDFD5 /* TableRowCell.xib in Resources */,
 				7FC55D962791372D001DDFD5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -739,6 +759,7 @@
 				7F498AC627718CAA00202413 /* TagTableViewCell.swift in Sources */,
 				7F376617278B59B800A107FF /* SendToOtherApp.swift in Sources */,
 				7FE4509C281E50C80034928B /* CustomSelectionView.swift in Sources */,
+				02640A4828468ADB00160ED1 /* DefaultTextBoxViewController.swift in Sources */,
 				7F498B572775719E00202413 /* CoreData.swift in Sources */,
 				7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */,
 				7F53DAA6279BA51B006789F6 /* AccountSettingsViewController.swift in Sources */,
@@ -760,6 +781,7 @@
 				7F37661E278D40F700A107FF /* FolderLocationViewController.swift in Sources */,
 				7FE45091281E2BE90034928B /* ObjectView.swift in Sources */,
 				7F53DAB0279D4CAD006789F6 /* SidebarViewController.swift in Sources */,
+				02640A4B2847BA9900160ED1 /* SettingsSceneDelegate.swift in Sources */,
 				7FF31CCE2799E04F00923AE3 /* DropboxInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -938,6 +960,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SimpleNotes/SimpleNotes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7UHNX49SSD;
@@ -957,9 +980,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jkozar.SimpleNotes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Debug;
 		};
@@ -969,6 +993,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SimpleNotes/SimpleNotes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7UHNX49SSD;
@@ -988,9 +1013,10 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jkozar.SimpleNotes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Release;
 		};
