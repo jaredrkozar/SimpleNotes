@@ -23,8 +23,7 @@ struct SettingsOptions {
 
 enum DetailViewType: Equatable {
     
-    case color(color: UIColor)
+    case color(color: UIView)
     case text(string: String)
     case control(controls: [UIControl])
-    case textField(string: String, keyboardType: UIKeyboardType)
 }

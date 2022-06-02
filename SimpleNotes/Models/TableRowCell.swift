@@ -37,6 +37,14 @@ class TableRowCell: UITableViewCell {
         return label
     }()
     
+    var optionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .right
+        return label
+    }()
+    
     var cellIndex: IndexPath?
     
     override func awakeFromNib() {
@@ -53,7 +61,7 @@ class TableRowCell: UITableViewCell {
         let constraints = [
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: iconView.image != nil ? 70 : 30),
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            titleLabel.widthAnchor.constraint(equalToConstant: titleLabel.intrinsicContentSize.width),
+            titleLabel.widthAnchor.constraint(equalToConstant: 300),
             titleLabel.heightAnchor.constraint(equalToConstant: 30)
         ]
         
@@ -78,6 +86,7 @@ class TableRowCell: UITableViewCell {
         
         switch model.detailViewType {
         case .control(controls: let controls):
+            optionLabel.isHidden = true
             for control in controls {
                 control.sizeToFit()
                 control.frame = CGRect(x: contentView.bounds.maxX - control.bounds.width + 20, y: 5, width: control.bounds.width, height: control.bounds.height)
@@ -93,13 +102,8 @@ class TableRowCell: UITableViewCell {
                 
                 NSLayoutConstraint.activate(constraints)
             }
-        case .color(color: let color):
-            let view = UIView()
-            view.sizeToFit()
-            view.layer.cornerRadius = Constants.cornerRadius
-            view.backgroundColor = color
-            view.translatesAutoresizingMaskIntoConstraints = false
-    
+        case .color(color: let view):
+            optionLabel.isHidden = true
             contentView.addSubview(view)
     
             let constraints = [
@@ -111,36 +115,14 @@ class TableRowCell: UITableViewCell {
             
             NSLayoutConstraint.activate(constraints)
         case .text(string: let string):
-            let label = UILabel()
-            label.text = string
-            label.sizeToFit()
-            label.textAlignment = .right
-            label.translatesAutoresizingMaskIntoConstraints = false
-            contentView.addSubview(label)
+            optionLabel.text = string
+            contentView.addSubview(optionLabel)
             
             let constraints = [
-                label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-                label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-                label.widthAnchor.constraint(equalToConstant: label.intrinsicContentSize.width),
-                label.heightAnchor.constraint(equalToConstant: 30)
-            ]
-            
-            NSLayoutConstraint.activate(constraints)
-        case .textField(string: let string, let keyboardType):
-            let textField = UITextField()
-            textField.backgroundColor = .systemGray3
-            textField.text = string
-            textField.target(forAction: #selector(fieldTectChanged), withSender: nil)
-            textField.translatesAutoresizingMaskIntoConstraints = false
-            textField.layer.cornerRadius = Constants.cornerRadius
-            textField.keyboardType = keyboardType
-            contentView.addSubview(textField)
-            
-            let constraints = [
-                textField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-                textField.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-                textField.widthAnchor.constraint(equalToConstant: 100),
-                textField.heightAnchor.constraint(equalToConstant: 30)
+                optionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+                optionLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+                optionLabel.widthAnchor.constraint(equalToConstant: 400),
+                optionLabel.heightAnchor.constraint(equalToConstant: 30)
             ]
             
             NSLayoutConstraint.activate(constraints)
