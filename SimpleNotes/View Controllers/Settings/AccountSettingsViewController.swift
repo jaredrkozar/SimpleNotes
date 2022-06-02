@@ -25,12 +25,12 @@ class AccountSettingsViewController: UITableViewController {
     
     func configure() {
         models.append(Sections(title: "Advanced", settings: [
-            SettingsOptions(title: "Google Drive", option: "", icon: UIImage(named: "GoogleDrive"), iconBGColor: UIColor(named: "Blue")!, detailViewType: nil) {
+            SettingsOptions(title: "Google Drive", option: "", icon: UIImage(named: "GoogleDrive")?.withTintColor(.white), iconBGColor: .systemBlue, detailViewType: nil) {
                             
                 GoogleInteractor().signOut()
                 },
                         
-            SettingsOptions(title: "Dropbox", option: "", icon: UIImage(named: "Dropbox"), iconBGColor: UIColor(named: "LightBlue")!, detailViewType: nil) {
+            SettingsOptions(title: "Dropbox", option: "", icon: UIImage(named: "Dropbox")?.withTintColor(.white), iconBGColor: .systemCyan, detailViewType: nil) {
                   
                     DropboxInteractor().signOut()
                     

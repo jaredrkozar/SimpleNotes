@@ -53,7 +53,7 @@ class TableRowCell: UITableViewCell {
         let constraints = [
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: iconView.image != nil ? 70 : 30),
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            titleLabel.widthAnchor.constraint(equalToConstant: 100),
+            titleLabel.widthAnchor.constraint(equalToConstant: titleLabel.intrinsicContentSize.width),
             titleLabel.heightAnchor.constraint(equalToConstant: 30)
         ]
         
@@ -121,7 +121,7 @@ class TableRowCell: UITableViewCell {
             let constraints = [
                 label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
                 label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-                label.widthAnchor.constraint(equalToConstant: 100),
+                label.widthAnchor.constraint(equalToConstant: label.intrinsicContentSize.width),
                 label.heightAnchor.constraint(equalToConstant: 30)
             ]
             
