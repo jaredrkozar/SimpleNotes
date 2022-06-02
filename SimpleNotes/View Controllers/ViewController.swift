@@ -187,7 +187,6 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         for view in viewOptions.allCases {
             viewoptions.append(UIAction(title: "\(view.title)", image: UIImage(systemName: "\(view.icon)"), identifier: .none, discoverabilityTitle: "View Options", attributes: [], state: .on, handler: {_ in
                 
-               print("FLLFLFLFL")
                 
             }))
         }

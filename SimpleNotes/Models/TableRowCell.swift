@@ -33,7 +33,7 @@ class TableRowCell: UITableViewCell {
     var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-        label.frame = CGRect(x: 60, y: 15, width: 130, height: 40)
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -41,13 +41,23 @@ class TableRowCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        // Initialization code\
+        
     }
     
     override func layoutSubviews() {
         contentView.addSubview(bgView)
         bgView.addSubview(iconView)
         contentView.addSubview(titleLabel)
+        
+        let constraints = [
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: iconView.image != nil ? 70 : 30),
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            titleLabel.widthAnchor.constraint(equalToConstant: 100),
+            titleLabel.heightAnchor.constraint(equalToConstant: 30)
+        ]
+        
+        NSLayoutConstraint.activate(constraints)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -69,21 +79,77 @@ class TableRowCell: UITableViewCell {
         switch model.detailViewType {
         case .control(controls: let controls):
             for control in controls {
+                control.sizeToFit()
                 control.frame = CGRect(x: contentView.bounds.maxX - control.bounds.width + 20, y: 5, width: control.bounds.width, height: control.bounds.height)
+                control.translatesAutoresizingMaskIntoConstraints = false
                 contentView.addSubview(control)
+                
+                let constraints = [
+                    control.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+                    control.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+                    control.widthAnchor.constraint(equalToConstant: 100),
+                    control.heightAnchor.constraint(equalToConstant: 30)
+                ]
+                
+                NSLayoutConstraint.activate(constraints)
             }
         case .color(color: let color):
             let view = UIView()
-            view.frame = CGRect(x: contentView.bounds.maxX - 20, y: 5, width: 10, height: 10)
+            view.sizeToFit()
+            view.layer.cornerRadius = Constants.cornerRadius
             view.backgroundColor = color
+            view.translatesAutoresizingMaskIntoConstraints = false
+    
             contentView.addSubview(view)
+    
+            let constraints = [
+                view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+                view.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+                view.widthAnchor.constraint(equalToConstant: 30),
+                view.heightAnchor.constraint(equalToConstant: 30)
+            ]
+            
+            NSLayoutConstraint.activate(constraints)
         case .text(string: let string):
             let label = UILabel()
             label.text = string
-            label.frame = CGRect(x: contentView.bounds.maxX - 40, y: contentView.bounds.maxY / 2, width: 10, height: 10)
+            label.sizeToFit()
+            label.textAlignment = .right
+            label.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview(label)
+            
+            let constraints = [
+                label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+                label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+                label.widthAnchor.constraint(equalToConstant: 100),
+                label.heightAnchor.constraint(equalToConstant: 30)
+            ]
+            
+            NSLayoutConstraint.activate(constraints)
+        case .textField(string: let string, let keyboardType):
+            let textField = UITextField()
+            textField.backgroundColor = .systemGray3
+            textField.text = string
+            textField.target(forAction: #selector(fieldTectChanged), withSender: nil)
+            textField.translatesAutoresizingMaskIntoConstraints = false
+            textField.layer.cornerRadius = Constants.cornerRadius
+            textField.keyboardType = keyboardType
+            contentView.addSubview(textField)
+            
+            let constraints = [
+                textField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+                textField.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+                textField.widthAnchor.constraint(equalToConstant: 100),
+                textField.heightAnchor.constraint(equalToConstant: 30)
+            ]
+            
+            NSLayoutConstraint.activate(constraints)
         case .none:
             print("No control")
         }
+    }
+    
+    @objc func fieldTectChanged() {
+        print("CHNAGED")
     }
 }

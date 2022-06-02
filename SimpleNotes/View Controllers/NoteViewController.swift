@@ -103,7 +103,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             toolsView.addSubview(highlighterTool)
             toolsView.addSubview(eraserTool)
         }
-        print(navigationItem.rightBarButtonItem?.customView?.bounds.minX)
+        
         toolsView.frame = CGRect(x: 0, y: 0, width: 200, height: 44)
         
         self.navigationItem.titleView = toolsView

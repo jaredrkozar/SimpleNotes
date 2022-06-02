@@ -43,7 +43,25 @@ class DefaultTextBoxViewController: UITableViewController {
         ]))
         
         textBoxSettings.append(Sections(title: nil, settings: [
+            SettingsOptions(title: "Color", option: "", icon: nil, iconBGColor: nil, detailViewType: .color(color: UIColor.green), handler: {
+                
+                let fontPicker = UIFontPickerViewController()
+                
+                self.present(fontPicker, animated: true)
+            })
+        ]))
+        
+        textBoxSettings.append(Sections(title: nil, settings: [
             SettingsOptions(title: "Color", option: "", icon: nil, iconBGColor: nil, detailViewType: .control(controls: [fontSize]), handler: {
+                
+                let fontPicker = UIFontPickerViewController()
+                
+                self.present(fontPicker, animated: true)
+            })
+        ]))
+        
+        textBoxSettings.append(Sections(title: nil, settings: [
+            SettingsOptions(title: "Color", option: "", icon: nil, iconBGColor: nil, detailViewType: .textField(string: "JEJEJJE", keyboardType: .numberPad), handler: {
                 
                 let fontPicker = UIFontPickerViewController()
                 

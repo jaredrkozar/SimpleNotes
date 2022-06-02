@@ -142,7 +142,6 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
             dismissKeyboard()
         } else {
             menu.showMenu(from: currentView as! UIView, rect: CGRect(x: 1, y: 1, width: 100, height: 100))
-            print(menu.isMenuVisible)
         }
     }
     
@@ -209,8 +208,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
     }
     
     @objc func tappedScreen(_ sender: UITapGestureRecognizer) {
-        print("dkdkddkdkkdkdkdkdkdkdTAP")
-        print(keyboardIsOpen)
+       
         if currentView?.isMoving == true || currentView?.isResizing == true || isSelectingLine == true {
             currentView?.moveIconImage.isHidden = true
             canCreateTextBox = true
@@ -286,7 +284,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
         newImage.isUserInteractionEnabled = true
         
         let textBoxTapped = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped(_:)))
-        print(textBoxTapped)
+
         newImage.addGestureRecognizer(textBoxTapped)
         
         self.addSubview(newImage)
@@ -294,7 +292,6 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
     }
     
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print(selectedTool.strokeType)
         guard let touch = touches.first else {return}
         currentPoint = touch.location(in: self)
         setTouchPoints(touch)

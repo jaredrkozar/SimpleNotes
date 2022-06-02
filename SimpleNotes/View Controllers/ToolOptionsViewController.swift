@@ -79,8 +79,6 @@ class ToolOptionsViewController: UIViewController, UICollectionViewDataSource, U
     var lineTypes = [["normalLine", "Normal"], ["dashedLine", "Dashed"], ["dottedLine", "Dotted"]]
     
     override func viewDidLoad() {
-        print(self.view.bounds.width)
-        print(self.view.frame.width)
         title = "Pen Settings"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .done, target: self, action: #selector(toggleFavoriteTool))

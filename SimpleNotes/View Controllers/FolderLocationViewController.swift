@@ -89,7 +89,7 @@ class FolderLocationViewController: UITableViewController {
     }
 
     @objc func selectFolderButton(_ sender: UIBarButtonItem) {
-        print(currentfolder)
+        
         let presenter = self.presentingViewController?.children.last as? NoteShareSettingsViewController
         presenter?.folderID = currentfolder
         

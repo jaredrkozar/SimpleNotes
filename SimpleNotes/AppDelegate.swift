@@ -94,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     // Open URL
     func application(_ application: UIApplication,
                       open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        print(url.scheme?.lowercased())
+        
          var handled: Bool
 
         handled = GIDSignIn.sharedInstance().handle(url)
@@ -109,7 +109,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
      func application(_ app: UIApplication, open url: URL,
                       options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
          var handled: Bool
-         print("DDKD")
          handled = GIDSignIn.sharedInstance().handle(url)
          
          if handled {

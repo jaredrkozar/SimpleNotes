@@ -92,7 +92,7 @@ class NoteShareSettingsViewController: UITableViewController {
             
                 sendToOtherApps(data: [currentNoteView, currentNote?.title! ?? ""])
         case .googledrive, .dropbox:
-     print("DLKDKKD")
+  
             uploadFileToCloud(folder: folderID ?? currentLocation.defaultFolder)
             default:
                 break
