@@ -25,7 +25,7 @@ enum DetailViewType: Equatable {
     
     case color(color: UIColor)
     case text(string: String)
-    case control(control: [UIControl])
+    case control(controls: [UIControl])
 }
 
 class SettingsViewController: UITableViewController {
@@ -34,18 +34,17 @@ class SettingsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.rowHeight = 65
         configure()
-        
-        let nib = UINib(nibName: "TableRowCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "TableRowCell")
-        
+        self.tableView.backgroundColor = .systemGroupedBackground
+        tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
+       
         title = "Settings"
         
     }
 
     func configure() {
+        tableView.sectionHeaderTopPadding = 1.0
         models.append(Sections(title: "Appearance", settings: [
             SettingsOptions(title: "Accounts", option: "", icon: UIImage(systemName: "cloud")?.withTintColor(UIColor.white, renderingMode: .alwaysOriginal), iconBGColor: .systemBlue, detailViewType: nil) {
                
@@ -83,7 +82,7 @@ class SettingsViewController: UITableViewController {
         }
         
         cell.configureCell(with: model)
-      
+        cell.backgroundColor = .secondarySystemGroupedBackground
         cell.accessoryType = .disclosureIndicator
         return cell
     }
@@ -94,8 +93,6 @@ class SettingsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-
         let model = models[indexPath.section].settings[indexPath.row]
         model.handler!()
     }

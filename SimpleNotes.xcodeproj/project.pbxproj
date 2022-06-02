@@ -223,6 +223,7 @@
 		02640A4628468ABB00160ED1 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */,
 				02640A4728468ADB00160ED1 /* DefaultTextBoxViewController.swift */,
 			);
 			path = Settings;
@@ -327,7 +328,6 @@
 				7F53DAAD279D4B75006789F6 /* TagsTableViewController.swift */,
 				7F53DAAF279D4CAD006789F6 /* SidebarViewController.swift */,
 				7F376625278E220D00A107FF /* SettingsViewController.swift */,
-				7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */,
 				7FEBEC72276135DA0066F0C0 /* ViewController.swift */,
 				7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */,
 				7F498ABD2771624200202413 /* NewTagViewController.swift */,

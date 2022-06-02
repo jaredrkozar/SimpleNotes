@@ -25,7 +25,8 @@ class DefaultTextBoxViewController: UITableViewController {
         self.tableView = UITableView(frame: self.tableView.frame, style: .insetGrouped)
  
         tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
-       
+        self.tableView.backgroundColor = .systemGroupedBackground
+        
        configureTextBoxSettings()
     }
 
@@ -42,7 +43,7 @@ class DefaultTextBoxViewController: UITableViewController {
         ]))
         
         textBoxSettings.append(Sections(title: nil, settings: [
-            SettingsOptions(title: "Color", option: "", icon: nil, iconBGColor: nil, detailViewType: .control(control: [fontSize]), handler: {
+            SettingsOptions(title: "Color", option: "", icon: nil, iconBGColor: nil, detailViewType: .control(controls: [fontSize]), handler: {
                 
                 let fontPicker = UIFontPickerViewController()
                 
@@ -69,6 +70,7 @@ class DefaultTextBoxViewController: UITableViewController {
         }
         
         cell.configureCell(with: setting)
+        cell.backgroundColor = .secondarySystemGroupedBackground
         
         return cell
     }

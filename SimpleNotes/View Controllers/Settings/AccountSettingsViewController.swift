@@ -12,11 +12,12 @@ class AccountSettingsViewController: UITableViewController {
     var models = [Sections]()
     
     override func viewDidLoad() {
-        let nib = UINib(nibName: "TableRowCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "TableRowCell")
+        tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
+       
         
         configure()
         
+        self.tableView.backgroundColor = .systemGroupedBackground
         title = "Account Settings"
 
         tableView.rowHeight = 70
@@ -55,7 +56,8 @@ class AccountSettingsViewController: UITableViewController {
         }
         
         let model = models[indexPath.section].settings[indexPath.row]
-        
+       
+        cell.backgroundColor = .secondarySystemGroupedBackground
         cell.configureCell(with: model)
 
         return cell
