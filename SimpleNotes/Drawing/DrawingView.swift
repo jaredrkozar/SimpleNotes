@@ -131,7 +131,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
         let deleteTextboxItem = UIMenuItem(title: "Delete", action: #selector(self.deleteTextBox))
         currentView?.isNotCurrentView()
     
-        currentView =  sender.view as! ObjectView
+        currentView =  sender.view as? ObjectView
         
         currentView?.isCurrentView()
         

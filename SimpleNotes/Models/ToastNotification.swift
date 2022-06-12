@@ -57,9 +57,11 @@ class ToastNotification: UIView {
             cancelButton.frame = CGRect(x: self.bounds.maxX - 80, y: 10, width: 70, height: 50)
             cancelButton.setTitle("Cancel", for: .normal)
             cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-            cancelButton.target(forAction: #selector(cancelUpload), withSender: self)
+            cancelButton.alpha = 0.9
             cancelButton.layer.cornerRadius = Constants.cornerRadius
             self.addSubview(cancelButton)
+            
+            cancelButton.target(forAction: #selector(cancelUpload), withSender: self)
             
         }
         
@@ -69,9 +71,8 @@ class ToastNotification: UIView {
             
             self.transform = CGAffineTransform(translationX: 0, y: 180)
             
-            
         }) { _ in
-            UIView.animate(withDuration: 0.25, delay: 1.5, options: [.curveEaseIn, .beginFromCurrentState], animations: {
+            UIView.animate(withDuration: 0.25, delay: 2.0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
                 
                 self.transform = CGAffineTransform(translationX: 0, y: -180)
 
