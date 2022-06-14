@@ -7,12 +7,10 @@
 
 import UIKit
 import WSTagsField
+import PhotosUI
 
 class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrollViewDelegate, UIPopoverPresentationControllerDelegate {
 
-    @IBOutlet var noteTitleField: UITextField!
-    @IBOutlet var noteDateField: UIDatePicker!
-    @IBOutlet var noteTagsField: WSTagsField!
     @IBOutlet var drawingVIew: DrawingView!
     
     var isNoteLocked: Bool?
@@ -36,88 +34,62 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
         drawingVIew.currentHighlighter = PenTool(width: 20.0, color: .systemYellow, opacity: 0.6, blendMode: .normal, strokeType: .dashed)
         
-        noteTitleField.backgroundColor = UIColor.systemGray5
-        noteTitleField.layer.cornerRadius = 6.0
-        noteTitleField.text = currentNote?.title ?? ""
-        
-        noteTagsField.cornerRadius = 6.0
-        noteTagsField.spaceBetweenTags = 3.0
-        noteTagsField.numberOfLines = 2
-        
-        noteTagsField.readOnly = true
-        noteTagsField.addTags((currentNote?.tags?.map({"\(String(describing: ($0 as AnyObject).name!))"})) ?? [String]())
-        
-        noteDateField.date = currentNote?.date ?? Date.now
-        
         let shareButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "square.and.arrow.up"), primaryAction: nil, menu: shareButtonTapped(menuOption: .displayInline))
         
-                                            
-        moreButton = UIBarButtonItem(title: "More", image: UIImage(systemName: "ellipsis.circle"), primaryAction: nil, menu: moreButtonTapped())
-        
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .default)
-        
-        var config = UIImage.SymbolConfiguration(paletteColors: [.systemBlue, .systemYellow])
+        if #available(iOS 16.0, *) {
+            navigationItem.style = .editor
+            navigationItem.title = currentNote?.title ?? "New Note"
+            
+                if currentDevice == .ipad {
+                    navigationItem.backBarButtonItem?.isHidden = true
+                }
 
-        var newconfig = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 42.0)))
+            navigationItem.centerItemGroups = [
+                UIBarButtonItem(image: UIImage(systemName: "character.textbox"), style: .plain, target: self, action: #selector(textToolSelected)).creatingOptionalGroup(customizationIdentifier: "textTool"),
+                
+                UIBarButtonItem(image: UIImage(systemName: "pencil"), style: .plain, target: self, action: #selector(penToolSelected(_:))).creatingOptionalGroup(customizationIdentifier: "penTool"),
+                
+                UIBarButtonItem(image: UIImage(systemName: "photo"), style: .plain, target: self, action: #selector(selectPhoto(_:))).creatingOptionalGroup(customizationIdentifier: "photoTool")
+                  
+            ]
+    
+            navigationItem.renameDelegate = self
+            navigationItem.titleMenuProvider = { suggestedActions in
+                var children = suggestedActions
+                children += [
 
-        //iPhone only tools
-        let currentTool = UIButton()
-        currentTool.setImage(UIImage(named: "penIcon")?.applyingSymbolConfiguration(newconfig), for: .normal)
-        currentTool.addTarget(self, action: #selector(penTool(sender:)), for: .touchUpInside)
-        currentTool.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-       
-        let changeTool = UIButton()
-        changeTool.setImage(UIImage(systemName: "folder", withConfiguration: largeConfig), for: .normal)
-        changeTool.showsMenuAsPrimaryAction = true
-        changeTool.menu = changeToolsMenu()
-        changeTool.frame = CGRect(x: 60, y: 0, width: 44, height: 44)
-        
-        //iPad Tools
-        let penTool = UIButton()
-        penTool.setImage(UIImage(systemName: "pencil")?.applyingSymbolConfiguration(newconfig), for: .normal)
-        penTool.addTarget(self, action: #selector(penTool(sender:)), for: .touchUpInside)
-        penTool.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
-       
-        let highlighterTool = UIButton()
-        highlighterTool.setImage(UIImage(systemName: "highlighter", withConfiguration: largeConfig), for: .normal)
-        highlighterTool.showsMenuAsPrimaryAction = true
-        highlighterTool.addTarget(self, action: #selector(highlighterTool(sender:)), for: .touchUpInside)
-        highlighterTool.frame = CGRect(x: 60, y: 0, width: 44, height: 44)
-        
-        let eraserconfig = UIImage.SymbolConfiguration(paletteColors: [.systemBlue, .systemRed.withAlphaComponent(0.5), .systemBlue])
-        let colorLargeConfig = eraserconfig.applying(largeConfig)
-        
-        let eraserTool = UIButton()
-        eraserTool.setImage(UIImage(named: "eraserIcon")?.applyingSymbolConfiguration(colorLargeConfig), for: .normal)
-        
-        eraserTool.showsMenuAsPrimaryAction = true
-        eraserTool.addTarget(self, action: #selector(eraserTool(sender:)), for: .touchUpInside)
-        eraserTool.frame = CGRect(x: 100, y: 0, width: 44, height: 44)
-        
-        let toolsView = UIView()
-        if currentDevice == .iphone {
-            toolsView.addSubview(currentTool)
-            toolsView.addSubview(changeTool)
-        } else {
-            toolsView.addSubview(penTool)
-            toolsView.addSubview(highlighterTool)
-            toolsView.addSubview(eraserTool)
-        }
-        
-        toolsView.frame = CGRect(x: 0, y: 0, width: 200, height: 44)
-        
-        self.navigationItem.titleView = toolsView
-        
-        switch currentDevice {
-        case .iphone:
-            self.navigationItem.titleView = toolsView
-            self.navigationItem.rightBarButtonItem = moreButton
-        case .ipad, .mac:
-            self.navigationItem.titleView = toolsView
-            self.navigationItem.leftBarButtonItem = shareButton
-        case .none:
-            return
-        }
+                    UIAction(title: "Change Date", subtitle: self.currentNote?.date?.formatted(), image: UIImage(systemName: "calendar"), identifier: .none, discoverabilityTitle: "Change Date", attributes: [], state: .off) {
+                        _ in
+                        
+                    },
+                    
+                    UIAction(title: "Edit Tags", image: UIImage(systemName: "tag")) { _ in
+                        
+                        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
+                        let navController = UINavigationController(rootViewController: vc)
+                        vc.newNoteVC = self.noteTagsField
+                        
+                        switch currentDevice {
+                        case .iphone:
+                            self.present(navController, animated: true, completion: nil)
+                        case .ipad, .mac:
+                            navController.modalPresentationStyle = UIModalPresentationStyle.popover
+                            navController.preferredContentSize = CGSize(width: 375, height: 300)
+                            navController.sheetPresentationController?.sourceView = self.view
+                            navController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
+                            self.present(navController, animated: true, completion: nil)
+                        case .none:
+                            return
+                        }
+                    }
+                    
+                    
+                ]
+                return UIMenu(children: children)
+            }
+       } else {
+           print("DDD")
+       }
         
         NotificationCenter.default.addObserver(self, selector: #selector(changeStrokeType(notification:)), name: Notification.Name("changedStrokeType"), object: nil)
         
@@ -144,26 +116,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
         NotificationCenter.default.post(name: Notification.Name("UpdateNotesTable"), object: nil)
         
-    }
-    
-    
-    @objc func editTagsButtonTapped(_ sender: Any) {
-        
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
-        let navController = UINavigationController(rootViewController: vc)
-        vc.newNoteVC = noteTagsField
-        
-        switch currentDevice {
-        case .iphone:
-            present(navController, animated: true, completion: nil)
-        case .ipad, .mac:
-            navController.modalPresentationStyle = UIModalPresentationStyle.popover
-            navController.preferredContentSize = CGSize(width: 375, height: 300)
-            navController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
-            present(navController, animated: true, completion: nil)
-        case .none:
-            return
-        }
     }
     
     func shareButtonTapped(menuOption: UIMenu.Options) -> UIMenu {
@@ -203,6 +155,10 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
     }
     
+    @objc func textToolSelected() {
+        drawingVIew.tool = .text
+    }
+    
     func changeToolsMenu() -> UIMenu {
         var toolsMenu = [UIAction]()
         for tool in Tools.allCases {
@@ -217,7 +173,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
     }
     
-    @objc func penTool(sender: UIButton) {
+    @objc func penToolSelected(_ sender: UIBarButtonItem) {
         if currentDevice == .iphone {
             presentSettingsStoryboard(identifier: "penMenu", source: sender)
         } else {
@@ -229,7 +185,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         }
     }
     
-    @objc func highlighterTool(sender: UIButton) {
+    @objc func highlighterTool(sender: UIBarButtonItem) {
         if currentDevice == .iphone {
             presentSettingsStoryboard(identifier: "penMenu", source: sender)
         } else {
@@ -241,7 +197,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         }
     }
     
-    @objc func eraserTool(sender: UIButton) {
+    @objc func eraserTool(sender: UIBarButtonItem) {
         if currentDevice == .iphone {
             presentSettingsStoryboard(identifier: "penMenu", source: sender)
         } else {
@@ -307,7 +263,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         return UIMenu(title: "", children: [shareButtonTapped(menuOption: []), lockNote, showTags])
     }
     
-    func presentSettingsStoryboard(identifier: String, source: UIButton) {
+    func presentSettingsStoryboard(identifier: String, source: UIBarButtonItem) {
         let vc = ToolOptionsViewController()
         let navigationController = UINavigationController(rootViewController: vc)
         if currentDevice == .iphone {
@@ -321,12 +277,51 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
 
             if let popoverPresentationController = navigationController.popoverPresentationController {
                      popoverPresentationController.permittedArrowDirections = .init([.up,.down])
-                     popoverPresentationController.sourceView = source
+                
+                if #available(iOS 16.0, *) {
+                    popoverPresentationController.sourceItem = source
+                } else {
+                    popoverPresentationController.barButtonItem = source
+                }
+                
                 navigationController.preferredContentSize = CGSize(width: 535, height: 300)
-                    popoverPresentationController.sourceRect = CGRect(x: 1, y: 1, width: source.bounds.width, height: source.bounds.height)
+                  
                      popoverPresentationController.delegate = self
                  }
         }
         self.present(navigationController, animated: true)
+    }
+}
+
+extension NoteViewController: UINavigationItemRenameDelegate {
+    func navigationItem(_: UINavigationItem, didEndRenamingWith title: String) {
+        NotificationCenter.default.post(name: Notification.Name("UpdateNotesTable"), object: nil)
+    }
+}
+
+extension NoteViewController: PHPickerViewControllerDelegate {
+    @objc func selectPhoto(_ sender: UIBarButtonItem) {
+        var configuration = PHPickerConfiguration()
+        configuration.filter = .images
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        self.present(picker, animated: true)
+    }
+    
+    //Image Picker
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        //set the photo symbol to previousImage and set the image the user selected to imageView.image, which displays it in the image view on the left side of the screen
+        
+        if let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
+            
+            itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+                DispatchQueue.main.async {
+                    guard let self = self, let image = image as? UIImage else { return }
+                    self.drawingVIew.insertImage(frame: CGRect(x: self.drawingVIew.bounds.midX, y: self.drawingVIew.bounds.midY, width: image.size.width, height: image.size.height), image: image)
+                }
+            }
+        }
+        picker.dismiss(animated: true, completion: nil)
     }
 }
