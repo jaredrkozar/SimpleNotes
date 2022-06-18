@@ -20,7 +20,7 @@ extension Note {
     @NSManaged public var noteID: String?
     @NSManaged public var title: String?
     @NSManaged public var isLocked: Bool
-    @NSManaged public var tags: NSSet?
+    @NSManaged public var tags: Set<String>?
     @NSManaged public var textbox: NSSet?
 
 }

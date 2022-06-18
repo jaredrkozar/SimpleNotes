@@ -11,7 +11,7 @@ import CoreData
 
 class EditTagsTableViewController: UITableViewController {
 
-    var newNoteVC = WSTagsField()
+    var note: Note?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,10 +73,11 @@ class EditTagsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if newNoteVC.tags.map({$0.text}).contains(tags[indexPath.row].name) {
-            newNoteVC.removeTag(tags[indexPath.row].name!)
+      
+        if note?.tags?.contains(tags[indexPath.row].name!) == true {
+            note?.tags?.remove(tags[indexPath.row].name!)
         } else {
-            newNoteVC.addTag(tags[indexPath.row].name!)
+            note?.tags?.insert(tags[indexPath.row].name!)
         }
     }
     

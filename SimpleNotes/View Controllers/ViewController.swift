@@ -124,7 +124,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                   
                   let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
                   let navController = UINavigationController(rootViewController: vc)
-                  vc.newNoteVC = cellTag.noteTags
+                  vc.note == notes[indexPath.row]
                   self.navigationController?.present(navController, animated: true, completion: nil)
                 
             }

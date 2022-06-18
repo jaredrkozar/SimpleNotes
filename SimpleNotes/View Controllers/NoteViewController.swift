@@ -7,6 +7,7 @@
 
 import UIKit
 import WSTagsField
+import PhotosUI
 
 class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrollViewDelegate {
 
@@ -24,6 +25,8 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
     var moreButton: UIBarButtonItem?
     
+    var listOfTags = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,7 +38,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         drawingVIew.currentPen = PenTool(width: 20.0, color: .systemPink, opacity: 1.0, blendMode: .normal, strokeType: .normal)
         
         drawingVIew.currentHighlighter = PenTool(width: 20.0, color: .systemYellow, opacity: 0.6, blendMode: .normal, strokeType: .normal)
-        
+    
         noteTitleField.backgroundColor = UIColor.systemGray5
         noteTitleField.layer.cornerRadius = 6.0
         noteTitleField.text = currentNote?.title ?? ""
@@ -55,6 +58,10 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             [
             UIBarButtonItem(image: UIImage(named: "penIcon"), style: .plain, target: self, action: #selector(penTool(_:))).creatingMovableGroup(customizationIdentifier: "pen"),
             
+            UIBarButtonItem(image: UIImage(systemName: "photo"), style: .plain, target: self, action: #selector(presentPhotoPicker(_:))).creatingMovableGroup(customizationIdentifier: "photo"),
+            
+            UIBarButtonItem(image: UIImage(named: "penIcon"), style: .plain, target: self, action: #selector(penTool(_:))).creatingMovableGroup(customizationIdentifier: "pen"),
+            
             UIBarButtonItemGroup.optionalGroup(customizationIdentifier: "shapes", items: [
                 
                 UIBarButtonItem(image: UIImage(systemName: "square"), style: .plain, target: .none, action: #selector(printLetter)),
@@ -65,13 +72,15 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             
             navigationItem.renameDelegate = self
             navigationItem.titleMenuProvider = { suggestedActions in
+                
                 var children = suggestedActions
                 children += [
-                    UIAction(title: "Edit Tags", image: UIImage(systemName: "tag")) { _ in
+                
+                    UIAction(title: "Edit Tags", subtitle: "\(self.currentNote?.tags?.count ?? 0) tags", image: UIImage(systemName: "pin"), identifier: .none, discoverabilityTitle: "String? = nil",  attributes: [], state: .off) { _ in
                         
                         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
                         let navController = UINavigationController(rootViewController: vc)
-                        vc.newNoteVC = self.noteTagsField
+                        vc.note = self.currentNote
                         
                         switch currentDevice {
                         case .iphone:
@@ -79,12 +88,26 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                         case .ipad, .mac:
                             navController.modalPresentationStyle = UIModalPresentationStyle.popover
                             navController.preferredContentSize = CGSize(width: 375, height: 300)
-                            navController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
+                            navController.popoverPresentationController?.sourceView = self.view
                             self.present(navController, animated: true, completion: nil)
                         case .none:
                             return
                         }
+                    },
+                    
+                    UIAction(title: self.currentNote?.isLocked ?? false ? "Unlock Note" : "Lock Note", subtitle: "", image: self.currentNote?.isLocked ?? false ? UIImage(systemName: "lock.open") : UIImage(systemName: "lock"), identifier: .none, discoverabilityTitle: "", attributes: [], state: .off) {_ in
+                        LockNote().authenticate(title: self.isNoteLocked! ? "Lock this note" : "Unlock this note", onCompleted: {result, error in
+                            
+                            if error == nil {
+                                
+                                self.isNoteLocked = !self.isNoteLocked!
+                                self.moreButton?.menu = self.moreButtonTapped()
+                            } else {
+                                ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: nil, progress: 4.0)
+                            }
+                        })
                     }
+                    
                 ]
                 
                 return UIMenu(children: children)
@@ -117,7 +140,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         saveNote(currentNote: currentNote, title: noteTitleField.text!, textboxes: textBoxes, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}), isLocked: isNoteLocked ?? false)
         
         NotificationCenter.default.post(name: Notification.Name("UpdateNotesTable"), object: nil)
-        
     }
     
     
@@ -125,7 +147,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
         let navController = UINavigationController(rootViewController: vc)
-        vc.newNoteVC = noteTagsField
+        vc.note = self.currentNote
         
         switch currentDevice {
         case .iphone:
@@ -236,15 +258,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     }
     
     @objc func moreButtonTapped() -> UIMenu {
-    
-        var showTags = UIAction(title: "Tags", subtitle: "", image: UIImage(systemName: "tag"), identifier: .none, discoverabilityTitle: "", attributes: [], state: .off, handler: {_ in
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
-            let navController = UINavigationController(rootViewController: vc)
-            vc.newNoteVC = self.noteTagsField
-            
-            self.present(navController, animated: true, completion: nil)
-        })
-        
+
         let lockTitle = self.isNoteLocked ?? false ? "Unlock note" : "Lock note"
         let lockImage = self.isNoteLocked! ? "lock.open" : "lock"
         
@@ -261,7 +275,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             })
         })
         
-        return UIMenu(title: "", children: [shareButtonTapped(menuOption: []), lockNote, showTags])
+        return UIMenu(title: "", children: [shareButtonTapped(menuOption: []), lockNote])
     }
 }
 
@@ -269,5 +283,36 @@ extension NoteViewController: UINavigationItemRenameDelegate {
     
     func navigationItem(_: UINavigationItem, didEndRenamingWith title: String) {
         navigationItem.title = title
+    }
+}
+
+extension NoteViewController: PHPickerViewControllerDelegate {
+    
+    @objc func presentPhotoPicker(_ sender: UIBarButtonItem) {
+        var configuration = PHPickerConfiguration()
+        configuration.filter = .images
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        self.present(picker, animated: true)
+    }
+    
+    //Image Picker
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        
+        if let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
+                   
+                   itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+                       DispatchQueue.main.async {
+                           guard let self = self, let image = image as? UIImage else { return }
+                          
+                           self.drawingVIew.insertImage(frame: CGRect(x: self.drawingVIew.bounds.midX, y: self.drawingVIew.bounds.midY, width: image.size.width ?? 200, height: image.size.height ?? 200), image: image)
+                       }
+                   }
+               }
+    }
+    
+    func addString(string: String) {
+        listOfTags.append(string)
     }
 }
