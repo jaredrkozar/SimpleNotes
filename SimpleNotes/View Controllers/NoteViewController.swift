@@ -106,7 +106,26 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                                 ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: nil, progress: 4.0)
                             }
                         })
-                    }
+                    },
+                    
+                    UIAction(title: "Change Date", subtitle: self.currentNote?.date?.formatted(), image: UIImage(systemName: "calender"), identifier: .none, discoverabilityTitle: "String? = nil",  attributes: [], state: .off) { _ in
+                        
+                        let vc = ChangeDateViewController()
+                        let navController = UINavigationController(rootViewController: vc)
+                        vc.note = self.currentNote
+                        
+                        switch currentDevice {
+                        case .iphone:
+                            self.present(navController, animated: true, completion: nil)
+                        case .ipad, .mac:
+                            navController.modalPresentationStyle = UIModalPresentationStyle.popover
+                            navController.preferredContentSize = CGSize(width: 375, height: 425)
+                            navController.popoverPresentationController?.sourceView = self.view
+                            self.present(navController, animated: true, completion: nil)
+                        case .none:
+                            return
+                        }
+                    },
                     
                 ]
                 
