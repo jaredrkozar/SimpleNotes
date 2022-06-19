@@ -52,7 +52,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
         if #available(iOS 16.0, *) {
             self.navigationItem.style = .editor
-            self.navigationItem.title = "DLLDLDLD"
+            self.navigationItem.title = currentNote?.title
             
             navigationItem.centerItemGroups =
             [
@@ -119,7 +119,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                             self.present(navController, animated: true, completion: nil)
                         case .ipad, .mac:
                             navController.modalPresentationStyle = UIModalPresentationStyle.popover
-                            navController.preferredContentSize = CGSize(width: 375, height: 425)
+                            navController.preferredContentSize = CGSize(width: 375, height: 600)
                             navController.popoverPresentationController?.sourceView = self.view
                             self.present(navController, animated: true, completion: nil)
                         case .none:
@@ -302,6 +302,7 @@ extension NoteViewController: UINavigationItemRenameDelegate {
     
     func navigationItem(_: UINavigationItem, didEndRenamingWith title: String) {
         navigationItem.title = title
+        
     }
 }
 
