@@ -258,68 +258,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aXY-tL-c3R" customClass="DrawingView" customModule="SimpleNotes" customModuleProvider="target">
-                                <rect key="frame" x="30" y="282" width="354" height="580"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aXY-tL-c3R" customClass="DrawingView" customModule="SimpleNotes" customModuleProvider="target">
+                                <rect key="frame" x="30" y="115" width="354" height="747"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="580" id="Lh0-Mt-5D4"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="2000" id="vWF-Bv-Sye"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ulo-95-Tbu">
-                                <rect key="frame" x="30" y="88" width="354" height="43"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Xdz-td-Z9N">
-                                <rect key="frame" x="30" y="138.5" width="354" height="34.5"/>
-                            </datePicker>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jmt-Fj-bTW" customClass="WSTagsField" customModule="WSTagsField">
-                                <rect key="frame" x="104" y="204" width="290" height="55"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tags" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IR4-dN-h6B">
-                                <rect key="frame" x="30" y="196" width="54" height="63"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="54" id="3En-ej-nor"/>
-                                    <constraint firstAttribute="height" constant="63" id="3j9-T6-Fo6"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="lAN-CM-DWr"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="aXY-tL-c3R" firstAttribute="leading" secondItem="lAN-CM-DWr" secondAttribute="leading" priority="750" constant="30" id="5p7-Gj-T83"/>
-                            <constraint firstItem="lAN-CM-DWr" firstAttribute="trailing" secondItem="ulo-95-Tbu" secondAttribute="trailing" constant="30" id="6qM-5N-ThY"/>
-                            <constraint firstItem="Xdz-td-Z9N" firstAttribute="top" secondItem="ulo-95-Tbu" secondAttribute="bottom" constant="7.5" id="F6G-et-lQo"/>
-                            <constraint firstItem="jmt-Fj-bTW" firstAttribute="top" secondItem="Xdz-td-Z9N" secondAttribute="bottom" constant="31" id="Gzk-Fu-02n"/>
-                            <constraint firstItem="jmt-Fj-bTW" firstAttribute="trailing" secondItem="CZ7-vF-jXR" secondAttribute="trailingMargin" id="IWP-5u-8gH"/>
-                            <constraint firstItem="IR4-dN-h6B" firstAttribute="bottom" secondItem="jmt-Fj-bTW" secondAttribute="bottom" id="ZTS-Ip-cfL"/>
                             <constraint firstItem="lAN-CM-DWr" firstAttribute="bottom" secondItem="aXY-tL-c3R" secondAttribute="bottom" id="b6A-XO-Y50"/>
-                            <constraint firstItem="ulo-95-Tbu" firstAttribute="trailing" secondItem="Xdz-td-Z9N" secondAttribute="trailing" id="cGO-Qt-zkK"/>
-                            <constraint firstItem="ulo-95-Tbu" firstAttribute="leading" secondItem="Xdz-td-Z9N" secondAttribute="leading" id="fPf-QI-zgM"/>
-                            <constraint firstItem="jmt-Fj-bTW" firstAttribute="leading" secondItem="IR4-dN-h6B" secondAttribute="trailing" constant="20" id="hgo-jm-WVG"/>
-                            <constraint firstItem="IR4-dN-h6B" firstAttribute="top" secondItem="Xdz-td-Z9N" secondAttribute="bottom" constant="23" id="k9o-fR-NCY"/>
-                            <constraint firstItem="ulo-95-Tbu" firstAttribute="top" secondItem="lAN-CM-DWr" secondAttribute="top" id="lY4-jk-vGj"/>
                             <constraint firstItem="aXY-tL-c3R" firstAttribute="top" secondItem="lAN-CM-DWr" secondAttribute="top" constant="194" id="nZU-2e-414"/>
-                            <constraint firstItem="ulo-95-Tbu" firstAttribute="leading" secondItem="aXY-tL-c3R" secondAttribute="leading" id="nrs-IT-o65"/>
-                            <constraint firstItem="ulo-95-Tbu" firstAttribute="leading" secondItem="IR4-dN-h6B" secondAttribute="leading" id="tnZ-7T-bur"/>
                             <constraint firstItem="lAN-CM-DWr" firstAttribute="trailing" secondItem="aXY-tL-c3R" secondAttribute="trailing" priority="750" constant="30" id="wN9-SY-wfC"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="drawingVIew" destination="aXY-tL-c3R" id="gXa-R8-Oxc"/>
-                        <outlet property="noteDateField" destination="Xdz-td-Z9N" id="sdW-pw-0qM"/>
-                        <outlet property="noteTagsField" destination="jmt-Fj-bTW" id="lEw-Jq-7MN"/>
-                        <outlet property="noteTitleField" destination="ulo-95-Tbu" id="jpI-0e-u0I"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wlR-ck-Kws" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4553.623188405797" y="3661.6071428571427"/>
+            <point key="canvasLocation" x="4552.1739130434789" y="3661.6071428571427"/>
         </scene>
         <!--Tool Options View Controller-->
         <scene sceneID="d5J-9u-p7g">

@@ -14,6 +14,14 @@ var currentNote: Note?
 
 public var currentDevice: Device?
 
+protocol DateHandler {
+    func dateHandler() -> Date
+}
+
+protocol TagHandler {
+    func tagHandler() -> String
+}
+
 protocol ModalHandler {
     func modalDismissed()
 }

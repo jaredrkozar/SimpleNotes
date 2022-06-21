@@ -11,10 +11,11 @@ import PhotosUI
 
 class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrollViewDelegate {
 
-    @IBOutlet var noteTitleField: UITextField!
-    @IBOutlet var noteDateField: UIDatePicker!
-    @IBOutlet var noteTagsField: WSTagsField!
     @IBOutlet var drawingVIew: DrawingView!
+    
+    var dateHandler: DateHandler?
+    
+    let searchController = UISearchController(searchResultsController: nil)
     
     var isNoteLocked: Bool?
     var timer: Timer?
@@ -29,6 +30,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchController.searchResultsUpdater = self
         
         ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: nil, progress: 4.0)
         
@@ -38,17 +40,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         drawingVIew.currentPen = PenTool(width: 20.0, color: .systemPink, opacity: 1.0, blendMode: .normal, strokeType: .normal)
         
         drawingVIew.currentHighlighter = PenTool(width: 20.0, color: .systemYellow, opacity: 0.6, blendMode: .normal, strokeType: .normal)
-    
-        noteTitleField.backgroundColor = UIColor.systemGray5
-        noteTitleField.layer.cornerRadius = 6.0
-        noteTitleField.text = currentNote?.title ?? ""
-        
-        noteTagsField.cornerRadius = 6.0
-        noteTagsField.spaceBetweenTags = 3.0
-        noteTagsField.numberOfLines = 2
-        
-        noteTagsField.readOnly = true
-        noteTagsField.addTags((currentNote?.tags?.map({"\(String(describing: ($0 as AnyObject).name!))"})) ?? [String]())
         
         if #available(iOS 16.0, *) {
             self.navigationItem.style = .editor
@@ -76,7 +67,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                 var children = suggestedActions
                 children += [
                 
-                    UIAction(title: "Edit Tags", subtitle: "\(self.currentNote?.tags?.count ?? 0) tags", image: UIImage(systemName: "pin"), identifier: .none, discoverabilityTitle: "String? = nil",  attributes: [], state: .off) { _ in
+                    UIAction(title: "Edit Tags", subtitle: "\tags", image: UIImage(systemName: "pin"), identifier: .none, discoverabilityTitle: "String? = nil",  attributes: [], state: .off) { _ in
                         
                         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
                         let navController = UINavigationController(rootViewController: vc)
@@ -156,7 +147,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     }
     
     @objc func autoSaveNote() {
-        saveNote(currentNote: currentNote, title: noteTitleField.text!, textboxes: textBoxes, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}), isLocked: isNoteLocked ?? false)
+        saveNote(currentNote: currentNote, title: navigationItem.title ?? "New Note", textboxes: textBoxes, date: dateHandler?.dateHandler() ?? Date.now, tags: ["noteTagsField.tags.map({$0.text})"], isLocked: isNoteLocked ?? false)
         
         NotificationCenter.default.post(name: Notification.Name("UpdateNotesTable"), object: nil)
     }
@@ -302,6 +293,8 @@ extension NoteViewController: UINavigationItemRenameDelegate {
     
     func navigationItem(_: UINavigationItem, didEndRenamingWith title: String) {
         navigationItem.title = title
+        saveNote(currentNote: currentNote, title: title, textboxes: [], date: Date.now, tags: ["HE::O"], isLocked: currentNote!.isLocked)
+        NotificationCenter.default.post(name: Notification.Name("reloadNotesTable"), object: nil)
         
     }
 }
@@ -334,5 +327,37 @@ extension NoteViewController: PHPickerViewControllerDelegate {
     
     func addString(string: String) {
         listOfTags.append(string)
+    }
+}
+
+extension NoteViewController: UISearchResultsUpdating {
+    func fetchQuerySuggestions(for searchController: UISearchController) -> [(String, UIImage?)] {
+        let queryText = searchController.searchBar.text
+        // Here you would decide how to transform the queryText into search results. This example just returns something fixed.
+        return [("Sample Suggestion", UIImage(systemName: "rectangle.and.text.magnifyingglass"))]
+    }
+    
+    func updateSearch(_ searchController: UISearchController, query: String) {
+        // This method is used to update the search UI from our query text change
+        // You should also update internal state related to when the query changes, as you might for when the user changes the query by typing.
+        searchController.searchBar.text = query
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        if #available(iOS 16.0, *) {
+            let querySuggestions = self.fetchQuerySuggestions(for: searchController)
+            searchController.searchSuggestions = querySuggestions.map { name, icon in
+                UISearchSuggestionItem(localizedSuggestion: name, localizedDescription: nil, iconImage: icon)
+            }
+        }
+    }
+
+    @available(iOS 16.0, *)
+    func updateSearchResults(for searchController: UISearchController, selecting searchSuggestion: UISearchSuggestion) {
+        if #available(iOS 16.0, *) {
+            if let suggestion = searchSuggestion.localizedSuggestion {
+                updateSearch(searchController, query: suggestion)
+            }
+        }
     }
 }

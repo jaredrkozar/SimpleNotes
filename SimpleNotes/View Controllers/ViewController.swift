@@ -47,6 +47,8 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         self.navigationItem.rightBarButtonItems = [addNote, viewOptions]
         self.navigationItem.leftBarButtonItem = settings
         
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadNotesTable(notification:)), name: Notification.Name("reloadNotesTable"), object: nil)
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -106,7 +108,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         switch currentDevice {
         case .ipad, .mac:
             self.splitViewController?.setViewController(vc, for: .secondary)
-            
+        
             self.showDetailViewController(vc, sender: true)
         case .iphone:
             self.navigationController?.pushViewController(vc, animated: true)
@@ -116,6 +118,17 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     }
     override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            
+            let newWindowAction = UIWindowScene.ActivationAction({ _ in
+                
+                // Create the user activity that represents the new scene content.
+                let userActivity = NSUserActivity(activityType: "com.jkozar.openNote")
+
+                // Return the activation configuration.
+                return UIWindowScene.ActivationConfiguration(userActivity: userActivity)
+
+            })
+            
             let editAction = UIAction(
               title: "Edit Tags", image: UIImage(systemName: "tag")) { [self] _ in
                 //gets the current dimension and splits it up into 2 parts, and saves them so they can be shown in the text fields in editPresetViewController. The editPresetViewController is then shown via a popover
@@ -157,7 +170,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                     }
             }
             
-            return UIMenu(title: "", children: [editAction, deleteAction])
+            return UIMenu(title: "", children: [newWindowAction, editAction, deleteAction])
         }
     }
     
@@ -192,5 +205,9 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         
         return UIMenu(title: "View Options", image: nil, identifier: nil, options: .singleSelection, children: [viewOptionsMenu, sortOptionsMenu])
         
+    }
+    
+    @objc func reloadNotesTable(notification: Notification) {
+        self.tableView.reloadData()
     }
 }

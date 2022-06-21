@@ -32,6 +32,7 @@
 		7F498AC727718CAA00202413 /* TagTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F498AC527718CAA00202413 /* TagTableViewCell.xib */; };
 		7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B0B27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld */; };
 		7F498B572775719E00202413 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B562775719E00202413 /* CoreData.swift */; };
+		7F4FA6C9285ED17B00DC7CB6 /* NoteSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4FA6C8285ED17B00DC7CB6 /* NoteSceneDelegate.swift */; };
 		7F53DAA6279BA51B006789F6 /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */; };
 		7F53DAA8279BEF62006789F6 /* CloudServiceFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAA7279BEF62006789F6 /* CloudServiceFiles.swift */; };
 		7F53DAAA279CC36C006789F6 /* ToastNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAA9279CC36C006789F6 /* ToastNotification.swift */; };
@@ -132,6 +133,7 @@
 		7F498AC527718CAA00202413 /* TagTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagTableViewCell.xib; sourceTree = "<group>"; };
 		7F498B0C27722F4E00202413 /* SimpleNotesDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleNotesDataModel.xcdatamodel; sourceTree = "<group>"; };
 		7F498B562775719E00202413 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		7F4FA6C8285ED17B00DC7CB6 /* NoteSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteSceneDelegate.swift; sourceTree = "<group>"; };
 		7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		7F53DAA7279BEF62006789F6 /* CloudServiceFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudServiceFiles.swift; sourceTree = "<group>"; };
 		7F53DAA9279CC36C006789F6 /* ToastNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastNotification.swift; sourceTree = "<group>"; tabWidth = 1; };
@@ -391,6 +393,7 @@
 				7FEBEC6E276135DA0066F0C0 /* AppDelegate.swift */,
 				7F498B0B27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld */,
 				7FEBEC70276135DA0066F0C0 /* SceneDelegate.swift */,
+				7F4FA6C8285ED17B00DC7CB6 /* NoteSceneDelegate.swift */,
 				7F8BBDFB276ED795005B07C1 /* Extensions.swift */,
 				7FEBEC74276135DA0066F0C0 /* Main.storyboard */,
 				7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */,
@@ -753,6 +756,7 @@
 				7FF892F027A4C2F90030588B /* Note+CoreDataProperties.swift in Sources */,
 				7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */,
 				7F376626278E220D00A107FF /* SettingsViewController.swift in Sources */,
+				7F4FA6C9285ED17B00DC7CB6 /* NoteSceneDelegate.swift in Sources */,
 				7F53DAAE279D4B75006789F6 /* TagsTableViewController.swift in Sources */,
 				7F53DAAC279D4B09006789F6 /* TabBarController.swift in Sources */,
 				7FF892EE27A4C2F90030588B /* TextBox+CoreDataProperties.swift in Sources */,

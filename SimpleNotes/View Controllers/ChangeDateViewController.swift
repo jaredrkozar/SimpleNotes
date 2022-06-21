@@ -7,7 +7,11 @@
 
 import UIKit
 
-class ChangeDateViewController: UIViewController {
+class ChangeDateViewController: UIViewController, DateHandler {
+    
+    func dateHandler() -> Date {
+        return datePicker.date
+    }
 
     var note: Note?
     
