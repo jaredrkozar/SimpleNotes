@@ -10,12 +10,35 @@ import WSTagsField
 import PhotosUI
 
 class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrollViewDelegate {
-
-    @IBOutlet var drawingVIew: DrawingView!
     
-    var dateHandler: DateHandler?
+    let drawingView = DrawingView(frame: CGRect.zero)
     
-    let searchController = UISearchController(searchResultsController: nil)
+    var dadteHandler: DateHandler?
+    
+    private let scrollView: UIScrollView = {
+    let scrollView = UIScrollView(frame: .zero)
+            scrollView.translatesAutoresizingMaskIntoConstraints = false
+    return scrollView
+        }()
+    
+    public var tool: Tools {
+        get {
+            return drawingView.tool ?? .pen
+        }
+        set {
+            drawingView.currentView?.isNotCurrentView()
+            if newValue == .scroll {
+                self.scrollView.panGestureRecognizer.minimumNumberOfTouches = 1
+                drawingView.isUserInteractionEnabled = true
+            } else {
+                self.scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
+                drawingView.tool = newValue
+            
+            }
+        }
+    }
+    
+    private let searchController = UISearchController(searchResultsController: nil)
     
     var isNoteLocked: Bool?
     var timer: Timer?
@@ -31,15 +54,38 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     override func viewDidLoad() {
         super.viewDidLoad()
         searchController.searchResultsUpdater = self
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        drawingView.translatesAutoresizingMaskIntoConstraints = false
+        
+        drawingView.backgroundColor = .blue
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(drawingView)
+    
+        NSLayoutConstraint.activate([
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            drawingView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            drawingView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            drawingView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            drawingView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            drawingView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+            drawingView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
+
+       
         
         ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: nil, progress: 4.0)
         
         // Do any additional setup after loading the view.
-        drawingVIew.setup()
-        drawingVIew.tool = .pen
-        drawingVIew.currentPen = PenTool(width: 20.0, color: .systemPink, opacity: 1.0, blendMode: .normal, strokeType: .normal)
         
-        drawingVIew.currentHighlighter = PenTool(width: 20.0, color: .systemYellow, opacity: 0.6, blendMode: .normal, strokeType: .normal)
+        tool = .pen
+        drawingView.currentPen = PenTool(width: 20.0, color: .systemPink, opacity: 1.0, blendMode: .normal, strokeType: .normal)
+        
+        drawingView.currentHighlighter = PenTool(width: 20.0, color: .systemYellow, opacity: 0.6, blendMode: .normal, strokeType: .normal)
         
         if #available(iOS 16.0, *) {
             self.navigationItem.style = .editor
@@ -52,6 +98,8 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             UIBarButtonItem(image: UIImage(systemName: "photo"), style: .plain, target: self, action: #selector(presentPhotoPicker(_:))).creatingMovableGroup(customizationIdentifier: "photo"),
             
             UIBarButtonItem(image: UIImage(named: "penIcon"), style: .plain, target: self, action: #selector(penTool(_:))).creatingMovableGroup(customizationIdentifier: "pen"),
+            
+            UIBarButtonItem(image: UIImage(systemName: "hand.point.up.left"), style: .plain, target: self, action: #selector(handTool(_:))).creatingMovableGroup(customizationIdentifier: "pen"),
             
             UIBarButtonItemGroup.optionalGroup(customizationIdentifier: "shapes", items: [
                 
@@ -110,7 +158,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                             self.present(navController, animated: true, completion: nil)
                         case .ipad, .mac:
                             navController.modalPresentationStyle = UIModalPresentationStyle.popover
-                            navController.preferredContentSize = CGSize(width: 375, height: 600)
+                            navController.preferredContentSize = CGSize(width: 375, height: 500)
                             navController.popoverPresentationController?.sourceView = self.view
                             self.present(navController, animated: true, completion: nil)
                         case .none:
@@ -142,12 +190,16 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         present(navController, animated: true, completion: nil)
     }
     
+    @objc func handTool(_ sender: UIBarButtonItem) {
+        tool = .scroll
+    }
+    
     @objc func cancelButtonTapped(sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
     @objc func autoSaveNote() {
-        saveNote(currentNote: currentNote, title: navigationItem.title ?? "New Note", textboxes: textBoxes, date: dateHandler?.dateHandler() ?? Date.now, tags: ["noteTagsField.tags.map({$0.text})"], isLocked: isNoteLocked ?? false)
+        saveNote(currentNote: currentNote, title: navigationItem.title ?? "New Note", textboxes: textBoxes, date: dadteHandler?.dateHandler() ?? Date.now, tags: ["noteTagsField.tags.map({$0.text})"], isLocked: isNoteLocked ?? false)
         
         NotificationCenter.default.post(name: Notification.Name("UpdateNotesTable"), object: nil)
     }
@@ -201,7 +253,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                     return
                 }
                 
-                vc.currentNoteView = self.drawingVIew.createPDF() as Data
+                vc.currentNoteView = self.drawingView.createPDF() as Data
                 vc.currentNote = self.currentNote
                 vc.sharingLocation = location
                 
@@ -214,7 +266,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     }
     
     @objc func penTool(_ sender: UIBarButtonItem) {
-        if drawingVIew.tool == .pen {
+        if tool == .pen {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "penMenu") as! ToolOptionsViewController
             let navigationController = UINavigationController(rootViewController: vc)
             if currentDevice == .iphone {
@@ -226,44 +278,44 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             }
             self.present(navigationController, animated: true)
         } else {
-            drawingVIew.tool = .pen
+            tool = .pen
         }
         
     }
     
     @objc func highlighterTool(sender: UIButton) {
-        if drawingVIew.tool == .highlighter {
+        if tool == .highlighter {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "penMenu") as! ToolOptionsViewController
             let navigationController = UINavigationController(rootViewController: vc)
             self.present(navigationController, animated: true)
         } else {
-            drawingVIew.tool = .text
+            tool = .text
         }
         
     }
     
     @objc func changeStrokeType(notification: Notification) {
-        if drawingVIew.tool == .pen {
-            drawingVIew.currentPen?.strokeType = StrokeTypes(rawValue: UserDefaults.standard.integer(forKey: "changedStrokeType")) ?? .normal
+        if tool == .pen {
+            drawingView.currentPen?.strokeType = StrokeTypes(rawValue: UserDefaults.standard.integer(forKey: "changedStrokeType")) ?? .normal
             
         } else {
-            drawingVIew.currentHighlighter?.strokeType = StrokeTypes(rawValue: UserDefaults.standard.integer(forKey: "changedStrokeType")) ?? .normal
+            drawingView.currentHighlighter?.strokeType = StrokeTypes(rawValue: UserDefaults.standard.integer(forKey: "changedStrokeType")) ?? .normal
         }
     }
     
     @objc func changeColor(notification: Notification) {
-        if drawingVIew.tool == .pen {
-            drawingVIew.currentPen?.color = UIColor(hex: UserDefaults.standard.string(forKey: "changedColor")!)!
+        if tool == .pen {
+            drawingView.currentPen?.color = UIColor(hex: UserDefaults.standard.string(forKey: "changedColor")!)!
         } else {
-            drawingVIew.currentHighlighter?.color = UIColor(hex: UserDefaults.standard.string(forKey: "changedColor")!)!
+            drawingView.currentHighlighter?.color = UIColor(hex: UserDefaults.standard.string(forKey: "changedColor")!)!
         }
     }
     
     @objc func changeSize(notification: Notification) {
-        if drawingVIew.tool == .pen {
-            drawingVIew.currentPen?.width = UserDefaults.standard.double(forKey: "changedWidth") 
+        if tool == .pen {
+            drawingView.currentPen?.width = UserDefaults.standard.double(forKey: "changedWidth")
         } else {
-            drawingVIew.currentHighlighter?.width = UserDefaults.standard.double(forKey: "changedWidth")
+            drawingView.currentHighlighter?.width = UserDefaults.standard.double(forKey: "changedWidth")
         }
     }
     
@@ -319,7 +371,7 @@ extension NoteViewController: PHPickerViewControllerDelegate {
                        DispatchQueue.main.async {
                            guard let self = self, let image = image as? UIImage else { return }
                           
-                           self.drawingVIew.insertImage(frame: CGRect(x: self.drawingVIew.bounds.midX, y: self.drawingVIew.bounds.midY, width: image.size.width ?? 200, height: image.size.height ?? 200), image: image)
+                           self.drawingView.insertImage(frame: CGRect(x: self.drawingView.bounds.midX, y: self.drawingView.bounds.midY, width: image.size.width ?? 200, height: image.size.height ?? 200), image: image)
                        }
                    }
                }

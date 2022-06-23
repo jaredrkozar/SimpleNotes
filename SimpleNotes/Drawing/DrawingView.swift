@@ -12,7 +12,7 @@ import UIKit
     func currentTextBoxColor() -> UIColor
 }
 
-open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UIScrollViewDelegate {
+class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UIScrollViewDelegate {
 
     public weak var delegate: DrawingViewDelegate?
     
@@ -20,7 +20,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
     
     public var tool: Tools?
     
-    public var selectedTool: Tool {
+    public var selectedTool: Tool? {
         if self.tool == .pen {
             return  currentPen ?? PenTool(width: 4.0, color: UIColor.systemBlue, opacity: 1.0, blendMode: .normal, strokeType: .normal)
         } else if self.tool == .highlighter {
@@ -28,7 +28,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
         } else if self.tool == .text {
             return TextTool()
         } else {
-            return PenTool()
+            return nil
         }
     }
     
@@ -70,14 +70,17 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
     
     private let forceSensitivity: CGFloat = 9.0
                     
-    func setup() {
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.frame = frame
+        self.translatesAutoresizingMaskIntoConstraints = false
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedScreen(_:)))
           self.addGestureRecognizer(tapGesture)
           self.layer.drawsAsynchronously = true
         print(self)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
               NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
-
     }
     
     open override func draw(_ rect: CGRect) {
@@ -222,7 +225,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
                 dismissKeyboard()
         } else {
             if tool == .text {
-                selectedTool.drawingView?.tappedScreen(sender)
+               tappedScreen(sender)
             
             } else if tool == .eraser {
                 let inLines = self.returnLines(point: sender.location(in: self))
@@ -299,17 +302,18 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
         setTouchPoints(touch)
         
         shapeFirstPoint = touch.location(in: self)
-        lines.append(Line(color: (selectedTool.color), width: (selectedTool.width) , opacity: (selectedTool.opacity), blendMode: selectedTool.blendMode ?? .normal, path: UIBezierPath(), type: .drawing, strokeType: selectedTool.strokeType))
+        
+        lines.append(Line(color: (selectedTool?.color)!, width: (selectedTool?.width)! , opacity: (selectedTool?.opacity)!, blendMode: selectedTool?.blendMode ?? .normal, path: UIBezierPath(), type: .drawing, strokeType: selectedTool?.strokeType))
     }
 
     open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        print("DLDLDL")
         guard let touch = touches.first else { return }
         getTouchPoints(touch)
         
         if tool != .text {
             if var currentPath = lines.popLast() {
-                currentPath.path = selectedTool.moved(currentPath: currentPath.path, previousPoint:  CGPoint(x: previousPoint!.x, y: previousPoint!.y), midpoint1: CGPoint(x: getMidPoints().0.x, y: getMidPoints().0.y), midpoint2: CGPoint(x: getMidPoints().1.x, y: getMidPoints().1.y))!
+                currentPath.path = (selectedTool?.moved(currentPath: currentPath.path, previousPoint:  CGPoint(x: previousPoint!.x, y: previousPoint!.y), midpoint1: CGPoint(x: getMidPoints().0.x, y: getMidPoints().0.y), midpoint2: CGPoint(x: getMidPoints().1.x, y: getMidPoints().1.y))!)!
                 lines.append(currentPath)
                 print(lines.count)
                 setNeedsDisplay()
@@ -323,7 +327,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
                 
                 var newLine = Line(color: UIColor.systemBlue, width: 2.0, opacity: 1.0, blendMode: .normal, path: UIBezierPath(), type: .drawing, fillColor: UIColor.brown)
                 print(selectedTool)
-                newLine.path = selectedTool.moved(currentPath: newLine.path, previousPoint: shapeFirstPoint!, midpoint1: currentPoint!, midpoint2: currentPoint!)!
+                newLine.path = (selectedTool?.moved(currentPath: newLine.path, previousPoint: shapeFirstPoint!, midpoint1: currentPoint!, midpoint2: currentPoint!)!)!
                 lines.append(newLine)
             }
         }
@@ -374,8 +378,8 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
         keyboardIsOpen = true
     }
     
-    required public init?(coder aDecoder: NSCoder) {
-       super.init(coder: aDecoder)
+    required public init?(coder aDecoder: NSCoder?) {
+        super.init(coder: aDecoder!)
     }
     
     private func addshape(shape: Shapes) -> UIBezierPath {

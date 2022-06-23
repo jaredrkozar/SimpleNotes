@@ -257,28 +257,9 @@
                     <view key="view" contentMode="scaleToFill" id="CZ7-vF-jXR" customClass="NoteView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aXY-tL-c3R" customClass="DrawingView" customModule="SimpleNotes" customModuleProvider="target">
-                                <rect key="frame" x="30" y="115" width="354" height="747"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="580" id="Lh0-Mt-5D4"/>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="2000" id="vWF-Bv-Sye"/>
-                                </constraints>
-                            </view>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="lAN-CM-DWr"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="aXY-tL-c3R" firstAttribute="leading" secondItem="lAN-CM-DWr" secondAttribute="leading" priority="750" constant="30" id="5p7-Gj-T83"/>
-                            <constraint firstItem="lAN-CM-DWr" firstAttribute="bottom" secondItem="aXY-tL-c3R" secondAttribute="bottom" id="b6A-XO-Y50"/>
-                            <constraint firstItem="aXY-tL-c3R" firstAttribute="top" secondItem="lAN-CM-DWr" secondAttribute="top" constant="194" id="nZU-2e-414"/>
-                            <constraint firstItem="lAN-CM-DWr" firstAttribute="trailing" secondItem="aXY-tL-c3R" secondAttribute="trailing" priority="750" constant="30" id="wN9-SY-wfC"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="drawingVIew" destination="aXY-tL-c3R" id="gXa-R8-Oxc"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wlR-ck-Kws" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -101,7 +101,7 @@ public enum Tools {
     case lasso
     case text
     case shape
-    case hand
+    case scroll
     
     var name: String {
         switch self {
@@ -117,8 +117,8 @@ public enum Tools {
             return "Text"
         case .shape:
             return "Shape"
-        case .hand:
-            return "Hand"
+        case .scroll:
+            return "Scroll"
         }
     }
 }
