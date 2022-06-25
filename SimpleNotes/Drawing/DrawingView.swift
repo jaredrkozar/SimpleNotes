@@ -303,22 +303,24 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         
         shapeFirstPoint = touch.location(in: self)
         
-        lines.append(Line(color: (selectedTool?.color)!, width: (selectedTool?.width)! , opacity: (selectedTool?.opacity)!, blendMode: selectedTool?.blendMode ?? .normal, path: UIBezierPath(), type: .drawing, strokeType: selectedTool?.strokeType))
+        if tool != .scroll {
+            lines.append(Line(color: (selectedTool?.color)!, width: (selectedTool?.width)! , opacity: (selectedTool?.opacity)!, blendMode: selectedTool?.blendMode ?? .normal, path: UIBezierPath(), type: .drawing, strokeType: selectedTool?.strokeType))
+        }
     }
 
     open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("DLDLDL")
+    
         guard let touch = touches.first else { return }
         getTouchPoints(touch)
         
-        if tool != .text {
+        if (tool != .scroll && tool != .text) {
+         
             if var currentPath = lines.popLast() {
                 currentPath.path = (selectedTool?.moved(currentPath: currentPath.path, previousPoint:  CGPoint(x: previousPoint!.x, y: previousPoint!.y), midpoint1: CGPoint(x: getMidPoints().0.x, y: getMidPoints().0.y), midpoint2: CGPoint(x: getMidPoints().1.x, y: getMidPoints().1.y))!)!
                 lines.append(currentPath)
-                print(lines.count)
                 setNeedsDisplay()
            }
-        } else {
+        } else if tool == .text {
             if canCreateTextBox == true {
                 if !lines.isEmpty {
                     lines.removeLast()
@@ -326,7 +328,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
                 }
                 
                 var newLine = Line(color: UIColor.systemBlue, width: 2.0, opacity: 1.0, blendMode: .normal, path: UIBezierPath(), type: .drawing, fillColor: UIColor.brown)
-                print(selectedTool)
+                
                 newLine.path = (selectedTool?.moved(currentPath: newLine.path, previousPoint: shapeFirstPoint!, midpoint1: currentPoint!, midpoint2: currentPoint!)!)!
                 lines.append(newLine)
             }

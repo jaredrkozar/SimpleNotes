@@ -32,9 +32,8 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                 drawingView.isUserInteractionEnabled = true
             } else {
                 self.scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
-                drawingView.tool = newValue
-            
             }
+            drawingView.tool = newValue
         }
     }
     
@@ -61,7 +60,8 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
         view.addSubview(scrollView)
         scrollView.addSubview(drawingView)
-    
+        scrollView.delegate = self
+        
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -76,7 +76,8 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             drawingView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
 
-       
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 5.0
         
         ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: nil, progress: 4.0)
         
@@ -183,6 +184,9 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(autoSaveNote), userInfo: nil, repeats: true)
     }
     
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return drawingView
+    }
     @objc func showPenMenu(sender: UIButton) {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "penMenu") as! ToolOptionsViewController
         let navController = UINavigationController(rootViewController: vc)
