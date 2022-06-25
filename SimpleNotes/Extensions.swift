@@ -94,7 +94,7 @@ public enum viewOptions: CaseIterable {
     }
 }
 
-public enum Tools {
+public enum Tools: CaseIterable {
     case pen
     case highlighter
     case eraser
@@ -119,6 +119,45 @@ public enum Tools {
             return "Shape"
         case .scroll:
             return "Scroll"
+        }
+    }
+    
+    var icon: UIImage {
+        switch self {
+        case .text:
+            return UIImage(systemName: "character.textbox")!
+        case .scroll:
+            return UIImage(systemName: "hand.point.up.left")!
+        case .eraser:
+            return UIImage(systemName: "pin")!
+        case .pen:
+            return UIImage(systemName: "rectangle.on.rectangle")!
+        case .highlighter:
+            return UIImage(systemName: "rectangle.on.rectangle.circle.fill")!
+        case .shape:
+            return UIImage(systemName: "circle")!
+        case .lasso:
+            return UIImage(systemName: "lasso")!
+        }
+   
+    }
+    
+    var optionsView: UIViewController? {
+        switch self {
+        case .pen:
+            return ToolOptionsViewController()
+        case .highlighter:
+            return ToolOptionsViewController()
+        case .eraser:
+            return nil
+        case .lasso:
+            return nil
+        case .shape:
+            return nil
+        case .scroll:
+            return nil
+        case .text:
+            return nil
         }
     }
 }

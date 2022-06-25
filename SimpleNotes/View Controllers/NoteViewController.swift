@@ -56,8 +56,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         drawingView.translatesAutoresizingMaskIntoConstraints = false
         
-        drawingView.backgroundColor = .blue
-        
         view.addSubview(scrollView)
         scrollView.addSubview(drawingView)
         scrollView.delegate = self
@@ -77,13 +75,15 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         ])
 
         scrollView.minimumZoomScale = 1.0
-        scrollView.maximumZoomScale = 5.0
+        scrollView.maximumZoomScale = 3.5
         
         ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: nil, progress: 4.0)
         
         // Do any additional setup after loading the view.
         
         tool = .pen
+        drawingView.backgroundColor = .systemBackground
+        
         drawingView.currentPen = PenTool(width: 20.0, color: .systemPink, opacity: 1.0, blendMode: .normal, strokeType: .normal)
         
         drawingView.currentHighlighter = PenTool(width: 20.0, color: .systemYellow, opacity: 0.6, blendMode: .normal, strokeType: .normal)
@@ -92,24 +92,38 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             self.navigationItem.style = .editor
             self.navigationItem.title = currentNote?.title
             
-            navigationItem.centerItemGroups =
-            [
-            UIBarButtonItem(image: UIImage(named: "penIcon"), style: .plain, target: self, action: #selector(penTool(_:))).creatingMovableGroup(customizationIdentifier: "pen"),
-            
-            UIBarButtonItem(image: UIImage(systemName: "photo"), style: .plain, target: self, action: #selector(presentPhotoPicker(_:))).creatingMovableGroup(customizationIdentifier: "photo"),
-            
-            UIBarButtonItem(image: UIImage(named: "penIcon"), style: .plain, target: self, action: #selector(penTool(_:))).creatingMovableGroup(customizationIdentifier: "pen"),
-            
-            UIBarButtonItem(image: UIImage(systemName: "hand.point.up.left"), style: .plain, target: self, action: #selector(handTool(_:))).creatingMovableGroup(customizationIdentifier: "pen"),
-            
-            UIBarButtonItemGroup.optionalGroup(customizationIdentifier: "shapes", items: [
-                
-                UIBarButtonItem(image: UIImage(systemName: "square"), style: .plain, target: .none, action: #selector(printLetter)),
-                
-                UIBarButtonItem(image: UIImage(systemName: "circle"), style: .plain, target: .none, action: #selector(printLetter))
 
-            ])]
-            
+            for menuTool in Tools.allCases {
+                navigationItem.centerItemGroups.append(UIBarButtonItem(title: menuTool.name, image: menuTool.icon, primaryAction: UIAction { _ in
+                    
+                    
+                    if (menuTool == self.tool) && (menuTool.optionsView != nil) {
+                        
+                        switch currentDevice {
+                        case .iphone:
+                        
+                            let navigationController = UINavigationController(rootViewController: menuTool.optionsView!)
+                            if let picker = navigationController.presentationController as? UISheetPresentationController {
+                                    picker.detents = [.medium()]
+                                    picker.prefersGrabberVisible = true
+                                    picker.preferredCornerRadius = 5.0
+                                }
+                                self.present(navigationController, animated: true, completion: nil)
+                    
+                        case .ipad, .mac:
+                            let navigationController = UINavigationController(rootViewController: menuTool.optionsView!)
+                            navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
+                            self.navigationController?.preferredContentSize = CGSize(width: 350, height: 225)
+                            self.present(self.navigationController!, animated: true, completion: nil)
+                        case .none:
+                            print("NONE")
+                        }
+                   
+                    } else {
+                        self.tool = menuTool
+                    }
+                }).creatingMovableGroup(customizationIdentifier: tool.name))
+            }
             navigationItem.renameDelegate = self
             navigationItem.titleMenuProvider = { suggestedActions in
                 
@@ -269,33 +283,13 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
     }
     
-    @objc func penTool(_ sender: UIBarButtonItem) {
-        if tool == .pen {
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "penMenu") as! ToolOptionsViewController
-            let navigationController = UINavigationController(rootViewController: vc)
-            if currentDevice == .iphone {
-                if let picker = navigationController.presentationController as? UISheetPresentationController {
-                picker.detents = [.medium()]
-                picker.prefersGrabberVisible = true
-                picker.preferredCornerRadius = 5.0
-                }
-            }
-            self.present(navigationController, animated: true)
-        } else {
-            tool = .pen
-        }
+    func switchToTool(selectedtool: Tools, viewController: UIViewController?) -> UIAction {
         
-    }
-    
-    @objc func highlighterTool(sender: UIButton) {
-        if tool == .highlighter {
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "penMenu") as! ToolOptionsViewController
-            let navigationController = UINavigationController(rootViewController: vc)
-            self.present(navigationController, animated: true)
-        } else {
-            tool = .text
-        }
+        return UIAction(title: selectedtool.name, image: selectedtool.icon, identifier: nil, attributes: []) { _ in
+            print((selectedtool == self.tool) && (selectedtool.optionsView != nil))
+            print("DD")
         
+     }
     }
     
     @objc func changeStrokeType(notification: Notification) {

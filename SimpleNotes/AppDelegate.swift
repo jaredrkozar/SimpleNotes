@@ -29,14 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
         
-        if options.userActivities.first?.activityType == "noteVC" {
-            let config = UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-            config.delegateClass = NoteSceneDelegate.self
-            return config
-        } else {
-            return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-        }
-        
+        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {

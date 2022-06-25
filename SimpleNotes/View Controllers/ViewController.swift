@@ -58,21 +58,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     
     @objc func addNote(sender: UIBarButtonItem) {
   
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newNoteVC") as! NoteViewController
-        
-        vc.currentNote = createNote()
-        vc.isNoteLocked = false
-        
-        switch currentDevice {
-        case .ipad, .mac:
-                splitViewController?.setViewController(vc, for: .secondary)
-            
-            showDetailViewController(vc, sender: true)
-        case .iphone:
-                navigationController?.pushViewController(vc, animated: true)
-        case .none:
-            return
-        }
+        showNote(note: createNote())
     }
 
     @objc func settingsScreen(sender: UIButton) {
@@ -101,7 +87,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     
     func showNote(note: Note) {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newNoteVC") as! NoteViewController
-        
+        print(currentDevice)
         vc.currentNote = note
         vc.isNoteLocked = note.isLocked
         
@@ -111,7 +97,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         
             self.showDetailViewController(vc, sender: true)
         case .iphone:
-            self.navigationController?.pushViewController(vc, animated: true)
+            self.show(vc, sender: self)
         case .none:
             return
         }

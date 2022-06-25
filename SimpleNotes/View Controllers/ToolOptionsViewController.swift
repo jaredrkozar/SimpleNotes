@@ -69,7 +69,8 @@ class ToolOptionsViewController: UIViewController, UICollectionViewDataSource, U
         view.addSubview(sizeCollectionView)
 
         view.addSubview(lineTypeCollectionView)
-        
+        navigationController?.navigationBar.backgroundColor = .systemBackground
+        self.view.backgroundColor = .systemBackground
         colorCollectionView.delegate = self
         colorCollectionView.dataSource = self
         sizeCollectionView.delegate = self

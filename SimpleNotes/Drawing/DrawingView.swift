@@ -211,8 +211,6 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     }
     
     @objc func tappedScreen(_ sender: UITapGestureRecognizer) {
-        print("dkdkddkdkkdkdkdkdkdkdTAP")
-        print(keyboardIsOpen)
         if currentView?.isMoving == true || currentView?.isResizing == true || isSelectingLine == true {
             currentView?.moveIconImage.isHidden = true
             canCreateTextBox = true
