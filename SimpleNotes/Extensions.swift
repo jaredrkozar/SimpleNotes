@@ -94,7 +94,7 @@ public enum viewOptions: CaseIterable {
     }
 }
 
-public enum Tools: CaseIterable {
+public enum Tools: Int, CaseIterable {
     case pen
     case highlighter
     case eraser

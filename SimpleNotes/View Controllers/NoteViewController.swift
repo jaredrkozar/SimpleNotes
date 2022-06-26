@@ -16,10 +16,10 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     var dadteHandler: DateHandler?
     
     private let scrollView: UIScrollView = {
-    let scrollView = UIScrollView(frame: .zero)
-            scrollView.translatesAutoresizingMaskIntoConstraints = false
-    return scrollView
-        }()
+        let scrollView = UIScrollView(frame: .zero)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
     
     public var tool: Tools {
         get {
@@ -73,7 +73,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             drawingView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
             drawingView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
-
+        
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 3.5
         
@@ -91,8 +91,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         if #available(iOS 16.0, *) {
             self.navigationItem.style = .editor
             self.navigationItem.title = currentNote?.title
-            
-
+                        
             for menuTool in Tools.allCases {
                 navigationItem.centerItemGroups.append(UIBarButtonItem(title: menuTool.name, image: menuTool.icon, primaryAction: UIAction { _ in
                     
@@ -101,35 +100,37 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                         
                         switch currentDevice {
                         case .iphone:
-                        
+                            
                             let navigationController = UINavigationController(rootViewController: menuTool.optionsView!)
                             if let picker = navigationController.presentationController as? UISheetPresentationController {
-                                    picker.detents = [.medium()]
-                                    picker.prefersGrabberVisible = true
-                                    picker.preferredCornerRadius = 5.0
-                                }
-                                self.present(navigationController, animated: true, completion: nil)
-                    
+                                picker.detents = [.medium()]
+                                picker.prefersGrabberVisible = true
+                                picker.preferredCornerRadius = 5.0
+                            }
+                            self.present(navigationController, animated: true, completion: nil)
+                            
                         case .ipad, .mac:
                             let navigationController = UINavigationController(rootViewController: menuTool.optionsView!)
                             navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
                             self.navigationController?.preferredContentSize = CGSize(width: 350, height: 225)
-                            self.present(self.navigationController!, animated: true, completion: nil)
+                            navigationController.popoverPresentationController?.barButtonItem = self.navigationItem.centerItemGroups[menuTool.rawValue].barButtonItems.first
+                            self.present(navigationController, animated: true, completion: nil)
                         case .none:
                             print("NONE")
                         }
-                   
+                        
                     } else {
                         self.tool = menuTool
                     }
                 }).creatingMovableGroup(customizationIdentifier: tool.name))
             }
+            
             navigationItem.renameDelegate = self
             navigationItem.titleMenuProvider = { suggestedActions in
                 
                 var children = suggestedActions
                 children += [
-                
+                    
                     UIAction(title: "Edit Tags", subtitle: "\tags", image: UIImage(systemName: "pin"), identifier: .none, discoverabilityTitle: "String? = nil",  attributes: [], state: .off) { _ in
                         
                         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
@@ -155,7 +156,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                             if error == nil {
                                 
                                 self.isNoteLocked = !self.isNoteLocked!
-                                self.moreButton?.menu = self.moreButtonTapped()
                             } else {
                                 ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: nil, progress: 4.0)
                             }
@@ -204,7 +204,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     @objc func showPenMenu(sender: UIButton) {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "penMenu") as! ToolOptionsViewController
         let navController = UINavigationController(rootViewController: vc)
-    
+        
         present(navController, animated: true, completion: nil)
     }
     
@@ -242,10 +242,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         }
     }
     
-    @objc func printLetter() {
-        print("SLSLLS")
-    }
-    
     func shareButtonTapped(menuOption: UIMenu.Options) -> UIMenu {
         var locations = [UIAction]()
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "shareNoteVC") as! NoteShareSettingsViewController
@@ -253,20 +249,20 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
         for location in SharingLocation.allCases {
             locations.append( UIAction(title: "\(location.viewTitle)", image: location.icon, identifier: nil, attributes: []) { _ in
-
+                
                 switch currentDevice {
                 case .iphone:
                     if let picker = navigationController.presentationController as? UISheetPresentationController {
-                       picker.detents = [.medium()]
-                       picker.prefersGrabberVisible = true
-                       picker.preferredCornerRadius = 7.0
+                        picker.detents = [.medium()]
+                        picker.prefersGrabberVisible = true
+                        picker.preferredCornerRadius = 7.0
                     }
                 case .ipad, .mac:
                     navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
-                  navigationController.preferredContentSize = CGSize(width: 375, height: 300)
+                    navigationController.preferredContentSize = CGSize(width: 375, height: 300)
                     navigationController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
                     
-                
+                    
                 case .none:
                     return
                 }
@@ -276,20 +272,11 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                 vc.sharingLocation = location
                 
                 self.present(navigationController, animated: true, completion: nil)
-             })
-          }
+            })
+        }
         
         return UIMenu(title: "Share Note", subtitle: nil, image: nil, identifier: nil, options: menuOption, children: locations)
         
-    }
-    
-    func switchToTool(selectedtool: Tools, viewController: UIViewController?) -> UIAction {
-        
-        return UIAction(title: selectedtool.name, image: selectedtool.icon, identifier: nil, attributes: []) { _ in
-            print((selectedtool == self.tool) && (selectedtool.optionsView != nil))
-            print("DD")
-        
-     }
     }
     
     @objc func changeStrokeType(notification: Notification) {
@@ -315,27 +302,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         } else {
             drawingView.currentHighlighter?.width = UserDefaults.standard.double(forKey: "changedWidth")
         }
-    }
-    
-    @objc func moreButtonTapped() -> UIMenu {
-
-        let lockTitle = self.isNoteLocked ?? false ? "Unlock note" : "Lock note"
-        let lockImage = self.isNoteLocked! ? "lock.open" : "lock"
-        
-        var lockNote = UIAction(title: lockTitle, subtitle: "", image: UIImage(systemName: lockImage), identifier: .none, discoverabilityTitle: "", attributes: [], state: .off, handler: {_ in
-            LockNote().authenticate(title: self.isNoteLocked! ? "Lock this note" : "Unlock this note", onCompleted: {result, error in
-                
-                if error == nil {
-                    
-                    self.isNoteLocked = !self.isNoteLocked!
-                    self.moreButton?.menu = self.moreButtonTapped()
-                } else {
-                    ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: nil, progress: 4.0)
-                }
-            })
-        })
-        
-        return UIMenu(title: "", children: [shareButtonTapped(menuOption: []), lockNote])
     }
 }
 
