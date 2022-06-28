@@ -9,6 +9,7 @@ import UIKit
 
 class ColorCollectionViewCell: UICollectionViewCell {
 
+    static let identifier = "colorCell"
     @IBOutlet var icon: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -43,6 +43,11 @@ class SettingsViewController: UITableViewController {
                
                 let accountSettings = self.storyboard!.instantiateViewController(withIdentifier: "accountSettings") as! AccountSettingsViewController
                 self.show(accountSettings, sender: true)
+            },
+            SettingsOptions(title: "Tint COlor", option: "", icon: UIImage(systemName: "cloud"), iconBGColor: UIColor(named: "Blue")!) {
+               
+               let tintPicker = TintPickerViewController()
+                self.show(tintPicker, sender: true)
             }
         ]))
     }

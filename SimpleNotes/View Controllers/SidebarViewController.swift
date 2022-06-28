@@ -182,7 +182,7 @@ var tabsItems = [Item(title: "Notes", image: UIImage(systemName: "square.grid.2x
 var tagsItems = [Item]()
 
 
-enum Section: String {
+private enum Section: String {
     case tabs
     case tags = "Tags"
 }

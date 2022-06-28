@@ -42,6 +42,7 @@
 		7F8BBDF1276D6A98005B07C1 /* ReusableTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BBDF0276D6A98005B07C1 /* ReusableTableView.swift */; };
 		7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BBDFB276ED795005B07C1 /* Extensions.swift */; };
 		7FB7C29B2815155F006C9FE2 /* HoldingClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */; };
+		7FB8120E2869554C00DC9E67 /* ColorCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB8120D2869554C00DC9E67 /* ColorCollectionView.swift */; };
 		7FC55D962791372D001DDFD5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */; };
 		7FC55DA12792ADEB001DDFD5 /* TableRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */; };
 		7FC55DA22792ADEB001DDFD5 /* TableRowCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FC55DA02792ADEB001DDFD5 /* TableRowCell.xib */; };
@@ -142,6 +143,7 @@
 		7F8BBDF0276D6A98005B07C1 /* ReusableTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableTableView.swift; sourceTree = "<group>"; };
 		7F8BBDFB276ED795005B07C1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingClass.swift; sourceTree = "<group>"; };
+		7FB8120D2869554C00DC9E67 /* ColorCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionView.swift; sourceTree = "<group>"; };
 		7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableRowCell.swift; sourceTree = "<group>"; };
 		7FC55DA02792ADEB001DDFD5 /* TableRowCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableRowCell.xib; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 			children = (
 				7FC7FB6E2837F74000CE483E /* Constants.swift */,
 				7FE45081281A56F40034928B /* CollectionReusableView.swift */,
+				7FB8120D2869554C00DC9E67 /* ColorCollectionView.swift */,
 				7F2FE9222830AE49006777DE /* LockNote.swift */,
 				7FC7FB6C2836D5C100CE483E /* CustomButton.swift */,
 				7F53DAA9279CC36C006789F6 /* ToastNotification.swift */,
@@ -762,6 +765,7 @@
 				7FC7FB6D2836D5C100CE483E /* CustomButton.swift in Sources */,
 				7F376613278AC3CD00A107FF /* SendEmail.swift in Sources */,
 				7F37661E278D40F700A107FF /* FolderLocationViewController.swift in Sources */,
+				7FB8120E2869554C00DC9E67 /* ColorCollectionView.swift in Sources */,
 				7FE45091281E2BE90034928B /* ObjectView.swift in Sources */,
 				7F53DAB0279D4CAD006789F6 /* SidebarViewController.swift in Sources */,
 				7FF31CCE2799E04F00923AE3 /* DropboxInteractor.swift in Sources */,
