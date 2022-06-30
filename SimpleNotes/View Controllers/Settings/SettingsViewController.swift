@@ -7,20 +7,6 @@
 
 import UIKit
 
-struct Sections {
-    let title: String
-    var settings: [SettingsOptions]
-}
-
-struct SettingsOptions {
-    let title: String
-    var option: String
-    let icon: UIImage?
-    let iconBGColor: UIColor
-    let viewController: UIViewController?
-    let control: DetailViewType?
-}
-
 class SettingsViewController: UITableViewController {
     
     var models = [Sections]()
@@ -37,9 +23,33 @@ class SettingsViewController: UITableViewController {
     }
 
     func configure() {
+        models.append(Sections(title: "Cloud", settings: [
+            SettingsOptions(title: "Accounts", option: "", icon: UIImage(systemName: "cloud")?.withTintColor(.white), iconBGColor: UIColor(named: "Blue")!, control: nil) {
+                
+                self.showSettingsPage(viewController: AccountSettingsViewController())
+            }
+        ]))
+        
         models.append(Sections(title: "Appearance", settings: [
-            SettingsOptions(title: "Accounts", option: "", icon: UIImage(systemName: "cloud"), iconBGColor: UIColor(named: "Blue")!, viewController: AccountSettingsViewController(), control: nil),
-            SettingsOptions(title: "Tint COlor", option: "", icon: UIImage(systemName: "cloud"), iconBGColor: UIColor(named: "Blue")!, viewController: TintPickerViewController(), control: nil)
+            SettingsOptions(title: "App Icon", option: "", icon: UIImage(systemName: "square.grid.2x2")?.withTintColor(.white), iconBGColor: UIColor(named: "Blue")!, control: nil) {
+                
+                self.showSettingsPage(viewController: AccountSettingsViewController())
+             },
+            SettingsOptions(title: "Tint Color", option: "", icon: UIImage(systemName: "cloud")?.withTintColor(.white), iconBGColor: UIColor(named: "Blue")!, control: nil) {
+                
+                self.showSettingsPage(viewController: TintPickerViewController())
+             },
+        ]))
+        
+        models.append(Sections(title: "Defaults", settings: [
+            SettingsOptions(title: "Text Box", option: "", icon: UIImage(systemName: "character.textbox")?.withTintColor(.red), iconBGColor: UIColor(named: "Blue")!, control: nil) {
+                   
+                self.showSettingsPage(viewController: DefaultTextBoxViewController())
+             },
+            SettingsOptions(title: "Note", option: "", icon: UIImage(systemName: "note.text")?.withTintColor(.white), iconBGColor: UIColor(named: "Blue")!, control: nil) {
+                
+                self.showSettingsPage(viewController: AccountSettingsViewController())
+            }
         ]))
     }
     
@@ -77,16 +87,19 @@ class SettingsViewController: UITableViewController {
 
         let model = models[indexPath.section].settings[indexPath.row]
         
+        model.handler!()
+    }
+
+    func showSettingsPage(viewController: UIViewController) {
         switch currentDevice {
         case .iphone:
-            show(model.viewController!, sender: true)
+            show(viewController, sender: true)
         case .ipad, .mac:
-            splitViewController?.setViewController(model.viewController, for: .secondary)
+            splitViewController?.setViewController(viewController, for: .secondary)
         case .none:
             return
         }
     }
-
     @IBAction func doneButtonTapped(_ sender: Any) {
         
         dismiss(animated: true, completion: nil)

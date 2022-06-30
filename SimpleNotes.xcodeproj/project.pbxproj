@@ -43,6 +43,7 @@
 		7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BBDFB276ED795005B07C1 /* Extensions.swift */; };
 		7FB7C29B2815155F006C9FE2 /* HoldingClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */; };
 		7FB8120E2869554C00DC9E67 /* ColorCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB8120D2869554C00DC9E67 /* ColorCollectionView.swift */; };
+		7FC2C11E286D64FA00D90E20 /* DefaultTextBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC2C11D286D64FA00D90E20 /* DefaultTextBoxViewController.swift */; };
 		7FC55D962791372D001DDFD5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */; };
 		7FC55DA12792ADEB001DDFD5 /* TableRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */; };
 		7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55DA327939E49001DDFD5 /* MimeTypes.swift */; };
@@ -143,6 +144,7 @@
 		7F8BBDFB276ED795005B07C1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingClass.swift; sourceTree = "<group>"; };
 		7FB8120D2869554C00DC9E67 /* ColorCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionView.swift; sourceTree = "<group>"; };
+		7FC2C11D286D64FA00D90E20 /* DefaultTextBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextBoxViewController.swift; sourceTree = "<group>"; };
 		7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableRowCell.swift; sourceTree = "<group>"; };
 		7FC55DA327939E49001DDFD5 /* MimeTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypes.swift; sourceTree = "<group>"; };
@@ -305,12 +307,10 @@
 				7F498AA9276FC22100202413 /* NoteViewController.swift */,
 				7F765A66285D8ABB00C51416 /* ChangeDateViewController.swift */,
 				7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */,
-				7FC7FB70283A0C4A00CE483E /* TintPickerViewController.swift */,
 				7F53DAAB279D4B09006789F6 /* TabBarController.swift */,
 				7F53DAAD279D4B75006789F6 /* TagsTableViewController.swift */,
 				7F53DAAF279D4CAD006789F6 /* SidebarViewController.swift */,
-				7F376625278E220D00A107FF /* SettingsViewController.swift */,
-				7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */,
+				7FC2C11C286D64D400D90E20 /* Settings */,
 				7FEBEC72276135DA0066F0C0 /* ViewController.swift */,
 				7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */,
 				7F498ABD2771624200202413 /* NewTagViewController.swift */,
@@ -334,6 +334,17 @@
 				7F498B562775719E00202413 /* CoreData.swift */,
 			);
 			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		7FC2C11C286D64D400D90E20 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				7FC7FB70283A0C4A00CE483E /* TintPickerViewController.swift */,
+				7FC2C11D286D64FA00D90E20 /* DefaultTextBoxViewController.swift */,
+				7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */,
+				7F376625278E220D00A107FF /* SettingsViewController.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		7FE45087281E29B40034928B /* Drawing */ = {
@@ -712,6 +723,7 @@
 				7FE4508F281E2B3E0034928B /* CustomTextBox.swift in Sources */,
 				7FE45094281E2CE20034928B /* PenTool.swift in Sources */,
 				7FEBEC73276135DA0066F0C0 /* ViewController.swift in Sources */,
+				7FC2C11E286D64FA00D90E20 /* DefaultTextBoxViewController.swift in Sources */,
 				7FF892EF27A4C2F90030588B /* Note+CoreDataClass.swift in Sources */,
 				7FF892ED27A4C2F90030588B /* TextBox+CoreDataClass.swift in Sources */,
 				7FE4509E281EEE760034928B /* TextTool.swift in Sources */,

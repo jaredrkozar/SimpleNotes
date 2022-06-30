@@ -40,7 +40,7 @@ class TagsTableViewController: UITableViewController {
         }
         
        
-        cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", icon: UIImage(systemName: tag.symbol!)?.withTintColor(UIColor(hex: tag.color!)!, renderingMode: .alwaysOriginal), iconBGColor: .systemBackground, viewController: nil, control: nil))
+        cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", icon: UIImage(systemName: tag.symbol!)?.withTintColor(UIColor(hex: tag.color!)!, renderingMode: .alwaysOriginal), iconBGColor: .systemBackground, control: nil, handler: nil))
         return cell
         
     }

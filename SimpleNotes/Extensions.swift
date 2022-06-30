@@ -173,6 +173,20 @@ public enum SharingType {
     case plainText
 }
 
+struct Sections {
+    let title: String?
+    var settings: [SettingsOptions]
+}
+
+struct SettingsOptions {
+    let title: String
+    var option: String
+    let icon: UIImage?
+    let iconBGColor: UIColor?
+    let control: DetailViewType?
+    let handler: (() -> Void)?
+}
+
 func sendBackSymbol(imageName: String, color: UIColor) -> UIImage {
     return UIImage(systemName: imageName)!.withTintColor(color, renderingMode: .alwaysOriginal)
 }
