@@ -161,8 +161,6 @@ extension SidebarViewController: UICollectionViewDelegate {
             vc.viewAppeared()
             splitViewController?.setViewController(navController, for: .supplementary)
         }
-        
-        view.window?.windowScene?.title = tabsItems[indexPath.row].title
     
         
     }

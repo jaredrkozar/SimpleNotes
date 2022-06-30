@@ -62,9 +62,21 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     }
 
     @objc func settingsScreen(sender: UIButton) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "settingsVC") as! SettingsViewController
-        let navController = UINavigationController(rootViewController: vc)
-        self.navigationController?.present(navController, animated: true, completion: nil)
+
+        let settingsVC = SettingsViewController()
+        
+        let navigationController = UINavigationController(rootViewController: settingsVC)
+        
+        switch currentDevice {
+            case .iphone:
+                present(navigationController, animated: true)
+            case .ipad, .mac:
+            let splitView = UISplitViewController(style: .doubleColumn)
+            splitView.viewControllers = [navigationController]
+            present(splitView, animated: true)
+        case .none:
+            return
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -39,14 +39,8 @@ class TagsTableViewController: UITableViewController {
             fatalError("Unable to dequeue the settings cell.")
         }
         
-        cell.logOutButton.isHidden = true
-        cell.background.backgroundColor = UIColor.clear
        
-        cell.icon.image = UIImage(systemName: tag.symbol!)?.withTintColor(UIColor(hex: tag.color!)!, renderingMode: .alwaysOriginal)
-        
-        cell.name.text = tag.name
-        
-        
+        cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", icon: UIImage(systemName: tag.symbol!)?.withTintColor(UIColor(hex: tag.color!)!, renderingMode: .alwaysOriginal), iconBGColor: .systemBackground, viewController: nil, control: nil))
         return cell
         
     }

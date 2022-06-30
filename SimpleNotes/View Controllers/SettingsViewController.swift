@@ -17,7 +17,8 @@ struct SettingsOptions {
     var option: String
     let icon: UIImage?
     let iconBGColor: UIColor
-    let handler: (() -> Void)
+    let viewController: UIViewController?
+    let control: DetailViewType?
 }
 
 class SettingsViewController: UITableViewController {
@@ -27,11 +28,9 @@ class SettingsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.rowHeight = 65
+        tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height), style: .insetGrouped)
+        tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
         configure()
-        
-        let nib = UINib(nibName: "TableRowCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "TableRowCell")
         
         title = "Settings"
         
@@ -39,16 +38,8 @@ class SettingsViewController: UITableViewController {
 
     func configure() {
         models.append(Sections(title: "Appearance", settings: [
-            SettingsOptions(title: "Accounts", option: "", icon: UIImage(systemName: "cloud"), iconBGColor: UIColor(named: "Blue")!) {
-               
-                let accountSettings = self.storyboard!.instantiateViewController(withIdentifier: "accountSettings") as! AccountSettingsViewController
-                self.show(accountSettings, sender: true)
-            },
-            SettingsOptions(title: "Tint COlor", option: "", icon: UIImage(systemName: "cloud"), iconBGColor: UIColor(named: "Blue")!) {
-               
-               let tintPicker = TintPickerViewController()
-                self.show(tintPicker, sender: true)
-            }
+            SettingsOptions(title: "Accounts", option: "", icon: UIImage(systemName: "cloud"), iconBGColor: UIColor(named: "Blue")!, viewController: AccountSettingsViewController(), control: nil),
+            SettingsOptions(title: "Tint COlor", option: "", icon: UIImage(systemName: "cloud"), iconBGColor: UIColor(named: "Blue")!, viewController: TintPickerViewController(), control: nil)
         ]))
     }
     
@@ -66,19 +57,11 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = models[indexPath.section].settings[indexPath.row]
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableRowCell", for: indexPath) as? TableRowCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TableRowCell.identifier, for: indexPath) as? TableRowCell else {
             fatalError("Unable to dequeue the settings cell.")
         }
         
-        cell.logOutButton.isHidden = true
-        
-        cell.icon.image = model.icon
-        cell.background.backgroundColor = model.iconBGColor
-        
-        cell.name.text = model.title
-        
-        cell.background.layer.cornerRadius = 9.0
-        cell.icon.tintColor = UIColor.white
+        cell.configureCell(with: model)
         
         cell.accessoryType = .disclosureIndicator
         return cell
@@ -93,7 +76,15 @@ class SettingsViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
 
         let model = models[indexPath.section].settings[indexPath.row]
-        model.handler()
+        
+        switch currentDevice {
+        case .iphone:
+            show(model.viewController!, sender: true)
+        case .ipad, .mac:
+            splitViewController?.setViewController(model.viewController, for: .secondary)
+        case .none:
+            return
+        }
     }
 
     @IBAction func doneButtonTapped(_ sender: Any) {
