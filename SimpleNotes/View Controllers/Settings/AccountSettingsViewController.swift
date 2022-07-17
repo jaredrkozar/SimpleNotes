@@ -23,12 +23,14 @@ class AccountSettingsViewController: UITableViewController {
     
     func configure() {
         models.append(Sections(title: "", settings: [
-            SettingsOptions(title: "Google Drive", option: "", icon: UIImage(named: "GoogleDriveIcon"), iconBGColor: UIColor.systemBlue, control: nil) {
+            SettingsOptions(title: "Google Drive", option: "", rowIcon: Icon(icon: UIImage(systemName: "pin"), iconBGColor: .systemRed, iconTintColor: .systemYellow), control: nil) {
                 
                 let textboxSettings = DefaultTextBoxViewController()
                 self.show(textboxSettings, sender: true)
             }
         ]))
+        
+        
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

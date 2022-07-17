@@ -27,6 +27,12 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
         return view
     }()
     
+    var optionLabel: UILabel = {
+        let view = UILabel()
+        view.numberOfLines = 1
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,7 +48,7 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
     // MARK: - Table view data source
     func configureTextBoxSettings() {
         textBoxSettings.append(Sections(title: nil, settings: [
-            SettingsOptions(title: "Font", option: "HELLO", icon: nil, iconBGColor: nil, control: .text(string: "DDD")) {
+            SettingsOptions(title: "Font", option: "HELLO", rowIcon: nil, control: .text(string: "DDD")) {
                 
                 let fontPicker = UIFontPickerViewController()
                 fontPicker.delegate = self
@@ -51,7 +57,7 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
         ]))
         
         textBoxSettings.append(Sections(title: nil, settings: [
-            SettingsOptions(title: "Color", option: "", icon: nil, iconBGColor: nil, control: .color(color: colorCircle), handler: {
+            SettingsOptions(title: "Color", option: "", rowIcon: nil, control: .color(color: colorCircle), handler: {
                 
                let colorPicker = UIColorPickerViewController()
                 colorPicker.delegate = self
@@ -60,7 +66,7 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
         ]))
         
         textBoxSettings.append(Sections(title: nil, settings: [
-            SettingsOptions(title: "Font SIze", option: "", icon: nil, iconBGColor: nil, control: .control(controls: [fontSize]), handler: nil)
+            SettingsOptions(title: "Font SIze", option: "", rowIcon: nil, control: .control(controls: [fontSize]), handler: nil)
         ]))
     }
                                

@@ -247,11 +247,11 @@
 		7F376618278BC78A00A107FF /* Sharing */ = {
 			isa = PBXGroup;
 			children = (
+				7F37662D278E666100A107FF /* GoogleInteractor.swift */,
 				7F376612278AC3CD00A107FF /* SendEmail.swift */,
 				7F376616278B59B800A107FF /* SendToOtherApp.swift */,
 				7F376614278B569D00A107FF /* SendText.swift */,
 				7F376619278BC7B400A107FF /* PDFCreator.swift */,
-				7F37662D278E666100A107FF /* GoogleInteractor.swift */,
 				7FF31CCD2799E04F00923AE3 /* DropboxInteractor.swift */,
 				7F37662F278E6A8500A107FF /* APIInteractor.swift */,
 			);

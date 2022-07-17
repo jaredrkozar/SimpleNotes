@@ -24,29 +24,29 @@ class SettingsViewController: UITableViewController {
 
     func configure() {
         models.append(Sections(title: "Cloud", settings: [
-            SettingsOptions(title: "Accounts", option: "", icon: UIImage(systemName: "cloud")?.withTintColor(.white), iconBGColor: UIColor(named: "Blue")!, control: nil) {
+            SettingsOptions(title: "Accounts", option: "", rowIcon: Icon(icon: UIImage(systemName: "cloud"), iconBGColor: .systemCyan, iconTintColor: nil), control: nil) {
                 
                 self.showSettingsPage(viewController: AccountSettingsViewController())
             }
         ]))
         
         models.append(Sections(title: "Appearance", settings: [
-            SettingsOptions(title: "App Icon", option: "", icon: UIImage(systemName: "square.grid.2x2")?.withTintColor(.white), iconBGColor: UIColor(named: "Blue")!, control: nil) {
+            SettingsOptions(title: "App Icon", option: "", rowIcon: Icon(icon: UIImage(systemName: "square.grid.2x2"), iconBGColor: .systemGreen, iconTintColor: nil), control: nil) {
                 
                 self.showSettingsPage(viewController: AccountSettingsViewController())
              },
-            SettingsOptions(title: "Tint Color", option: "", icon: UIImage(systemName: "cloud")?.withTintColor(.white), iconBGColor: UIColor(named: "Blue")!, control: nil) {
+            SettingsOptions(title: "Tint Color", option: "", rowIcon: Icon(icon: UIImage(systemName: "paintbrush"), iconBGColor: .systemRed, iconTintColor: nil), control: nil) {
                 
                 self.showSettingsPage(viewController: TintPickerViewController())
              },
         ]))
         
         models.append(Sections(title: "Defaults", settings: [
-            SettingsOptions(title: "Text Box", option: "", icon: UIImage(systemName: "character.textbox")?.withTintColor(.red), iconBGColor: UIColor(named: "Blue")!, control: nil) {
+            SettingsOptions(title: "Text Box", option: "", rowIcon: Icon(icon: UIImage(systemName: "character.textbox"), iconBGColor: .systemRed, iconTintColor: nil), control: nil) {
                    
                 self.showSettingsPage(viewController: DefaultTextBoxViewController())
              },
-            SettingsOptions(title: "Note", option: "", icon: UIImage(systemName: "note.text")?.withTintColor(.white), iconBGColor: UIColor(named: "Blue")!, control: nil) {
+            SettingsOptions(title: "Note", option: "",rowIcon: Icon(icon: UIImage(systemName: "doc"), iconBGColor: .systemOrange, iconTintColor: nil), control: nil) {
                 
                 self.showSettingsPage(viewController: AccountSettingsViewController())
             }

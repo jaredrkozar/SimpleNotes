@@ -68,7 +68,7 @@ class FolderLocationViewController: UITableViewController {
         let file = allFiles[indexPath.row]
         
         
-        cell.configureCell(with: SettingsOptions(title: file.name, option: "", icon: file.type.icon, iconBGColor: .systemBackground, control: nil, handler: nil))
+        cell.configureCell(with: SettingsOptions(title: file.name, option: "", rowIcon: Icon(icon: UIImage(systemName: "pin"), iconBGColor: .systemRed, iconTintColor: .systemYellow), control: nil, handler: nil))
         
         if file.type.typeURL == "folder" {
             cell.accessoryType = .disclosureIndicator
