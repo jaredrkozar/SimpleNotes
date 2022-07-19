@@ -11,11 +11,12 @@ class TabBarController: UITabBarController {
 
     private lazy var allNotesViewController = makeViewController()
     private lazy var tagsTableViewController = makeTagsTableViewController()
-
+    private lazy var settingsViewController = makeSettingsViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewControllers = [allNotesViewController,
-                           tagsTableViewController]
+                           tagsTableViewController, settingsViewController]
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +42,14 @@ private extension TabBarController {
         vc.tabBarItem = UITabBarItem(title: "Tags",
                                      image: UIImage(systemName: "tag.fill"),
                                      tag: 1)
+        return UINavigationController(rootViewController: vc)
+    }
+    
+    private func makeSettingsViewController() -> UINavigationController {
+        let vc = SettingsViewController()
+        vc.tabBarItem = UITabBarItem(title: "Settings",
+                                     image: UIImage(systemName: "gear"),
+                                     tag: 2)
         return UINavigationController(rootViewController: vc)
     }
 }

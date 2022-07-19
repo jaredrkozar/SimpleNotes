@@ -27,8 +27,30 @@ class SidebarViewController: UIViewController {
         collectionView.selectItem(at: IndexPath(item: 0, section: 0),
                                          animated: false,
                                          scrollPosition: UICollectionView.ScrollPosition.centeredVertically)
+        
+        
+        let settings = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsScreen))
+        
+        toolbarItems = [settings]
+        navigationController?.isToolbarHidden = false
     }
     
+    @objc func settingsScreen() {
+        let settingsVC = SettingsViewController()
+        
+        let navigationController = UINavigationController(rootViewController: settingsVC)
+        
+        switch currentDevice {
+            case .iphone:
+                present(navigationController, animated: true)
+            case .ipad, .mac:
+            let splitView = UISplitViewController(style: .doubleColumn)
+            splitView.viewControllers = [navigationController]
+            present(splitView, animated: true)
+        case .none:
+            return
+        }
+    }
     override func viewWillAppear(_ animated: Bool) {
         #if targetEnvironment(macCatalyst)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -147,6 +169,9 @@ extension SidebarViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
        
+        
+        NotificationCenter.default.post(name: Notification.Name("tintColorChanged"), object: nil)
+        
         if indexPath.section != 0 {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
             let navController = UINavigationController(rootViewController: vc)

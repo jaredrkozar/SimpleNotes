@@ -14,8 +14,7 @@ class TagsTableViewController: UITableViewController {
 
         // Do any additional setup after loading the view.
         
-        let nib = UINib(nibName: "TableRowCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "TableRowCell")
+        tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
         
         title = "Tags"
         
@@ -40,7 +39,7 @@ class TagsTableViewController: UITableViewController {
         }
         
        
-        cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", rowIcon: Icon(icon: UIImage(systemName: "pin"), iconBGColor: .systemRed, iconTintColor: .systemYellow), control: nil, handler: nil))
+        cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", rowIcon: Icon(icon: UIImage(systemName: tag.symbol!), iconBGColor: .systemBackground, iconTintColor: UIColor(hex: tag.color!)), control: nil, handler: nil))
         return cell
         
     }

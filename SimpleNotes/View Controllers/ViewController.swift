@@ -12,6 +12,9 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     var dataSource = ReusableTableView()
     var currentTag: String?
     
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.post(name: Notification.Name( "tintColorChanged"), object: nil)
+    }
     func viewAppeared() {
         fetchNotes(tag: currentTag, sortOption: .titleAscending)
         
@@ -39,13 +42,10 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         let addNote = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(addNote))
-        
-        let settings = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .plain, target: self, action: #selector(settingsScreen))
 
         let viewOptions = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.up.arrow.down"), primaryAction: nil, menu: viewOptionsMenu())
         
         self.navigationItem.rightBarButtonItems = [addNote, viewOptions]
-        self.navigationItem.leftBarButtonItem = settings
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadNotesTable(notification:)), name: Notification.Name("reloadNotesTable"), object: nil)
         
@@ -69,24 +69,6 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     @objc func addNote(sender: UIBarButtonItem) {
   
         showNote(note: createNote())
-    }
-
-    @objc func settingsScreen(sender: UIButton) {
-
-        let settingsVC = SettingsViewController()
-        
-        let navigationController = UINavigationController(rootViewController: settingsVC)
-        
-        switch currentDevice {
-            case .iphone:
-                present(navigationController, animated: true)
-            case .ipad, .mac:
-            let splitView = UISplitViewController(style: .doubleColumn)
-            splitView.viewControllers = [navigationController]
-            present(splitView, animated: true)
-        case .none:
-            return
-        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

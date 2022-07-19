@@ -50,8 +50,13 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
     var listOfTags = [String]()
     
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.post(name: Notification.Name( "tintColorChanged"), object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         searchController.searchResultsUpdater = self
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         drawingView.translatesAutoresizingMaskIntoConstraints = false
@@ -189,7 +194,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         } else {
             print("debugDescr")
         }
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(changeStrokeType(notification:)), name: Notification.Name("changedStrokeType"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(changeSize(notification:)), name: Notification.Name("changedWidth"), object: nil)

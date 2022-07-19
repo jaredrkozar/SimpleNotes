@@ -48,6 +48,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             currentDevice = .mac
         }
         
+        NotificationCenter.default.post(name: Notification.Name( "tintColorChanged"), object: nil)
+        
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             let splitViewController = UISplitViewController(style: .tripleColumn)
@@ -56,6 +58,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             splitViewController.preferredSplitBehavior = .displace
 
             splitViewController.setViewController(SidebarViewController(), for: .primary)
+            splitViewController.setViewController(ViewController(), for: .supplementary)
+            
+            splitViewController.setViewController(UINavigationController(rootViewController: NoteViewController())
+                                                  , for: .secondary)
             splitViewController.setViewController(TabBarController(), for: .compact)
             
             splitViewController.primaryBackgroundStyle = .sidebar
@@ -64,6 +70,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.makeKeyAndVisible()
             
         }
+        
+        print(UserDefaults.standard.string(forKey: "tintColor"))
         
     }
 
