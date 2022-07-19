@@ -49,11 +49,21 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadNotesTable(notification:)), name: Notification.Name("reloadNotesTable"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(tintColorChanged(notification:)), name: Notification.Name("tintColorChanged"), object: nil)
+        
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+    }
+    
+    @objc func tintColorChanged(notification: Notification) {
+ 
+        navigationController?.navigationBar.tintColor = UIColor(hex: UserDefaults.standard.string(forKey: "tintColor")!)
+  
+        self.view.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "tintColor") ?? UIColor.systemBlue.toHex)!)
     }
     
     @objc func addNote(sender: UIBarButtonItem) {

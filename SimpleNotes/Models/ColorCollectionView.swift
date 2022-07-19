@@ -7,13 +7,15 @@
 
 import UIKit
 
-class ColorCollectionView: UICollectionView {
+class ColorCollectionView: UICollectionView, UICollectionViewDelegate {
 
     var colors: [Color] = [Color(color: UIColor.systemRed.toHex), Color(color: UIColor.systemGreen.toHex), Color(color: UIColor.systemBlue.toHex), Color(color: UIColor.systemCyan.toHex), Color(color: UIColor.systemPink.toHex), Color(color: UIColor.systemOrange.toHex), Color(color: UIColor.systemMint.toHex), Color(color: UIColor.systemIndigo.toHex), Color(color: UIColor.systemTeal.toHex), Color(color: UIColor.systemYellow.toHex), Color(color: UIColor.systemPurple.toHex)]
     
     lazy var collectiondataSource = configureDataSource()
     
     private var collectionView: UICollectionView?
+    
+    var selectedColor: ((_ color: String)->())?
     
     init(frame: CGRect) {
         
@@ -25,6 +27,7 @@ class ColorCollectionView: UICollectionView {
         self.addSubview(collectionView!)
         applySnapshot()
         collectionView?.dataSource = collectiondataSource
+        collectionView?.delegate = self
         collectionView?.register(ColorCollectionViewCell.self, forCellWithReuseIdentifier: ColorCollectionViewCell.identifier)
         
     }
@@ -53,6 +56,10 @@ class ColorCollectionView: UICollectionView {
           snapshot.appendItems(colors, toSection: .main)
        
         collectiondataSource.apply(snapshot, animatingDifferences: false)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedColor?((colors[indexPath.item].color ?? UIColor.systemBlue.toHex)!)
     }
 }
 

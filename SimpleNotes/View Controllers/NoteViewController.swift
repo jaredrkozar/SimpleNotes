@@ -181,8 +181,9 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                         }
                     },
                     
+                    self.shareButtonTapped()
                 ]
-                
+    
                 return UIMenu(children: children)
             }
         } else {
@@ -195,12 +196,53 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
         NotificationCenter.default.addObserver(self, selector: #selector(changeColor(notification:)), name: Notification.Name("changedColor"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(tintColorChanged(notification:)), name: Notification.Name("tintColorChanged"), object: nil)
+        
         timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(autoSaveNote), userInfo: nil, repeats: true)
     }
+    
+    @available(iOS 16.0, *)
+    func shareButtonTapped() -> UIMenu {
+         var locations = [UIAction]()
+         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "shareNoteVC") as! NoteShareSettingsViewController
+         let navigationController = UINavigationController(rootViewController: vc)
+         
+         for location in SharingLocation.allCases {
+             locations.append( UIAction(title: "\(location.viewTitle)", image: location.icon, identifier: nil, attributes: []) { _ in
+
+                 switch currentDevice {
+                 case .iphone:
+                     if let picker = navigationController.presentationController as? UISheetPresentationController {
+                        picker.detents = [.medium()]
+                        picker.prefersGrabberVisible = true
+                        picker.preferredCornerRadius = 7.0
+                     }
+                 case .ipad, .mac:
+                     navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
+                   navigationController.preferredContentSize = CGSize(width: 375, height: 300)
+                     navigationController.popoverPresentationController?.sourceItem = self.navigationItem.titleView
+                     
+                 
+                 case .none:
+                     return
+                 }
+                 
+                 vc.currentNoteView = self.drawingView.createPDF() as Data
+                 vc.currentNote = self.currentNote
+                 vc.sharingLocation = location
+                 
+                 self.present(navigationController, animated: true, completion: nil)
+              })
+           }
+         
+        return UIMenu(title: "Share Note", subtitle: nil, image: nil, identifier: nil, options: [], children: locations)
+         
+     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return drawingView
     }
+    
     @objc func showPenMenu(sender: UIButton) {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "penMenu") as! ToolOptionsViewController
         let navController = UINavigationController(rootViewController: vc)
@@ -242,42 +284,12 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         }
     }
     
-    func shareButtonTapped(menuOption: UIMenu.Options) -> UIMenu {
-        var locations = [UIAction]()
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "shareNoteVC") as! NoteShareSettingsViewController
-        let navigationController = UINavigationController(rootViewController: vc)
-        
-        for location in SharingLocation.allCases {
-            locations.append( UIAction(title: "\(location.viewTitle)", image: location.icon, identifier: nil, attributes: []) { _ in
-                
-                switch currentDevice {
-                case .iphone:
-                    if let picker = navigationController.presentationController as? UISheetPresentationController {
-                        picker.detents = [.medium()]
-                        picker.prefersGrabberVisible = true
-                        picker.preferredCornerRadius = 7.0
-                    }
-                case .ipad, .mac:
-                    navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
-                    navigationController.preferredContentSize = CGSize(width: 375, height: 300)
-                    navigationController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
-                    
-                    
-                case .none:
-                    return
-                }
-                
-                vc.currentNoteView = self.drawingView.createPDF() as Data
-                vc.currentNote = self.currentNote
-                vc.sharingLocation = location
-                
-                self.present(navigationController, animated: true, completion: nil)
-            })
-        }
-        
-        return UIMenu(title: "Share Note", subtitle: nil, image: nil, identifier: nil, options: menuOption, children: locations)
-        
+    @objc func tintColorChanged(notification: Notification) {
+        navigationController?.navigationBar.tintColor = UIColor(hex: UserDefaults.standard.string(forKey: "tintColor")!)
+  
+        self.view.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "tintColor") ?? UIColor.systemBlue.toHex)!)
     }
+    
     
     @objc func changeStrokeType(notification: Notification) {
         if tool == .pen {

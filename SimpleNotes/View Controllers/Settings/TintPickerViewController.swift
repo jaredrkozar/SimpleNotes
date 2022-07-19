@@ -21,16 +21,19 @@ class TintPickerViewController: UIViewController, UICollectionViewDelegate {
         view.backgroundColor = .systemBackground
         
         colorcollectionView = ColorCollectionView(frame: CGRect(x: 20, y: 30, width: view.bounds.width, height: 400))
-        print(colorcollectionView?.colors.count)
+    
         view.addSubview(colorcollectionView!)
         colorcollectionView!.delegate = self
         // Register cell classes
 
         // Do any additional setup after loading the view.
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(colorcollectionView?.colors[indexPath.item])
-        print("colorcollectionView?.colors[indexPath.item]")
+     
+        colorcollectionView?.selectedColor = { color in
+            print(color)
+            self.view.tintColor = UIColor(hex: color)
+            UserDefaults.standard.set(color, forKey: "tintColor")
+           
+            NotificationCenter.default.post(name: Notification.Name( "tintColorChanged"), object: nil)
+        }
     }
 }
