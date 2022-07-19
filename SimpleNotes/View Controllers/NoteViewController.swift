@@ -58,26 +58,52 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         super.viewDidLoad()
         
         searchController.searchResultsUpdater = self
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        drawingView.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(scrollView)
-        scrollView.addSubview(drawingView)
-        scrollView.delegate = self
-        
-        NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        if currentNote == nil {
             
-            drawingView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            drawingView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            drawingView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            drawingView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            drawingView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
-            drawingView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-        ])
+                view.backgroundColor = .systemBackground
+          
+            let noNoteLabel = UILabel()
+            noNoteLabel.textAlignment = .center
+            noNoteLabel.text = "Select a note on the left, or tap the New Note button on the upper right"
+            noNoteLabel.textColor = .systemGray2
+            noNoteLabel.font = UIFont.systemFont(ofSize: 30, weight: .medium)
+            noNoteLabel.numberOfLines = 0
+            noNoteLabel.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(noNoteLabel)
+            
+            NSLayoutConstraint.activate([
+                noNoteLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+                noNoteLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                
+                noNoteLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.70),
+                
+                noNoteLabel.heightAnchor.constraint(equalToConstant: 600)
+            ])
+        }
+        else {
+            scrollView.translatesAutoresizingMaskIntoConstraints = false
+            drawingView.translatesAutoresizingMaskIntoConstraints = false
+            
+            view.addSubview(scrollView)
+            scrollView.addSubview(drawingView)
+            scrollView.delegate = self
+            
+            NSLayoutConstraint.activate([
+                scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+                scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                
+                drawingView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+                drawingView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+                drawingView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+                drawingView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+                drawingView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+                drawingView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+            ])
+        }
         
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 3.5
