@@ -56,7 +56,8 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(self.view.window?.frame.size.width)
+        print(self.view.bounds)
         searchController.searchResultsUpdater = self
         
         if currentNote == nil {
@@ -229,7 +230,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
         NotificationCenter.default.addObserver(self, selector: #selector(tintColorChanged(notification:)), name: Notification.Name("tintColorChanged"), object: nil)
         
-        timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(autoSaveNote), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(autoSaveNote), userInfo: nil, repeats: true)
     }
     
     @available(iOS 16.0, *)
@@ -287,6 +288,10 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
     @objc func cancelButtonTapped(sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        saveNote(currentNote: currentNote, title: navigationItem.title ?? "New Note", textboxes: textBoxes, date: dadteHandler?.dateHandler() ?? Date.now, tags: ["noteTagsField.tags.map({$0.text})"], isLocked: isNoteLocked ?? false)
     }
     
     @objc func autoSaveNote() {

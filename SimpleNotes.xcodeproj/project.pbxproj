@@ -28,8 +28,6 @@
 		7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AA9276FC22100202413 /* NoteViewController.swift */; };
 		7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */; };
 		7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498ABD2771624200202413 /* NewTagViewController.swift */; };
-		7F498AC627718CAA00202413 /* TagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AC427718CAA00202413 /* TagTableViewCell.swift */; };
-		7F498AC727718CAA00202413 /* TagTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F498AC527718CAA00202413 /* TagTableViewCell.xib */; };
 		7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B0B27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld */; };
 		7F498B572775719E00202413 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B562775719E00202413 /* CoreData.swift */; };
 		7F53DAA6279BA51B006789F6 /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */; };
@@ -51,6 +49,7 @@
 		7FC7FB6F2837F74000CE483E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7FB6E2837F74000CE483E /* Constants.swift */; };
 		7FC7FB71283A0C4B00CE483E /* TintPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7FB70283A0C4A00CE483E /* TintPickerViewController.swift */; };
 		7FD82DCB28233AE500ECCB3B /* Brush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD82DCA28233AE500ECCB3B /* Brush.swift */; };
+		7FDE92FC288777AA00B8E44F /* SelectColorPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE92FB288777AA00B8E44F /* SelectColorPopoverViewController.swift */; };
 		7FE45082281A56F40034928B /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45081281A56F40034928B /* CollectionReusableView.swift */; };
 		7FE45085281A67E20034928B /* ColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45083281A67E20034928B /* ColorCollectionViewCell.swift */; };
 		7FE45086281A67E20034928B /* ColorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FE45084281A67E20034928B /* ColorCollectionViewCell.xib */; };
@@ -129,8 +128,6 @@
 		7F498AA9276FC22100202413 /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTagsTableViewController.swift; sourceTree = "<group>"; };
 		7F498ABD2771624200202413 /* NewTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTagViewController.swift; sourceTree = "<group>"; };
-		7F498AC427718CAA00202413 /* TagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTableViewCell.swift; sourceTree = "<group>"; };
-		7F498AC527718CAA00202413 /* TagTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagTableViewCell.xib; sourceTree = "<group>"; };
 		7F498B0C27722F4E00202413 /* SimpleNotesDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleNotesDataModel.xcdatamodel; sourceTree = "<group>"; };
 		7F498B562775719E00202413 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +149,7 @@
 		7FC7FB6E2837F74000CE483E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7FC7FB70283A0C4A00CE483E /* TintPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TintPickerViewController.swift; sourceTree = "<group>"; };
 		7FD82DCA28233AE500ECCB3B /* Brush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brush.swift; sourceTree = "<group>"; };
+		7FDE92FB288777AA00B8E44F /* SelectColorPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectColorPopoverViewController.swift; sourceTree = "<group>"; };
 		7FE45081281A56F40034928B /* CollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectionReusableView.swift; path = SimpleNotes/CollectionReusableView.swift; sourceTree = SOURCE_ROOT; };
 		7FE45083281A67E20034928B /* ColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionViewCell.swift; sourceTree = "<group>"; };
 		7FE45084281A67E20034928B /* ColorCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -286,8 +284,6 @@
 				7F0F03ED282E4B8000A6B404 /* LineTypeCollectionViewCell.xib */,
 				7FE45083281A67E20034928B /* ColorCollectionViewCell.swift */,
 				7FE45084281A67E20034928B /* ColorCollectionViewCell.xib */,
-				7F498AC427718CAA00202413 /* TagTableViewCell.swift */,
-				7F498AC527718CAA00202413 /* TagTableViewCell.xib */,
 			);
 			path = Tags;
 			sourceTree = "<group>";
@@ -305,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				7F498AA9276FC22100202413 /* NoteViewController.swift */,
+				7FDE92FB288777AA00B8E44F /* SelectColorPopoverViewController.swift */,
 				7F765A66285D8ABB00C51416 /* ChangeDateViewController.swift */,
 				7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */,
 				7F53DAAB279D4B09006789F6 /* TabBarController.swift */,
@@ -545,7 +542,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F498AC727718CAA00202413 /* TagTableViewCell.xib in Resources */,
 				7FE45086281A67E20034928B /* ColorCollectionViewCell.xib in Resources */,
 				7F0F03EF282E4B8000A6B404 /* LineTypeCollectionViewCell.xib in Resources */,
 				7FEBEC7B276135DC0066F0C0 /* LaunchScreen.storyboard in Resources */,
@@ -724,6 +720,7 @@
 				7FE45094281E2CE20034928B /* PenTool.swift in Sources */,
 				7FEBEC73276135DA0066F0C0 /* ViewController.swift in Sources */,
 				7FC2C11E286D64FA00D90E20 /* DefaultTextBoxViewController.swift in Sources */,
+				7FDE92FC288777AA00B8E44F /* SelectColorPopoverViewController.swift in Sources */,
 				7FF892EF27A4C2F90030588B /* Note+CoreDataClass.swift in Sources */,
 				7FF892ED27A4C2F90030588B /* TextBox+CoreDataClass.swift in Sources */,
 				7FE4509E281EEE760034928B /* TextTool.swift in Sources */,
@@ -751,7 +748,6 @@
 				7FE4508B281E2A8C0034928B /* Line.swift in Sources */,
 				7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */,
 				7FF892E627A3D2070030588B /* AllTags+CoreDataProperties.swift in Sources */,
-				7F498AC627718CAA00202413 /* TagTableViewCell.swift in Sources */,
 				7F376617278B59B800A107FF /* SendToOtherApp.swift in Sources */,
 				7FE4509C281E50C80034928B /* CustomSelectionView.swift in Sources */,
 				7F498B572775719E00202413 /* CoreData.swift in Sources */,

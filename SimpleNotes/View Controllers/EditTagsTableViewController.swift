@@ -22,8 +22,7 @@ class EditTagsTableViewController: UITableViewController {
         
         let plusButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonTapped))
         
-        let nib = UINib(nibName: "TagTableViewCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "TagTableViewCell")
+        tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
         
         self.navigationItem.leftBarButtonItems = [plusButton]
         self.navigationItem.rightBarButtonItems = [doneButton]
@@ -50,13 +49,11 @@ class EditTagsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TagTableViewCell", for: indexPath) as! TagTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TableRowCell", for: indexPath) as! TableRowCell
         
         let tag = tags[indexPath.row]
         
-        cell.tagImage.image = UIImage(systemName: tag.symbol!)?.withTintColor(UIColor(hex: tag.color!)!, renderingMode: .alwaysOriginal)
-        
-        cell.tagName.text = tag.name
+        cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", rowIcon: Icon(icon: UIImage(systemName: tag.symbol!), iconBGColor: .systemBackground, iconTintColor: UIColor(hex: tag.color!)), control: nil, handler: nil))
         
         return cell
     }

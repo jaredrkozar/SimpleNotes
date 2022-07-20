@@ -45,6 +45,7 @@ class SidebarViewController: UIViewController {
                 present(navigationController, animated: true)
             case .ipad, .mac:
             let splitView = UISplitViewController(style: .doubleColumn)
+            splitView.displayModeButtonVisibility = .never
             splitView.viewControllers = [navigationController]
             present(splitView, animated: true)
         case .none:

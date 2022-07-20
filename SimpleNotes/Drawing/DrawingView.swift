@@ -182,8 +182,18 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     }
     
     @objc func changeBGColor(){
-        if let new = currentView as? CustomTextBox {
-            new.backgroundColor = delegate?.currentTextBoxColor()
+        let vc = SelectColorPopoverViewController()
+        let navigationController = UINavigationController(rootViewController: vc)
+        navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
+        navigationController.preferredContentSize = CGSize(width: 350, height: 225)
+        navigationController.popoverPresentationController?.sourceItem = currentView as? UIView
+        self.findViewController()?.present(navigationController, animated: true)
+        
+        vc.returnColor = { color in
+            
+            let textBox = self.currentView as? CustomTextBox
+            
+            textBox?.backgroundColor = UIColor(hex: color)
         }
     }
     
@@ -341,9 +351,13 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
             lines.removeLast()
         } else if tool == .text {
             if canCreateTextBox == true {
+               
                 lines.removeLast()
                 setNeedsDisplay()
-                insertTextBox(frame: CGRect(x: shapeFirstPoint!.x, y: shapeFirstPoint!.y, width: currentPoint!.x - shapeFirstPoint!.x, height: currentPoint!.y - shapeFirstPoint!.y))
+                
+                if (abs(currentPoint!.x - shapeFirstPoint!.x) > 50) && (abs(currentPoint!.y - shapeFirstPoint!.y) > 50) {
+                    insertTextBox(frame: CGRect(x: shapeFirstPoint!.x, y: shapeFirstPoint!.y, width: currentPoint!.x - shapeFirstPoint!.x, height: currentPoint!.y - shapeFirstPoint!.y))
+                }
             }
         }
     }

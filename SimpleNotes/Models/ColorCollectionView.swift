@@ -20,7 +20,7 @@ class ColorCollectionView: UICollectionView, UICollectionViewDelegate {
     init(frame: CGRect) {
         
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 50, height: 50)
+        layout.itemSize = CGSize(width: 45, height: 45)
         super.init(frame: frame, collectionViewLayout: UICollectionViewFlowLayout())
         
         collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
