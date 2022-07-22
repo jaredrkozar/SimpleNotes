@@ -221,7 +221,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     }
     
     @objc func tappedScreen(_ sender: UITapGestureRecognizer) {
-        if currentView?.isMoving == true || currentView?.isResizing == true || isSelectingLine == true {
+        if currentView != nil {
             currentView?.moveIconImage.isHidden = true
             canCreateTextBox = true
             isSelectingLine = false
@@ -233,8 +233,9 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
                 dismissKeyboard()
         } else {
             if tool == .text {
-               tappedScreen(sender)
-            
+                if canCreateTextBox == true {
+                    insertTextBox(frame: CGRect(x: sender.location(in: self).x, y: sender.location(in: self).y, width: 100, height: 100))
+                   }
             } else if tool == .eraser {
                 let inLines = self.returnLines(point: sender.location(in: self))
     //            lines.removeAll(where: {inLines.contains($0)})
@@ -335,7 +336,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
                     setNeedsDisplay()
                 }
                 
-                var newLine = Line(color: UIColor.systemBlue, width: 2.0, opacity: 1.0, blendMode: .normal, path: UIBezierPath(), type: .drawing, fillColor: UIColor.brown)
+                var newLine = Line(color: UIColor(hex: (UserDefaults.standard.string(forKey: "tintColor") ?? UIColor.systemBlue.toHex)!)!, width: 2.0, opacity: 1.0, blendMode: .normal, path: UIBezierPath(), type: .drawing, fillColor: UIColor.brown)
                 
                 newLine.path = (selectedTool?.moved(currentPath: newLine.path, previousPoint: shapeFirstPoint!, midpoint1: currentPoint!, midpoint2: currentPoint!)!)!
                 lines.append(newLine)

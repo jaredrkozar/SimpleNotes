@@ -8,7 +8,7 @@
 import UIKit
 
 class ToastNotification: UIView {
-  
+    
     private var imageView: UIImageView {
         let image = UIImageView()
         image.tintColor = UIColor.white
@@ -67,21 +67,13 @@ class ToastNotification: UIView {
         
         window?.addSubview(self)
         
-        UIView.animate(withDuration: 0.25, delay: 0.4, options: [.curveEaseIn, .beginFromCurrentState], animations: {
-            
-            self.transform = CGAffineTransform(translationX: 0, y: 180)
-            
-        }) { _ in
-            UIView.animate(withDuration: 0.25, delay: 2.0, options: [.curveEaseIn, .beginFromCurrentState], animations: {
-                
-                self.transform = CGAffineTransform(translationX: 0, y: -180)
-
-            })              { _ in
-                self.removeFromSuperview()
-            }
-            
-        }
-        
+        UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 1.0, delay: 0, options: [.curveEaseInOut], animations: {
+          self.backgroundColor = .green
+        }, completion: { _ in
+          UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 1.0, delay: 0, options: [.curveEaseInOut], animations: {
+            self.backgroundColor = .red
+          })
+        })
     }
     
     

@@ -9,7 +9,7 @@ import UIKit
 import WSTagsField
 import PhotosUI
 
-class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrollViewDelegate {
+class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrollViewDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     let drawingView = DrawingView(frame: CGRect.zero)
     
@@ -56,8 +56,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(self.view.window?.frame.size.width)
-        print(self.view.bounds)
+    
         searchController.searchResultsUpdater = self
         
         if currentNote == nil {
@@ -84,6 +83,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             ])
         }
         else {
+            drawingView.objectTintColor = UIColor(hex: UserDefaults.standard.string(forKey: "tintColor")!)
             scrollView.translatesAutoresizingMaskIntoConstraints = false
             drawingView.translatesAutoresizingMaskIntoConstraints = false
             
@@ -119,6 +119,8 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         drawingView.currentPen = PenTool(width: 20.0, color: .systemPink, opacity: 1.0, blendMode: .normal, strokeType: .normal)
         
         drawingView.currentHighlighter = PenTool(width: 20.0, color: .systemYellow, opacity: 0.6, blendMode: .normal, strokeType: .normal)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), menu: addMediaMenu())
         
         if #available(iOS 16.0, *) {
             self.navigationItem.style = .editor
@@ -361,18 +363,29 @@ extension NoteViewController: UINavigationItemRenameDelegate {
         NotificationCenter.default.post(name: Notification.Name("reloadNotesTable"), object: nil)
         
     }
+    
+    @objc func addMediaMenu() -> UIMenu {
+        let presentPhotosPicker = UIAction(title: "Photos Library", image: UIImage(systemName: "photo"), identifier: nil, discoverabilityTitle: nil, attributes: [], state: .on) { _ in
+            var configuration = PHPickerConfiguration()
+            configuration.filter = .images
+            let picker = PHPickerViewController(configuration: configuration)
+            picker.delegate = self
+            self.present(picker, animated: true)
+        }
+        
+        let presentCameraPicker = UIAction(title: "Camera", image: UIImage(systemName: "camera"), identifier: nil, discoverabilityTitle: nil, attributes: [], state: .on) {_ in
+            let vc = UIImagePickerController()
+            vc.sourceType = .camera
+            vc.allowsEditing = true
+            vc.delegate = self
+            self.present(vc, animated: true)
+        }
+        
+        return UIMenu(title: "Add Media", image: nil, identifier: nil, options: .singleSelection, children: [presentPhotosPicker, presentCameraPicker])
+    }
 }
 
 extension NoteViewController: PHPickerViewControllerDelegate {
-    
-    @objc func presentPhotoPicker(_ sender: UIBarButtonItem) {
-        var configuration = PHPickerConfiguration()
-        configuration.filter = .images
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = self
-        self.present(picker, animated: true)
-    }
-    
     //Image Picker
     
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
@@ -383,7 +396,15 @@ extension NoteViewController: PHPickerViewControllerDelegate {
                        DispatchQueue.main.async {
                            guard let self = self, let image = image as? UIImage else { return }
                           
-                           self.drawingView.insertImage(frame: CGRect(x: self.drawingView.bounds.midX, y: self.drawingView.bounds.midY, width: image.size.width ?? 200, height: image.size.height ?? 200), image: image)
+                           let dimension: CGFloat = 400
+                           
+                           let maxDimension =  CGFloat(max(image.size.width, image.size.height))
+                           let scale = dimension / maxDimension
+                           var rect: CGRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+                           let transform = CGAffineTransform(scaleX: scale, y: scale)
+                           rect = rect.applying(transform)
+                           print(CGFloat(rect.width) / 2)
+                           self.drawingView.insertImage(frame: CGRect(x: (rect.width + (-1 * CGFloat(rect.width) / 2)), y: (rect.height + (-1 * CGFloat(rect.height) / 2)), width: rect.width, height: rect.height), image: image)
                        }
                    }
                }
