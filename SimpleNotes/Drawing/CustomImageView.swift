@@ -20,8 +20,8 @@ class CustomImageView: UIImageView, UIGestureRecognizerDelegate, ObjectView {
     var isResizing: Bool = false
     
     func isCurrentView() {
-        self.layer.borderColor = drawingView?.objectTintColor?.cgColor
-        self.layer.borderWidth = 29.0
+        self.layer.borderColor = UIColor(hex: UserDefaults.standard.string(forKey: "tintColor")!)?.cgColor ?? UIColor.systemBlue.cgColor
+        self.layer.borderWidth = 2.0
     }
     
     func isNotCurrentView() {

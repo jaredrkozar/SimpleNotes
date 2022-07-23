@@ -83,7 +83,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             ])
         }
         else {
-            drawingView.objectTintColor = UIColor(hex: UserDefaults.standard.string(forKey: "tintColor")!)
             scrollView.translatesAutoresizingMaskIntoConstraints = false
             drawingView.translatesAutoresizingMaskIntoConstraints = false
             

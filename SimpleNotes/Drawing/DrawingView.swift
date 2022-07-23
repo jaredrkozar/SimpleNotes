@@ -78,7 +78,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedScreen(_:)))
           self.addGestureRecognizer(tapGesture)
           self.layer.drawsAsynchronously = true
-        print(self)
+       
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
               NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
@@ -127,6 +127,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     
     @objc func textBoxTapped(_ sender: UITapGestureRecognizer) {
         currentView?.isNotCurrentView()
+       
        let editItem = UIMenuItem(title: "Edit", action: #selector(self.editTextBox))
        let backgroundColorItem = UIMenuItem(title: "Background Color", action: #selector(self.changeBGColor))
         let moveTextboxItem = UIMenuItem(title: "Move", action: #selector(self.moveTextbox))
@@ -155,6 +156,8 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
          let deleteTextboxItem = UIMenuItem(title: "Delete", action: #selector(self.deleteTextBox))
      
         currentView = sender.view as! ObjectView
+        currentView?.isCurrentView()
+        
          menu.menuItems = [moveTextboxItem, resizeTextboxItem, deleteTextboxItem]
          
         menu.showMenu(from: currentView as! UIView, rect: CGRect(x: 1, y: 1, width: 100, height: 100))
@@ -221,6 +224,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     }
     
     @objc func tappedScreen(_ sender: UITapGestureRecognizer) {
+   
         if currentView != nil {
             currentView?.moveIconImage.isHidden = true
             canCreateTextBox = true
@@ -297,7 +301,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         newImage.isUserInteractionEnabled = true
         
         let textBoxTapped = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped(_:)))
-        print(textBoxTapped)
+    
         newImage.addGestureRecognizer(textBoxTapped)
         
         self.addSubview(newImage)
@@ -318,7 +322,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     }
 
     open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-    
+    print(objectTintColor)
         guard let touch = touches.first else { return }
         getTouchPoints(touch)
         

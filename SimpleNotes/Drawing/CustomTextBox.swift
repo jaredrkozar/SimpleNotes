@@ -23,7 +23,7 @@ class CustomTextBox: UITextView, UIGestureRecognizerDelegate, ObjectView {
     var isResizing: Bool
     
     func isCurrentView() {
-        self.layer.borderColor = drawingView?.objectTintColor?.cgColor ?? UIColor.systemBlue.cgColor
+        self.layer.borderColor = UIColor(hex: UserDefaults.standard.string(forKey: "tintColor")!)?.cgColor ?? UIColor.systemBlue.cgColor
         self.layer.borderWidth = 2.0
     }
     
@@ -48,7 +48,7 @@ class CustomTextBox: UITextView, UIGestureRecognizerDelegate, ObjectView {
         self.frame = frame
         self.isEditable = true
         self.isUserInteractionEnabled = true
-        self.layer.borderColor = drawingView?.objectTintColor?.cgColor ?? UIColor.systemBlue.cgColor
+        self.layer.borderColor = UIColor(hex: UserDefaults.standard.string(forKey: "tintColor")!)?.cgColor ?? UIColor.systemBlue.cgColor
         self.textColor = UIColor.label
         self.layer.borderWidth = 1.5
         self.backgroundColor = UIColor.clear

@@ -15,9 +15,7 @@ class TintPickerViewController: UIViewController, UICollectionViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(self.navigationController?.preferredContentSize)
-        print(self.parent?.navigationController?.preferredContentSize)
-        print(self.presentingViewController?.navigationController?.preferredContentSize)
+        
         title = "Tint Picker"
         navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = .systemBackground
@@ -26,17 +24,16 @@ class TintPickerViewController: UIViewController, UICollectionViewDelegate {
     
         view.addSubview(colorcollectionView!)
         colorcollectionView?.translatesAutoresizingMaskIntoConstraints = false
+        
         colorcollectionView!.delegate = self
         // Register cell classes
 
         // Do any additional setup after loading the view.
      
-        NSLayoutConstraint.activate([
-            colorcollectionView!.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            colorcollectionView!.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            colorcollectionView!.heightAnchor.constraint(equalToConstant: 500)
-        ])
-        
+        colorcollectionView?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10 ).isActive = true
+        colorcollectionView?.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10).isActive = true
+        colorcollectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        colorcollectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         colorcollectionView?.selectedColor = { color in
             
             self.view.tintColor = UIColor(hex: color)

@@ -24,7 +24,14 @@ class ColorCollectionView: UICollectionView, UICollectionViewDelegate {
         super.init(frame: frame, collectionViewLayout: UICollectionViewFlowLayout())
         
         collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
+  
         self.addSubview(collectionView!)
+        
+        collectionView?.translatesAutoresizingMaskIntoConstraints = false
+        collectionView?.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor).isActive = true
+        collectionView?.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor).isActive = true
+        collectionView?.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
+        collectionView?.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor).isActive = true
         applySnapshot()
         collectionView?.dataSource = collectiondataSource
         collectionView?.delegate = self

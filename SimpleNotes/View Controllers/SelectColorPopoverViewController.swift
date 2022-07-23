@@ -17,11 +17,17 @@ class SelectColorPopoverViewController: UIViewController, UICollectionViewDelega
         super.viewDidLoad()
         
         print(view.bounds.height)
-        colorcollectionView = ColorCollectionView(frame: CGRect(x: 20, y: 30, width: 200, height: 400))
-    
+        colorcollectionView = ColorCollectionView(frame: .zero)
+        colorcollectionView?.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(colorcollectionView!)
         colorcollectionView!.delegate = self
         
+        colorcollectionView?.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
+        colorcollectionView?.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: 10).isActive = true
+        colorcollectionView?.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
+        colorcollectionView?.heightAnchor.constraint(equalTo: view.layoutMarginsGuide.heightAnchor).isActive = true
+        colorcollectionView?.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor).isActive = true
+            
         colorcollectionView?.selectedColor = { color in
             
             self.returnColor?(color)
