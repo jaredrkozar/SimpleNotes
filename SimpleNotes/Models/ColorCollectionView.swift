@@ -8,7 +8,7 @@
 import UIKit
 
 class ColorCollectionView: UICollectionView, UICollectionViewDelegate {
-
+    
     var colors: [Color] = [Color(color: UIColor.systemRed.toHex), Color(color: UIColor.systemGreen.toHex), Color(color: UIColor.systemBlue.toHex), Color(color: UIColor.systemCyan.toHex), Color(color: UIColor.systemPink.toHex), Color(color: UIColor.systemOrange.toHex), Color(color: UIColor.systemMint.toHex), Color(color: UIColor.systemIndigo.toHex), Color(color: UIColor.systemTeal.toHex), Color(color: UIColor.systemYellow.toHex), Color(color: UIColor.systemPurple.toHex)]
     
     var allowTransparent: Bool = true
@@ -55,6 +55,7 @@ class ColorCollectionView: UICollectionView, UICollectionViewDelegate {
      
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ColorCollectionViewCell.identifier, for: indexPath) as! ColorCollectionViewCell
             cell.backgroundColor = UIColor(hex: self.colors[indexPath.item].color)
+            cell.icon.image = UIImage(systemName: "pin")
             cell.layer.cornerRadius = Constants.cornerRadius
             return cell
         }

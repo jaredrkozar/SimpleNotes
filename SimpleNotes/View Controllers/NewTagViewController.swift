@@ -8,7 +8,6 @@
 import UIKit
 
 class NewTagViewController: UIViewController, UICollectionViewDelegate, UIColorPickerViewControllerDelegate {
-    let detailIcons = UIImage.SymbolConfiguration(pointSize: 30.0, weight: .regular, scale: .large)
     
     var segmentedControl = UISegmentedControl(items: ["Color", "Icon"])
     var tagNameField = UITextField()
@@ -36,10 +35,12 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UIColorP
         segmentedControl.addTarget(self, action: #selector(segmentValueChanged(sender:)), for: .valueChanged)
                 
         segmentedControl.selectedSegmentIndex = 0
+        tagNameField.textAlignment = .center
         tagNameField.text = currentTag?.name
         tagNameField.backgroundColor = .systemGray4
         tagNameField.layer.cornerRadius = Constants.cornerRadius
         
+        tagNameField.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         tagNameField.translatesAutoresizingMaskIntoConstraints = false
         symbolImage.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
@@ -82,12 +83,13 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UIColorP
         colorcollectionView?.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 5).isActive = true
         colorcollectionView?.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 20).isActive = true
         colorcollectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-    
+        iconcollectionView?.isHidden = true
         self.view.addSubview(iconcollectionView!)
-        iconcollectionView?.leadingAnchor.constraint(equalTo: colorcollectionView!.leadingAnchor, constant: 0).isActive = true
-        iconcollectionView?.trailingAnchor.constraint(equalTo: colorcollectionView!.trailingAnchor, constant: 5).isActive = true
-        iconcollectionView?.topAnchor.constraint(equalTo: colorcollectionView!.topAnchor, constant: 20).isActive = true
-        iconcollectionView?.bottomAnchor.constraint(equalTo: colorcollectionView!.bottomAnchor).isActive = true
+       
+        iconcollectionView?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
+        iconcollectionView?.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 5).isActive = true
+        iconcollectionView?.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 20).isActive = true
+        iconcollectionView?.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         
         let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
 
@@ -120,7 +122,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UIColorP
     }
     
     @objc func segmentValueChanged(sender: UISegmentedControl) {
-        print(sender.selectedSegmentIndex)
+        tagNameField.resignFirstResponder()
         if sender.selectedSegmentIndex == 0 {
             iconcollectionView?.isHidden = true
             colorcollectionView?.isHidden = false

@@ -10,22 +10,19 @@ import UIKit
 class ColorCollectionViewCell: UICollectionViewCell {
 
     static let identifier = "colorCell"
-    var icon = UIImageView()
+    var icon: UIImageView = {
+        let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
+        view.image = UIImage(systemName: "pin")
+        view.contentMode = .scaleAspectFit
+        
+        return view
+    }()
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        icon.backgroundColor = .systemBlue
-        icon.tintColor = .systemBlue
-        icon.image = UIImage(systemName: "pin")
+        icon.tintColor = .green
         contentView.addSubview(icon)
-        NSLayoutConstraint.activate([
-        icon.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-        icon.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-        icon.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-        icon.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
-        icon.widthAnchor.constraint(equalToConstant: 40),
-        icon.heightAnchor.constraint(equalToConstant: 40)
-        ])
+        
     }
 }

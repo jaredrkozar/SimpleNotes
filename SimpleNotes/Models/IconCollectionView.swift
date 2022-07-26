@@ -18,15 +18,9 @@ class IconCollectionView: UICollectionView, UICollectionViewDelegate {
     var selectedIcon: ((_ icon: String)->())?
     
     init(frame: CGRect) {
-        for icon in icons {
-            if UIImage(systemName: icon.icon) != nil {
-                print(icon.icon)
-            } else {
-                print("NIL")
-            }
-        }
+        
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 50, height: 50)
+        layout.itemSize = CGSize(width: 100, height: 100)
     
         super.init(frame: frame, collectionViewLayout: UICollectionViewFlowLayout())
         
@@ -55,8 +49,9 @@ class IconCollectionView: UICollectionView, UICollectionViewDelegate {
         let dataSource = UICollectionViewDiffableDataSource<IconSection, IconStruct>(collectionView: collectionView!) { (collectionView, indexPath, icon) -> ColorCollectionViewCell? in
      
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ColorCollectionViewCell.identifier, for: indexPath) as! ColorCollectionViewCell
-            cell.icon.image = UIImage(systemName: icon.icon)?.withTintColor(.systemBlue)
-            cell.layer.cornerRadius = Constants.cornerRadius
+            cell.icon.tintColor = .systemGray2
+            cell.icon.image = UIImage(systemName: self.icons[indexPath.item].icon)
+            cell.addSubview(cell.icon)
             return cell
         }
      
