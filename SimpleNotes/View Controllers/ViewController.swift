@@ -61,7 +61,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     
     @objc func tintColorChanged(notification: Notification) {
  
-        navigationController?.navigationBar.tintColor = UIColor(hex: UserDefaults.standard.string(forKey: "tintColor")!)
+        navigationController?.navigationBar.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "tintColor") ?? UIColor.systemBlue.toHex)!)
   
         self.view.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "tintColor") ?? UIColor.systemBlue.toHex)!)
     }
@@ -91,10 +91,9 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     
     func showNote(note: Note) {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newNoteVC") as! NoteViewController
-        print(currentDevice)
         vc.currentNote = note
         vc.isNoteLocked = note.isLocked
-        
+    
         switch currentDevice {
         case .ipad, .mac:
             self.splitViewController?.setViewController(vc, for: .secondary)
@@ -125,7 +124,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                 
                   let cellTag = tableView.cellForRow(at: indexPath) as! NoteTableViewCell
                   
-                  let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
+                  let vc = EditTagsTableViewController()
                   let navController = UINavigationController(rootViewController: vc)
                   vc.note == notes[indexPath.row]
                   self.navigationController?.present(navController, animated: true, completion: nil)

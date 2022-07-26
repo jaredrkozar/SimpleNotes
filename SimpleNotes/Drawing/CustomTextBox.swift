@@ -79,7 +79,7 @@ class CustomTextBox: UITextView, UIGestureRecognizerDelegate, ObjectView {
         addSubview(bottomRightDragHandle)
         
         resizingHandles.append(contentsOf: [upperLeftDragHandle, upperRightDragHandle, bottomLeftDragHandle, bottomRightDragHandle])
-        
+      
         let upperLeftButtonTouched = UIPanGestureRecognizer(target: self, action: #selector(self.resizeUpperLeft(_:)))
         upperLeftButtonTouched.delegate = self
         upperLeftDragHandle.addGestureRecognizer(upperLeftButtonTouched)

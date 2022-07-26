@@ -7,14 +7,13 @@
 
 import UIKit
 
-class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIColorPickerViewControllerDelegate {
+class NewTagViewController: UIViewController, UICollectionViewDelegate, UIColorPickerViewControllerDelegate {
     let detailIcons = UIImage.SymbolConfiguration(pointSize: 30.0, weight: .regular, scale: .large)
     
-    @IBOutlet var segmentedControl: UISegmentedControl!
-    @IBOutlet var tagNameField: UITextField!
-    @IBOutlet var symbolImage: UIImageView!
+    var segmentedControl = UISegmentedControl(items: ["Color", "Icon"])
+    var tagNameField = UITextField()
+    var symbolImage = UIImageView()
     
-    @IBOutlet var collectionView: UICollectionView!
     var currentTag: AllTags?
     var colorCell = "colorCell"
     var iconCell = "iconCell"
@@ -25,20 +24,70 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     var isEditingTag: Bool?
     
-      let icons = ["folder", "tray", "externaldrive", "doc", "doc.plaintext", "note.text", "book", "book.closed", "ticket", "link", "person", "person.crop.circle", "person.crop.square", "sun.max", "moon", "umbrella", "thermometer", "cloud.moon", "mic", "loupe", "magnifyingglass", "square", "circle", "eye", "tshirt", "eyeglasses", "facemask", "message", "bubble.right", "quote.bubble", "star.bubble", "exclamationmark.bubble", "plus.bubble", "checkmark.bubble"]
+    private var colorcollectionView: ColorCollectionView?
+    
+    private var iconcollectionView: IconCollectionView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        let colorCell = UINib(nibName: "ColorCollectionViewCell", bundle: nil)
-        collectionView.register(colorCell, forCellWithReuseIdentifier: "ColorCollectionViewCell")
+        self.view.backgroundColor = .systemBackground
+        segmentedControl.addTarget(self, action: #selector(segmentValueChanged(sender:)), for: .valueChanged)
+                
         segmentedControl.selectedSegmentIndex = 0
-        collectionView.allowsSelection = true
-        collectionView.allowsMultipleSelection = false
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        tagNameField.text = currentTag?.name
+        tagNameField.backgroundColor = .systemGray4
+        tagNameField.layer.cornerRadius = Constants.cornerRadius
+        
+        tagNameField.translatesAutoresizingMaskIntoConstraints = false
+        symbolImage.translatesAutoresizingMaskIntoConstraints = false
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(segmentedControl)
+        view.addSubview(symbolImage)
+        view.addSubview(tagNameField)
+        
+        segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60).isActive = true
+        segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60).isActive = true
+        segmentedControl.topAnchor.constraint(equalTo: tagNameField.bottomAnchor, constant: 20).isActive = true
+        segmentedControl.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        
+        symbolImage.contentMode = .scaleAspectFit
+        symbolImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
+        symbolImage.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        symbolImage.widthAnchor.constraint(equalTo: symbolImage.heightAnchor, multiplier: 1).isActive = true
+        symbolImage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        tagNameField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60).isActive = true
+        tagNameField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60).isActive = true
+        tagNameField.topAnchor.constraint(equalTo: symbolImage.bottomAnchor, constant: 20).isActive = true
+        tagNameField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        tagNameField.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        colorcollectionView = ColorCollectionView(frame: .zero)
+        iconcollectionView = IconCollectionView(frame: .zero)
+    
+        colorcollectionView?.translatesAutoresizingMaskIntoConstraints = false
+        
+        colorcollectionView!.delegate = self
+        
+        iconcollectionView?.translatesAutoresizingMaskIntoConstraints = false
+        
+        iconcollectionView!.delegate = self
+        
+        self.view.addSubview(colorcollectionView!)
+        
+        colorcollectionView?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
+        colorcollectionView?.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 5).isActive = true
+        colorcollectionView?.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 20).isActive = true
+        colorcollectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+    
+        self.view.addSubview(iconcollectionView!)
+        iconcollectionView?.leadingAnchor.constraint(equalTo: colorcollectionView!.leadingAnchor, constant: 0).isActive = true
+        iconcollectionView?.trailingAnchor.constraint(equalTo: colorcollectionView!.trailingAnchor, constant: 5).isActive = true
+        iconcollectionView?.topAnchor.constraint(equalTo: colorcollectionView!.topAnchor, constant: 20).isActive = true
+        iconcollectionView?.bottomAnchor.constraint(equalTo: colorcollectionView!.bottomAnchor).isActive = true
         
         let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
 
@@ -50,88 +99,34 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         tagNameField.text = name
         symbolImage.image = sendBackSymbol(imageName: image ?? "folder", color: selectedColor ?? UIColor.systemBlue)
-    }
-    
-    @IBAction func changedSegment(_ sender: UISegmentedControl) {
         
-        collectionView.reloadData()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if(segmentedControl.selectedSegmentIndex==0) {
-            return Constants.colors.count
-        } else {
-            return icons.count
+        colorcollectionView?.selectedColor = { color in
+            
+            self.selectedColor = UIColor(hex: color)
+            
+            self.changeIcon(iconName: self.image ?? "folder", color: self.selectedColor!)
+        }
+        
+        iconcollectionView?.selectedIcon = { icon in
+            
+            self.image = icon
+            
+            self.changeIcon(iconName: icon, color: self.selectedColor ?? .systemBlue)
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ColorCollectionViewCell", for: indexPath) as! ColorCollectionViewCell
-        cell.layer.cornerRadius = Constants.cornerRadius
-        switch segmentedControl.selectedSegmentIndex {
-            case 0:
-        
-            cell.backgroundColor = Constants.colors[indexPath.item]
-            cell.icon.image = nil
-            
-            case 1:
-            
-            cell.backgroundColor = .systemGray5
-            
-                cell.icon.image = UIImage(systemName: icons[indexPath.item], withConfiguration: detailIcons)
-                cell.icon.tintColor = selectedColor
-        
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ColorCollectionViewCell", for: indexPath) as! ColorCollectionViewCell
-
-        }
-        return cell
+    func changeIcon(iconName: String, color: UIColor) {
+        self.symbolImage.image = sendBackSymbol(imageName: iconName, color: selectedColor!)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if(segmentedControl.selectedSegmentIndex==0) {
-  
-            if indexPath.item != Constants.colors.count - 1 {
-                if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
-                    cell.layer.borderColor = Constants.colors[indexPath.item].darker(by: 40.0)?.cgColor
-                    cell.layer.borderWidth = Constants.borderWidth
-                    }
-                
-                selectedColor = Constants.colors[indexPath.item] as! UIColor
-            } else {
-                let colorPicker = UIColorPickerViewController()
-                colorPicker.selectedColor = selectedColor!
-                colorPicker.supportsAlpha = false
-                colorPicker.delegate = self
-                colorPicker.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "pin"), style: .done, target: nil, action: nil)
-                present(colorPicker, animated: true)
-            }
+    @objc func segmentValueChanged(sender: UISegmentedControl) {
+        print(sender.selectedSegmentIndex)
+        if sender.selectedSegmentIndex == 0 {
+            iconcollectionView?.isHidden = true
+            colorcollectionView?.isHidden = false
         } else {
-            
-            
-                      if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
-                          cell.layer.borderColor = UIColor.gray.cgColor
-                          cell.layer.borderWidth = Constants.borderWidth
-                          }
-            
-          let iconcell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell
-            image = icons[indexPath.item] as! String
-        }
-    
-        symbolImage.image = sendBackSymbol(imageName: (image ?? "folder"), color: selectedColor ?? UIColor.systemGray)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if(segmentedControl.selectedSegmentIndex==0){
-            if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
-                
-                cell.layer.borderWidth = 0.0
-                }
-        } else {
-            if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
-                
-                cell.layer.borderWidth = 0.0
-            }
+            iconcollectionView?.isHidden = false
+            colorcollectionView?.isHidden = true
         }
     }
     
@@ -150,33 +145,6 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         
         dismiss(animated: true, completion: nil)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "sectionHeader", for: indexPath) as? CollectionReusableView
-        
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionReusableView.identifier, for: indexPath) as! CollectionReusableView
-            
-            if indexPath.section == 1 {
-                header.label.text = " Dark icons"
-            } else {
-                header.label.text = " Light icons"
-            }
-        
-        return header
-    }
-    
-    func colorPickerViewController(_ viewController: UIColorPickerViewController, didSelect color: UIColor, continuously: Bool) {
-        
-        selectedColor = color
-        
-        symbolImage.image = sendBackSymbol(imageName: (image ?? "folder"), color: selectedColor!)
-        
-        if continuously == false {
-            
-            Constants.colors.insert(selectedColor!, at: Constants.colors.count - 1)
-            collectionView.reloadData()
-        }
     }
     
 }

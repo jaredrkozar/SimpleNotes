@@ -26,6 +26,8 @@ class ChangeDateViewController: UIViewController, DateHandler {
         return label
     }()
     
+    var selecteddate: ((_ date: Date)->())?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Change Note Date"
@@ -68,6 +70,7 @@ class ChangeDateViewController: UIViewController, DateHandler {
     }
     
     @objc func dateChanged(_ sender: UIDatePicker) {
-        dateLabel.text = "The note's creation date is \(sender.date.formatted())"
+        dateLabel.text = "The note's creation date is \(String(describing: sender.date.formatted()))"
+        selecteddate!(sender.date)
     }
 }

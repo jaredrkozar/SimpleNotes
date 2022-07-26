@@ -45,7 +45,7 @@ class TagsTableViewController: UITableViewController {
     }
     
     @objc func editTags(sender: UIBarButtonItem) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newTagVC") as! NewTagViewController
+        let vc = NewTagViewController()
         
         let navController = UINavigationController(rootViewController: vc)
         self.navigationController?.present(navController, animated: true, completion: nil)
@@ -65,7 +65,7 @@ class TagsTableViewController: UITableViewController {
               title: "Edit Tags", image: UIImage(systemName: "tag")) { [self] _ in
                 //gets the current dimension and splits it up into 2 parts, and saves them so they can be shown in the text fields in editPresetViewController. The editPresetViewController is then shown via a popover
                   
-                  let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newTagVC") as! NewTagViewController
+                  let vc = NewTagViewController()
                   let navController = UINavigationController(rootViewController: vc)
                   vc.isEditingTag = true
                   vc.currentTag = tags[indexPath.row]

@@ -145,7 +145,6 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
             dismissKeyboard()
         } else {
             menu.showMenu(from: currentView as! UIView, rect: CGRect(x: 1, y: 1, width: 100, height: 100))
-            print(menu.isMenuVisible)
         }
     }
     
@@ -188,10 +187,11 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         let vc = SelectColorPopoverViewController()
         let navigationController = UINavigationController(rootViewController: vc)
         navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
-        navigationController.preferredContentSize = CGSize(width: 350, height: 225)
+        navigationController.preferredContentSize = CGSize(width: 270, height: 250)
         navigationController.popoverPresentationController?.sourceItem = currentView as? UIView
-        self.findViewController()?.present(navigationController, animated: true)
         
+        vc.displayTransparent = true
+        self.findViewController()?.present(navigationController, animated: true)
         vc.returnColor = { color in
             
             let textBox = self.currentView as? CustomTextBox
@@ -230,8 +230,10 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
             canCreateTextBox = true
             isSelectingLine = false
             currentView?.isNotCurrentView()
+            dismissKeyboard()
         } else if menu.isMenuVisible == true {
             currentView?.isNotCurrentView()
+            dismissKeyboard()
             menu.hideMenu()
         } else if keyboardIsOpen == true {
                 dismissKeyboard()
@@ -322,7 +324,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     }
 
     open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-    print(objectTintColor)
+  
         guard let touch = touches.first else { return }
         getTouchPoints(touch)
         

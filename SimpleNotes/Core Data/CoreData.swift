@@ -35,47 +35,109 @@ func fetchTags() {
 func createNote() -> Note {
     let newNote = Note(context: context)
     newNote.date = Date()
-    newNote.title = ""
+    newNote.title = "New Note"
     newNote.tags = []
     newNote.isLocked = false
+    newNote.noteID = UUID().uuidString
     return newNote
 }
 
-func saveNote(currentNote: Note?, title: String, textboxes: [CustomTextBox], date: Date, tags: [String], isLocked: Bool) {
+func saveStrokes(strokes: [UIBezierPath], note: Note) {
    
-    let newNote = currentNote ?? Note(context: context)
+}
 
-    newNote.title = title
-    newNote.date = date
-    newNote.noteID = UUID().uuidString
-    newNote.isLocked = isLocked
-    var tagset = Set<Tags>()
+func saveTextBoxes(textBoxes: [UITextField], note: Note) {
+    var textboxesset = Set<TextBox>()
     
-    for tag in tags {
-        let newtag = Tags(context: context)
-        newtag.name = tag
-        newtag.notes = newNote
-        tagset.insert(newtag)
+    for textBox in textboxesset {
+        let newTextbox = TextBox(context: context)
+        textboxesset.insert(newTextbox)
     }
-
-    newNote.addToTags(tagset)
-    
-    var textboxes = Set<TextBox>()
-    
-    for textbox in textboxes {
-        let newtextbox = TextBox(context: context)
-        newtextbox.text = textbox.text
-        newtextbox.xCoordinate = textbox.xCoordinate
-        newtextbox.yCoordinate = textbox.yCoordinate
-    }
-
-    newNote.addToTextbox(textboxes)
     
     do {
         try context.save()
     } catch {
         print("An error occured while saving a note.")
     }
+}
+
+func saveImages(images: [UIImage], note: Note) {
+    var imageset = Set<Image>()
+    
+    for image in images {
+        let newImage = Image(context: context)
+        let imageAsData = image.jpegData(compressionQuality: 1.0)
+        newImage.image = imageAsData
+        imageset.insert(newImage)
+    }
+    
+    do {
+        try context.save()
+    } catch {
+        print("An error occured while saving a note.")
+    }
+}
+
+func saveTitle(title: String, note: Note) {
+    note.setValue(title, forKey: "title")
+    do {
+        try context.save()
+    } catch {
+        print("An error occured while saving a note.")
+    }
+}
+
+func saveDate(date: Date, note: Note) {
+    note.setValue(date, forKey: "date")
+    do {
+        try context.save()
+    } catch {
+        print("An error occured while saving a note.")
+    }
+}
+
+func saveAll(note: Note, date: Date, title: String, textBoxes: [UITextView], strokes: [Line], images: [UIImage]) {
+    note.setValue(date, forKey: "date")
+    note.setValue(title, forKey: "title")
+    
+    var imageset = Set<Image>()
+    
+    for image in images {
+        let newImage = Image(context: context)
+        let imageAsData = image.jpegData(compressionQuality: 1.0)
+        newImage.image = imageAsData
+        imageset.insert(newImage)
+    }
+    
+    var textBoxes = Set<TextBox>()
+    
+    for textBox in textBoxes {
+        textBoxes.insert(textBox)
+    }
+    
+    do {
+        try context.save()
+    } catch {
+        print("An error occured while saving a note.")
+    }
+}
+
+func saveTagsForNote(tags: [String], note: Note) {
+    var tagset = Set<Tags>()
+    
+    for tag in tags {
+        let newtag = Tags(context: context)
+        newtag.name = tag
+        newtag.notes = note
+        tagset.insert(newtag)
+    }
+    
+    do {
+        try context.save()
+    } catch {
+        print("An error occured while saving a note.")
+    }
+    
 }
 
 func fetchNotes(tag: String?, sortOption: sortOptions?) {

@@ -9,26 +9,27 @@ import UIKit
 
 class SelectColorPopoverViewController: UIViewController, UICollectionViewDelegate {
 
-    private var colorcollectionView: ColorCollectionView?
+    var colorcollectionView =  ColorCollectionView(frame: .zero)
+    var displayTransparent: Bool = false
     
     var returnColor: ((_ color: String)->())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(view.bounds.height)
         colorcollectionView = ColorCollectionView(frame: .zero)
-        colorcollectionView?.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(colorcollectionView!)
-        colorcollectionView!.delegate = self
+        colorcollectionView.translatesAutoresizingMaskIntoConstraints = false
+        colorcollectionView.allowTransparent = displayTransparent
+        view.addSubview(colorcollectionView)
+        colorcollectionView.delegate = self
         
-        colorcollectionView?.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-        colorcollectionView?.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: 10).isActive = true
-        colorcollectionView?.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
-        colorcollectionView?.heightAnchor.constraint(equalTo: view.layoutMarginsGuide.heightAnchor).isActive = true
-        colorcollectionView?.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor).isActive = true
+        colorcollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10 ).isActive = true
+        colorcollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10).isActive = true
+        colorcollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        colorcollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        
             
-        colorcollectionView?.selectedColor = { color in
+        colorcollectionView.selectedColor = { color in
             
             self.returnColor?(color)
         }

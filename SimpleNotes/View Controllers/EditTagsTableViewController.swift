@@ -59,7 +59,7 @@ class EditTagsTableViewController: UITableViewController {
     }
     
     @objc func plusButtonTapped(sender: UIBarButtonItem) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newTagVC") as! NewTagViewController
+        let vc = NewTagViewController()
         let navController = UINavigationController(rootViewController: vc)
         vc.selectedColor = .systemBlue
         self.navigationController?.present(navController, animated: true, completion: nil)
@@ -71,11 +71,8 @@ class EditTagsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       
-        if note?.tags?.contains(tags[indexPath.row].name!) == true {
-            note?.tags?.remove(tags[indexPath.row].name!)
-        } else {
-            note?.tags?.insert(tags[indexPath.row].name!)
-        }
+
+        print(self.parent)
     }
     
     override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
@@ -84,7 +81,7 @@ class EditTagsTableViewController: UITableViewController {
               title: "Edit Tag", image: UIImage(systemName: "tag")) { [self] _ in
                 //gets the current dimension and splits it up into 2 parts, and saves them so they can be shown in the text fields in editPresetViewController. The editPresetViewController is then shown via a popover
                 
-                  let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newTagVC") as! NewTagViewController
+                  let vc = NewTagViewController()
                   let navController = UINavigationController(rootViewController: vc)
                   vc.isEditingTag = true
                   vc.currentTag = tags[indexPath.row]

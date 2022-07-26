@@ -34,6 +34,7 @@ class TintPickerViewController: UIViewController, UICollectionViewDelegate {
         colorcollectionView?.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10).isActive = true
         colorcollectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         colorcollectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        
         colorcollectionView?.selectedColor = { color in
             
             self.view.tintColor = UIColor(hex: color)

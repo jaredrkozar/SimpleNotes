@@ -93,7 +93,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             NSLayoutConstraint.activate([
                 scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
                 scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+                scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
                 scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
                 
                 drawingView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
@@ -166,7 +166,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                     
                     UIAction(title: "Edit Tags", subtitle: "\tags", image: UIImage(systemName: "pin"), identifier: .none, discoverabilityTitle: "String? = nil",  attributes: [], state: .off) { _ in
                         
-                        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
+                        let vc = EditTagsTableViewController()
                         let navController = UINavigationController(rootViewController: vc)
                         vc.note = self.currentNote
                         
@@ -212,6 +212,13 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                         case .none:
                             return
                         }
+                        
+                        vc.selecteddate = { date in
+                            self.currentNote?.date = date
+                            
+                            saveDate(date: date, note: self.currentNote!)
+                            NotificationCenter.default.post(name: Notification.Name("reloadNotesTable"), object: nil)
+                        }
                     },
                     
                     self.shareButtonTapped()
@@ -237,7 +244,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     @available(iOS 16.0, *)
     func shareButtonTapped() -> UIMenu {
          var locations = [UIAction]()
-         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "shareNoteVC") as! NoteShareSettingsViewController
+         let vc = NoteShareSettingsViewController()
          let navigationController = UINavigationController(rootViewController: vc)
          
          for location in SharingLocation.allCases {
@@ -276,35 +283,17 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         return drawingView
     }
     
-    @objc func showPenMenu(sender: UIButton) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "penMenu") as! ToolOptionsViewController
-        let navController = UINavigationController(rootViewController: vc)
-        
-        present(navController, animated: true, completion: nil)
-    }
-    
-    @objc func handTool(_ sender: UIBarButtonItem) {
-        tool = .scroll
-    }
-    
-    @objc func cancelButtonTapped(sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        saveNote(currentNote: currentNote, title: navigationItem.title ?? "New Note", textboxes: textBoxes, date: dadteHandler?.dateHandler() ?? Date.now, tags: ["noteTagsField.tags.map({$0.text})"], isLocked: isNoteLocked ?? false)
-    }
-    
     @objc func autoSaveNote() {
-        saveNote(currentNote: currentNote, title: navigationItem.title ?? "New Note", textboxes: textBoxes, date: dadteHandler?.dateHandler() ?? Date.now, tags: ["noteTagsField.tags.map({$0.text})"], isLocked: isNoteLocked ?? false)
-        
-        NotificationCenter.default.post(name: Notification.Name("UpdateNotesTable"), object: nil)
+        if currentNote != nil {
+
+            NotificationCenter.default.post(name: Notification.Name("UpdateNotesTable"), object: nil)
+        }
     }
     
     
     @objc func editTagsButtonTapped(_ sender: Any) {
         
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
+        let vc = EditTagsTableViewController()
         let navController = UINavigationController(rootViewController: vc)
         vc.note = self.currentNote
         
@@ -322,7 +311,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     }
     
     @objc func tintColorChanged(notification: Notification) {
-        navigationController?.navigationBar.tintColor = UIColor(hex: UserDefaults.standard.string(forKey: "tintColor")!)
+        navigationController?.navigationBar.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "tintColor") ?? UIColor.systemBlue.toHex)!)
   
         self.view.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "tintColor") ?? UIColor.systemBlue.toHex)!)
     }
@@ -347,6 +336,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
     @objc func changeSize(notification: Notification) {
         if tool == .pen {
+            print(currentNote?.date)
             drawingView.currentPen?.width = UserDefaults.standard.double(forKey: "changedWidth")
         } else {
             drawingView.currentHighlighter?.width = UserDefaults.standard.double(forKey: "changedWidth")
@@ -358,7 +348,7 @@ extension NoteViewController: UINavigationItemRenameDelegate {
     
     func navigationItem(_: UINavigationItem, didEndRenamingWith title: String) {
         navigationItem.title = title
-        saveNote(currentNote: currentNote, title: title, textboxes: [], date: Date.now, tags: ["HE::O"], isLocked: currentNote!.isLocked)
+        saveTitle(title: title, note: currentNote!)
         NotificationCenter.default.post(name: Notification.Name("reloadNotesTable"), object: nil)
         
     }
@@ -444,4 +434,5 @@ extension NoteViewController: UISearchResultsUpdating {
             }
         }
     }
+    
 }

@@ -30,7 +30,7 @@ class ReusableTableView: NSObject, UITableViewDataSource, UITableViewDelegate {
         }
         cell.noteDate.text = singlenote.date!.formatted()
         
-        cell.noteTags.addTags(["DLDLDL"])
+        cell.noteTags.addTags(Array(singlenote.tags ?? Set<String>()))
         
         cell.accessibilityLabel = "\(singlenote.title) Created on \(singlenote.date)"
         

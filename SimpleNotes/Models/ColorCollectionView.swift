@@ -11,6 +11,7 @@ class ColorCollectionView: UICollectionView, UICollectionViewDelegate {
 
     var colors: [Color] = [Color(color: UIColor.systemRed.toHex), Color(color: UIColor.systemGreen.toHex), Color(color: UIColor.systemBlue.toHex), Color(color: UIColor.systemCyan.toHex), Color(color: UIColor.systemPink.toHex), Color(color: UIColor.systemOrange.toHex), Color(color: UIColor.systemMint.toHex), Color(color: UIColor.systemIndigo.toHex), Color(color: UIColor.systemTeal.toHex), Color(color: UIColor.systemYellow.toHex), Color(color: UIColor.systemPurple.toHex)]
     
+    var allowTransparent: Bool = true
     lazy var collectiondataSource = configureDataSource()
     
     private var collectionView: UICollectionView?
@@ -20,8 +21,13 @@ class ColorCollectionView: UICollectionView, UICollectionViewDelegate {
     init(frame: CGRect) {
         
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 45, height: 45)
+        layout.itemSize = CGSize(width: 50, height: 50)
+    
         super.init(frame: frame, collectionViewLayout: UICollectionViewFlowLayout())
+        print(allowTransparent)
+        if allowTransparent == true  {
+            colors.insert(Color(color: UIColor.secondarySystemBackground.toHex), at: 2)
+        }
         
         collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
   
@@ -66,6 +72,7 @@ class ColorCollectionView: UICollectionView, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         selectedColor?((colors[indexPath.item].color ?? UIColor.systemBlue.toHex)!)
     }
 }
