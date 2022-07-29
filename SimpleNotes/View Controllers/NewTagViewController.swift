@@ -79,15 +79,15 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UIColorP
         
         self.view.addSubview(colorcollectionView!)
         
-        colorcollectionView?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
-        colorcollectionView?.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 5).isActive = true
+        colorcollectionView?.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor).isActive = true
+        colorcollectionView?.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor).isActive = true
         colorcollectionView?.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 20).isActive = true
         colorcollectionView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         iconcollectionView?.isHidden = true
         self.view.addSubview(iconcollectionView!)
        
-        iconcollectionView?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
-        iconcollectionView?.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 5).isActive = true
+        iconcollectionView?.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor).isActive = true
+        iconcollectionView?.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor).isActive = true
         iconcollectionView?.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 20).isActive = true
         iconcollectionView?.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         
