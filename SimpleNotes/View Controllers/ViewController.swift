@@ -126,7 +126,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                   
                   let vc = EditTagsTableViewController()
                   let navController = UINavigationController(rootViewController: vc)
-                  vc.note == notes[indexPath.row]
+                  vc.note = notes[indexPath.row]
                   self.navigationController?.present(navController, animated: true, completion: nil)
                 
             }

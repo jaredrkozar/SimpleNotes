@@ -62,7 +62,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         if currentNote == nil {
             
                 view.backgroundColor = .systemBackground
-          
+            self.navigationItem.title = nil
             let noNoteLabel = UILabel()
             noNoteLabel.textAlignment = .center
             noNoteLabel.text = "Select a note on the left, or tap the New Note button on the upper right"
@@ -145,7 +145,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                         case .ipad, .mac:
                             let navigationController = UINavigationController(rootViewController: menuTool.optionsView!)
                             navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
-                            self.navigationController?.preferredContentSize = CGSize(width: 350, height: 225)
+                            navigationController.preferredContentSize = CGSize(width: 500, height: 250)
                             navigationController.popoverPresentationController?.barButtonItem = self.navigationItem.centerItemGroups[menuTool.rawValue].barButtonItems.first
                             self.present(navigationController, animated: true, completion: nil)
                         case .none:

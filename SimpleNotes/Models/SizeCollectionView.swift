@@ -7,16 +7,15 @@
 
 import UIKit
 
-class ColorCollectionView: UICollectionView, UICollectionViewDelegate {
+class SizeCollectionView: UICollectionView, UICollectionViewDelegate {
     
-    var colors: [Color] = [Color(color: UIColor.systemRed.toHex), Color(color: UIColor.systemOrange.toHex), Color(color: UIColor.systemYellow.toHex), Color(color: UIColor.systemGreen.toHex), Color(color: UIColor.systemBlue.toHex), Color(color: UIColor.systemIndigo.toHex), Color(color: UIColor.systemPurple.toHex), Color(color: UIColor.systemPink.toHex), Color(color: UIColor.systemMint.toHex), Color(color: UIColor.systemTeal.toHex), Color(color: UIColor.systemCyan.toHex)]
+    var widths: [Size] = [Size(width: 1.0), Size(width: 3.0), Size(width: 5.0), Size(width: 7.0), Size(width: 10.0), Size(width: 13.0), Size(width: 15.0), Size(width: 17.0), Size(width: 21.0), Size(width: 25.0), Size(width: 27.0), Size(width: 30.0)]
     
-    var allowTransparent: Bool = true
     lazy var collectiondataSource = configureDataSource()
     
     private var collectionView: UICollectionView?
     
-    var selectedColor: ((_ color: String)->())?
+    var selectedWidth: ((_ width: Double)->())?
     
     init(frame: CGRect) {
         
@@ -25,12 +24,8 @@ class ColorCollectionView: UICollectionView, UICollectionViewDelegate {
     
         super.init(frame: frame, collectionViewLayout: UICollectionViewFlowLayout())
         
-        if allowTransparent == true  {
-            colors.insert(Color(color: UIColor.secondarySystemBackground.toHex), at: 2)
-        }
-        
         collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
-        
+  
         self.addSubview(collectionView!)
         
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
@@ -49,13 +44,16 @@ class ColorCollectionView: UICollectionView, UICollectionViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureDataSource() -> UICollectionViewDiffableDataSource<ColorSection, Color> {
+    func configureDataSource() -> UICollectionViewDiffableDataSource<SIzeSection, Size> {
      
-        let dataSource = UICollectionViewDiffableDataSource<ColorSection, Color>(collectionView: collectionView!) { (collectionView, indexPath, icon) -> ColorCollectionViewCell? in
+        let dataSource = UICollectionViewDiffableDataSource<SIzeSection, Size>(collectionView: collectionView!) { (collectionView, indexPath, icon) -> ColorCollectionViewCell? in
      
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ColorCollectionViewCell.identifier, for: indexPath) as! ColorCollectionViewCell
-            cell.backgroundColor = UIColor(hex: self.colors[indexPath.item].color)
-            cell.icon.image = UIImage(systemName: "pin")
+            cell.backgroundColor = .systemGray5
+            let circle = CAShapeLayer()
+            circle.path = UIBezierPath(arcCenter: cell.contentView.center, radius: self.widths[indexPath.item].width * 0.75, startAngle: 0.0, endAngle: .pi * 2, clockwise: true).cgPath
+            circle.fillColor = UIColor.label.cgColor
+            cell.layer.addSublayer(circle)
             cell.layer.cornerRadius = Constants.cornerRadius
             return cell
         }
@@ -65,28 +63,28 @@ class ColorCollectionView: UICollectionView, UICollectionViewDelegate {
     
     func applySnapshot() {
       
-        var snapshot = NSDiffableDataSourceSnapshot<ColorSection, Color>()
+        var snapshot = NSDiffableDataSourceSnapshot<SIzeSection, Size>()
           snapshot.appendSections([.main])
-          snapshot.appendItems(colors, toSection: .main)
+          snapshot.appendItems(widths, toSection: .main)
        
         collectiondataSource.apply(snapshot, animatingDifferences: false)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        selectedColor?((colors[indexPath.item].color ?? UIColor.systemBlue.toHex)!)
+        selectedWidth?(widths[indexPath.item].width)
     }
 }
 
-struct Color: Hashable {
-    var color: String!
+struct Size: Hashable {
+    var width: Double!
     
-    init(color: String!) {
-        self.color = color
+    init(width: Double!) {
+        self.width = width
     }
     
 }
 
-enum ColorSection {
+enum SIzeSection {
     case main
 }

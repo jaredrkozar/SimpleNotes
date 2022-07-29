@@ -71,8 +71,21 @@ class EditTagsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       
-
-        print(self.parent)
+        if ((note?.tags?.contains(tags[indexPath.item].name!)) != nil) {
+            note?.tags?.remove(tags[indexPath.item].name!)
+           print("ADDED")
+            print(tags[indexPath.item].name)
+        } else {
+            print("removed")
+            note?.tags?.insert(tags[indexPath.item].name!)
+        }
+       
+        print(note?.tags)
+        do {
+            try context.save()
+        } catch {
+            print("An error occured while saving a note.")
+        }
     }
     
     override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {

@@ -11,7 +11,6 @@
 		5BBB5572D47E81F29B170B17 /* Pods_SimpleNotesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7042E8EED9EB51C046B04E5F /* Pods_SimpleNotesTests.framework */; };
 		7F0F03E7282C368D00A6B404 /* ToolOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */; };
 		7F0F03EE282E4B8000A6B404 /* LineTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0F03EC282E4B8000A6B404 /* LineTypeCollectionViewCell.swift */; };
-		7F0F03EF282E4B8000A6B404 /* LineTypeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F0F03ED282E4B8000A6B404 /* LineTypeCollectionViewCell.xib */; };
 		7F11DAB5279F351F0053D2FB /* Tags+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F11DAB3279F351F0053D2FB /* Tags+CoreDataClass.swift */; };
 		7F11DAB6279F351F0053D2FB /* Tags+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F11DAB4279F351F0053D2FB /* Tags+CoreDataProperties.swift */; };
 		7F2FE9232830AE4A006777DE /* LockNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2FE9222830AE49006777DE /* LockNote.swift */; };
@@ -25,6 +24,7 @@
 		7F376626278E220D00A107FF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376625278E220D00A107FF /* SettingsViewController.swift */; };
 		7F37662E278E666100A107FF /* GoogleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37662D278E666100A107FF /* GoogleInteractor.swift */; };
 		7F376630278E6A8500A107FF /* APIInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37662F278E6A8500A107FF /* APIInteractor.swift */; };
+		7F4974B32892451400A3D0FF /* LineTypeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4974B22892451400A3D0FF /* LineTypeCollectionView.swift */; };
 		7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AA9276FC22100202413 /* NoteViewController.swift */; };
 		7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */; };
 		7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498ABD2771624200202413 /* NewTagViewController.swift */; };
@@ -44,6 +44,7 @@
 		7F97ED57288F8A0400DA2EB4 /* Note+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97ED56288F8A0400DA2EB4 /* Note+CoreDataClass.swift */; };
 		7F97ED59288F8A3C00DA2EB4 /* Image+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97ED58288F8A3C00DA2EB4 /* Image+CoreDataClass.swift */; };
 		7F97ED5B288FA81E00DA2EB4 /* IconCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97ED5A288FA81E00DA2EB4 /* IconCollectionView.swift */; };
+		7F97ED5D28920FCA00DA2EB4 /* SizeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97ED5C28920FCA00DA2EB4 /* SizeCollectionView.swift */; };
 		7FB7C29B2815155F006C9FE2 /* HoldingClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */; };
 		7FB8120E2869554C00DC9E67 /* ColorCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB8120D2869554C00DC9E67 /* ColorCollectionView.swift */; };
 		7FC2C11E286D64FA00D90E20 /* DefaultTextBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC2C11D286D64FA00D90E20 /* DefaultTextBoxViewController.swift */; };
@@ -113,7 +114,6 @@
 		7042E8EED9EB51C046B04E5F /* Pods_SimpleNotesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleNotesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolOptionsViewController.swift; sourceTree = "<group>"; };
 		7F0F03EC282E4B8000A6B404 /* LineTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineTypeCollectionViewCell.swift; sourceTree = "<group>"; };
-		7F0F03ED282E4B8000A6B404 /* LineTypeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LineTypeCollectionViewCell.xib; sourceTree = "<group>"; };
 		7F11DAB3279F351F0053D2FB /* Tags+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tags+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		7F11DAB4279F351F0053D2FB /* Tags+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tags+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		7F2FE9222830AE49006777DE /* LockNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockNote.swift; sourceTree = "<group>"; };
@@ -127,6 +127,7 @@
 		7F376625278E220D00A107FF /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		7F37662D278E666100A107FF /* GoogleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleInteractor.swift; sourceTree = "<group>"; };
 		7F37662F278E6A8500A107FF /* APIInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIInteractor.swift; sourceTree = "<group>"; };
+		7F4974B22892451400A3D0FF /* LineTypeCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineTypeCollectionView.swift; sourceTree = "<group>"; };
 		7F498AA9276FC22100202413 /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTagsTableViewController.swift; sourceTree = "<group>"; };
 		7F498ABD2771624200202413 /* NewTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTagViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +147,7 @@
 		7F97ED56288F8A0400DA2EB4 /* Note+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7F97ED58288F8A3C00DA2EB4 /* Image+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7F97ED5A288FA81E00DA2EB4 /* IconCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCollectionView.swift; sourceTree = "<group>"; };
+		7F97ED5C28920FCA00DA2EB4 /* SizeCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeCollectionView.swift; sourceTree = "<group>"; };
 		7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingClass.swift; sourceTree = "<group>"; };
 		7FB8120D2869554C00DC9E67 /* ColorCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionView.swift; sourceTree = "<group>"; };
 		7FC2C11D286D64FA00D90E20 /* DefaultTextBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextBoxViewController.swift; sourceTree = "<group>"; };
@@ -266,7 +268,9 @@
 				7FC7FB6E2837F74000CE483E /* Constants.swift */,
 				7FE45081281A56F40034928B /* CollectionReusableView.swift */,
 				7FB8120D2869554C00DC9E67 /* ColorCollectionView.swift */,
+				7F97ED5C28920FCA00DA2EB4 /* SizeCollectionView.swift */,
 				7F97ED5A288FA81E00DA2EB4 /* IconCollectionView.swift */,
+				7F4974B22892451400A3D0FF /* LineTypeCollectionView.swift */,
 				7F2FE9222830AE49006777DE /* LockNote.swift */,
 				7FC7FB6C2836D5C100CE483E /* CustomButton.swift */,
 				7F53DAA9279CC36C006789F6 /* ToastNotification.swift */,
@@ -286,7 +290,6 @@
 			isa = PBXGroup;
 			children = (
 				7F0F03EC282E4B8000A6B404 /* LineTypeCollectionViewCell.swift */,
-				7F0F03ED282E4B8000A6B404 /* LineTypeCollectionViewCell.xib */,
 				7FE45083281A67E20034928B /* ColorCollectionViewCell.swift */,
 			);
 			path = Tags;
@@ -548,7 +551,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F0F03EF282E4B8000A6B404 /* LineTypeCollectionViewCell.xib in Resources */,
 				7FEBEC7B276135DC0066F0C0 /* LaunchScreen.storyboard in Resources */,
 				7FEBEC78276135DC0066F0C0 /* Assets.xcassets in Resources */,
 				7FEBEC76276135DA0066F0C0 /* Main.storyboard in Resources */,
@@ -718,6 +720,7 @@
 				7F376615278B569D00A107FF /* SendText.swift in Sources */,
 				7FE45082281A56F40034928B /* CollectionReusableView.swift in Sources */,
 				7FD82DCB28233AE500ECCB3B /* Brush.swift in Sources */,
+				7F97ED5D28920FCA00DA2EB4 /* SizeCollectionView.swift in Sources */,
 				7FF892E527A3D2070030588B /* AllTags+CoreDataClass.swift in Sources */,
 				7FC55DA12792ADEB001DDFD5 /* TableRowCell.swift in Sources */,
 				7F0F03E7282C368D00A6B404 /* ToolOptionsViewController.swift in Sources */,
@@ -730,6 +733,7 @@
 				7FE4509E281EEE760034928B /* TextTool.swift in Sources */,
 				7FEBEC6F276135DA0066F0C0 /* AppDelegate.swift in Sources */,
 				7F11DAB5279F351F0053D2FB /* Tags+CoreDataClass.swift in Sources */,
+				7F4974B32892451400A3D0FF /* LineTypeCollectionView.swift in Sources */,
 				7F376630278E6A8500A107FF /* APIInteractor.swift in Sources */,
 				7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */,
 				7FEBEC71276135DA0066F0C0 /* SceneDelegate.swift in Sources */,
