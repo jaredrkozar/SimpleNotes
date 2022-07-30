@@ -32,7 +32,6 @@ class NoteShareSettingsViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         // Do any additional setup after loading the view.
-        sendNoteButton.setTitle(sharingLocation?.buttonMessage, for: .normal)
         
         title = sharingLocation?.viewTitle
     
@@ -139,5 +138,14 @@ class NoteShareSettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return .leastNormalMagnitude
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        
+        let button = CustomButton(frame: CGRect(x: 5, y: 3, width: self.view.frame.width - 5, height: 20))
+        button.setTitle(sharingLocation?.buttonMessage, for: .normal)
+        view.addSubview(button)
+        return view
     }
 }

@@ -52,6 +52,24 @@ class ToolOptionsViewController: UIViewController, UICollectionViewDelegate {
         linetypecollectionview?.trailingAnchor.constraint(equalTo: currentDevice == .iphone ? view.safeAreaLayoutGuide.trailingAnchor : view.centerXAnchor).isActive = true
         linetypecollectionview?.topAnchor.constraint(equalTo: currentDevice == .iphone ? sizecollectionview!.bottomAnchor : colorcollectionView!.bottomAnchor, constant: -15 ).isActive = true
         linetypecollectionview?.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        colorcollectionView?.selectedColor = { color in
+            
+            UserDefaults.standard.set(color, forKey: "color")
+            NotificationCenter.default.post(name: Notification.Name( "changedColor"), object: nil)
+        }
+        
+        sizecollectionview?.selectedWidth = { width in
+            
+            UserDefaults.standard.set(width, forKey: "width")
+            NotificationCenter.default.post(name: Notification.Name( "changedWidth"), object: nil)
+        }
+        
+        linetypecollectionview?.selectedStroke = { strokeType in
+            
+            UserDefaults.standard.set(strokeType, forKey: "strokeType")
+            NotificationCenter.default.post(name: Notification.Name( "changedStrokeType"), object: nil)
+        }
     }
     
     @objc func toggleFavoriteTool(sender: UIBarButtonItem) {

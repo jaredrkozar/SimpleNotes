@@ -15,7 +15,7 @@ class LineTypeCollectionView: UICollectionView, UICollectionViewDelegate {
     
     private var collectionView: UICollectionView?
     
-    var selectedStroke: ((_ strokeType: StrokeTypes)->())?
+    var selectedStroke: ((_ strokeType: Int)->())?
     
     init(frame: CGRect) {
         
@@ -67,7 +67,7 @@ class LineTypeCollectionView: UICollectionView, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedStroke!(strokes[indexPath.item].strokeType)
+        selectedStroke!(strokes[indexPath.item].strokeType.rawValue)
        
     }
 }

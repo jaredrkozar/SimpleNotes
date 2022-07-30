@@ -10,7 +10,7 @@ import UIKit
 private let reuseIdentifier = "Cell"
 
 class TintPickerViewController: UIViewController, UICollectionViewDelegate {
-
+    
     private var colorcollectionView: ColorCollectionView?
     
     override func viewDidLoad() {

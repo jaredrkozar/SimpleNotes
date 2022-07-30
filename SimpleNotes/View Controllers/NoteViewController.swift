@@ -135,6 +135,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                         case .iphone:
                             
                             let navigationController = UINavigationController(rootViewController: menuTool.optionsView!)
+                
                             if let picker = navigationController.presentationController as? UISheetPresentationController {
                                 picker.detents = [.medium()]
                                 picker.prefersGrabberVisible = true
@@ -316,30 +317,28 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         self.view.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "tintColor") ?? UIColor.systemBlue.toHex)!)
     }
     
-    
-    @objc func changeStrokeType(notification: Notification) {
-        if tool == .pen {
-            drawingView.currentPen?.strokeType = StrokeTypes(rawValue: UserDefaults.standard.integer(forKey: "changedStrokeType")) ?? .normal
-            
-        } else {
-            drawingView.currentHighlighter?.strokeType = StrokeTypes(rawValue: UserDefaults.standard.integer(forKey: "changedStrokeType")) ?? .normal
-        }
-    }
-    
     @objc func changeColor(notification: Notification) {
         if tool == .pen {
-            drawingView.currentPen?.color = UIColor(hex: UserDefaults.standard.string(forKey: "changedColor")!)!
+            drawingView.currentPen?.color = UIColor(hex: UserDefaults.standard.string(forKey: "color")!)!
         } else {
-            drawingView.currentHighlighter?.color = UIColor(hex: UserDefaults.standard.string(forKey: "changedColor")!)!
+            drawingView.currentHighlighter?.color = UIColor(hex: UserDefaults.standard.string(forKey: "color")!)!
         }
     }
     
     @objc func changeSize(notification: Notification) {
         if tool == .pen {
-            print(currentNote?.date)
-            drawingView.currentPen?.width = UserDefaults.standard.double(forKey: "changedWidth")
+            drawingView.currentPen?.width = UserDefaults.standard.double(forKey: "width")
         } else {
-            drawingView.currentHighlighter?.width = UserDefaults.standard.double(forKey: "changedWidth")
+            drawingView.currentHighlighter?.width = UserDefaults.standard.double(forKey: "width")
+        }
+    }
+    
+    @objc func changeStrokeType(notification: Notification) {
+        if tool == .pen {
+            drawingView.currentPen?.strokeType = StrokeTypes(rawValue: UserDefaults.standard.integer(forKey: "strokeType")) ?? .normal
+            
+        } else {
+            drawingView.currentHighlighter?.strokeType = StrokeTypes(rawValue: UserDefaults.standard.integer(forKey: "strokeType")) ?? .normal
         }
     }
 }
