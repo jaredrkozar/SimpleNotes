@@ -7,15 +7,11 @@
 
 import UIKit
 
-class ChangeDateViewController: UIViewController, DateHandler {
-    
-    func dateHandler() -> Date {
-        return datePicker.date
-    }
-
-    var note: Note?
+class ChangeDateViewController: UIViewController {
     
     let datePicker = UIDatePicker()
+    var source: NoteViewController!
+    var noteDate: Date?
     
     lazy var dateLabel: UILabel = {
         let label = UILabel()
@@ -25,8 +21,6 @@ class ChangeDateViewController: UIViewController, DateHandler {
         label.numberOfLines = 0
         return label
     }()
-    
-    var selecteddate: ((_ date: Date)->())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +33,7 @@ class ChangeDateViewController: UIViewController, DateHandler {
           // Posiiton date picket within a view
         datePicker.preferredDatePickerStyle = .inline
         datePicker.translatesAutoresizingMaskIntoConstraints = false
-          
+        datePicker.date = noteDate!
           // Set some of UIDatePicker properties
           datePicker.timeZone = NSTimeZone.local
         datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
@@ -47,7 +41,7 @@ class ChangeDateViewController: UIViewController, DateHandler {
      
           // Add DataPicker to the view
           self.view.addSubview(datePicker)
-        dateLabel.text = "The note's creation date is \(note?.date?.formatted() ?? Date.now.formatted())"
+        dateLabel.text = "The note's creation date is \(noteDate!.formatted() ?? Date.now.formatted())"
         self.view.addSubview(dateLabel)
         
         NSLayoutConstraint.activate([
@@ -71,6 +65,6 @@ class ChangeDateViewController: UIViewController, DateHandler {
     
     @objc func dateChanged(_ sender: UIDatePicker) {
         dateLabel.text = "The note's creation date is \(String(describing: sender.date.formatted()))"
-        selecteddate!(sender.date)
+        source?.dateChanged(date: sender.date)
     }
 }

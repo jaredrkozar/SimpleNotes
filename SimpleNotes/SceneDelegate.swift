@@ -59,7 +59,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
             splitViewController.setViewController(SidebarViewController(), for: .primary)
             splitViewController.setViewController(ViewController(), for: .supplementary)
-            
             splitViewController.setViewController(UINavigationController(rootViewController: NoteViewController())
                                                   , for: .secondary)
             splitViewController.setViewController(TabBarController(), for: .compact)

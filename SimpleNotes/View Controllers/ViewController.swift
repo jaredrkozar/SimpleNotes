@@ -15,12 +15,14 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.post(name: Notification.Name( "tintColorChanged"), object: nil)
     }
+    
     func viewAppeared() {
         fetchNotes(tag: currentTag, sortOption: .titleAscending)
         
         tableView.dataSource = dataSource
         dataSource.listofnotes = notes
         tableView.reloadData()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,32 +69,37 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     }
     
     @objc func addNote(sender: UIBarButtonItem) {
-  
-        showNote(note: createNote())
+        createNewNote()
+        fetchNotes(tag: nil, sortOption: .titleAscending)
+        tableView.dataSource = dataSource
+        dataSource.listofnotes = notes
+        tableView.reloadData()
+        showNote(noteIndex: notes.count - 1)
+        print(notes.count)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if dataSource.listofnotes[indexPath.row].isLocked == true {
+        if fetchNoteLockedStatus(index: indexPath.row) == true {
            
             LockNote().authenticate(title: "View this note", onCompleted: {result, error in
                 if error == nil {
-                    self.showNote(note: self.dataSource.listofnotes[indexPath.row])
+                    self.showNote(noteIndex: indexPath.row)
                 } else {
                     ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: "DLDLDLDLD", progress: nil)
                 }
             })
             
         } else {
-            showNote(note: self.dataSource.listofnotes[indexPath.row])
+            showNote(noteIndex: indexPath.row)
         }
         
        
     }
     
-    func showNote(note: Note) {
+    func showNote(noteIndex: Int?) {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newNoteVC") as! NoteViewController
-        vc.currentNote = note
-        vc.isNoteLocked = note.isLocked
+        vc.noteIndex = noteIndex
+        vc.isNoteLocked = fetchNoteLockedStatus(index: noteIndex!)
     
         switch currentDevice {
         case .ipad, .mac:
@@ -137,10 +144,10 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
               image: UIImage(systemName: "trash"),
                 attributes: .destructive) { [self] _ in
                     
-                    if dataSource.listofnotes[indexPath.row].isLocked == true {
+                    if fetchNoteLockedStatus(index: indexPath.row) == true {
                         LockNote().authenticate(title: "Delete this note", onCompleted: {result, error in
                             if error == nil {
-                                deleteNote(note: dataSource.listofnotes[indexPath.row])
+                                deleteNote(index: indexPath.row)
                                 
                                 self.dataSource.listofnotes.remove(at: indexPath.row)
                                 
@@ -151,7 +158,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                         })
                         
                     } else {
-                        deleteNote(note: dataSource.listofnotes[indexPath.row])
+                        deleteNote(index: indexPath.row)
                         
                         self.dataSource.listofnotes.remove(at: indexPath.row)
                         

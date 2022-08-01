@@ -13,8 +13,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
     let drawingView = DrawingView(frame: CGRect.zero)
     
-    var dadteHandler: DateHandler?
-    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -39,12 +37,15 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
     private let searchController = UISearchController(searchResultsController: nil)
     
-    var isNoteLocked: Bool?
     var timer: Timer?
     
     var currentNote: Note?
     
-    var textBoxes = [CustomTextBox]()
+    var noteIndex: Int!
+    
+    var noteTitle: String?
+    var noteDate: Date?
+    var isNoteLocked: Bool?
     
     var moreButton: UIBarButtonItem?
     
@@ -59,7 +60,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
         searchController.searchResultsUpdater = self
         
-        if currentNote == nil {
+        if noteIndex == nil {
             
                 view.backgroundColor = .systemBackground
             self.navigationItem.title = nil
@@ -83,6 +84,9 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             ])
         }
         else {
+            
+            self.navigationItem.title = fetchNoteTitle(index: noteIndex!)
+            noteDate = fetchDate(index: noteIndex)
             scrollView.translatesAutoresizingMaskIntoConstraints = false
             drawingView.translatesAutoresizingMaskIntoConstraints = false
             
@@ -121,114 +125,103 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), menu: addMediaMenu())
         
-        if #available(iOS 16.0, *) {
-            self.navigationItem.style = .editor
-            self.navigationItem.title = currentNote?.title
-                        
-            for menuTool in Tools.allCases {
-                navigationItem.centerItemGroups.append(UIBarButtonItem(title: menuTool.name, image: menuTool.icon, primaryAction: UIAction { _ in
+        self.navigationItem.style = .editor
                     
-                    
-                    if (menuTool == self.tool) && (menuTool.optionsView != nil) {
-                        
-                        switch currentDevice {
-                        case .iphone:
-                            
-                            let navigationController = UINavigationController(rootViewController: menuTool.optionsView!)
+        for menuTool in Tools.allCases {
+            navigationItem.centerItemGroups.append(UIBarButtonItem(title: menuTool.name, image: menuTool.icon, primaryAction: UIAction { _ in
                 
-                            if let picker = navigationController.presentationController as? UISheetPresentationController {
-                                picker.detents = [.medium()]
-                                picker.prefersGrabberVisible = true
-                                picker.preferredCornerRadius = 5.0
-                            }
-                            self.present(navigationController, animated: true, completion: nil)
-                            
-                        case .ipad, .mac:
-                            let navigationController = UINavigationController(rootViewController: menuTool.optionsView!)
-                            navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
-                            navigationController.preferredContentSize = CGSize(width: 500, height: 250)
-                            navigationController.popoverPresentationController?.barButtonItem = self.navigationItem.centerItemGroups[menuTool.rawValue].barButtonItems.first
-                            self.present(navigationController, animated: true, completion: nil)
-                        case .none:
-                            print("NONE")
-                        }
+                
+                if (menuTool == self.tool) && (menuTool.optionsView != nil) {
+                    
+                    switch currentDevice {
+                    case .iphone:
                         
-                    } else {
-                        self.tool = menuTool
-                    }
-                }).creatingMovableGroup(customizationIdentifier: tool.name))
-            }
+                        let navigationController = UINavigationController(rootViewController: menuTool.optionsView!)
             
-            navigationItem.renameDelegate = self
-            navigationItem.titleMenuProvider = { suggestedActions in
+                        if let picker = navigationController.presentationController as? UISheetPresentationController {
+                            picker.detents = [.medium()]
+                            picker.prefersGrabberVisible = true
+                            picker.preferredCornerRadius = 5.0
+                        }
+                        self.present(navigationController, animated: true, completion: nil)
+                        
+                    case .ipad, .mac:
+                        let navigationController = UINavigationController(rootViewController: menuTool.optionsView!)
+                        navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
+                        navigationController.preferredContentSize = CGSize(width: 500, height: 250)
+                        navigationController.popoverPresentationController?.barButtonItem = self.navigationItem.centerItemGroups[menuTool.rawValue].barButtonItems.first
+                        self.present(navigationController, animated: true, completion: nil)
+                    case .none:
+                        print("NONE")
+                    }
+                    
+                } else {
+                    self.tool = menuTool
+                }
+            }).creatingMovableGroup(customizationIdentifier: tool.name))
+        }
+        
+        navigationItem.renameDelegate = self
+        navigationItem.titleMenuProvider = { suggestedActions in
+            
+            var children = suggestedActions
+            children += [
                 
-                var children = suggestedActions
-                children += [
+                UIAction(title: "Edit Tags", subtitle: "\tags", image: UIImage(systemName: "pin"), identifier: .none, discoverabilityTitle: "String? = nil",  attributes: [], state: .off) { _ in
                     
-                    UIAction(title: "Edit Tags", subtitle: "\tags", image: UIImage(systemName: "pin"), identifier: .none, discoverabilityTitle: "String? = nil",  attributes: [], state: .off) { _ in
-                        
-                        let vc = EditTagsTableViewController()
-                        let navController = UINavigationController(rootViewController: vc)
-                        vc.note = self.currentNote
-                        
-                        switch currentDevice {
-                        case .iphone:
-                            self.present(navController, animated: true, completion: nil)
-                        case .ipad, .mac:
-                            navController.modalPresentationStyle = UIModalPresentationStyle.popover
-                            navController.preferredContentSize = CGSize(width: 375, height: 300)
-                            navController.popoverPresentationController?.sourceView = self.view
-                            self.present(navController, animated: true, completion: nil)
-                        case .none:
-                            return
-                        }
-                    },
+                    let vc = EditTagsTableViewController()
+                    let navController = UINavigationController(rootViewController: vc)
+                    vc.note = self.currentNote
                     
-                    UIAction(title: self.currentNote?.isLocked ?? false ? "Unlock Note" : "Lock Note", subtitle: "", image: self.currentNote?.isLocked ?? false ? UIImage(systemName: "lock.open") : UIImage(systemName: "lock"), identifier: .none, discoverabilityTitle: "", attributes: [], state: .off) {_ in
-                        LockNote().authenticate(title: self.isNoteLocked! ? "Lock this note" : "Unlock this note", onCompleted: {result, error in
+                    switch currentDevice {
+                    case .iphone:
+                        self.present(navController, animated: true, completion: nil)
+                    case .ipad, .mac:
+                        navController.modalPresentationStyle = UIModalPresentationStyle.popover
+                        navController.preferredContentSize = CGSize(width: 375, height: 300)
+                        navController.popoverPresentationController?.sourceView = self.view
+                        self.present(navController, animated: true, completion: nil)
+                    case .none:
+                        return
+                    }
+                },
+                
+                UIAction(title: fetchNoteLockedStatus(index: self.noteIndex!) == true ? "Unlock Note" : "Lock Note", subtitle: "", image: fetchNoteLockedStatus(index: self.noteIndex!) == true ? UIImage(systemName: "lock.open") : UIImage(systemName: "lock"), identifier: .none, discoverabilityTitle: "", attributes: [], state: .off) {_ in
+                    LockNote().authenticate(title: self.isNoteLocked! ? "Lock this note" : "Unlock this note", onCompleted: {result, error in
+                        
+                        if error == nil {
                             
-                            if error == nil {
-                                
-                                self.isNoteLocked = !self.isNoteLocked!
-                            } else {
-                                ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: nil, progress: 4.0)
-                            }
-                        })
-                    },
-                    
-                    UIAction(title: "Change Date", subtitle: self.currentNote?.date?.formatted(), image: UIImage(systemName: "calender"), identifier: .none, discoverabilityTitle: "String? = nil",  attributes: [], state: .off) { _ in
-                        
-                        let vc = ChangeDateViewController()
-                        let navController = UINavigationController(rootViewController: vc)
-                        vc.note = self.currentNote
-                        
-                        switch currentDevice {
-                        case .iphone:
-                            self.present(navController, animated: true, completion: nil)
-                        case .ipad, .mac:
-                            navController.modalPresentationStyle = UIModalPresentationStyle.popover
-                            navController.preferredContentSize = CGSize(width: 375, height: 500)
-                            navController.popoverPresentationController?.sourceView = self.view
-                            self.present(navController, animated: true, completion: nil)
-                        case .none:
-                            return
+                            self.isNoteLocked = !self.isNoteLocked!
+                            saveNoteLock(isLocked: self.isNoteLocked!, index: self.noteIndex!)
+                        } else {
+                            ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: nil, progress: 4.0)
                         }
-                        
-                        vc.selecteddate = { date in
-                            self.currentNote?.date = date
-                            
-                            saveDate(date: date, note: self.currentNote!)
-                            NotificationCenter.default.post(name: Notification.Name("reloadNotesTable"), object: nil)
-                        }
-                    },
+                    })
+                },
+                
+                UIAction(title: "Change Date", subtitle: self.noteDate?.formatted(), image: UIImage(systemName: "calender"), identifier: .none, discoverabilityTitle: "String? = nil",  attributes: [], state: .off) { _ in
                     
-                    self.shareButtonTapped()
-                ]
-    
-                return UIMenu(children: children)
-            }
-        } else {
-            print("debugDescr")
+                    let vc = ChangeDateViewController()
+                    let navController = UINavigationController(rootViewController: vc)
+                    vc.source = self
+                    vc.noteDate = self.noteDate
+                    switch currentDevice {
+                    case .iphone:
+                        self.present(navController, animated: true, completion: nil)
+                    case .ipad, .mac:
+                        navController.modalPresentationStyle = UIModalPresentationStyle.popover
+                        navController.preferredContentSize = CGSize(width: 375, height: 500)
+                        navController.popoverPresentationController?.sourceView = self.view
+                        self.present(navController, animated: true, completion: nil)
+                    case .none:
+                        return
+                    }
+                },
+                
+                self.shareButtonTapped()
+            ]
+
+            return UIMenu(children: children)
         }
 
         NotificationCenter.default.addObserver(self, selector: #selector(changeStrokeType(notification:)), name: Notification.Name("changedStrokeType"), object: nil)
@@ -311,6 +304,12 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         }
     }
     
+    func dateChanged(date: Date) {
+        noteDate = date
+        saveDate(date: date, index: noteIndex)
+        NotificationCenter.default.post(name: Notification.Name("reloadNotesTable"), object: nil)
+    }
+    
     @objc func tintColorChanged(notification: Notification) {
         navigationController?.navigationBar.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "tintColor") ?? UIColor.systemBlue.toHex)!)
   
@@ -347,7 +346,7 @@ extension NoteViewController: UINavigationItemRenameDelegate {
     
     func navigationItem(_: UINavigationItem, didEndRenamingWith title: String) {
         navigationItem.title = title
-        saveTitle(title: title, note: currentNote!)
+        saveTitle(title: title, index: noteIndex!)
         NotificationCenter.default.post(name: Notification.Name("reloadNotesTable"), object: nil)
         
     }
