@@ -111,38 +111,75 @@ class CustomTextBox: UITextView, UIGestureRecognizerDelegate, ObjectView {
     }
     
     @objc func resizeUpperLeft(_ sender: UIPanGestureRecognizer) {
-        if isResizing == true {
-            HelperFunctions.resizeUpperLeft(view: self, translation: sender.translation(in: self), start: start)
-            start = sender.translation(in: self)
+        switch sender.state {
+            case .ended, .cancelled:
+                start = CGPoint.zero
+        case .changed:
+            if isResizing == true {
+                HelperFunctions.resizeUpperLeft(view: self, translation: sender.translation(in: self), start: start)
+                start = sender.translation(in: self)
+            }
+        default:
+            return
         }
     }
     
     @objc func resizeUpperRight(_ sender: UIPanGestureRecognizer) {
-        if isResizing == true {
-            HelperFunctions.resizeUpperRight(view: self, translation: sender.translation(in: self), start: start)
-            start = sender.translation(in: self)
+        
+        switch sender.state {
+            case .ended, .cancelled:
+                start = CGPoint.zero
+        case .changed:
+            if isResizing == true {
+                HelperFunctions.resizeUpperRight(view: self, translation: sender.translation(in: self), start: start)
+                start = sender.translation(in: self)
+            }
+        default:
+            return
         }
     }
     
     @objc func resizeButtomLeft(_ sender: UIPanGestureRecognizer) {
-        if isResizing == true {
-            HelperFunctions.resizeLowerLeft(view: self, translation: sender.translation(in: self), start: start)
-            start = sender.translation(in: self)
+        
+        switch sender.state {
+        case .ended, .cancelled:
+            start = CGPoint.zero
+        case .changed:
+            if isResizing == true {
+                HelperFunctions.resizeLowerLeft(view: self, translation: sender.translation(in: self), start: start)
+                start = sender.translation(in: self)
+            }
+        default:
+            return
         }
     }
     
     @objc func resizeBottomRight(_ sender: UIPanGestureRecognizer) {
-        if isResizing == true {
-            HelperFunctions.resizeLowerRight(view: self, translation: sender.translation(in: self), start: start)
-            start = sender.translation(in: self)
+        
+        switch sender.state {
+        case .ended, .cancelled:
+            start = CGPoint.zero
+        case .changed:
+            if isResizing == true {
+                HelperFunctions.resizeLowerRight(view: self, translation: sender.translation(in: self), start: start)
+                start = sender.translation(in: self)
+            }
+        default:
+            return
         }
-     
     }
     
     @objc func moveTextBox(_ sender: UIPanGestureRecognizer) {
-        if self.isMoving == true {
-            self.moveBy(x: sender.translation(in: self).x - start.x, y: sender.translation(in: self).y - start.y)
-            start = sender.translation(in: self)
+        switch sender.state {
+        case .ended, .cancelled:
+            start = CGPoint.zero
+        case .changed:
+            if self.isMoving == true {
+                self.moveBy(x: sender.translation(in: self).x - start.x, y: sender.translation(in: self).y - start.y)
+                start = sender.translation(in: self)
+            }
+        default:
+            return
         }
     }
     

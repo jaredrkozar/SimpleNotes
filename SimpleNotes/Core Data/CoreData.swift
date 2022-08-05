@@ -72,9 +72,10 @@ func createNewNote() {
     let newNote = Note(context: context)
     newNote.date = Date()
     newNote.title = "New Note"
-    newNote.tags = []
     newNote.isLocked = false
+    newNote.addToTags(Set<Tags>())
     newNote.noteID = UUID().uuidString
+    
     do {
         try context.save()
     } catch {
@@ -118,14 +119,19 @@ func saveNoteLock(isLocked: Bool, index: Int) {
     }
 }
 
-func saveTagsForNote(tags: [String], note: Note) {
+func saveTagsForNote(tags: Set<String>, index: Int) {
+    
     var tagset = Set<Tags>()
     
     for tag in tags {
         let newtag = Tags(context: context)
         newtag.name = tag
-        newtag.notes = note
+        newtag.notes = notes[index]
         tagset.insert(newtag)
+    }
+
+    if notes.indices.contains(index) {
+        notes[index].addToTags(tagset)
     }
     
     do {
@@ -185,6 +191,17 @@ func deleteNote(index: Int) {
     } catch {
         print("An error occured")
     }
+}
+
+func fetchTagsForNote(index: Int) -> Set<String> {
+    let allTags = notes[index].tags as? Set<Tags>
+    
+    var newArray = Set<String>()
+    
+    for tag in allTags! {
+        newArray.insert(tag.name!)
+    }
+    return newArray
 }
 
 func deleteTag(tag: AllTags) {

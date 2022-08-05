@@ -18,6 +18,8 @@ class ToastNotification: UIView {
         return image
     }
     
+    private let progressView = UIProgressView()
+    private var animator = UIViewPropertyAnimator(duration: 0.2, curve: .linear)
     
     func showToast(backgroundColor: UIColor, image: UIImage, titleText: String, subtitleText: String?, progress: Double?) {
         
@@ -45,7 +47,6 @@ class ToastNotification: UIView {
             subtitleLabel.text = subtitleText
             self.addSubview(subtitleLabel)
         } else {
-            let progressView = UIProgressView()
             progressView.progress = 0.35
             progressView.frame = CGRect(x: 65, y: 45, width: self.bounds.maxX - 155, height: 30)
             progressView.progressTintColor = .white
@@ -61,23 +62,38 @@ class ToastNotification: UIView {
             cancelButton.layer.cornerRadius = Constants.cornerRadius
             self.addSubview(cancelButton)
             
-            cancelButton.target(forAction: #selector(cancelUpload), withSender: self)
+            cancelButton.addTarget(self, action: #selector(cancelUpload(_:)), for: .touchUpInside)
             
         }
         
         window?.addSubview(self)
         
-        UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 1.0, delay: 0, options: [.curveEaseInOut], animations: {
-          self.backgroundColor = .green
-        }, completion: { _ in
-          UIViewPropertyAnimator.runningPropertyAnimator(withDuration: 1.0, delay: 0, options: [.curveEaseInOut], animations: {
-            self.backgroundColor = .red
-          })
-        })
+        animator.addAnimations {
+            self.transform = CGAffineTransform(translationX: 0, y: 180)
+        }
+        
+        animator.startAnimation()
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGesture))
+        self.addGestureRecognizer(panGesture)
     }
     
+    @objc func panGesture(_ sender: UIPanGestureRecognizer) {
+        let tranalsaiotn  = sender.translation(in: self)
+        sender.setTranslation(.zero, in: self)
+        
+    }
     
-    @objc func cancelUpload(sender: UIButton) {
-        sender.backgroundColor = .red
+    @objc func cancelUpload(_ sender: UIButton) {
+        animator.addAnimations {
+            self.transform = CGAffineTransform(translationX: 0, y: -180)
+        }
+     
+        animator.addCompletion({_ in
+            
+            self.removeFromSuperview()
+        })
+        
+        animator.startAnimation()
     }
 }

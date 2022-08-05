@@ -6,10 +6,10 @@
 //
 
 import UIKit
+import WSTagsField
 
 class ViewController: UITableViewController, UINavigationControllerDelegate {
     
-    var dataSource = ReusableTableView()
     var currentTag: String?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -19,8 +19,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     func viewAppeared() {
         fetchNotes(tag: currentTag, sortOption: .titleAscending)
         
-        tableView.dataSource = dataSource
-        dataSource.listofnotes = notes
+        tableView.dataSource = self
         tableView.reloadData()
         
     }
@@ -61,6 +60,35 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         
     }
     
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return notes.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NoteTableViewCell", for: indexPath) as? NoteTableViewCell else {
+            fatalError("Unable to dequeue the image cell.")
+        }
+        
+        let singlenote = notes[indexPath.row]
+
+        if singlenote.isLocked == true {
+            cell.noteTitle.text = "Note Locked"
+        } else {
+            cell.noteTitle.text = singlenote.title
+        }
+        cell.noteDate.text = singlenote.date!.formatted()
+     
+        let noteTags = fetchTagsForNote(index: indexPath.row)
+        
+        cell.tagView?.tags = ["HELLO", "GOODBye"]
+    
+        
+        cell.accessibilityLabel = "\(singlenote.title) Created on  \(singlenote.date)"
+        
+        cell.layoutIfNeeded()
+        return cell
+    }
+    
     @objc func tintColorChanged(notification: Notification) {
  
         navigationController?.navigationBar.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "tintColor") ?? UIColor.systemBlue.toHex)!)
@@ -71,14 +99,14 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     @objc func addNote(sender: UIBarButtonItem) {
         createNewNote()
         fetchNotes(tag: nil, sortOption: .titleAscending)
-        tableView.dataSource = dataSource
-        dataSource.listofnotes = notes
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.reloadData()
         showNote(noteIndex: notes.count - 1)
-        print(notes.count)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         if fetchNoteLockedStatus(index: indexPath.row) == true {
            
             LockNote().authenticate(title: "View this note", onCompleted: {result, error in
@@ -113,6 +141,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         }
     }
     override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             
             let newWindowAction = UIWindowScene.ActivationAction({ _ in
@@ -133,7 +162,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                   
                   let vc = EditTagsTableViewController()
                   let navController = UINavigationController(rootViewController: vc)
-                  vc.note = notes[indexPath.row]
+                  vc.index = indexPath.row 
                   self.navigationController?.present(navController, animated: true, completion: nil)
                 
             }
@@ -147,9 +176,10 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                     if fetchNoteLockedStatus(index: indexPath.row) == true {
                         LockNote().authenticate(title: "Delete this note", onCompleted: {result, error in
                             if error == nil {
+                      
                                 deleteNote(index: indexPath.row)
                                 
-                                self.dataSource.listofnotes.remove(at: indexPath.row)
+                               notes.remove(at: indexPath.row)
                                 
                                 self.tableView.reloadData()
                             } else {
@@ -160,7 +190,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                     } else {
                         deleteNote(index: indexPath.row)
                         
-                        self.dataSource.listofnotes.remove(at: indexPath.row)
+                        notes.remove(at: indexPath.row)
                         
                         self.tableView.reloadData()
                     }
@@ -179,8 +209,8 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                 
                 fetchNotes(tag: self.currentTag, sortOption: sort)
                 
-                self.tableView.dataSource = self.dataSource
-                self.dataSource.listofnotes = notes
+                self.tableView.dataSource = self
+                self.tableView.delegate = self
                 self.tableView.reloadData()
                 
             }))

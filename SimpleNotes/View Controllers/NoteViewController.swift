@@ -167,11 +167,13 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             var children = suggestedActions
             children += [
                 
-                UIAction(title: "Edit Tags", subtitle: "\tags", image: UIImage(systemName: "pin"), identifier: .none, discoverabilityTitle: "String? = nil",  attributes: [], state: .off) { _ in
+                UIAction(title: "Edit Tags", subtitle: "\(fetchTagsForNote(index: self.noteIndex).count) tags", image: UIImage(systemName: "pin"), identifier: .none, discoverabilityTitle: "String? = nil",  attributes: [], state: .off) { _ in
                     
                     let vc = EditTagsTableViewController()
                     let navController = UINavigationController(rootViewController: vc)
-                    vc.note = self.currentNote
+                    vc.index = self.noteIndex
+    
+                    vc.currentTags = fetchTagsForNote(index: self.noteIndex)
                     
                     switch currentDevice {
                     case .iphone:
@@ -289,7 +291,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
         let vc = EditTagsTableViewController()
         let navController = UINavigationController(rootViewController: vc)
-        vc.note = self.currentNote
+        vc.index = noteIndex
         
         switch currentDevice {
         case .iphone:

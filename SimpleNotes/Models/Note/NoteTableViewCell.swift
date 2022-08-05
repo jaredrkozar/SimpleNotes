@@ -13,22 +13,17 @@ class NoteTableViewCell: UITableViewCell {
     @IBOutlet var noteTitle: UILabel!
     @IBOutlet var noteDate: UILabel!
     @IBOutlet var noteText: UITextView!
-    @IBOutlet var noteTags: WSTagsField!
+    
+    var tagView: TagView?
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
-        noteTags.tintColor = UIColor(named: "AccentColor")
-        noteTags.cornerRadius = 6.0
-        noteTags.spaceBetweenTags = 3.0
-        noteTags.readOnly = true
-        noteTags.layoutMargins = UIEdgeInsets(top: 2, left: 6, bottom: 2, right: 6)
-        noteTags.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        noteTags.numberOfLines = 1
-        
-        noteTags.backgroundColor = .clear
+        print(contentView.bounds.maxX - 173 - 20)
+        tagView = TagView(frame: CGRect(x: 173, y: 105, width: contentView.bounds.maxX - 173 - 50, height: 61))
+   
+        self.addSubview(tagView!)
         
     }
 

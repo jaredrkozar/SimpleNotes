@@ -11,7 +11,9 @@ import CoreData
 
 class EditTagsTableViewController: UITableViewController {
 
-    var note: Note?
+    var index: Int!
+    
+    var currentTags: Set<String> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +35,12 @@ class EditTagsTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        print(currentTags)
+        saveTagsForNote(tags: currentTags, index: index)
+        NotificationCenter.default.post(name: Notification.Name("reloadNotesTable"), object: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView.reloadData()
@@ -52,7 +60,7 @@ class EditTagsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableRowCell", for: indexPath) as! TableRowCell
         
         let tag = tags[indexPath.row]
-        
+
         cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", rowIcon: Icon(icon: UIImage(systemName: tag.symbol!), iconBGColor: .systemBackground, iconTintColor: UIColor(hex: tag.color!)), control: nil, handler: nil))
         
         return cell
@@ -71,20 +79,10 @@ class EditTagsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       
-        if ((note?.tags?.contains(tags[indexPath.item].name!)) != nil) {
-            note?.tags?.remove(tags[indexPath.item].name!)
-           print("ADDED")
-            print(tags[indexPath.item].name)
+        if currentTags.contains(tags[indexPath.row].name!) {
+            currentTags.remove(tags[indexPath.row].name!)
         } else {
-            print("removed")
-            note?.tags?.insert(tags[indexPath.item].name!)
-        }
-       
-        print(note?.tags)
-        do {
-            try context.save()
-        } catch {
-            print("An error occured while saving a note.")
+            currentTags.insert(tags[indexPath.row].name!)
         }
     }
     

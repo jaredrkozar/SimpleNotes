@@ -320,3 +320,11 @@ extension UIColor {
          }
      }
  }
+
+extension String {
+    
+    func widthOfString() -> CGSize {
+        let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
+        return self.size(withAttributes: fontAttributes)
+    }
+}

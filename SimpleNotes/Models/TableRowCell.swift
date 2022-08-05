@@ -81,6 +81,7 @@ class TableRowCell: UITableViewCell {
     
     func configureCell(with model: SettingsOptions) {
         iconView.image = model.rowIcon?.icon
+        iconView.tintColor = model.rowIcon?.iconTintColor ?? UIColor.white
         bgView.backgroundColor = model.rowIcon?.iconBGColor
         titleLabel.text = model.title
         
