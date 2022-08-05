@@ -20,9 +20,10 @@ class NoteTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        print(contentView.bounds.maxX - 173 - 20)
-        tagView = TagView(frame: CGRect(x: 173, y: 105, width: contentView.bounds.maxX - 173 - 50, height: 61))
-   
+        print(contentView.bounds.maxX - 20)
+     
+        tagView = TagView(frame: CGRect(x: 173, y: 105, width: contentView.bounds.maxX - 173 - 50, height: 75))
+        
         self.addSubview(tagView!)
         
     }

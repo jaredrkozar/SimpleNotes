@@ -80,9 +80,9 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
      
         let noteTags = fetchTagsForNote(index: indexPath.row)
         
-        cell.tagView?.tags = ["HELLO", "GOODBye"]
+        let tags = fetchTagsForNote(index: indexPath.row)
+        cell.tagView?.addTags(tags: Array(tags))
     
-        
         cell.accessibilityLabel = "\(singlenote.title) Created on  \(singlenote.date)"
         
         cell.layoutIfNeeded()
