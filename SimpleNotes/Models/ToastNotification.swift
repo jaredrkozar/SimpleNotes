@@ -79,9 +79,33 @@ class ToastNotification: UIView {
     }
     
     @objc func panGesture(_ sender: UIPanGestureRecognizer) {
-        let tranalsaiotn  = sender.translation(in: self)
-        sender.setTranslation(.zero, in: self)
-        
+        switch sender.state {
+        case .began, .changed:
+            if(sender.velocity(in: self).y < 0)
+           {
+                self.center = CGPoint(x: self.center.x, y: self.center.y + sender.translation(in: self).y)
+           } else {
+               self.center = CGPoint(x: self.center.x, y: (self.center.y + sender.translation(in: self).y) * 0.9)
+           }
+            
+            sender.setTranslation(CGPoint.zero, in: self)
+        case .ended:
+            if self.frame.maxY < 0 {
+                self.removeFromSuperview()
+            } else {
+                animator.addAnimations {
+                    self.transform = CGAffineTransform(translationX: 0, y:( self.frame.maxY * -1))
+                }
+             
+                animator.addCompletion({_ in
+                    
+                    self.removeFromSuperview()
+                })
+                animator.startAnimation()
+            }
+        default:
+            return
+        }
     }
     
     @objc func cancelUpload(_ sender: UIButton) {
@@ -95,5 +119,10 @@ class ToastNotification: UIView {
         })
         
         animator.startAnimation()
+    }
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIPanGestureRecognizer) -> Bool {
+        let velocity = gestureRecognizer.velocity(in: self)
+        return abs(velocity.x) < abs(velocity.y)
     }
 }

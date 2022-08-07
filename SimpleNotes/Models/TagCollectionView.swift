@@ -18,7 +18,7 @@ class TagView: UIView {
         self.backgroundColor = .red
     }
     
-    func addTags(tags: Set<String>) {
+    func addTags(tags: [String]) {
         print(tags)
         for tag in tags {
             let newTagChip = TagChip()

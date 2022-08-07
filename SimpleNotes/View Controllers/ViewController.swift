@@ -14,6 +14,9 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.post(name: Notification.Name( "tintColorChanged"), object: nil)
+        fetchNotes(tag: currentTag, sortOption: .titleAscending)
+        tableView.dataSource = self
+        tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -50,6 +53,10 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         
     }
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notes.count
     }
@@ -68,7 +75,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         }
         cell.noteDate.text = singlenote.date!.formatted()
         
-        cell.tagView?.addTags(tags: fetchTagsForNote(index: indexPath.row))
+        cell.tagView?.addTags(tags: fetchTagsForNote(index: indexPath.row).sorted())
     
         cell.accessibilityLabel = "\(singlenote.title) Created on  \(singlenote.date)"
         
@@ -219,8 +226,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     }
     
     @objc func reloadNotesTable(notification: Notification) {
-        print(fetchTagsForNote(index: notification.userInfo?["index"] as? Int ?? 0).count)
-        print(Array(fetchTagsForNote(index: notification.userInfo?["index"] as? Int ?? 0)))
-        self.tableView.reloadData()
+        let indexPath = IndexPath(row: 0, section: tableView.numberOfSections)
+        self.tableView.reloadRows(at: [indexPath], with: .fade)
     }
 }
