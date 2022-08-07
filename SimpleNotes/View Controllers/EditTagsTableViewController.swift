@@ -32,7 +32,6 @@ class EditTagsTableViewController: UITableViewController {
         tableView.rowHeight = 70
         self.tableView.allowsMultipleSelection = true
         fetchTags()
-        
         tableView.reloadData()
     }
     

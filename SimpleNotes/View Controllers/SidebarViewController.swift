@@ -174,17 +174,15 @@ extension SidebarViewController: UICollectionViewDelegate {
         NotificationCenter.default.post(name: Notification.Name("tintColorChanged"), object: nil)
         
         if indexPath.section != 0 {
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
+            let vc = ViewController()
             let navController = UINavigationController(rootViewController: vc)
             vc.currentTag = tagsItems[indexPath.row - 1].title
-            vc.viewAppeared()
-            self.navigationController?.present(navController, animated: true, completion: nil)
+            splitViewController?.setViewController(navController, for: .supplementary)
             
         } else {
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
+            let vc = ViewController()
 
             let navController = UINavigationController(rootViewController: vc)
-            vc.viewAppeared()
             splitViewController?.setViewController(navController, for: .supplementary)
         }
     

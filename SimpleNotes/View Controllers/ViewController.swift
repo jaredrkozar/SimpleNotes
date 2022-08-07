@@ -16,18 +16,8 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         NotificationCenter.default.post(name: Notification.Name( "tintColorChanged"), object: nil)
     }
     
-    func viewAppeared() {
-        fetchNotes(tag: currentTag, sortOption: .titleAscending)
-        
-        tableView.dataSource = self
-        tableView.reloadData()
-        
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
-        if currentDevice == .iphone || self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClass.compact {
-            viewAppeared()
-        }
+        fetchNotes(tag: currentTag, sortOption: .titleAscending)
     }
     
     override func viewDidLoad() {
@@ -78,8 +68,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         }
         cell.noteDate.text = singlenote.date!.formatted()
         
-        let tags = fetchTagsForNote(index: 0)
-        cell.tagView?.addTags(tags: tags)
+        cell.tagView?.addTags(tags: fetchTagsForNote(index: indexPath.row))
     
         cell.accessibilityLabel = "\(singlenote.title) Created on  \(singlenote.date)"
         

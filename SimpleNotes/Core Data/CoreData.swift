@@ -202,6 +202,7 @@ func fetchTagsForNote(index: Int) -> Set<String> {
     for tag in allTags! {
         newArray.insert(tag.name!)
     }
+    
     return newArray
 }
 
