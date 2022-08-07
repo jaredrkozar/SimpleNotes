@@ -18,7 +18,8 @@ class TagView: UIView {
         self.backgroundColor = .red
     }
     
-    func addTags(tags: [String]) {
+    func addTags(tags: Set<String>) {
+        print(tags)
         for tag in tags {
             let newTagChip = TagChip()
             let width = tag.widthOfString()
@@ -35,6 +36,7 @@ class TagView: UIView {
             }
         }
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

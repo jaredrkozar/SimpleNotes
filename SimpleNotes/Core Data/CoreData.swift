@@ -185,6 +185,7 @@ func fetchNoteTitle(index: Int) -> String {
 }
 
 func deleteNote(index: Int) {
+
     context.delete(notes[index])
     do {
         try context.save()

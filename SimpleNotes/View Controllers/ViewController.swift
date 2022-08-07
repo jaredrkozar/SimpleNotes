@@ -77,11 +77,9 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
             cell.noteTitle.text = singlenote.title
         }
         cell.noteDate.text = singlenote.date!.formatted()
-     
-        let noteTags = fetchTagsForNote(index: indexPath.row)
         
-        let tags = fetchTagsForNote(index: indexPath.row)
-        cell.tagView?.addTags(tags: Array(tags))
+        let tags = fetchTagsForNote(index: 0)
+        cell.tagView?.addTags(tags: tags)
     
         cell.accessibilityLabel = "\(singlenote.title) Created on  \(singlenote.date)"
         
@@ -125,18 +123,18 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     }
     
     func showNote(noteIndex: Int?) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newNoteVC") as! NoteViewController
+        let vc = NoteViewController()
         vc.noteIndex = noteIndex
         vc.isNoteLocked = fetchNoteLockedStatus(index: noteIndex!)
-    
-        switch currentDevice {
-        case .ipad, .mac:
+        
+        if currentDevice == .iphone || self.splitViewController?.traitCollection.horizontalSizeClass == .compact {
+            show(vc, sender: true)
+        } else if currentDevice == .ipad {
             self.splitViewController?.setViewController(vc, for: .secondary)
         
             self.showDetailViewController(vc, sender: true)
-        case .iphone:
-            self.show(vc, sender: self)
-        case .none:
+
+        } else {
             return
         }
     }
@@ -157,11 +155,9 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
             let editAction = UIAction(
               title: "Edit Tags", image: UIImage(systemName: "tag")) { [self] _ in
                 //gets the current dimension and splits it up into 2 parts, and saves them so they can be shown in the text fields in editPresetViewController. The editPresetViewController is then shown via a popover
-                
-                  let cellTag = tableView.cellForRow(at: indexPath) as! NoteTableViewCell
-                  
                   let vc = EditTagsTableViewController()
                   let navController = UINavigationController(rootViewController: vc)
+                  vc.currentTags = fetchTagsForNote(index: indexPath.row)
                   vc.index = indexPath.row 
                   self.navigationController?.present(navController, animated: true, completion: nil)
                 
@@ -234,6 +230,8 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     }
     
     @objc func reloadNotesTable(notification: Notification) {
+        print(fetchTagsForNote(index: notification.userInfo?["index"] as? Int ?? 0).count)
+        print(Array(fetchTagsForNote(index: notification.userInfo?["index"] as? Int ?? 0)))
         self.tableView.reloadData()
     }
 }

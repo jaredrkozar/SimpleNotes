@@ -128,7 +128,7 @@ class TableRowCell: UITableViewCell {
             
             NSLayoutConstraint.activate(constraints)
         case .none:
-            print("No control")
+            return
         }
     }
     

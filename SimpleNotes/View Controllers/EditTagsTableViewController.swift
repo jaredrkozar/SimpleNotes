@@ -13,7 +13,7 @@ class EditTagsTableViewController: UITableViewController {
 
     var index: Int!
     
-    var currentTags: Set<String> = []
+    var currentTags: Set<String>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,13 +32,13 @@ class EditTagsTableViewController: UITableViewController {
         tableView.rowHeight = 70
         self.tableView.allowsMultipleSelection = true
         fetchTags()
+        
         tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        print(currentTags)
-        saveTagsForNote(tags: currentTags, index: index)
-        NotificationCenter.default.post(name: Notification.Name("reloadNotesTable"), object: nil)
+        saveTagsForNote(tags: currentTags!, index: index)
+        NotificationCenter.default.post(name: Notification.Name("reloadNotesTable"), object: ["index": index])
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,10 +79,11 @@ class EditTagsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       
-        if currentTags.contains(tags[indexPath.row].name!) {
-            currentTags.remove(tags[indexPath.row].name!)
+        if currentTags!.contains(tags[indexPath.row].name!) {
+            currentTags?.remove(tags[indexPath.row].name!)
         } else {
-            currentTags.insert(tags[indexPath.row].name!)
+            
+            currentTags?.insert(tags[indexPath.row].name!)
         }
     }
     
