@@ -111,9 +111,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 3.5
-        
-        ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: nil, progress: 4.0)
-        
+    
         // Do any additional setup after loading the view.
         
         tool = .pen
@@ -196,7 +194,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                             self.isNoteLocked = !self.isNoteLocked!
                             saveNoteLock(isLocked: self.isNoteLocked!, index: self.noteIndex!)
                         } else {
-                            ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: nil, progress: 4.0)
+                            ToastNotification(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", progress: 0.25)
                         }
                     })
                 },
@@ -256,7 +254,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                  case .ipad, .mac:
                      navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
                    navigationController.preferredContentSize = CGSize(width: 375, height: 300)
-                     navigationController.popoverPresentationController?.sourceItem = self.navigationItem.titleView
+                     navigationController.popoverPresentationController?.sourceItem = self.drawingView
                      
                  
                  case .none:
@@ -392,7 +390,7 @@ extension NoteViewController: PHPickerViewControllerDelegate {
                            var rect: CGRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
                            let transform = CGAffineTransform(scaleX: scale, y: scale)
                            rect = rect.applying(transform)
-                           print(CGFloat(rect.width) / 2)
+                           
                            self.drawingView.insertImage(frame: CGRect(x: (rect.width + (-1 * CGFloat(rect.width) / 2)), y: (rect.height + (-1 * CGFloat(rect.height) / 2)), width: rect.width, height: rect.height), image: image)
                        }
                    }

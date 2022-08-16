@@ -15,13 +15,18 @@ class ResizableButton: UIButton {
         super.init(frame: frame)
         self.layer.borderWidth = 1
         self.layer.borderColor = UIColor.white.cgColor
-        self.layer.backgroundColor = drawingView?.objectTintColor?.cgColor ?? UIColor.systemBlue.cgColor
-        self.layer.cornerRadius = 10
+        print(drawingView?.objectTintColor)
+        self.layer.backgroundColor = tintColor.cgColor
+        self.layer.cornerRadius = 5
 
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func tintColorDidChange() {
+        self.backgroundColor = tintColor
     }
     
 }

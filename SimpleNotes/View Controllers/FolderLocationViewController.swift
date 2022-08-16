@@ -20,8 +20,7 @@ class FolderLocationViewController: UITableViewController {
 
         title = "Folders"
         
-        let nib = UINib(nibName: "TableRowCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "TableRowCell")
+        tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Select Folder", style: .done, target: self, action: #selector(selectFolderButton))
     }
@@ -68,7 +67,7 @@ class FolderLocationViewController: UITableViewController {
         let file = allFiles[indexPath.row]
         
         
-        cell.configureCell(with: SettingsOptions(title: file.name, option: "", rowIcon: Icon(icon: UIImage(systemName: "pin"), iconBGColor: .systemRed, iconTintColor: .systemYellow), control: nil, handler: nil))
+        cell.configureCell(with: SettingsOptions(title: file.name, option: "", rowIcon: Icon(icon: file.type.icon, iconBGColor: .systemBackground, iconTintColor: file.type.tintColor), control: nil, handler: nil))
         
         if file.type.typeURL == "folder" {
             cell.accessoryType = .disclosureIndicator
@@ -82,7 +81,7 @@ class FolderLocationViewController: UITableViewController {
         let selectedFile = allFiles[indexPath.row]
 
         if  selectedFile.type == .folder {
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "folderLocationsVC") as! FolderLocationViewController
+            let vc = FolderLocationViewController()
             vc.location = location
             vc.currentfolder = selectedFile.folderID
             self.navigationController?.pushViewController(vc, animated: true)

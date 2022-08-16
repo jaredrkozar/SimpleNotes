@@ -38,6 +38,7 @@ class TintPickerViewController: UIViewController, UICollectionViewDelegate {
         colorcollectionView?.selectedColor = { color in
             
             self.view.tintColor = UIColor(hex: color)
+ 
             UserDefaults.standard.set(color, forKey: "tintColor")
            
             NotificationCenter.default.post(name: Notification.Name( "tintColorChanged"), object: nil)

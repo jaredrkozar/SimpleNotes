@@ -55,7 +55,7 @@ class TagsTableViewController: UITableViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
         let navController = UINavigationController(rootViewController: vc)
         vc.currentTag = tags[indexPath.row].name
-//        vc.viewAppeared()
+
         self.navigationController?.pushViewController(vc, animated: true)
         
     }

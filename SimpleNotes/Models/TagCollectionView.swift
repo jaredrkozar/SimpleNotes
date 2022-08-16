@@ -15,7 +15,7 @@ class TagView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.frame = frame
-        self.backgroundColor = .red
+        self.backgroundColor = .clear
     }
     
     func addTags(tags: [String]) {

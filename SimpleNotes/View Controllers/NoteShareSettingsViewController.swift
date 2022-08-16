@@ -10,8 +10,7 @@ import GoogleSignIn
 
 class NoteShareSettingsViewController: UITableViewController {
     
-    @IBOutlet var sendNoteButton: CustomButton!
-
+    private var models = [Sections]()
     var format: SharingType?
     var currentNote: Note?
     var currentNoteView: Data!
@@ -30,122 +29,103 @@ class NoteShareSettingsViewController: UITableViewController {
     
     var folderID: String?
     
-    override func viewWillAppear(_ animated: Bool) {
-        // Do any additional setup after loading the view.
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        title = sharingLocation?.viewTitle
-    
-        view.backgroundColor = UIColor.systemBackground
-        tableView.reloadData()
-
-        format = .pdf
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if sectionShouldBeHidden(section) {
-            return nil // Show nothing for the header of hidden sections
-        } else {
-            return super.tableView(tableView, titleForHeaderInSection: section) // Use the default header for other sections
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if sectionShouldBeHidden(section) {
-                return 0 // Don't show any rows for hidden sections
-        } else {
-            return super.tableView(tableView, numberOfRowsInSection: section) // Use the default number of rows for other sections
-        }
-    }
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
-            if indexPath.row == 0 {
-                format = SharingType.pdf
-            } else {
-                format = SharingType.plainText
-            }
-            
-        } else if indexPath.section == 1 {
-
-            if currentLocation.isSignedIn == false {
-                currentLocation.signIn(vc: self)
-            } else {
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "folderLocationsVC") as! FolderLocationViewController
-                       let navController = UINavigationController(rootViewController: vc)
-                vc.location = sharingLocation
-                vc.currentfolder = currentLocation.defaultFolder
-                self.navigationController?.present(navController, animated: true, completion: nil)
-            }
-        }
+        tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height), style: .insetGrouped)
+        tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
+        configure()
+        
+        title = "Settings"
         
     }
-    
-    @IBAction func didTapExportButton(_ sender: Any) {
-        
-        switch sharingLocation {
-            case .email:
-                sendEmail(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: currentNoteView)
-            case .messages:
-                sendText(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: currentNoteView)
-            case .otherapps:
-            
-                sendToOtherApps(data: [currentNoteView, currentNote?.title! ?? ""])
-        case .googledrive, .dropbox:
-     
-            uploadFileToCloud(folder: folderID ?? currentLocation.defaultFolder)
-            default:
-                break
-        }
-    }
-    
-    private func sectionShouldBeHidden(_ section: Int) -> Bool {
-        var shouldHideSection: Bool = false
-        
-        switch sharingLocation {
-        case .email, .messages, .otherapps:
-            switch section {
-                case 1:
-                    shouldHideSection = true
-                default:
-                    shouldHideSection =  false
-            }
-        case .googledrive, .dropbox:
-            switch section {
-                case 0:
-                    shouldHideSection = true
-                default:
-                    shouldHideSection = false
-            }
-            case .none:
-                break
-        }
-        return shouldHideSection
-    }
-    
-    func uploadFileToCloud(folder: String) {
 
-        if currentLocation.isSignedIn {
-            currentLocation.uploadFile(note: currentNoteView, noteName: (currentNote?.title)!, folderID: folder, onCompleted: {progress,error in
+    func configure() {
+        models.append(Sections(title: "Format", settings: [
+            SettingsOptions(title: "PDF", option: "", rowIcon: nil, control: nil) {
                 
-                let notic = ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: "DLDLDLDLD", progress: nil)
+                self.format = .pdf
+            },
+            SettingsOptions(title: "Image", option: "", rowIcon: nil, control: nil) {
+                
+                self.format = .image
+            }
+        ]))
         
-            
-            })
-        } else {
-            currentLocation.signIn(vc: self)
+        models.append(Sections(title: "Location", settings: [
+            SettingsOptions(title: "Folder", option: "", rowIcon: nil, control: nil) {
+                
+                if self.currentLocation.isSignedIn == false {
+                    self.currentLocation.signIn(vc: self)
+                           } else {
+                               let vc = FolderLocationViewController()
+                              let navController = UINavigationController(rootViewController: vc)
+                               vc.location = self.sharingLocation
+                               vc.currentfolder = self.currentLocation.defaultFolder
+                               self.navigationController?.present(navController, animated: true, completion: nil)
+                           }
+             },
+        ]))
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return  models.count
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return models[section].settings.count
+    }
+
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let model = models[indexPath.section].settings[indexPath.row]
+
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TableRowCell.identifier, for: indexPath) as? TableRowCell else {
+            fatalError("Unable to dequeue the settings cell.")
+        }
+        
+        cell.configureCell(with: model)
+        
+        if  models[1].settings[0].title == "Folder" {
+         // Own Account
+           cell.accessoryType = .none
+           //cell.backgroundColor = UIColor.red
+        }else{
+         //Guest Account
+            cell.accessoryType = .checkmark
+        }
+       
+        return cell
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let section = models[section]
+        return section.title
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        let model = models[indexPath.section].settings[indexPath.row]
+        
+        model.handler!()
+    }
+
+    func showSettingsPage(viewController: UIViewController) {
+        switch currentDevice {
+        case .iphone:
+            show(viewController, sender: true)
+        case .ipad, .mac:
+            splitViewController?.setViewController(viewController, for: .secondary)
+        case .none:
+            return
         }
     }
     
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return .leastNormalMagnitude
-    }
-    
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+    @IBAction func doneButtonTapped(_ sender: Any) {
         
-        let button = CustomButton(frame: CGRect(x: 5, y: 3, width: self.view.frame.width - 5, height: 20))
-        button.setTitle(sharingLocation?.buttonMessage, for: .normal)
-        view.addSubview(button)
-        return view
+        dismiss(animated: true, completion: nil)
     }
 }

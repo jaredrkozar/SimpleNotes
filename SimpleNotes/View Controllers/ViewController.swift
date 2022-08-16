@@ -107,7 +107,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                 if error == nil {
                     self.showNote(noteIndex: indexPath.row)
                 } else {
-                    ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: "DLDLDLDLD", progress: nil)
+                    ToastNotification(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: "DLDLDLDLD")
                 }
             })
             
@@ -175,7 +175,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                                 
                                 self.tableView.reloadData()
                             } else {
-                                ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: "DLDLDLDLD", progress: nil)
+                                ToastNotification(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: "DLDLDLDLD")
                             }
                         })
                         
@@ -226,7 +226,6 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     }
     
     @objc func reloadNotesTable(notification: Notification) {
-        let indexPath = IndexPath(row: 0, section: tableView.numberOfSections)
-        self.tableView.reloadRows(at: [indexPath], with: .fade)
+        tableView.reloadData()
     }
 }

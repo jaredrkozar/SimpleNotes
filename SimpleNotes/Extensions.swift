@@ -100,7 +100,6 @@ public enum Tools: Int, CaseIterable {
     case eraser
     case lasso
     case text
-    case shape
     case scroll
     
     
@@ -116,8 +115,6 @@ public enum Tools: Int, CaseIterable {
             return "Lasso"
         case .text:
             return "Text"
-        case .shape:
-            return "Shape"
         case .scroll:
             return "Scroll"
         }
@@ -135,8 +132,6 @@ public enum Tools: Int, CaseIterable {
             return UIImage(systemName: "rectangle.on.rectangle")!
         case .highlighter:
             return UIImage(systemName: "rectangle.on.rectangle.circle.fill")!
-        case .shape:
-            return UIImage(systemName: "circle")!
         case .lasso:
             return UIImage(systemName: "lasso")!
         }
@@ -152,8 +147,6 @@ public enum Tools: Int, CaseIterable {
         case .eraser:
             return nil
         case .lasso:
-            return nil
-        case .shape:
             return nil
         case .scroll:
             return nil
@@ -171,7 +164,7 @@ public enum Device {
 
 public enum SharingType {
     case pdf
-    case plainText
+    case image
 }
 
 struct Sections {
@@ -181,7 +174,7 @@ struct Sections {
 
 struct SettingsOptions {
     let title: String
-    var option: String
+    var option: String?
     let rowIcon: Icon?
     let control: DetailViewType?
     let handler: (() -> Void)?

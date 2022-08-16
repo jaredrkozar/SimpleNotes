@@ -41,18 +41,6 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     public var canCreateTextBox: Bool = true
     private var isSelectingLine: Bool = false
     
-    private var shape: Shapes?
-    
-    public var selectedShape: Shapes? {
-        get {
-            return shape
-        }
-        set {
-            tool = nil
-            self.shape = newValue
-        }
-    }
-    
     var menu = UIMenuController.shared
     var lines = [Line]()
     var textBoxes = [CustomTextBox]()
@@ -112,11 +100,6 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
                 line.color.setStroke()
                 line.path.stroke()
             case .text:
-                line.path.lineWidth = line.width
-                shapeStrokeColor.setStroke()
-                shapeFillColor.setFill()
-                line.path.fill()
-            case .shape:
                 line.path.lineWidth = line.width
                 shapeStrokeColor.setStroke()
                 shapeFillColor.setFill()
@@ -402,23 +385,6 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     required public init?(coder aDecoder: NSCoder?) {
         super.init(coder: aDecoder!)
     }
-    
-    private func addshape(shape: Shapes) -> UIBezierPath {
-
-        var shapePath = UIBezierPath()
-        
-        switch shape {
-            case .rect:
-            shapePath = UIBezierPath(rect: CGRect(x: shapeFirstPoint!.x, y: shapeFirstPoint!.y, width: currentPoint!.x - shapeFirstPoint!.x, height: currentPoint!.y - shapeFirstPoint!.y))
-        case .circle:
-            shapePath = UIBezierPath(arcCenter: shapeFirstPoint!, radius: currentPoint!.x - shapeFirstPoint!.x, startAngle: 0, endAngle: 180, clockwise: true)
-        case .straightline:
-            shapePath.move(to: shapeFirstPoint!)
-            shapePath.addLine(to: currentPoint!)
-        }
-        return shapePath
-    }
-    
     
     @objc func dismissKeyboard() {
         currentView?.isNotCurrentView()

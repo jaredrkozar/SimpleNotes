@@ -8,7 +8,7 @@
 import UIKit
 
 class ToastNotification: UIView {
-    
+
     private var imageView: UIImageView {
         let image = UIImageView()
         image.tintColor = UIColor.white
@@ -18,54 +18,85 @@ class ToastNotification: UIView {
         return image
     }
     
-    private let progressView = UIProgressView()
+    lazy var titleLabel: UILabel = {
+        let titleLabel = UILabel()
+        titleLabel.textColor = .white
+        titleLabel.font = UIFont.systemFont(ofSize: 20.0, weight: .bold)
+        titleLabel.frame = CGRect(x: 65, y: 10, width: Constants.screenWidth - 60 - 100, height: 20)
+        return titleLabel
+    }()
+
+    lazy var subtitleLabel: UILabel = {
+        let subtitleLabel = UILabel()
+        subtitleLabel.textColor = .white
+        subtitleLabel.font = UIFont.systemFont(ofSize: 20.0, weight: .regular)
+        subtitleLabel.frame = CGRect(x: 65, y: 35, width: Constants.screenWidth - 60 - 100, height: 20)
+        return subtitleLabel
+    }()
+    
+    lazy var progressView: UIProgressView = {
+        let progressView = UIProgressView()
+        print(UIScreen.main.nativeBounds.width)
+        progressView.frame = CGRect(x: 65, y: 45, width: Constants.screenWidth - 60 - 100, height: 30)
+        progressView.progressTintColor = .white
+        progressView.trackTintColor = .black.withAlphaComponent(0.4)
+        return progressView
+    }()
+    
+    private var cancelButton: UIButton {
+        let cancelButton = UIButton()
+        cancelButton.frame = CGRect(x: self.bounds.maxX - 80, y: 10, width: 70, height: 50)
+        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        cancelButton.layer.cornerRadius = Constants.cornerRadius
+        return cancelButton
+    }
+    
     private var animator = UIViewPropertyAnimator(duration: 0.2, curve: .linear)
     
-    func showToast(backgroundColor: UIColor, image: UIImage, titleText: String, subtitleText: String?, progress: Double?) {
+    init(backgroundColor: UIColor, image: UIImage, titleText: String, subtitleText: String?) {
+        super.init(frame: CGRect(x: 30, y: -70, width: Constants.screenWidth - 60, height: 70))
+        subtitleLabel.text = subtitleText
+        self.addSubview(subtitleLabel)
         
+        toastCreator(title: titleText, image: image, backgroundColor: backgroundColor)
+    }
+    
+    func updateProgress(progress: Float) {
+        progressView.progress = progress
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    init(backgroundColor: UIColor, image: UIImage, titleText: String, progress: Double?) {
+        super.init(frame: CGRect(x: 30, y: -70, width: Constants.screenWidth - 60, height: 70))
+        progressView.progress = Float(progress!)
+        self.addSubview(progressView)
+        
+        let cancelButton = UIButton(type: .system)
+        cancelButton.backgroundColor = backgroundColor.darker(by: 40.0)
+        self.addSubview(cancelButton)
+        
+        cancelButton.addTarget(self, action: #selector(cancelUpload(_:)), for: .touchUpInside)
+        
+        toastCreator(title: titleText, image: image, backgroundColor: backgroundColor)
+    }
+    
+    private func toastCreator(title: String, image: UIImage, backgroundColor: UIColor) {
         let window =  UIApplication.shared.windows.filter {$0.isKeyWindow}.first
         
-        self.frame = CGRect(x: 30, y: -70, width: Constants.screenWidth - 60, height: 70)
         self.backgroundColor = backgroundColor
         self.layer.cornerRadius = Constants.cornerRadius
         self.alpha = 1.0
         
+        imageView.image = image
         self.addSubview(imageView)
         
-        let titleLabel = UILabel()
-        titleLabel.textColor = .white
-        titleLabel.font = UIFont.systemFont(ofSize: 20.0, weight: .bold)
-        titleLabel.frame = CGRect(x: 65, y: 10, width: UIScreen.main.nativeBounds.width - 45, height: 20)
-        titleLabel.text = titleText
+        titleLabel.text = title
         self.addSubview(titleLabel)
-        
-        if progress == nil {
-            let subtitleLabel = UILabel()
-            subtitleLabel.textColor = .white
-            subtitleLabel.font = UIFont.systemFont(ofSize: 20.0, weight: .regular)
-            subtitleLabel.frame = CGRect(x: 65, y: 35, width: 45, height: 20)
-            subtitleLabel.text = subtitleText
-            self.addSubview(subtitleLabel)
-        } else {
-            progressView.progress = 0.35
-            progressView.frame = CGRect(x: 65, y: 45, width: self.bounds.maxX - 155, height: 30)
-            progressView.progressTintColor = .white
-            progressView.trackTintColor = backgroundColor.darker(by: 40.0)
-            self.addSubview(progressView)
-            
-            let cancelButton = UIButton(type: .system)
-            cancelButton.backgroundColor = backgroundColor.darker(by: 40.0)
-            cancelButton.frame = CGRect(x: self.bounds.maxX - 80, y: 10, width: 70, height: 50)
-            cancelButton.setTitle("Cancel", for: .normal)
-            cancelButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-            cancelButton.alpha = 0.9
-            cancelButton.layer.cornerRadius = Constants.cornerRadius
-            self.addSubview(cancelButton)
-            
-            cancelButton.addTarget(self, action: #selector(cancelUpload(_:)), for: .touchUpInside)
-            
-        }
-        
+    
         window?.addSubview(self)
         
         animator.addAnimations {

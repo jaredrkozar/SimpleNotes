@@ -104,7 +104,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
      func application(_ app: UIApplication, open url: URL,
                       options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
          var handled: Bool
-         print("DDKD")
          handled = GIDSignIn.sharedInstance().handle(url)
          
          if handled {

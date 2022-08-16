@@ -37,4 +37,8 @@ class TagChip: UIView {
             label.centerXAnchor.constraint(equalTo: self.centerXAnchor)
         ])
     }
+    
+    override func tintColorDidChange() {
+        self.backgroundColor = tintColor
+    }
 }

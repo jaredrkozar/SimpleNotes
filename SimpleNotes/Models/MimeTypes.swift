@@ -19,20 +19,38 @@ public enum MimeTypes: CaseIterable {
     var icon: UIImage {
         switch self {
             case .folder:
-            return (UIImage(systemName: "folder")?.withTintColor(UIColor.systemCyan, renderingMode: .alwaysOriginal))!
+            return UIImage(systemName: "folder")!
         case .pdf:
-            return (UIImage(systemName: "doc.viewfinder")?.withTintColor(UIColor.systemRed, renderingMode: .alwaysOriginal))!
+            return UIImage(systemName: "doc.viewfinder")!
         case .document:
-            return (UIImage(systemName: "doc")?.withTintColor(UIColor.systemBlue, renderingMode: .alwaysOriginal))!
+            return UIImage(systemName: "doc")!
         case .spreadsheet:
-            return (UIImage(systemName: "tablecells")?.withTintColor(UIColor.systemGreen, renderingMode: .alwaysOriginal))!
-            
+            return UIImage(systemName: "tablecells")!
         case .presentation:
-            return (UIImage(systemName: "rectangle.grid.2x2")?.withTintColor(UIColor.systemYellow, renderingMode: .alwaysOriginal))!
+            return UIImage(systemName: "rectangle.grid.2x2")!
         case .audiofile:
-            return (UIImage(systemName: "mic")?.withTintColor(UIColor.systemPink, renderingMode: .alwaysOriginal))!
+            return UIImage(systemName: "mic")!
         case .other:
-            return (UIImage(systemName: "questionmark.circle")?.withTintColor(UIColor.systemPurple, renderingMode: .alwaysOriginal))!
+            return UIImage(systemName: "questionmark.circle")!
+        }
+    }
+    
+    var tintColor: UIColor {
+        switch self {
+            case .folder:
+            return .systemCyan
+            case .pdf:
+            return .systemOrange
+            case .document:
+            return .systemBlue
+            case .spreadsheet:
+            return .systemGreen
+            case .presentation:
+            return .systemYellow
+            case .audiofile:
+            return .systemGray
+            case .other:
+            return .systemPink
         }
     }
     

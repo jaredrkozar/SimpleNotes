@@ -28,7 +28,7 @@ class EditTagsTableViewController: UITableViewController {
         
         self.navigationItem.leftBarButtonItems = [plusButton]
         self.navigationItem.rightBarButtonItems = [doneButton]
-        
+        print(currentTags)
         tableView.rowHeight = 70
         self.tableView.allowsMultipleSelection = true
         fetchTags()
@@ -79,9 +79,10 @@ class EditTagsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       
         if currentTags!.contains(tags[indexPath.row].name!) {
+            print("removed tag \(tags[indexPath.row].name!)")
             currentTags?.remove(tags[indexPath.row].name!)
         } else {
-            
+            print("inserted tag \(tags[indexPath.row].name!)")
             currentTags?.insert(tags[indexPath.row].name!)
         }
     }

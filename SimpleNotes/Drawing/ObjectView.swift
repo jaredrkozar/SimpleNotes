@@ -14,7 +14,7 @@ protocol ObjectView {
     var isResizing: Bool { get set }
     var resizingHandles: [UIButton] { get set }
     
-   func isCurrentView()
+    func isCurrentView()
     func isNotCurrentView()
 }
 

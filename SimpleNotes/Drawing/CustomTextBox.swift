@@ -10,7 +10,6 @@ import UIKit
 class CustomTextBox: UITextView, UIGestureRecognizerDelegate, ObjectView {
     var resizingHandles: [UIButton]
     
-    
     var upperLeftDragHandle = ResizableButton()
     var upperRightDragHandle = ResizableButton()
     var bottomLeftDragHandle = ResizableButton()
@@ -53,24 +52,30 @@ class CustomTextBox: UITextView, UIGestureRecognizerDelegate, ObjectView {
         self.layer.borderWidth = 1.5
         self.backgroundColor = UIColor.clear
    
+        moveIconImage.frame = CGRect(x: (self.frame.height - 25), y: (self.frame.height - 25), width: 50, height: 50)
+        
         self.addSubview(moveIconImage)
         moveIconImage.isHidden = true
     
         upperLeftDragHandle.frame = CGRect(x: self.bounds.minX, y: self.bounds.minY, width: 18, height: 18)
         upperLeftDragHandle.center = CGPoint(x: self.bounds.minX, y: self.bounds.minY)
         upperLeftDragHandle.autoresizingMask = [.flexibleBottomMargin, .flexibleRightMargin]
-
+        upperLeftDragHandle.bringSubviewToFront(self)
+        
         upperRightDragHandle.frame = CGRect(x: self.bounds.maxX, y: self.bounds.minY, width: 18, height: 18)
         upperRightDragHandle.center = CGPoint(x: self.bounds.maxX, y: self.bounds.minY)
         upperRightDragHandle.autoresizingMask = [.flexibleBottomMargin, .flexibleLeftMargin]
- 
+        upperRightDragHandle.bringSubviewToFront(self)
+        
         bottomLeftDragHandle.bounds = CGRect(x: self.bounds.minX, y: self.bounds.maxY, width: 18, height: 18)
         bottomLeftDragHandle.center = CGPoint(x: self.bounds.minX, y: self.bounds.maxY)
         bottomLeftDragHandle.autoresizingMask = [.flexibleRightMargin, .flexibleTopMargin]
-                                                  
+        bottomLeftDragHandle.bringSubviewToFront(self)
+        
         bottomRightDragHandle.frame = CGRect(x: self.bounds.maxX, y: self.bounds.maxY, width: 18, height: 18)
         bottomRightDragHandle.center = CGPoint(x: self.bounds.maxX, y: self.bounds.maxY)
         bottomRightDragHandle.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin]
+        bottomRightDragHandle.bringSubviewToFront(self)
         
         self.clipsToBounds = false
         addSubview(upperLeftDragHandle)

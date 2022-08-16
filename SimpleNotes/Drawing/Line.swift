@@ -20,14 +20,6 @@ public struct Line: Equatable {
 
 
 enum DrawingType {
-    case shape
-    case text
     case drawing
+    case text
 }
-
-public enum Shapes {
-    case circle
-    case rect
-    case straightline
-}
-

@@ -9,7 +9,7 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
     
-    var models = [Sections]()
+    private var models = [Sections]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,6 +100,7 @@ class SettingsViewController: UITableViewController {
             return
         }
     }
+    
     @IBAction func doneButtonTapped(_ sender: Any) {
         
         dismiss(animated: true, completion: nil)

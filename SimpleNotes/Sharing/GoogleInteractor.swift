@@ -111,11 +111,12 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         upload.fields = "id"
         
        self.driveService.executeQuery(upload, completionHandler:  { (response, result, error) in
-           
+           let gkkg = ToastNotification(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", progress: 0.0)
+
            self.driveService.uploadProgressBlock = { [weak self] _, uploaded, total in
                    guard total > 0 else { return }
                    let progress = Float(uploaded) / Float(total)
-               onCompleted(Double(progress), error?.localizedDescription)
+               gkkg.updateProgress(progress: progress)
                }
        }
        )

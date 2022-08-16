@@ -27,6 +27,7 @@ class TableRowCell: UITableViewCell {
     var iconView: UIImageView = {
         let view = UIImageView()
         view.frame = CGRect(x: 3, y: 5, width: 35, height: 30)
+        view.contentMode = .scaleAspectFit
         return view
     }()
     
