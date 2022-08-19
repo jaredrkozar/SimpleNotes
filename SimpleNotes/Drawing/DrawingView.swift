@@ -25,6 +25,8 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
             return  currentPen ?? PenTool(width: 4.0, color: UIColor.systemBlue, opacity: 1.0, blendMode: .normal, strokeType: .normal)
         } else if self.tool == .highlighter {
             return currentHighlighter ?? PenTool(width: 4.0, color: UIColor.systemYellow, opacity: 0.8, blendMode: .normal, strokeType: .normal)
+        } else if self.tool == .eraser {
+            return PenTool(width: 4.0, color: UIColor.systemBlue, opacity: 1.0, blendMode: .normal, strokeType: .normal)
         } else if self.tool == .text {
             return TextTool()
         } else {
@@ -67,8 +69,17 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
           self.addGestureRecognizer(tapGesture)
           self.layer.drawsAsynchronously = true
        
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(detectLongPress(_:)))
+        longPressGesture.delegate = self
+        longPressGesture.cancelsTouchesInView = true
+        self.addGestureRecognizer(longPressGesture)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
               NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
+    }
+    
+    @objc func detectLongPress(_ gesture: UILongPressGestureRecognizer) {
+        print("DLDLDLD")
     }
     
     open override func draw(_ rect: CGRect) {
@@ -314,7 +325,13 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         if (tool != .scroll && tool != .text) {
          
             if var currentPath = lines.popLast() {
-                currentPath.path = (selectedTool?.moved(currentPath: currentPath.path, previousPoint:  CGPoint(x: previousPoint!.x, y: previousPoint!.y), midpoint1: CGPoint(x: getMidPoints().0.x, y: getMidPoints().0.y), midpoint2: CGPoint(x: getMidPoints().1.x, y: getMidPoints().1.y))!)!
+                if tool == .eraser {
+                    currentPath.path = (selectedTool?.moved(currentPath: currentPath.path, previousPoint:  CGPoint(x: previousPoint!.x, y: previousPoint!.y), midpoint1: CGPoint(x: getMidPoints().0.x, y: getMidPoints().0.y), midpoint2: CGPoint(x: getMidPoints().1.x, y: getMidPoints().1.y))!)!
+                    removeAnnotationAtPoint(point: currentPoint!)
+                } else {
+                    currentPath.path = (selectedTool?.moved(currentPath: currentPath.path, previousPoint:  CGPoint(x: previousPoint!.x, y: previousPoint!.y), midpoint1: CGPoint(x: getMidPoints().0.x, y: getMidPoints().0.y), midpoint2: CGPoint(x: getMidPoints().1.x, y: getMidPoints().1.y))!)!
+
+                }
                 lines.append(currentPath)
                 setNeedsDisplay()
            }
@@ -394,5 +411,21 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     
     public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self
+    }
+    
+    private func removeAnnotationAtPoint(point: CGPoint) {
+        
+        let removeLine = lines.filter({checkContains(point: point, path: $0.path)})
+        
+        if removeLine.count != 0 {
+            let fiif = lines.firstIndex(of: removeLine.first!)
+            lines.remove(at: fiif ?? 0)
+        }
+    }
+    
+    func checkContains(point: CGPoint, path: UIBezierPath) -> Bool {
+        var hitPath: CGPath?
+        hitPath = path.cgPath.copy(strokingWithWidth: 10.0, lineCap: .round, lineJoin: .round, miterLimit: 0)
+        return hitPath?.contains(point) ?? false
     }
 }

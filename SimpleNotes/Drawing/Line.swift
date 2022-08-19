@@ -16,6 +16,10 @@ public struct Line: Equatable {
     var type: DrawingType
     var fillColor: UIColor?
     var strokeType: StrokeTypes?
+    
+    mutating func updateOpacity() {
+        self.opacity = 0.5
+    }
 }
 
 
