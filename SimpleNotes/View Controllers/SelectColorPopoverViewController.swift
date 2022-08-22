@@ -13,10 +13,13 @@ class SelectColorPopoverViewController: UIViewController, UICollectionViewDelega
     var displayTransparent: Bool = false
     
     var returnColor: ((_ color: String)->())?
+    var vcTitle: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = vcTitle
+        self.view.backgroundColor = .green
         colorcollectionView = ColorCollectionView(frame: .zero)
         colorcollectionView.translatesAutoresizingMaskIntoConstraints = false
         colorcollectionView.allowTransparent = displayTransparent
@@ -27,7 +30,6 @@ class SelectColorPopoverViewController: UIViewController, UICollectionViewDelega
         colorcollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10).isActive = true
         colorcollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         colorcollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        
             
         colorcollectionView.selectedColor = { color in
             

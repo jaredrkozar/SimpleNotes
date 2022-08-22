@@ -26,6 +26,8 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         } else if self.tool == .highlighter {
             return currentHighlighter ?? PenTool(width: 4.0, color: UIColor.systemYellow, opacity: 0.8, blendMode: .normal, strokeType: .normal)
         } else if self.tool == .eraser {
+            return PenTool(width: 4.0, color: UIColor.clear, opacity: 1.0, blendMode: .normal, strokeType: .normal)
+        } else if self.tool == .lasso {
             return PenTool(width: 4.0, color: UIColor.systemBlue, opacity: 1.0, blendMode: .normal, strokeType: .normal)
         } else if self.tool == .text {
             return TextTool()
@@ -45,6 +47,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     
     var menu = UIMenuController.shared
     var lines = [Line]()
+    
     var textBoxes = [CustomTextBox]()
     var images = [CustomImageView]()
     var currentView: ObjectView?
@@ -59,27 +62,40 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     var shapeWidth: Double?
     
     private let forceSensitivity: CGFloat = 9.0
-                    
+         
+    private lazy var longPressGesture: UILongPressGestureRecognizer = {
+        let press = UILongPressGestureRecognizer(target: self, action: #selector(drawStraightLine(_:)))
+        press.delegate = self
+        press.numberOfTouchesRequired = 1
+        press.minimumPressDuration = 0.4
+        return press
+    }()
+    
+    private lazy var tapGesture: UITapGestureRecognizer = {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tappedScreen(_:)))
+        tap.delegate = self
+        tap.cancelsTouchesInView = false
+        tap.numberOfTouchesRequired = 1
+        return tap
+    }()
+    
+    
     public override init(frame: CGRect) {
         super.init(frame: frame)
         self.frame = frame
         self.translatesAutoresizingMaskIntoConstraints = false
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedScreen(_:)))
           self.addGestureRecognizer(tapGesture)
           self.layer.drawsAsynchronously = true
        
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(detectLongPress(_:)))
-        longPressGesture.delegate = self
-        longPressGesture.cancelsTouchesInView = true
         self.addGestureRecognizer(longPressGesture)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
               NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
     
-    @objc func detectLongPress(_ gesture: UILongPressGestureRecognizer) {
-        print("DLDLDLD")
+    @objc func drawStraightLine(_ gesture: UILongPressGestureRecognizer) {
+    
     }
     
     open override func draw(_ rect: CGRect) {
@@ -90,8 +106,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         }
         
         for line in lines {
-            
-            context.setBlendMode(line.blendMode )
+
             context.setAlpha(line.opacity)
             
             switch line.strokeType {
@@ -180,12 +195,24 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     @objc func changeBGColor(){
         let vc = SelectColorPopoverViewController()
         let navigationController = UINavigationController(rootViewController: vc)
-        navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
-        navigationController.preferredContentSize = CGSize(width: 270, height: 250)
-        navigationController.popoverPresentationController?.sourceItem = currentView as? UIView
+        let topmostVC = findViewController()
         
+        if currentDevice == .iphone || topmostVC?.traitCollection.horizontalSizeClass == .compact {
+            if let picker = navigationController.presentationController as? UISheetPresentationController {
+                picker.detents = [.medium()]
+                picker.prefersGrabberVisible = true
+                picker.preferredCornerRadius = 5.0
+            }
+        } else if currentDevice == .ipad {
+            navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
+            navigationController.preferredContentSize = CGSize(width: 270, height: 250)
+            navigationController.popoverPresentationController?.sourceItem = currentView as? UIView
+        } else {
+            return
+        }
+        vc.vcTitle = "Background Color"
         vc.displayTransparent = true
-        self.findViewController()?.present(navigationController, animated: true)
+        topmostVC?.present(navigationController, animated: true)
         vc.returnColor = { color in
             
             let textBox = self.currentView as? CustomTextBox
@@ -210,10 +237,6 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         } else if let image = currentView as? CustomImageView {
             image.isNotCurrentView()
             image.removeFromSuperview()
-        } else if let stroke = currentView as? CustomSelectionView {
-            lines.remove(at: lines.firstIndex(where: {stroke.selectedLine == $0})!)
-            currentView?.isNotCurrentView()
-            setNeedsDisplay()
         }
     }
     
@@ -239,25 +262,6 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
             } else if tool == .eraser {
                 let inLines = self.returnLines(point: sender.location(in: self))
     //            lines.removeAll(where: {inLines.contains($0)})
-            } else if tool == .lasso {
-              
-                let selectedLine = self.returnLines(point: sender.location(in: self))
-                if selectedLine != nil {
-                    let selectionView = CustomSelectionView(line: selectedLine!)
-                    selectionView.isUserInteractionEnabled = true
-                    self.addSubview(selectionView)
-                    selectionView.becomeFirstResponder()
-                    isSelectingLine = true
-                    selectionView.selectedLine = selectedLine
-                    currentView = selectionView
-                    let moveTextboxItem = UIMenuItem(title: "Move", action: #selector(self.moveTextbox))
-                    let resizeTextboxItem = UIMenuItem(title: "Resize", action: #selector(self.resizeTextbox))
-                    let deleteTextboxItem = UIMenuItem(title: "Delete", action: #selector(self.deleteTextBox))
-                
-                    menu.menuItems = [moveTextboxItem, resizeTextboxItem, deleteTextboxItem]
-                    
-                    menu.showMenu(from: currentView as! UIView, rect: CGRect(x: 1, y: 1, width: 100, height: 100))
-                }
             }
         }
     }
@@ -289,7 +293,22 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         textBoxes.append(textbox)
     }
     
-        
+    func insertSelectionView(frame: CGRect, selectedLines: [Int]) {
+        let selectionView = CustomSelectionView(frame: frame)
+        selectionView.selectedLines = selectedLines.map({lines[$0]})
+        selectionView.becomeFirstResponder()
+        self.addSubview(selectionView)
+        selectionView.isCurrentView()
+        selectionView.isUserInteractionEnabled = true
+        currentView = selectionView
+        let selectionTapped = UITapGestureRecognizer(target: self, action: #selector(self.textBoxTapped(_:)))
+        selectionView.addGestureRecognizer(selectionTapped)
+    }
+    
+    @objc func selectionTapped(_ sender: UITapGestureRecognizer) {
+        print("SelectionTapped")
+    }
+    
     public func insertImage(frame: CGRect?, image: UIImage) {
         let newImage = CustomImageView(frame: frame!, image: image)
         currentView = newImage
@@ -305,15 +324,13 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     }
     
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+    
         guard let touch = touches.first else {return}
         currentPoint = touch.location(in: self)
         setTouchPoints(touch)
-        
         shapeFirstPoint = touch.location(in: self)
-        
         if tool != .scroll {
-            lines.append(Line(color: (selectedTool?.color)!, width: (selectedTool?.width)! , opacity: (selectedTool?.opacity)!, blendMode: selectedTool?.blendMode ?? .normal, path: UIBezierPath(), type: .drawing, strokeType: selectedTool?.strokeType))
+            lines.append(Line(color: (selectedTool?.color)!, width: (selectedTool?.width)! , opacity: (selectedTool?.opacity)!, path: UIBezierPath(), type: .drawing, strokeType: selectedTool?.strokeType))
         }
     }
 
@@ -322,16 +339,17 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         guard let touch = touches.first else { return }
         getTouchPoints(touch)
         
-        if (tool != .scroll && tool != .text) {
+        if (tool != .scroll && tool != .text) && touches.count == 1 {
          
             if var currentPath = lines.popLast() {
+                currentPath.path = (selectedTool?.moved(currentPath: currentPath.path, previousPoint:  CGPoint(x: previousPoint!.x, y: previousPoint!.y), midpoint1: CGPoint(x: getMidPoints().0.x, y: getMidPoints().0.y), midpoint2: CGPoint(x: getMidPoints().1.x, y: getMidPoints().1.y))!)!
+                
                 if tool == .eraser {
-                    currentPath.path = (selectedTool?.moved(currentPath: currentPath.path, previousPoint:  CGPoint(x: previousPoint!.x, y: previousPoint!.y), midpoint1: CGPoint(x: getMidPoints().0.x, y: getMidPoints().0.y), midpoint2: CGPoint(x: getMidPoints().1.x, y: getMidPoints().1.y))!)!
-                    removeAnnotationAtPoint(point: currentPoint!)
-                } else {
-                    currentPath.path = (selectedTool?.moved(currentPath: currentPath.path, previousPoint:  CGPoint(x: previousPoint!.x, y: previousPoint!.y), midpoint1: CGPoint(x: getMidPoints().0.x, y: getMidPoints().0.y), midpoint2: CGPoint(x: getMidPoints().1.x, y: getMidPoints().1.y))!)!
-
+                    if let returnedInt = returnAnnotationIndexAtPoint(point: currentPoint!), returnAnnotationIndexAtPoint(point: currentPoint!) != nil {
+                        lines.remove(at: returnedInt)
+                    }
                 }
+                
                 lines.append(currentPath)
                 setNeedsDisplay()
            }
@@ -342,7 +360,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
                     setNeedsDisplay()
                 }
                 
-                var newLine = Line(color: UIColor(hex: (UserDefaults.standard.string(forKey: "tintColor") ?? UIColor.systemBlue.toHex)!)!, width: 2.0, opacity: 1.0, blendMode: .normal, path: UIBezierPath(), type: .drawing, fillColor: UIColor.brown)
+                var newLine = Line(color: UIColor(hex: (UserDefaults.standard.string(forKey: "tintColor") ?? UIColor.systemBlue.toHex)!)!, width: 2.0, opacity: 1.0, path: UIBezierPath(), type: .drawing)
                 
                 newLine.path = (selectedTool?.moved(currentPath: newLine.path, previousPoint: shapeFirstPoint!, midpoint1: currentPoint!, midpoint2: currentPoint!)!)!
                 lines.append(newLine)
@@ -354,6 +372,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         if currentView?.isMoving == true || currentView?.isResizing  == true {
             currentView?.start = CGPoint.zero
         }
+        
         if tool == .eraser {
             lines.removeLast()
         } else if tool == .text {
@@ -413,19 +432,20 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         return self
     }
     
-    private func removeAnnotationAtPoint(point: CGPoint) {
+    private func returnAnnotationIndexAtPoint(point: CGPoint) -> Int? {
         
-        let removeLine = lines.filter({checkContains(point: point, path: $0.path)})
+        let removeLine = lines.filter({checkContains(point: point, path: $0.path, width: $0.width)})
+        var intToReturn: Int?
         
         if removeLine.count != 0 {
-            let fiif = lines.firstIndex(of: removeLine.first!)
-            lines.remove(at: fiif ?? 0)
+            intToReturn = lines.firstIndex(of: removeLine.first!)
         }
+        return intToReturn ?? nil
     }
     
-    func checkContains(point: CGPoint, path: UIBezierPath) -> Bool {
+    func checkContains(point: CGPoint, path: UIBezierPath, width: Double) -> Bool {
         var hitPath: CGPath?
-        hitPath = path.cgPath.copy(strokingWithWidth: 10.0, lineCap: .round, lineJoin: .round, miterLimit: 0)
+        hitPath = path.cgPath.copy(strokingWithWidth: width, lineCap: .round, lineJoin: .round, miterLimit: 0)
         return hitPath?.contains(point) ?? false
     }
 }

@@ -46,7 +46,7 @@ class ToolOptionsViewController: UIViewController, UICollectionViewDelegate {
         sizecollectionview?.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor).isActive = true
         sizecollectionview?.topAnchor.constraint(equalTo: currentDevice == .iphone ? colorcollectionView!.bottomAnchor : view.safeAreaLayoutGuide.topAnchor).isActive = true
         sizecollectionview?.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        sizecollectionview?.heightAnchor.constraint(equalToConstant: 100)
+        sizecollectionview?.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
         linetypecollectionview?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
         linetypecollectionview?.trailingAnchor.constraint(equalTo: currentDevice == .iphone ? view.safeAreaLayoutGuide.trailingAnchor : view.centerXAnchor).isActive = true

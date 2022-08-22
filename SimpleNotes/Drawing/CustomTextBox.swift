@@ -47,8 +47,9 @@ class CustomTextBox: UITextView, UIGestureRecognizerDelegate, ObjectView {
         self.frame = frame
         self.isEditable = true
         self.isUserInteractionEnabled = true
-        self.layer.borderColor = UIColor(hex: UserDefaults.standard.string(forKey: "tintColor")!)?.cgColor ?? UIColor.systemBlue.cgColor
-        self.textColor = UIColor.label
+        self.layer.borderColor = UIColor(hex: (UserDefaults.standard.string(forKey: "tintColor") ?? UIColor.systemBlue.toHex)!)?.cgColor
+        self.textColor = UIColor(hex: UserDefaults.standard.string(forKey: "defaultTextColor")!) ?? UIColor.label
+        self.font = UIFont(name: UserDefaults.standard.string(forKey: "defaultFont") ?? "SF Pro", size: CGFloat(UserDefaults.standard.float(forKey: "defaultFontSize")) ?? 15)
         self.layer.borderWidth = 1.5
         self.backgroundColor = UIColor.clear
    

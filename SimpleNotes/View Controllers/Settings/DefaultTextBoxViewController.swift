@@ -15,6 +15,8 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
         textfield.keyboardType = .numberPad
         textfield.backgroundColor = .secondarySystemFill
         textfield.layer.cornerRadius = Constants.cornerRadius
+        textfield.addTarget(nil, action: #selector(finishedPickingFontSize), for: .editingDidEnd)
+        textfield.text = UserDefaults.standard.string(forKey: "defaultFontSize")
         return textfield
     }()
     
@@ -22,7 +24,7 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
         let view = UIView()
         view.sizeToFit()
         view.layer.cornerRadius = Constants.cornerRadius
-        view.backgroundColor = .green
+        view.backgroundColor = UIColor(hex: UserDefaults.standard.string(forKey: "defaultTextColor")!) ?? UIColor.label
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -57,11 +59,9 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
         ]))
         
         textBoxSettings.append(Sections(title: nil, settings: [
-            SettingsOptions(title: "Color", option: "", rowIcon: nil, control: .color(color: colorCircle), handler: {
+            SettingsOptions(title: "Text Color", option: "", rowIcon: nil, control: .color(color: colorCircle), handler: {
                 
-               let colorPicker = UIColorPickerViewController()
-                colorPicker.delegate = self
-                self.present(colorPicker, animated: true)
+                self.showColorPicker(popoverPresenter: self.colorCircle, saveTo: "defaultTextColor")
             })
         ]))
         
@@ -106,12 +106,43 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
         let cell = tableView.cellForRow(at: IndexPath(item: 0, section: 0)) as! TableRowCell
         
         cell.optionLabel.text = font.familyName
+        UserDefaults.standard.set(font.familyName, forKey: "defaultFont")
         self.tableView.reloadRows(at: [IndexPath(item: 0, section: 1)], with: .automatic)
     }
     
     func colorPickerViewController(_ viewController: UIColorPickerViewController, didSelect color: UIColor, continuously: Bool) {
         if continuously == false {
             colorCircle.backgroundColor = color
+            UserDefaults.standard.set(color.toHex, forKey: "defaultTextColor")
         }
+    }
+    
+    func showColorPicker(popoverPresenter: UIView, saveTo: String) {
+        let vc = SelectColorPopoverViewController()
+        let navigationController = UINavigationController(rootViewController: vc)
+        
+        if currentDevice == .iphone || self.splitViewController?.traitCollection.horizontalSizeClass == .compact {
+            if let picker = navigationController.presentationController as? UISheetPresentationController {
+                picker.detents = [.medium()]
+                picker.prefersGrabberVisible = true
+                picker.preferredCornerRadius = 5.0
+            }
+        } else if currentDevice == .ipad {
+            navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
+            navigationController.preferredContentSize = CGSize(width: 270, height: 250)
+            navigationController.popoverPresentationController?.sourceItem = popoverPresenter
+        } else {
+            return
+        }
+        
+        present(navigationController, animated: true)
+        vc.returnColor = { color in
+            popoverPresenter.backgroundColor = UIColor(hex: color)
+            UserDefaults.standard.set(color, forKey: saveTo)
+        }
+    }
+    
+    @objc func finishedPickingFontSize() {
+        UserDefaults.standard.set(fontSize.text, forKey: "defaultFontSize")
     }
 }
