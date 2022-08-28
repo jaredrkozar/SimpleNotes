@@ -2,10 +2,9 @@
 //  Image+CoreDataClass.swift
 //  SimpleNotes
 //
-//  Created by JaredKozar on 7/25/22.
+//  Created by Jared Kozar on 8/28/22.
 //
 
-import UIKit
 import Foundation
 import CoreData
 

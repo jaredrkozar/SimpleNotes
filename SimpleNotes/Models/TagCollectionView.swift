@@ -11,15 +11,16 @@ class TagView: UIView {
     
     var xPosition: CGFloat = 5.0
     var yPosition: CGFloat = 5.0
+    var tags = [String]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.frame = frame
         self.backgroundColor = .clear
+        addTags()
     }
     
-    func addTags(tags: [String]) {
-        print(tags)
+    func addTags() {
         for tag in tags {
             let newTagChip = TagChip()
             let width = tag.widthOfString()

@@ -70,8 +70,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
         }
         
-        print(UserDefaults.standard.string(forKey: "tintColor"))
-        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

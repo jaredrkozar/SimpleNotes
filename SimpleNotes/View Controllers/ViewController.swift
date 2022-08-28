@@ -75,7 +75,8 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         }
         cell.noteDate.text = singlenote.date!.formatted()
         
-        cell.tagView?.addTags(tags: fetchTagsForNote(index: indexPath.row).sorted())
+        cell.tagView?.tags = fetchTagsForNote(index: indexPath.row).sorted()
+        cell.tagView?.addTags()
     
         cell.accessibilityLabel = "\(singlenote.title) Created on  \(singlenote.date)"
         
@@ -85,9 +86,9 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     
     @objc func tintColorChanged(notification: Notification) {
  
-        navigationController?.navigationBar.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "tintColor") ?? UIColor.systemBlue.toHex)!)
+        navigationController?.navigationBar.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "defaultTintColor")!))
   
-        self.view.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "tintColor") ?? UIColor.systemBlue.toHex)!)
+        self.view.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "defaultTintColor")!))
     }
     
     @objc func addNote(sender: UIBarButtonItem) {
@@ -153,7 +154,6 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                 //gets the current dimension and splits it up into 2 parts, and saves them so they can be shown in the text fields in editPresetViewController. The editPresetViewController is then shown via a popover
                   let vc = EditTagsTableViewController()
                   let navController = UINavigationController(rootViewController: vc)
-                  vc.currentTags = fetchTagsForNote(index: indexPath.row)
                   vc.index = indexPath.row 
                   self.navigationController?.present(navController, animated: true, completion: nil)
                 
@@ -226,6 +226,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     }
     
     @objc func reloadNotesTable(notification: Notification) {
-        tableView.reloadData()
+        guard let rowNum = notification.userInfo!.values.first as? Int else { return }
+        tableView.reloadRows(at: [IndexPath(item: rowNum, section: 0)], with: .fade)
     }
 }

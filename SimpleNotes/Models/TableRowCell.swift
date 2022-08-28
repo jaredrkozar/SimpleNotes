@@ -87,7 +87,7 @@ class TableRowCell: UITableViewCell {
         titleLabel.text = model.title
         
         switch model.control {
-        case .control(controls: let controls):
+        case .control(controls: let controls, width: let width):
             optionLabel.isHidden = true
             for control in controls {
                 control.sizeToFit()
@@ -98,7 +98,7 @@ class TableRowCell: UITableViewCell {
                 let constraints = [
                     control.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
                     control.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-                    control.widthAnchor.constraint(equalToConstant: 100),
+                    control.widthAnchor.constraint(equalToConstant: width),
                     control.heightAnchor.constraint(equalToConstant: 30)
                 ]
                 

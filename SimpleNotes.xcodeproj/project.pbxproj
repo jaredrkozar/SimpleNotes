@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0207566428B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */; };
 		1197BA6F1902435A622C74E4 /* Pods_SimpleNotes_SimpleNotesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A3152DECD2FC30763295899 /* Pods_SimpleNotes_SimpleNotesUITests.framework */; };
 		5BBB5572D47E81F29B170B17 /* Pods_SimpleNotesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7042E8EED9EB51C046B04E5F /* Pods_SimpleNotesTests.framework */; };
 		7F0F03E7282C368D00A6B404 /* ToolOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */; };
 		7F0F03EE282E4B8000A6B404 /* LineTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0F03EC282E4B8000A6B404 /* LineTypeCollectionViewCell.swift */; };
-		7F11DAB5279F351F0053D2FB /* Tags+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F11DAB3279F351F0053D2FB /* Tags+CoreDataClass.swift */; };
-		7F11DAB6279F351F0053D2FB /* Tags+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F11DAB4279F351F0053D2FB /* Tags+CoreDataProperties.swift */; };
 		7F2FE9232830AE4A006777DE /* LockNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2FE9222830AE49006777DE /* LockNote.swift */; };
 		7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3765FF278A078B00A107FF /* NoteShareSettingsViewController.swift */; };
 		7F37660F278A52DA00A107FF /* SharingLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37660E278A52DA00A107FF /* SharingLocation.swift */; };
@@ -38,10 +37,6 @@
 		7F53DAB0279D4CAD006789F6 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAAF279D4CAD006789F6 /* SidebarViewController.swift */; };
 		7F765A67285D8ABB00C51416 /* ChangeDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F765A66285D8ABB00C51416 /* ChangeDateViewController.swift */; };
 		7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BBDFB276ED795005B07C1 /* Extensions.swift */; };
-		7F97ED54288F89D700DA2EB4 /* Note+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97ED52288F89D700DA2EB4 /* Note+CoreDataProperties.swift */; };
-		7F97ED55288F89D700DA2EB4 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97ED53288F89D700DA2EB4 /* Image+CoreDataProperties.swift */; };
-		7F97ED57288F8A0400DA2EB4 /* Note+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97ED56288F8A0400DA2EB4 /* Note+CoreDataClass.swift */; };
-		7F97ED59288F8A3C00DA2EB4 /* Image+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97ED58288F8A3C00DA2EB4 /* Image+CoreDataClass.swift */; };
 		7F97ED5B288FA81E00DA2EB4 /* IconCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97ED5A288FA81E00DA2EB4 /* IconCollectionView.swift */; };
 		7F97ED5D28920FCA00DA2EB4 /* SizeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97ED5C28920FCA00DA2EB4 /* SizeCollectionView.swift */; };
 		7FB7C29B2815155F006C9FE2 /* HoldingClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */; };
@@ -82,10 +77,6 @@
 		7FEBECA2276136280066F0C0 /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEBECA0276136280066F0C0 /* NoteTableViewCell.swift */; };
 		7FEBECA3276136280066F0C0 /* NoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FEBECA1276136280066F0C0 /* NoteTableViewCell.xib */; };
 		7FF31CCE2799E04F00923AE3 /* DropboxInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF31CCD2799E04F00923AE3 /* DropboxInteractor.swift */; };
-		7FF892E527A3D2070030588B /* AllTags+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF892E327A3D2070030588B /* AllTags+CoreDataClass.swift */; };
-		7FF892E627A3D2070030588B /* AllTags+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF892E427A3D2070030588B /* AllTags+CoreDataProperties.swift */; };
-		7FF892ED27A4C2F90030588B /* TextBox+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF892E927A4C2F90030588B /* TextBox+CoreDataClass.swift */; };
-		7FF892EE27A4C2F90030588B /* TextBox+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF892EA27A4C2F90030588B /* TextBox+CoreDataProperties.swift */; };
 		89FFEB63BB116947CD42CF9F /* Pods_SimpleNotes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2A758B7642B220E38ECD114 /* Pods_SimpleNotes.framework */; };
 /* End PBXBuildFile section */
 
@@ -107,6 +98,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNoteSettingsViewController.swift; sourceTree = "<group>"; };
 		0C1A53E84B9AB4F3086B417C /* Pods-SimpleNotes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes.debug.xcconfig"; path = "Target Support Files/Pods-SimpleNotes/Pods-SimpleNotes.debug.xcconfig"; sourceTree = "<group>"; };
 		1176E2B00F40D0F68753D3F9 /* Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig"; path = "Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		15F95CAC11D6C63B056CB79F /* Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig"; path = "Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -115,8 +107,6 @@
 		7042E8EED9EB51C046B04E5F /* Pods_SimpleNotesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleNotesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolOptionsViewController.swift; sourceTree = "<group>"; };
 		7F0F03EC282E4B8000A6B404 /* LineTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineTypeCollectionViewCell.swift; sourceTree = "<group>"; };
-		7F11DAB3279F351F0053D2FB /* Tags+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tags+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		7F11DAB4279F351F0053D2FB /* Tags+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tags+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		7F2FE9222830AE49006777DE /* LockNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockNote.swift; sourceTree = "<group>"; };
 		7F3765FF278A078B00A107FF /* NoteShareSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteShareSettingsViewController.swift; sourceTree = "<group>"; };
 		7F37660E278A52DA00A107FF /* SharingLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingLocation.swift; sourceTree = "<group>"; };
@@ -142,10 +132,6 @@
 		7F53DAAF279D4CAD006789F6 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		7F765A66285D8ABB00C51416 /* ChangeDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeDateViewController.swift; sourceTree = "<group>"; };
 		7F8BBDFB276ED795005B07C1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		7F97ED52288F89D700DA2EB4 /* Note+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		7F97ED53288F89D700DA2EB4 /* Image+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		7F97ED56288F8A0400DA2EB4 /* Note+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataClass.swift"; sourceTree = "<group>"; };
-		7F97ED58288F8A3C00DA2EB4 /* Image+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7F97ED5A288FA81E00DA2EB4 /* IconCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCollectionView.swift; sourceTree = "<group>"; };
 		7F97ED5C28920FCA00DA2EB4 /* SizeCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeCollectionView.swift; sourceTree = "<group>"; };
 		7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingClass.swift; sourceTree = "<group>"; };
@@ -190,10 +176,6 @@
 		7FEBECA0276136280066F0C0 /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
 		7FEBECA1276136280066F0C0 /* NoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTableViewCell.xib; sourceTree = "<group>"; };
 		7FF31CCD2799E04F00923AE3 /* DropboxInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxInteractor.swift; sourceTree = "<group>"; };
-		7FF892E327A3D2070030588B /* AllTags+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AllTags+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		7FF892E427A3D2070030588B /* AllTags+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AllTags+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		7FF892E927A4C2F90030588B /* TextBox+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextBox+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		7FF892EA27A4C2F90030588B /* TextBox+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextBox+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		8A3152DECD2FC30763295899 /* Pods_SimpleNotes_SimpleNotesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleNotes_SimpleNotesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2A758B7642B220E38ECD114 /* Pods_SimpleNotes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleNotes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5F91D029CB6F76A1989F591 /* Pods-SimpleNotes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes.release.xcconfig"; path = "Target Support Files/Pods-SimpleNotes/Pods-SimpleNotes.release.xcconfig"; sourceTree = "<group>"; };
@@ -330,16 +312,6 @@
 		7F8358F427792493007428A8 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				7F97ED52288F89D700DA2EB4 /* Note+CoreDataProperties.swift */,
-				7F97ED53288F89D700DA2EB4 /* Image+CoreDataProperties.swift */,
-				7F97ED56288F8A0400DA2EB4 /* Note+CoreDataClass.swift */,
-				7F97ED58288F8A3C00DA2EB4 /* Image+CoreDataClass.swift */,
-				7FF892E927A4C2F90030588B /* TextBox+CoreDataClass.swift */,
-				7FF892EA27A4C2F90030588B /* TextBox+CoreDataProperties.swift */,
-				7FF892E327A3D2070030588B /* AllTags+CoreDataClass.swift */,
-				7FF892E427A3D2070030588B /* AllTags+CoreDataProperties.swift */,
-				7F11DAB3279F351F0053D2FB /* Tags+CoreDataClass.swift */,
-				7F11DAB4279F351F0053D2FB /* Tags+CoreDataProperties.swift */,
 				7F498B562775719E00202413 /* CoreData.swift */,
 			);
 			path = "Core Data";
@@ -350,6 +322,7 @@
 			children = (
 				7FC7FB70283A0C4A00CE483E /* TintPickerViewController.swift */,
 				7FC2C11D286D64FA00D90E20 /* DefaultTextBoxViewController.swift */,
+				0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */,
 				7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */,
 				7F376625278E220D00A107FF /* SettingsViewController.swift */,
 			);
@@ -724,7 +697,6 @@
 				7FE45082281A56F40034928B /* CollectionReusableView.swift in Sources */,
 				7FD82DCB28233AE500ECCB3B /* Brush.swift in Sources */,
 				7F97ED5D28920FCA00DA2EB4 /* SizeCollectionView.swift in Sources */,
-				7FF892E527A3D2070030588B /* AllTags+CoreDataClass.swift in Sources */,
 				7FC55DA12792ADEB001DDFD5 /* TableRowCell.swift in Sources */,
 				7FBC07F6289B16F800AA28CB /* TagCollectionViewCell.swift in Sources */,
 				7F0F03E7282C368D00A6B404 /* ToolOptionsViewController.swift in Sources */,
@@ -733,10 +705,8 @@
 				7FEBEC73276135DA0066F0C0 /* ViewController.swift in Sources */,
 				7FC2C11E286D64FA00D90E20 /* DefaultTextBoxViewController.swift in Sources */,
 				7FDE92FC288777AA00B8E44F /* SelectColorPopoverViewController.swift in Sources */,
-				7FF892ED27A4C2F90030588B /* TextBox+CoreDataClass.swift in Sources */,
 				7FE4509E281EEE760034928B /* TextTool.swift in Sources */,
 				7FEBEC6F276135DA0066F0C0 /* AppDelegate.swift in Sources */,
-				7F11DAB5279F351F0053D2FB /* Tags+CoreDataClass.swift in Sources */,
 				7F4974B32892451400A3D0FF /* LineTypeCollectionView.swift in Sources */,
 				7F376630278E6A8500A107FF /* APIInteractor.swift in Sources */,
 				7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */,
@@ -747,20 +717,17 @@
 				7F0F03EE282E4B8000A6B404 /* LineTypeCollectionViewCell.swift in Sources */,
 				7FE45085281A67E20034928B /* ColorCollectionViewCell.swift in Sources */,
 				7F765A67285D8ABB00C51416 /* ChangeDateViewController.swift in Sources */,
-				7F97ED59288F8A3C00DA2EB4 /* Image+CoreDataClass.swift in Sources */,
 				7F2FE9232830AE4A006777DE /* LockNote.swift in Sources */,
 				7F37660F278A52DA00A107FF /* SharingLocation.swift in Sources */,
 				7FE4509A281E30A00034928B /* HelperFunctions.swift in Sources */,
-				7F97ED55288F89D700DA2EB4 /* Image+CoreDataProperties.swift in Sources */,
-				7F11DAB6279F351F0053D2FB /* Tags+CoreDataProperties.swift in Sources */,
 				7FB7C29B2815155F006C9FE2 /* HoldingClass.swift in Sources */,
 				7F37661A278BC7B400A107FF /* PDFCreator.swift in Sources */,
 				7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */,
 				7FE45096281E2E860034928B /* CustomImageView.swift in Sources */,
 				7FEBECA2276136280066F0C0 /* NoteTableViewCell.swift in Sources */,
 				7FE4508B281E2A8C0034928B /* Line.swift in Sources */,
+				0207566428B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift in Sources */,
 				7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */,
-				7FF892E627A3D2070030588B /* AllTags+CoreDataProperties.swift in Sources */,
 				7F376617278B59B800A107FF /* SendToOtherApp.swift in Sources */,
 				7FBC07F4289B153600AA28CB /* TagCollectionView.swift in Sources */,
 				7FE4509C281E50C80034928B /* CustomSelectionView.swift in Sources */,
@@ -769,15 +736,12 @@
 				7F53DAA6279BA51B006789F6 /* AccountSettingsViewController.swift in Sources */,
 				7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */,
 				7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */,
-				7F97ED57288F8A0400DA2EB4 /* Note+CoreDataClass.swift in Sources */,
 				7FE45098281E30740034928B /* ResizableButton.swift in Sources */,
 				7F53DAAA279CC36C006789F6 /* ToastNotification.swift in Sources */,
 				7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */,
 				7F376626278E220D00A107FF /* SettingsViewController.swift in Sources */,
 				7F53DAAE279D4B75006789F6 /* TagsTableViewController.swift in Sources */,
-				7F97ED54288F89D700DA2EB4 /* Note+CoreDataProperties.swift in Sources */,
 				7F53DAAC279D4B09006789F6 /* TabBarController.swift in Sources */,
-				7FF892EE27A4C2F90030588B /* TextBox+CoreDataProperties.swift in Sources */,
 				7FE4508D281E2AAB0034928B /* Tool.swift in Sources */,
 				7F37662E278E666100A107FF /* GoogleInteractor.swift in Sources */,
 				7FC7FB71283A0C4B00CE483E /* TintPickerViewController.swift in Sources */,

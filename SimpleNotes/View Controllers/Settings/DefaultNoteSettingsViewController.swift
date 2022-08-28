@@ -7,38 +7,39 @@
 
 import UIKit
 
-class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewControllerDelegate, UIColorPickerViewControllerDelegate {
+class DefaultNoteViewController: UITableViewController, UIFontPickerViewControllerDelegate, UIColorPickerViewControllerDelegate {
     var textBoxSettings = [Sections]()
     
-    var fontSize: UITextField = {
+    var noteTitle: UITextField = {
         let textfield = UITextField()
-        textfield.keyboardType = .numberPad
         textfield.backgroundColor = .secondarySystemFill
         textfield.layer.cornerRadius = Constants.cornerRadius
-        textfield.addTarget(nil, action: #selector(finishedPickingFontSize), for: .editingDidEnd)
-        textfield.text = UserDefaults.standard.string(forKey: "defaultFontSize")
+        textfield.addTarget(nil, action: #selector(finishedPickingNoteTitle), for: .editingDidEnd)
+        textfield.text = UserDefaults.standard.string(forKey: "defaultNoteTitle")
         return textfield
+    }()
+    
+    var defaultNoteDate: UIDatePicker = {
+        var datePicker = UIDatePicker()
+        datePicker.preferredDatePickerStyle = .compact
+        datePicker.date = (UserDefaults.standard.object(forKey: "defaultNoteDate") as? Date)!
+        datePicker.addTarget(nil, action: #selector(finishedPickingNoteDate(_:)), for: .editingDidEnd)
+        return datePicker
     }()
     
     var colorCircle: UIView = {
         let view = UIView()
         view.sizeToFit()
         view.layer.cornerRadius = Constants.cornerRadius
-        view.backgroundColor = UIColor(hex: UserDefaults.standard.string(forKey: "defaultTextColor")!)
+        view.backgroundColor = UIColor(hex: (UserDefaults.standard.string(forKey: "defaultTextColor")!))
         view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    var optionLabel: UILabel = {
-        let view = UILabel()
-        view.numberOfLines = 1
         return view
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Text Box Defaults"
+        title = "Note Defaults"
         self.tableView = UITableView(frame: self.tableView.frame, style: .insetGrouped)
  
         tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
@@ -50,23 +51,17 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
     // MARK: - Table view data source
     func configureTextBoxSettings() {
         textBoxSettings.append(Sections(title: nil, settings: [
-            SettingsOptions(title: "Font", option: "HELLO", rowIcon: nil, control: .text(string: "DDD")) {
-                
-                let fontPicker = UIFontPickerViewController()
-                fontPicker.delegate = self
-                self.present(fontPicker, animated: true)
-            }
-        ]))
+            SettingsOptions(title: "Note Title", option: nil, rowIcon: nil, control: .control(controls: [noteTitle], width: 100), handler: nil)]))
         
         textBoxSettings.append(Sections(title: nil, settings: [
-            SettingsOptions(title: "Text Color", option: "", rowIcon: nil, control: .color(color: colorCircle), handler: {
+            SettingsOptions(title: "Note Background Color", option: "", rowIcon: nil, control: .color(color: colorCircle), handler: {
                 
-                self.showColorPicker(popoverPresenter: self.colorCircle, saveTo: "defaultTextColor", vcTitle: "Text Color")
+                self.showColorPicker(popoverPresenter: self.colorCircle, saveTo: "defaultBackgroundColor", vcTitle: "Background Color")
             })
         ]))
         
         textBoxSettings.append(Sections(title: nil, settings: [
-            SettingsOptions(title: "Font Size", option: "", rowIcon: nil, control: .control(controls: [fontSize], width: 100), handler: nil)
+            SettingsOptions(title: "Note Date", option: "", rowIcon: nil, control: .control(controls: [defaultNoteDate], width: 200), handler: nil)
         ]))
     }
                                
@@ -134,7 +129,8 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
         } else {
             return
         }
-        vc.vcTitle = vcTitle
+        
+        vc.vcTitle = "Note Background Color"
         present(navigationController, animated: true)
         vc.returnColor = { color in
             popoverPresenter.backgroundColor = UIColor(hex: color)
@@ -142,7 +138,11 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
         }
     }
     
-    @objc func finishedPickingFontSize() {
-        UserDefaults.standard.set(fontSize.text, forKey: "defaultFontSize")
+    @objc func finishedPickingNoteTitle() {
+        UserDefaults.standard.set(noteTitle.text, forKey: "defaultNoteTitle")
+    }
+    
+    @objc func finishedPickingNoteDate(_ sender: UIDatePicker) {
+        UserDefaults.standard.set(sender.date, forKey: "defaultNoteDate")
     }
 }

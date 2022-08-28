@@ -19,7 +19,7 @@ class SelectColorPopoverViewController: UIViewController, UICollectionViewDelega
         super.viewDidLoad()
         
         title = vcTitle
-        self.view.backgroundColor = .green
+        self.view.backgroundColor = .systemGroupedBackground
         colorcollectionView = ColorCollectionView(frame: .zero)
         colorcollectionView.translatesAutoresizingMaskIntoConstraints = false
         colorcollectionView.allowTransparent = displayTransparent

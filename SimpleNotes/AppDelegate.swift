@@ -21,6 +21,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         GIDSignIn.sharedInstance().clientID = "968933311910-9e4an07ni7ugfji5i8t6cfkj18h1861m.apps.googleusercontent.com"
         DropboxClientsManager.setupWithAppKey("4plzdchy13fkopr")
     
+        if isAppAlreadyLaunchedOnce() == false {
+            UserDefaults.standard.set(UIColor.systemBlue.toHex, forKey: "defaultTintColor")
+            UserDefaults.standard.set(UIColor.green.toHex, forKey: "defaultTextColor")
+            UserDefaults.standard.set("New Note", forKey: "defaultNoteTitle")
+            UserDefaults.standard.set(16.0, forKey: "defaultFontSize")
+            UserDefaults.standard.set(Date(), forKey: "defaultNoteDate")
+        }
         return true
     }
 

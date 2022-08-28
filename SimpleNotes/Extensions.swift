@@ -8,7 +8,7 @@
 import UIKit
 
 var notes: [Note] = []
-var tags: [AllTags] = []
+var tags: [Tags] = []
 
 var currentNote: Note?
 
@@ -189,7 +189,7 @@ enum DetailViewType: Equatable {
     
     case color(color: UIView)
     case text(string: String)
-    case control(controls: [UIControl])
+    case control(controls: [UIControl], width: Double)
 }
 
 func sendBackSymbol(imageName: String, color: UIColor) -> UIImage {
@@ -319,5 +319,18 @@ extension String {
     func widthOfString() -> CGSize {
         let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
         return self.size(withAttributes: fontAttributes)
+    }
+}
+
+func isAppAlreadyLaunchedOnce()->Bool{
+        let defaults = UserDefaults.standard
+        
+        if defaults.bool(forKey: "isAppAlreadyLaunchedOnce"){
+            print("App already launched : \(isAppAlreadyLaunchedOnce)")
+            return true
+        }else{
+            defaults.set(true, forKey: "isAppAlreadyLaunchedOnce")
+            print("App launched first time")
+        return false
     }
 }

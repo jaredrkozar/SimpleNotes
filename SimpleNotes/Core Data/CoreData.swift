@@ -10,13 +10,13 @@ import CoreData
 
 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
-func saveTag(currentTag: AllTags?, name: String, symbol: String, color: String) {
+func saveTag(currentTag: Tags?, name: String, symbol: String, color: String) {
   
-    let newTag = currentTag ?? AllTags(context: context)
+    let newTag = currentTag ?? Tags(context: context)
     newTag.symbol = symbol
     newTag.name = name
     newTag.color = color
-    
+    newTag.note = nil
     do {
         try context.save()
     } catch {
@@ -25,10 +25,14 @@ func saveTag(currentTag: AllTags?, name: String, symbol: String, color: String) 
 }
 
 func fetchTags() {
+    let request = Tags.fetchRequest() as NSFetchRequest<Tags>
+    let sort = NSSortDescriptor(key: #keyPath(Tags.name), ascending: true)
+    request.sortDescriptors = [sort]
+    
     do {
-        tags = try context.fetch(AllTags.fetchRequest())
+        tags = try context.fetch(request)
     } catch {
-        print("An error occured")
+        print("Fetch failed")
     }
 }
 
@@ -70,10 +74,9 @@ func saveImages(images: [UIImage], note: Note) {
 
 func createNewNote() {
     let newNote = Note(context: context)
-    newNote.date = Date()
-    newNote.title = "New Note"
+    newNote.date = (UserDefaults.standard.object(forKey: "defaultNoteDate") as? Date)!
+    newNote.title = UserDefaults.standard.string(forKey: "defaultNoteTitle")
     newNote.isLocked = false
-    newNote.addToTags(Set<Tags>())
     newNote.noteID = UUID().uuidString
     
     do {
@@ -118,30 +121,6 @@ func saveNoteLock(isLocked: Bool, index: Int) {
         print("An error occured while saving a note.")
     }
 }
-
-func saveTagsForNote(tags: Set<String>, index: Int) {
-    
-    var tagset = Set<Tags>()
-    
-    for tag in tags {
-        let newtag = Tags(context: context)
-        newtag.name = tag
-        newtag.notes = notes[index]
-        tagset.insert(newtag)
-    }
-
-    if notes.indices.contains(index) {
-        notes[index].addToTags(tagset)
-    }
-    
-    do {
-        try context.save()
-    } catch {
-        print("An error occured while saving a note.")
-    }
-    
-}
-
 
 func fetchNotes(tag: String?, sortOption: sortOptions?) {
     let request = Note.fetchRequest() as NSFetchRequest<Note>
@@ -194,19 +173,24 @@ func deleteNote(index: Int) {
     }
 }
 
-func fetchTagsForNote(index: Int) -> Set<String> {
-    let allTags = notes[index].tags as? Set<Tags>
+func fetchTagsForNote(index: Int) -> [String] {
+    guard let context = notes[index].managedObjectContext else {
+        fatalError("unable to load managed object context")
+    }
+    let tagFetchRequest: NSFetchRequest<Tags> = Tags.fetchRequest()
+    tagFetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Tags.name), ascending: true)]
     
-    var newArray = Set<String>()
-    
-    for tag in allTags! {
-        newArray.insert(tag.name!)
+    var tagarray = [String]()
+    do {
+        tagarray = try context.fetch(tagFetchRequest).map({$0.name ?? ""})
+    } catch {
+        print("An error occured")
     }
     
-    return newArray
+    return tagarray
 }
 
-func deleteTag(tag: AllTags) {
+func deleteTag(tag: Tags) {
     context.delete(tag)
     
     do {

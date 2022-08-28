@@ -19,6 +19,7 @@ class SettingsViewController: UITableViewController {
         configure()
         
         title = "Settings"
+        self.navigationController?.navigationBar.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "defaultTintColor")!))
         
     }
 
@@ -46,9 +47,11 @@ class SettingsViewController: UITableViewController {
                    
                 self.showSettingsPage(viewController: DefaultTextBoxViewController())
              },
+            
+            
             SettingsOptions(title: "Note", option: "",rowIcon: Icon(icon: UIImage(systemName: "doc"), iconBGColor: .systemOrange, iconTintColor: nil), control: nil) {
                 
-                self.showSettingsPage(viewController: AccountSettingsViewController())
+                self.showSettingsPage(viewController: DefaultNoteViewController())
             }
         ]))
     }

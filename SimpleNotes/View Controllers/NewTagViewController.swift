@@ -13,7 +13,7 @@ class NewTagViewController: UIViewController, UICollectionViewDelegate, UIColorP
     var tagNameField = UITextField()
     var symbolImage = UIImageView()
     
-    var currentTag: AllTags?
+    var currentTag: Tags?
     var colorCell = "colorCell"
     var iconCell = "iconCell"
     

@@ -360,7 +360,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
                     setNeedsDisplay()
                 }
                 
-                var newLine = Line(color: UIColor(hex: (UserDefaults.standard.string(forKey: "tintColor") ?? UIColor.systemBlue.toHex)!)!, width: 2.0, opacity: 1.0, path: UIBezierPath(), type: .drawing)
+                var newLine = Line(color: UIColor(hex: (UserDefaults.standard.string(forKey: "defaultTintColor")!))!, width: 2.0, opacity: 1.0, path: UIBezierPath(), type: .drawing)
                 
                 newLine.path = (selectedTool?.moved(currentPath: newLine.path, previousPoint: shapeFirstPoint!, midpoint1: currentPoint!, midpoint2: currentPoint!)!)!
                 lines.append(newLine)
