@@ -17,7 +17,12 @@ class CustomTextBox: UITextView, UIGestureRecognizerDelegate, ObjectView {
     
     private var drawingView: DrawingView?
     
-    var moveIconImage: UIImageView = UIImageView(image: UIImage(named: "moveIcon"))
+    var moveIconImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "moveIcon")
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
     
     var isResizing: Bool
     
@@ -106,6 +111,12 @@ class CustomTextBox: UITextView, UIGestureRecognizerDelegate, ObjectView {
         move.delegate = self
         self.addGestureRecognizer(move)
 
+        NSLayoutConstraint.activate([
+            moveIconImage.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
+            moveIconImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0),
+            moveIconImage.heightAnchor.constraint(equalToConstant: 50),
+            moveIconImage.widthAnchor.constraint(equalToConstant: 50)
+        ])
     }
     
     required init?(coder aDecoder: NSCoder) {

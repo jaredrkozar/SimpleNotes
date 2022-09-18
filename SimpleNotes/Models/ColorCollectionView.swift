@@ -7,9 +7,9 @@
 
 import UIKit
 
-class ColorCollectionView: UICollectionView, UICollectionViewDelegate {
+class ColorCollectionView: UICollectionView, UICollectionViewDelegate, UIColorPickerViewControllerDelegate {
     
-    var colors: [Color] = [Color(color: UIColor.systemRed.toHex), Color(color: UIColor.systemOrange.toHex), Color(color: UIColor.systemYellow.toHex), Color(color: UIColor.systemGreen.toHex), Color(color: UIColor.systemBlue.toHex), Color(color: UIColor.systemIndigo.toHex), Color(color: UIColor.systemPurple.toHex), Color(color: UIColor.systemPink.toHex), Color(color: UIColor.systemMint.toHex), Color(color: UIColor.systemTeal.toHex), Color(color: UIColor.systemCyan.toHex)]
+    var colors: [Color] = [Color(color: UIColor.systemRed.toHex), Color(color: UIColor.systemOrange.toHex), Color(color: UIColor.systemYellow.toHex), Color(color: UIColor.systemGreen.toHex), Color(color: UIColor.systemBlue.toHex), Color(color: UIColor.systemIndigo.toHex), Color(color: UIColor.systemPurple.toHex), Color(color: UIColor.systemPink.toHex), Color(color: UIColor.systemMint.toHex), Color(color: UIColor.systemTeal.toHex), Color(color: UIColor.systemCyan.toHex), Color(color: UIColor.tertiarySystemBackground.toHex)]
     
     var allowTransparent: Bool?
     lazy var collectiondataSource = configureDataSource()
@@ -57,6 +57,13 @@ class ColorCollectionView: UICollectionView, UICollectionViewDelegate {
             cell.backgroundColor = UIColor(hex: self.colors[indexPath.item].color)
             cell.icon.image = UIImage(systemName: "pin")
             cell.layer.cornerRadius = Constants.cornerRadius
+            
+            if indexPath.item == self.colors.count - 1 {
+                let image = UIImageView()
+                image.frame = CGRect(x: 2, y: 2, width: cell.contentView.bounds.width - 5, height: cell.contentView.bounds.height - 5)
+                image.image = UIImage(systemName: "plus")
+                cell.addSubview(image)
+            }
             return cell
         }
      
@@ -74,7 +81,22 @@ class ColorCollectionView: UICollectionView, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        selectedColor?((colors[indexPath.item].color ?? UIColor.systemBlue.toHex)!)
+        if indexPath.item == colors.count - 1 {
+            let colorPicker = UIColorPickerViewController()
+            colorPicker.supportsAlpha = false
+            colorPicker.delegate = self
+            self.findViewController()?.present(colorPicker, animated: true)
+        } else {
+            selectedColor?((colors[indexPath.item].color ?? UIColor.systemBlue.toHex)!)
+        }
+    }
+    
+    func colorPickerViewController(_ viewController: UIColorPickerViewController, didSelect color: UIColor, continuously: Bool) {
+        if continuously == false {
+            colors.insert(Color(color: viewController.selectedColor.toHex), at: colors.count - 1)
+            applySnapshot()
+        }
+
     }
 }
 
