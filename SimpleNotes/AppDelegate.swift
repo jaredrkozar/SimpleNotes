@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     
         if isAppAlreadyLaunchedOnce() == false {
             UserDefaults.standard.set(UIColor.systemBlue.toHex, forKey: "defaultTintColor")
-            UserDefaults.standard.set(UIColor.green.toHex, forKey: "defaultTextColor")
+            UserDefaults.standard.set(UIColor.label.toHex, forKey: "defaultTextColor")
             UserDefaults.standard.set("New Note", forKey: "defaultNoteTitle")
             UserDefaults.standard.set(16.0, forKey: "defaultFontSize")
             UserDefaults.standard.set(Date(), forKey: "defaultNoteDate")

@@ -45,6 +45,8 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     public var canCreateTextBox: Bool = true
     private var isSelectingLine: Bool = false
     
+    private var drawingStraightLine: Bool = false
+    
     var menu = UIMenuController.shared
     var lines = [Line]()
     
@@ -65,6 +67,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
          
     private lazy var longPressGesture: UILongPressGestureRecognizer = {
         let press = UILongPressGestureRecognizer(target: self, action: #selector(drawStraightLine(_:)))
+        press.cancelsTouchesInView = false
         press.delegate = self
         press.numberOfTouchesRequired = 1
         press.minimumPressDuration = 0.4
@@ -84,10 +87,11 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         super.init(frame: frame)
         self.frame = frame
         self.translatesAutoresizingMaskIntoConstraints = false
-        
-          self.addGestureRecognizer(tapGesture)
-          self.layer.drawsAsynchronously = true
-       
+        self.isMultipleTouchEnabled = true
+        self.isUserInteractionEnabled = true
+        self.addGestureRecognizer(tapGesture)
+        self.layer.drawsAsynchronously = true
+
         self.addGestureRecognizer(longPressGesture)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -95,7 +99,8 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     }
     
     @objc func drawStraightLine(_ gesture: UILongPressGestureRecognizer) {
-    
+        print("dldldldld")
+        drawingStraightLine = true
     }
     
     open override func draw(_ rect: CGRect) {
@@ -181,6 +186,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         if let textbox = currentView as? CustomTextBox {
             for handle in textbox.resizingHandles {
                 handle.isHidden = false
+                handle.bringSubviewToFront(currentView as! UIView)
             }
         }
     }
@@ -340,9 +346,18 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         getTouchPoints(touch)
         
         if (tool != .scroll && tool != .text) && touches.count == 1 {
-         
+            
             if var currentPath = lines.popLast() {
-                currentPath.path = (selectedTool?.moved(currentPath: currentPath.path, previousPoint:  CGPoint(x: previousPoint!.x, y: previousPoint!.y), midpoint1: CGPoint(x: getMidPoints().0.x, y: getMidPoints().0.y), midpoint2: CGPoint(x: getMidPoints().1.x, y: getMidPoints().1.y))!)!
+                
+                if drawingStraightLine == true {
+                    var linePath = UIBezierPath()
+                    linePath.move(to: shapeFirstPoint!)
+                    linePath.addLine(to: currentPoint!)
+                    
+                    currentPath.path = linePath
+                } else {
+                    currentPath.path = (selectedTool?.moved(currentPath: currentPath.path, previousPoint:  CGPoint(x: previousPoint!.x, y: previousPoint!.y), midpoint1: CGPoint(x: getMidPoints().0.x, y: getMidPoints().0.y), midpoint2: CGPoint(x: getMidPoints().1.x, y: getMidPoints().1.y))!)!
+                }
                 
                 if tool == .eraser {
                     if let returnedInt = returnAnnotationIndexAtPoint(point: currentPoint!), returnAnnotationIndexAtPoint(point: currentPoint!) != nil {
@@ -369,6 +384,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     }
     
     open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        drawingStraightLine = false
         if currentView?.isMoving == true || currentView?.isResizing  == true {
             currentView?.start = CGPoint.zero
         }
