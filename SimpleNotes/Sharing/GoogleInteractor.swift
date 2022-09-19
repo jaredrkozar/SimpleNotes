@@ -110,16 +110,18 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
        let upload = GTLRDriveQuery_FilesCreate.query(withObject: file, uploadParameters: params)
         upload.fields = "id"
         
-       self.driveService.executeQuery(upload, completionHandler:  { (response, result, error) in
-           let gkkg = ToastNotification(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", progress: 0.0)
-
-           self.driveService.uploadProgressBlock = { [weak self] _, uploaded, total in
-                   guard total > 0 else { return }
-                   let progress = Float(uploaded) / Float(total)
-               gkkg.updateProgress(progress: progress)
-               }
-       }
-       )
+        let gkkg = ToastNotification(backgroundColor: .systemBlue, image: UIImage(systemName: "icloud.and.arrow.up")!, titleText: "DDDD", progress: 0.0)
+        
+        driveService.uploadProgressBlock = { _, uploaded, total in
+            
+            gkkg.updateProgress(progress: Float((uploaded / total)) * 100)
+        }
+        
+        self.driveService.executeQuery(upload, completionHandler:  { (response, result, error) in
+            gkkg.removeFromSuperview()
+            
+            let finishedUpload = ToastNotification(backgroundColor: .systemGreen, image: UIImage(systemName: "checkmark.circle")!, titleText: "Upload Complete", subtitleText: "The upload is finished. Your can view the note in the Google Drive app or on the website")
+        })
     }
     
     override init() {

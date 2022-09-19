@@ -9,16 +9,15 @@ import UIKit
 
 class ToastNotification: UIView {
 
-    private var imageView: UIImageView {
+    lazy var imageView: UIImageView = {
         let image = UIImageView()
         image.tintColor = UIColor.white
         image.frame = CGRect(x: 5, y: 10, width: 50, height: 50)
         image.preferredSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 30.0, weight: .regular, scale: .large)
-        image.image = UIImage(systemName: "pin")
         return image
-    }
+    }()
     
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.textColor = .white
         titleLabel.font = UIFont.systemFont(ofSize: 20.0, weight: .bold)
@@ -64,6 +63,18 @@ class ToastNotification: UIView {
     
     func updateProgress(progress: Float) {
         progressView.progress = progress
+        
+        if progress >= 0.99 {
+            animator.addAnimations {
+                self.transform = CGAffineTransform(translationX: 0, y:( self.frame.maxY * -1))
+            }
+         
+            animator.addCompletion({_ in
+                
+                self.removeFromSuperview()
+            })
+            animator.startAnimation()
+        }
     }
     
     required init?(coder: NSCoder) {

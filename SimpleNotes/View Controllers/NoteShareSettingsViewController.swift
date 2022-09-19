@@ -12,7 +12,7 @@ class NoteShareSettingsViewController: UITableViewController {
     
     private var models = [Sections]()
     var format: SharingType?
-    var currentNote: Note?
+    var currentNoteTitle: String?
     var currentNoteView: Data!
     var sharingLocation: SharingLocation?
     
@@ -37,6 +37,8 @@ class NoteShareSettingsViewController: UITableViewController {
         configure()
         
         title = "Settings"
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Upload Note", style: .done, target: self, action: #selector(uploadNote))
         
     }
 
@@ -127,5 +129,11 @@ class NoteShareSettingsViewController: UITableViewController {
     @IBAction func doneButtonTapped(_ sender: Any) {
         
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func uploadNote() {
+        currentLocation.uploadFile(note: currentNoteView, noteName: "currentNoteTitle!", folderID: folderID, onCompleted: {_,_ in
+            print("slsl")
+        })
     }
 }

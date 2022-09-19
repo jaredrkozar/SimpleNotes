@@ -69,6 +69,7 @@ class DropboxInteractor: APIInteractor {
             
             .progress { progressData in
                 progress = progressData.fractionCompleted
+                print(progress)
             }
         
             .response(queue: DispatchQueue.global(qos: .userInteractive), completionHandler: { response, error in
