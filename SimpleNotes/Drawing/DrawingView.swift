@@ -383,8 +383,26 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         }
     }
     
+    public func redoLastStroke() {
+        undoManager?.undo()
+    }
+    
+    public func undoLastStroke() {
+        undoManager?.redo()
+        print(undoManager?.canRedo)
+    }
+    
     open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         drawingStraightLine = false
+      
+        undoManager!.registerUndo(withTarget: self) { target in
+            
+            self.lines.removeLast()
+            self.setNeedsDisplay()
+        }
+        
+        undoManager?.setActionName("Undo Stroke")
+        
         if currentView?.isMoving == true || currentView?.isResizing  == true {
             currentView?.start = CGPoint.zero
         }
@@ -402,6 +420,10 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
                 }
             }
         }
+    }
+    
+    func undo() {
+        undoManager?.undo()
     }
     
     private func setTouchPoints(_ touch: UITouch) {
