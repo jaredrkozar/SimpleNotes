@@ -449,11 +449,13 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
                     insertTextBox(frame: CGRect(x: shapeFirstPoint!.x, y: shapeFirstPoint!.y, width: currentPoint!.x - shapeFirstPoint!.x, height: currentPoint!.y - shapeFirstPoint!.y))
                 }
             }
-        }
-       
-        undoManager!.registerUndo(withTarget: self) { target in
-            self.lines.removeLast()
-            self.setNeedsDisplay()
+        } else if tool == .pen || tool == .highlighter {
+            undoManager!.registerUndo(withTarget: self) { target in
+                if self.lines.count > 0 {
+                    self.lines.removeLast()
+                    self.setNeedsDisplay()
+                }
+            }
         }
     }
     
@@ -516,7 +518,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         return intToReturn ?? nil
     }
     
-    func checkContains(point: CGPoint, path: UIBezierPath, width: Double) -> Bool {
+    private func checkContains(point: CGPoint, path: UIBezierPath, width: Double) -> Bool {
         var hitPath: CGPath?
         hitPath = path.cgPath.copy(strokingWithWidth: width, lineCap: .round, lineJoin: .round, miterLimit: 0)
         return hitPath?.contains(point) ?? false
