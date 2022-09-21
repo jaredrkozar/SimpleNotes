@@ -19,6 +19,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     public var objectTintColor: UIColor?
     
     public var tool: Tools?
+    private var lastLine: Line?
     
     public var selectedTool: Tool? {
         if self.tool == .pen {
@@ -219,18 +220,40 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         vc.vcTitle = "Background Color"
         vc.displayTransparent = true
         topmostVC?.present(navigationController, animated: true)
+        let textBox = self.currentView as? CustomTextBox
+        let originalColor = textBox?.backgroundColor
+        
         vc.returnColor = { color in
             
             let textBox = self.currentView as? CustomTextBox
             
             textBox?.backgroundColor = UIColor(hex: color)
         }
+        
+        undoManager!.registerUndo(withTarget: self) { target in
+            textBox?.backgroundColor = originalColor
+        }
     }
     
     @objc func moveTextbox() {
+        
+        if let textbox = currentView as? CustomTextBox {
+            let oldframe = textbox.frame
+
+            undoManager!.registerUndo(withTarget: self) { target in
+                textbox.frame = oldframe
+            }
+            
+        } else if let image = currentView as? CustomImageView {
+            let oldframe = image.frame
+            
+            undoManager!.registerUndo(withTarget: self) { target in
+                image.frame = oldframe
+            }
+        }
+        
         canCreateTextBox = false
         currentView?.moveIconImage.isHidden = false
-        currentView?.moveIconImage.frame = CGRect(x: 4, y: 0, width: (currentView as! UIView).bounds.width / 4, height: (currentView as! UIView).bounds.height / 4)
         currentView?.moveIconImage.center = (currentView as! UIView).center
         currentView?.isMoving = true
     }
@@ -297,6 +320,12 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         let textBoxTapped = UITapGestureRecognizer(target: self, action: #selector(self.textBoxTapped(_:)))
         textbox.addGestureRecognizer(textBoxTapped)
         textBoxes.append(textbox)
+        
+        undoManager!.registerUndo(withTarget: self) { target in
+            print("TEXTBOX")
+            textbox.removeFromSuperview()
+            self.textBoxes.removeLast()
+        }
     }
     
     func insertSelectionView(frame: CGRect, selectedLines: [Int]) {
@@ -326,6 +355,11 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         newImage.addGestureRecognizer(textBoxTapped)
         
         self.addSubview(newImage)
+        
+        undoManager!.registerUndo(withTarget: self) { target in
+            print("image")
+            newImage.removeFromSuperview()
+        }
         
     }
     
@@ -361,6 +395,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
                 
                 if tool == .eraser {
                     if let returnedInt = returnAnnotationIndexAtPoint(point: currentPoint!), returnAnnotationIndexAtPoint(point: currentPoint!) != nil {
+                       
                         lines.remove(at: returnedInt)
                     }
                 }
@@ -384,22 +419,17 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     }
     
     public func redoLastStroke() {
-        undoManager?.undo()
+        undoManager?.redo()
+       setNeedsDisplay()
     }
     
     public func undoLastStroke() {
-        undoManager?.redo()
-        print(undoManager?.canRedo)
+        undoManager?.undo()
+       setNeedsDisplay()
     }
     
     open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         drawingStraightLine = false
-      
-        undoManager!.registerUndo(withTarget: self) { target in
-            
-            self.lines.removeLast()
-            self.setNeedsDisplay()
-        }
         
         undoManager?.setActionName("Undo Stroke")
         
@@ -419,6 +449,11 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
                     insertTextBox(frame: CGRect(x: shapeFirstPoint!.x, y: shapeFirstPoint!.y, width: currentPoint!.x - shapeFirstPoint!.x, height: currentPoint!.y - shapeFirstPoint!.y))
                 }
             }
+        }
+       
+        undoManager!.registerUndo(withTarget: self) { target in
+            self.lines.removeLast()
+            self.setNeedsDisplay()
         }
     }
     
