@@ -124,8 +124,8 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         let vc = NoteViewController()
         vc.noteIndex = noteIndex
         vc.isNoteLocked = fetchNoteLockedStatus(index: noteIndex!)
-        guard let path = Bundle.main.url(forResource: "squaredots-6", withExtension: "pdf") else { return }
-
+        guard let path = Bundle.main.url(forResource: "vitb12", withExtension: "pdf") else { return }
+        
         vc.pdfDocument = PDFDocument(url: path)
         if currentDevice == .iphone || self.splitViewController?.traitCollection.horizontalSizeClass == .compact {
             show(vc, sender: true)

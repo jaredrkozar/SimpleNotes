@@ -27,12 +27,8 @@ class CustomPDFPage: UIView {
         let context = UIGraphicsGetCurrentContext()!
         page?.draw(with: .artBox, to: context)
         UIColor.white.setFill()
-        let rect = UIBezierPath()
-        rect.addLine(to: CGPoint(x: self.bounds.maxX, y: self.bounds.minY))
-        rect.addLine(to: CGPoint(x: self.bounds.maxX, y: self.bounds.maxY))
-        rect.addLine(to: CGPoint(x: self.bounds.minX, y: self.bounds.maxY))
-        rect.addLine(to: CGPoint(x: self.bounds.minX, y: self.bounds.minY))
-        UIColor.lightGray.setStroke()
+        let rect = UIBezierPath(rect: CGRect(x: self.bounds.minX, y: self.bounds.minY, width: self.bounds.width, height: 100))
+        UIColor.lightGray.setFill()
         rect.stroke()
     }
 }

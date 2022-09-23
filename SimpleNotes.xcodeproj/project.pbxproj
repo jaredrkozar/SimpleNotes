@@ -11,6 +11,7 @@
 		02AEB2D628DCC90E00AF46D6 /* squaredots-6.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 02AEB2D528DCC90E00AF46D6 /* squaredots-6.pdf */; };
 		02AEB2D828DCE3D600AF46D6 /* CustomPDFPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AEB2D728DCE3D600AF46D6 /* CustomPDFPage.swift */; };
 		02AEB2DA28DD26AA00AF46D6 /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AEB2D928DD26AA00AF46D6 /* Border.swift */; };
+		02AEB2DC28DDFF8400AF46D6 /* vitb12.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 02AEB2DB28DDFF8400AF46D6 /* vitb12.pdf */; };
 		1197BA6F1902435A622C74E4 /* Pods_SimpleNotes_SimpleNotesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A3152DECD2FC30763295899 /* Pods_SimpleNotes_SimpleNotesUITests.framework */; };
 		5BBB5572D47E81F29B170B17 /* Pods_SimpleNotesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7042E8EED9EB51C046B04E5F /* Pods_SimpleNotesTests.framework */; };
 		7F0F03E7282C368D00A6B404 /* ToolOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */; };
@@ -105,6 +106,7 @@
 		02AEB2D528DCC90E00AF46D6 /* squaredots-6.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "squaredots-6.pdf"; path = "../../../../../Downloads/squaredots-6.pdf"; sourceTree = "<group>"; };
 		02AEB2D728DCE3D600AF46D6 /* CustomPDFPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPDFPage.swift; sourceTree = "<group>"; };
 		02AEB2D928DD26AA00AF46D6 /* Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
+		02AEB2DB28DDFF8400AF46D6 /* vitb12.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = vitb12.pdf; path = "../../../../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/AEE20F13-BFAB-418C-A55A-F77476B2FCCF/vitb12.pdf"; sourceTree = "<group>"; };
 		0C1A53E84B9AB4F3086B417C /* Pods-SimpleNotes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes.debug.xcconfig"; path = "Target Support Files/Pods-SimpleNotes/Pods-SimpleNotes.debug.xcconfig"; sourceTree = "<group>"; };
 		1176E2B00F40D0F68753D3F9 /* Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig"; path = "Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		15F95CAC11D6C63B056CB79F /* Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig"; path = "Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 		02AEB2D428DCC8C200AF46D6 /* pdfs */ = {
 			isa = PBXGroup;
 			children = (
+				02AEB2DB28DDFF8400AF46D6 /* vitb12.pdf */,
 				02AEB2D528DCC90E00AF46D6 /* squaredots-6.pdf */,
 			);
 			path = pdfs;
@@ -550,6 +553,7 @@
 				7FEBECA3276136280066F0C0 /* NoteTableViewCell.xib in Resources */,
 				02AEB2D628DCC90E00AF46D6 /* squaredots-6.pdf in Resources */,
 				7FC55D962791372D001DDFD5 /* GoogleService-Info.plist in Resources */,
+				02AEB2DC28DDFF8400AF46D6 /* vitb12.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

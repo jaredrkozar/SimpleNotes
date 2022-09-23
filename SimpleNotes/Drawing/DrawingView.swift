@@ -369,7 +369,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         currentPoint = touch.location(in: self)
         setTouchPoints(touch)
         shapeFirstPoint = touch.location(in: self)
-        if tool != .scroll {
+        if tool != .scroll && 1 == (event?.allTouches!.count)! {
             lines.append(Line(color: (selectedTool?.color)!, width: (selectedTool?.width)! , opacity: (selectedTool?.opacity)!, path: UIBezierPath(), type: .drawing, strokeType: selectedTool?.strokeType))
         }
     }
