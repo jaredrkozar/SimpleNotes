@@ -426,6 +426,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     public func undoLastStroke() {
         undoManager?.undo()
        setNeedsDisplay()
+        
     }
     
     open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

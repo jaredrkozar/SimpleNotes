@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0207566428B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */; };
+		02AEB2D628DCC90E00AF46D6 /* squaredots-6.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 02AEB2D528DCC90E00AF46D6 /* squaredots-6.pdf */; };
+		02AEB2D828DCE3D600AF46D6 /* CustomPDFPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AEB2D728DCE3D600AF46D6 /* CustomPDFPage.swift */; };
+		02AEB2DA28DD26AA00AF46D6 /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AEB2D928DD26AA00AF46D6 /* Border.swift */; };
 		1197BA6F1902435A622C74E4 /* Pods_SimpleNotes_SimpleNotesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A3152DECD2FC30763295899 /* Pods_SimpleNotes_SimpleNotesUITests.framework */; };
 		5BBB5572D47E81F29B170B17 /* Pods_SimpleNotesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7042E8EED9EB51C046B04E5F /* Pods_SimpleNotesTests.framework */; };
 		7F0F03E7282C368D00A6B404 /* ToolOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */; };
@@ -99,6 +102,9 @@
 
 /* Begin PBXFileReference section */
 		0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNoteSettingsViewController.swift; sourceTree = "<group>"; };
+		02AEB2D528DCC90E00AF46D6 /* squaredots-6.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "squaredots-6.pdf"; path = "../../../../../Downloads/squaredots-6.pdf"; sourceTree = "<group>"; };
+		02AEB2D728DCE3D600AF46D6 /* CustomPDFPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPDFPage.swift; sourceTree = "<group>"; };
+		02AEB2D928DD26AA00AF46D6 /* Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
 		0C1A53E84B9AB4F3086B417C /* Pods-SimpleNotes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes.debug.xcconfig"; path = "Target Support Files/Pods-SimpleNotes/Pods-SimpleNotes.debug.xcconfig"; sourceTree = "<group>"; };
 		1176E2B00F40D0F68753D3F9 /* Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig"; path = "Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		15F95CAC11D6C63B056CB79F /* Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig"; path = "Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -209,6 +215,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02AEB2D428DCC8C200AF46D6 /* pdfs */ = {
+			isa = PBXGroup;
+			children = (
+				02AEB2D528DCC90E00AF46D6 /* squaredots-6.pdf */,
+			);
+			path = pdfs;
+			sourceTree = "<group>";
+		};
 		0481132D7C0C0C532551601A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,6 +264,8 @@
 			isa = PBXGroup;
 			children = (
 				7FC7FB6E2837F74000CE483E /* Constants.swift */,
+				02AEB2D928DD26AA00AF46D6 /* Border.swift */,
+				02AEB2D728DCE3D600AF46D6 /* CustomPDFPage.swift */,
 				7FE45081281A56F40034928B /* CollectionReusableView.swift */,
 				7FBC07F3289B153600AA28CB /* TagCollectionView.swift */,
 				7F97ED5C28920FCA00DA2EB4 /* SizeCollectionView.swift */,
@@ -385,6 +401,7 @@
 				7F498B0B27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld */,
 				7FEBEC70276135DA0066F0C0 /* SceneDelegate.swift */,
 				7F8BBDFB276ED795005B07C1 /* Extensions.swift */,
+				02AEB2D428DCC8C200AF46D6 /* pdfs */,
 				7FEBEC74276135DA0066F0C0 /* Main.storyboard */,
 				7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */,
 				7FE45087281E29B40034928B /* Drawing */,
@@ -531,6 +548,7 @@
 				7FEBEC78276135DC0066F0C0 /* Assets.xcassets in Resources */,
 				7FEBEC76276135DA0066F0C0 /* Main.storyboard in Resources */,
 				7FEBECA3276136280066F0C0 /* NoteTableViewCell.xib in Resources */,
+				02AEB2D628DCC90E00AF46D6 /* squaredots-6.pdf in Resources */,
 				7FC55D962791372D001DDFD5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -704,6 +722,7 @@
 				7FE45094281E2CE20034928B /* PenTool.swift in Sources */,
 				7FEBEC73276135DA0066F0C0 /* ViewController.swift in Sources */,
 				7FC2C11E286D64FA00D90E20 /* DefaultTextBoxViewController.swift in Sources */,
+				02AEB2DA28DD26AA00AF46D6 /* Border.swift in Sources */,
 				7FDE92FC288777AA00B8E44F /* SelectColorPopoverViewController.swift in Sources */,
 				7FE4509E281EEE760034928B /* TextTool.swift in Sources */,
 				7FEBEC6F276135DA0066F0C0 /* AppDelegate.swift in Sources */,
@@ -739,6 +758,7 @@
 				7FE45098281E30740034928B /* ResizableButton.swift in Sources */,
 				7F53DAAA279CC36C006789F6 /* ToastNotification.swift in Sources */,
 				7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */,
+				02AEB2D828DCE3D600AF46D6 /* CustomPDFPage.swift in Sources */,
 				7F376626278E220D00A107FF /* SettingsViewController.swift in Sources */,
 				7F53DAAE279D4B75006789F6 /* TagsTableViewController.swift in Sources */,
 				7F53DAAC279D4B09006789F6 /* TabBarController.swift in Sources */,

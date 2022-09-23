@@ -7,6 +7,7 @@
 
 import UIKit
 import WSTagsField
+import PDFKit
 
 class ViewController: UITableViewController, UINavigationControllerDelegate {
     
@@ -123,7 +124,9 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         let vc = NoteViewController()
         vc.noteIndex = noteIndex
         vc.isNoteLocked = fetchNoteLockedStatus(index: noteIndex!)
-        
+        guard let path = Bundle.main.url(forResource: "squaredots-6", withExtension: "pdf") else { return }
+
+        vc.pdfDocument = PDFDocument(url: path)
         if currentDevice == .iphone || self.splitViewController?.traitCollection.horizontalSizeClass == .compact {
             show(vc, sender: true)
         } else if currentDevice == .ipad {

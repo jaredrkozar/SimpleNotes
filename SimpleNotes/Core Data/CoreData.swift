@@ -78,6 +78,7 @@ func createNewNote() {
     newNote.title = UserDefaults.standard.string(forKey: "defaultNoteTitle")
     newNote.isLocked = false
     newNote.noteID = UUID().uuidString
+    newNote.tags = NSSet()
     
     do {
         try context.save()

@@ -26,6 +26,11 @@ protocol ModalHandler {
     func modalDismissed()
 }
 
+enum PageDisplayType {
+    case vertical
+    case horizontal
+}
+
 public enum StrokeTypes: Int {
     case normal
     case dotted
