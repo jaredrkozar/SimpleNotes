@@ -98,12 +98,10 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                 drawPage(num: page)
             }
             
-            drawingView.backgroundColor = .systemBackground
+            drawingView.backgroundColor = .clear
             self.navigationItem.title = fetchNoteTitle(index: noteIndex!)
             self.navigationItem.largeTitleDisplayMode = .never
             noteDate = fetchDate(index: noteIndex)
-        
-            baseView.backgroundColor = .green
         
             baseView.addSubview(pdfHolderView)
             baseView.addSubview(drawingView)
@@ -288,8 +286,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     func getAllPageOffsets(page: PDFPage, numberOfPages: Int) -> [Border] {
         
         let pageSize = CGSize(width: (page.bounds(for: .mediaBox).width), height: (page.bounds(for: .artBox).height))
-        print(page.bounds(for: .mediaBox).width)
-        print(page.bounds(for: .artBox).width)
         var offsets = [Border]()
                
         if (pageDisplayType == .vertical){
@@ -321,7 +317,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
     func drawPage(num: Int) {
         let page = pdfDocument?.page(at: num)
-        let pdfpage = CustomPDFPage(frame: CGRect(x: offsets[num].minX, y: offsets[num].minY, width: offsets[num].maxX - offsets[num].minX, height: offsets[num].maxY - offsets[num].minY), page: page)
+        let pdfpage = CustomPDFPage(frame: CGRect(x: offsets[num].minX, y: offsets[num].minY + 20, width: offsets[num].maxX - offsets[num].minX, height: offsets[num].maxY - offsets[num].minY), page: page)
         pdfHolderView.addSubview(pdfpage)
     }
     
@@ -364,7 +360,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                      return
                  }
                  
-                 vc.currentNoteView = self.drawingView.createPDF() as Data
+                 vc.currentNoteView = self.exportAsPDF()
                  vc.sharingLocation = location
                  vc.currentNoteTitle = self.currentNote?.title
                  self.present(navigationController, animated: true, completion: nil)
@@ -441,6 +437,34 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         } else {
             drawingView.currentHighlighter?.strokeType = StrokeTypes(rawValue: UserDefaults.standard.integer(forKey: "strokeType")) ?? .normal
         }
+    }
+    
+    func exportAsPDF() -> Data {
+        let newPDF = NSMutableData()
+        UIGraphicsBeginPDFContextToData(newPDF, CGRect(x: 0,y: 0, width: scrollView.contentSize.width, height: scrollView.contentSize.height), nil)
+        let context = UIGraphicsGetCurrentContext()
+        scrollView.setContentOffset(.zero, animated: false)
+        for counter in 0 ..< pdfDocument!.pageCount {
+            
+            scrollView.setContentOffset(CGPoint(x: offsets[counter].minX, y: offsets[counter].minY), animated: false)
+                        switch self.pageDisplayType {
+                        case .horizontal:
+                            scrollView.frame = CGRect(x: scrollView.frame.minX, y: scrollView.frame.minY, width: (offsets[counter].maxX - offsets[counter].minX), height: scrollView.frame.height)
+                        case .vertical:
+                            scrollView.frame = CGRect(x: scrollView.frame.minX, y: scrollView.frame.minY, width: scrollView.frame.width, height: (offsets[counter].maxY - offsets[counter].minY))
+                        case .none:
+                            scrollView.frame = .zero
+                        }
+                        
+                        UIGraphicsBeginPDFPageWithInfo(CGRect(x: 0, y: 0, width: scrollView.frame.width, height: scrollView.frame.height), nil)
+            
+                        context!.translateBy(x: -offsets[counter].minX, y: -offsets[counter].minY)
+            
+            scrollView.layer.render(in: context!)
+        }
+        
+        UIGraphicsEndPDFContext()
+        return newPDF as Data
     }
 }
 

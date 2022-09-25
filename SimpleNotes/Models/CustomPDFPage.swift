@@ -25,10 +25,23 @@ class CustomPDFPage: UIView {
     
     override func draw(_ rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()!
-        page?.draw(with: .artBox, to: context)
         UIColor.white.setFill()
-        let rect = UIBezierPath(rect: CGRect(x: self.bounds.minX, y: self.bounds.minY, width: self.bounds.width, height: 100))
-        UIColor.lightGray.setFill()
-        rect.stroke()
+        context.fill(rect)
+        context.translateBy(x: 0, y: rect.height)
+        context.scaleBy(x: 1, y: -1)
+        page?.draw(with: .artBox, to: context)
+
+        let path = UIBezierPath()
+        path.lineWidth = 3.0
+               path.move(to: CGPoint(x: 0,y: self.bounds.minY))
+               path.addLine(to: CGPoint(x: self.bounds.maxX, y: self.bounds.minY))
+               path.move(to: CGPoint(x: 0, y: 0))
+               path.addLine(to: CGPoint(x: 0, y: self.bounds.maxY))
+               path.move(to: CGPoint(x: self.bounds.maxX, y: 0))
+               path.addLine(to: CGPoint(x: self.bounds.maxX, y: self.bounds.maxY))
+               path.move(to: CGPoint(x: 0, y: 0))
+               path.addLine(to: CGPoint(x: self.bounds.maxX, y: 0))
+               UIColor.lightGray.setStroke()
+               path.stroke()
     }
 }
