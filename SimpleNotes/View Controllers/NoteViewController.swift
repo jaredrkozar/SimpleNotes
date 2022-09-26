@@ -91,7 +91,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             ])
         } else {
             pageDisplayType = .vertical
-    
+            
             offsets.append(contentsOf: getAllPageOffsets(page: (pdfDocument?.page(at: 0))!, numberOfPages: pdfDocument!.pageCount))
             
             for page in 0..<(pdfDocument!.pageCount) {
@@ -509,15 +509,9 @@ extension NoteViewController: PHPickerViewControllerDelegate {
                        DispatchQueue.main.async {
                            guard let self = self, let image = image as? UIImage else { return }
                           
-                           let dimension: CGFloat = 400
+                           let newRect = image.resizeImage(dimension: 400)
                            
-                           let maxDimension =  CGFloat(max(image.size.width, image.size.height))
-                           let scale = dimension / maxDimension
-                           var rect: CGRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
-                           let transform = CGAffineTransform(scaleX: scale, y: scale)
-                           rect = rect.applying(transform)
-                           
-                           self.drawingView.insertImage(frame: CGRect(x: (rect.width + (-1 * CGFloat(rect.width) / 2)), y: (rect.height + (-1 * CGFloat(rect.height) / 2)), width: rect.width, height: rect.height), image: image)
+                           self.drawingView.insertImage(frame: CGRect(x: (newRect.width + (-1 * CGFloat(newRect.width) / 2)), y: (newRect.height + (-1 * CGFloat(newRect.height) / 2)), width: newRect.width, height: newRect.height), image: image)
                            
                            picker.dismiss(animated: true)
                        }

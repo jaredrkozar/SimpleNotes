@@ -8,6 +8,8 @@
 import UIKit
 import WSTagsField
 import PDFKit
+import MobileCoreServices
+import UniformTypeIdentifiers
 
 class ViewController: UITableViewController, UINavigationControllerDelegate {
     
@@ -36,11 +38,13 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         title = "Notes"
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        let addNote = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(addNote))
-
+        let addNote = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: self, action: #selector(addDefaultNote))
+        
+        let importMenu = UIBarButtonItem(title: nil, image: UIImage(systemName: "square.and.arrow.down"), primaryAction: nil, menu: importOptionsMenu())
+        
         let viewOptions = UIBarButtonItem(title: nil, image: UIImage(systemName: "arrow.up.arrow.down"), primaryAction: nil, menu: viewOptionsMenu())
         
-        self.navigationItem.rightBarButtonItems = [addNote, viewOptions]
+        self.navigationItem.rightBarButtonItems = [addNote, importMenu, viewOptions]
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadNotesTable(notification:)), name: Notification.Name("reloadNotesTable"), object: nil)
         
@@ -74,6 +78,8 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         } else {
             cell.noteTitle.text = singlenote.title
         }
+        
+        cell.noteThumbanil.image = UIImage(data: singlenote.thumbanil!)
         cell.noteDate.text = singlenote.date!.formatted()
         
         cell.tagView?.tags = fetchTagsForNote(index: indexPath.row).sorted()
@@ -92,8 +98,15 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         self.view.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "defaultTintColor")!))
     }
     
-    @objc func addNote(sender: UIBarButtonItem) {
-        createNewNote()
+    @objc func addDefaultNote(sender: UIBarButtonItem) {
+        let templateAsData = PDFDocument()
+        templateAsData.insert(PDFPage(image: UIImage(named: "dottedGrid")!)!, at: 0)
+        templateAsData.insert(PDFPage(image: UIImage(named: "dottedGrid")!)!, at: 1)
+        addNewNote(thumbnail: templateAsData.page(at: 0)!.createThumbnail(), pdf: templateAsData.dataRepresentation()!)
+    }
+    
+    func addNewNote(thumbnail: Data, pdf: Data) {
+        createNewNote(thumbnail: thumbnail, pdf: pdf)
         fetchNotes(tag: nil, sortOption: .titleAscending)
         tableView.dataSource = self
         tableView.delegate = self
@@ -124,9 +137,8 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         let vc = NoteViewController()
         vc.noteIndex = noteIndex
         vc.isNoteLocked = fetchNoteLockedStatus(index: noteIndex!)
-        guard let path = Bundle.main.url(forResource: "vitb12", withExtension: "pdf") else { return }
         
-        vc.pdfDocument = PDFDocument(url: path)
+        vc.pdfDocument = PDFDocument(data: notes[noteIndex!].data!)
         if currentDevice == .iphone || self.splitViewController?.traitCollection.horizontalSizeClass == .compact {
             show(vc, sender: true)
         } else if currentDevice == .ipad {
@@ -195,6 +207,33 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         }
     }
     
+    func importOptionsMenu() -> UIMenu {
+        var importMenu = [UIAction]()
+        
+        for sort in SharingLocation.allCases {
+            if sort.canImport == true {
+                importMenu.append(UIAction(title: "\(sort.viewTitle)", image: nil, identifier: .none, discoverabilityTitle: "Sort Options", attributes: [], state: .on, handler: {_ in
+                    
+                    switch sort {
+                    case .files:
+                        self.presentFilesPicker()
+                    case .scanDocument:
+                        print("dlldld")
+                    case .dropbox:
+                        print ("dkdkdd")
+                    case .googledrive:
+                        print("DLDLl")
+                    default:
+                        print("Not supported")
+                    }
+                }))
+            }
+        }
+
+        return UIMenu(title: "View Options", image: nil, identifier: nil, options: .singleSelection, children: importMenu)
+        
+    }
+    
     func viewOptionsMenu() -> UIMenu {
         var sortoptions = [UIAction]()
         var viewoptions = [UIAction]()
@@ -233,3 +272,31 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         tableView.reloadRows(at: [IndexPath(item: rowNum, section: 0)], with: .fade)
     }
 }
+
+extension ViewController: UIDocumentPickerDelegate {
+    @objc func presentFilesPicker() {
+        let documentpicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.pdf, UTType.data])
+        documentpicker.delegate = self
+            self.present(documentpicker, animated: true, completion: nil)
+    }
+    
+    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        
+        guard let myURL = urls.first else {
+            return
+        }
+        
+        myURL.startAccessingSecurityScopedResource()
+        do {
+            let newDoc = PDFDocument(url: myURL)
+            print(newDoc?.pageCount)
+            addNewNote(thumbnail: (newDoc?.page(at: 0)!.createThumbnail())!, pdf: (newDoc?.dataRepresentation())!)
+        } catch {
+            print("There was an error loading the image: \(error). Please try again.")
+        }
+        
+        myURL.startAccessingSecurityScopedResource()
+        
+    }
+}
+

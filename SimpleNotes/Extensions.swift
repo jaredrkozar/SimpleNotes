@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PDFKit
 
 var notes: [Note] = []
 var tags: [Tags] = []
@@ -201,7 +202,23 @@ func sendBackSymbol(imageName: String, color: UIColor) -> UIImage {
     return UIImage(systemName: imageName)!.withTintColor(color, renderingMode: .alwaysOriginal)
 }
 
-
+extension UIImage {
+    func resizeImage(dimension: CGFloat) -> CGRect {
+        let maxDimension =  CGFloat(max(self.size.width, self.size.height))
+        let scale = dimension / maxDimension
+        var rect: CGRect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
+        let transform = CGAffineTransform(scaleX: scale, y: scale)
+        rect = rect.applying(transform)
+        
+        return rect
+    }
+    
+    func converttoString() -> String {
+        let data = self.jpegData(compressionQuality: 1)
+        return (data?.base64EncodedString(options: .endLineWithLineFeed))!
+            
+    }
+}
 extension UIView {
 
     func findViewController() -> UIViewController? {
@@ -325,6 +342,13 @@ extension String {
         let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
         return self.size(withAttributes: fontAttributes)
     }
+    
+    func toImage() -> UIImage? {
+        if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters){
+            return UIImage(data: data)
+        }
+        return nil
+    }
 }
 
 func isAppAlreadyLaunchedOnce()->Bool{
@@ -337,5 +361,12 @@ func isAppAlreadyLaunchedOnce()->Bool{
             defaults.set(true, forKey: "isAppAlreadyLaunchedOnce")
             print("App launched first time")
         return false
+    }
+}
+
+extension PDFPage {
+    func createThumbnail() -> Data {
+        let newThumbanil = self.thumbnail(of: CGSize(width: 1150, height: 150), for: .artBox)
+        return newThumbanil.jpegData(compressionQuality: 0.6)!
     }
 }

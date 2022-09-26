@@ -1,8 +1,8 @@
 //
 //  Note+CoreDataProperties.swift
-//  SimpleNotes
+//  
 //
-//  Created by JaredKozar on 7/25/22.
+//  Created by Jared Kozar on 9/26/22.
 //
 //
 
@@ -20,9 +20,11 @@ extension Note {
     @NSManaged public var isLocked: Bool
     @NSManaged public var noteID: String?
     @NSManaged public var title: String?
+    @NSManaged public var data: Data?
+    @NSManaged public var thumbanil: Data?
+    @NSManaged public var images: Image?
     @NSManaged public var tags: NSSet?
     @NSManaged public var textbox: NSSet?
-    @NSManaged public var images: Image?
 
 }
 
@@ -36,10 +38,10 @@ extension Note {
     @NSManaged public func removeFromTags(_ value: Tags)
 
     @objc(addTags:)
-    @NSManaged public func addToTags(_ values: Set<Tags>)
+    @NSManaged public func addToTags(_ values: NSSet)
 
     @objc(removeTags:)
-    @NSManaged public func removeFromTags(_ values: Set<Tags>)
+    @NSManaged public func removeFromTags(_ values: NSSet)
 
 }
 
@@ -53,13 +55,9 @@ extension Note {
     @NSManaged public func removeFromTextbox(_ value: TextBox)
 
     @objc(addTextbox:)
-    @NSManaged public func addToTextbox(_ values: Set<TextBox>)
+    @NSManaged public func addToTextbox(_ values: NSSet)
 
     @objc(removeTextbox:)
-    @NSManaged public func removeFromTextbox(_ values: Set<TextBox>)
-
-}
-
-extension Note : Identifiable {
+    @NSManaged public func removeFromTextbox(_ values: NSSet)
 
 }
