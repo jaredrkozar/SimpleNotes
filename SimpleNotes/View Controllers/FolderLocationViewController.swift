@@ -33,7 +33,7 @@ class FolderLocationViewController: UITableViewController {
             location!.currentLocation.signIn(vc: self)
             return
         }
-        
+        print(currentfolder)
         location?.currentLocation.fetchFiles(folderID: (currentfolder ?? location?.currentLocation.defaultFolder)!, onCompleted: {
             (files, error) in
             self.allFiles = files!
@@ -60,7 +60,7 @@ class FolderLocationViewController: UITableViewController {
             fatalError("Unable to dequeue the note cell.")
         }
          
-        let file = allFiles[indexPath.row]
+        var file = allFiles[indexPath.row]
         
         
         cell.configureCell(with: SettingsOptions(title: file.name, option: "", rowIcon: Icon(icon: file.type.icon, iconBGColor: .systemBackground, iconTintColor: file.type.tintColor), control: nil, handler: nil))
@@ -70,7 +70,7 @@ class FolderLocationViewController: UITableViewController {
         }
         
         if serviceType == .download {
-            if file.type.typeURL == "pdf" {
+            if file.type == .pdf || file.type == .folder {
                 cell.isUserInteractionEnabled = true
             } else {
                 cell.isUserInteractionEnabled = false
@@ -83,17 +83,18 @@ class FolderLocationViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let selectedFile = allFiles[indexPath.row]
-
+        
         if  selectedFile.type == .folder {
             let vc = FolderLocationViewController()
             vc.location = location
             vc.currentfolder = selectedFile.folderID
+            vc.serviceType = serviceType
             self.navigationController?.pushViewController(vc, animated: true)
         }
         
         if serviceType == .download {
             if selectedFile.type == .pdf {
-                location?.currentLocation.downloadFile(identifier: selectedFile.folderID, onCompleted: {(files, error) in
+                location?.currentLocation.downloadFile(identifier: selectedFile.folderID, folderID: selectedFile.folderID, onCompleted: {(files, error) in
                     self.dismiss(animated: true)
                     self.returnPDFData!(files!)
                 })

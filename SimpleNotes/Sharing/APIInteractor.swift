@@ -22,5 +22,5 @@ protocol APIInteractor {
     
     func getFileType(type: String) -> MimeTypes
     
-    func downloadFile(identifier: String, onCompleted: @escaping (Data?, Error?) -> ())
+    func downloadFile(identifier: String, folderID: String?, onCompleted: @escaping (Data?, Error?) -> ())
 }

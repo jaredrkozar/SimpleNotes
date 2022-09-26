@@ -7,21 +7,18 @@
 
 import UIKit
 import SwiftyDropbox
+import PDFKit
 
 class DropboxInteractor: APIInteractor {
-    func downloadFile(identifier: String, onCompleted: @escaping (Data?, Error?) -> ()) {
-        print(identifier)
-    }
     
-    var defaultFolder: String = "/"
-    
+    var defaultFolder: String = ""
     
     var filesInFolder = [CloudServiceFiles]()
     let client = DropboxClientsManager.authorizedClient
 
     func fetchFiles(folderID: String, onCompleted: @escaping ([CloudServiceFiles]?, Error?) -> ()) {
         
-        client!.files.listFolder(path: "").response { [self] response, error in
+        client!.files.listFolder(path: folderID).response { [self] response, error in
             if let result = response {
         
                 for file in result.entries {
@@ -31,7 +28,7 @@ class DropboxInteractor: APIInteractor {
                         isFolder = false
                     }
                 
-                    self.filesInFolder.append(CloudServiceFiles(name: file.name, type: self.getFileType(type: file.name), folderID: file.pathLower!))
+                    self.filesInFolder.append(CloudServiceFiles(name: file.name, type: isFolder == true ? .folder : self.getFileType(type: file.name), folderID: file.pathLower!))
                 }
                 
                 onCompleted(self.filesInFolder, nil)
@@ -84,6 +81,24 @@ class DropboxInteractor: APIInteractor {
             })
     }
     
+    func downloadFile(identifier: String, folderID: String?, onCompleted: @escaping (Data?, Error?) -> ()) {
+
+        let destination : (URL, HTTPURLResponse) -> URL = { temporaryURL, response in
+            let fileManager = FileManager.default
+            let directoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+              // generate a unique name for this file in case we've seen it before
+            let UUID = NSUUID().uuidString
+              let pathComponent = "\(UUID)-\(response.suggestedFilename!)"
+            return directoryURL.appendingPathComponent(pathComponent, conformingTo: .fileURL)
+          }
+
+        client?.files.download(path: folderID!, rev: nil, overwrite: true, destination: destination)
+            .response { response, error in
+                if let dropboxData = try? Data(contentsOf: response!.1) {
+                    onCompleted(dropboxData, nil)
+                }
+            }
+    }
     
     func getFileType(type: String) -> MimeTypes {
         let type = (type as NSString).pathExtension

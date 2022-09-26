@@ -214,7 +214,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         
         for sort in SharingLocation.allCases {
             if sort.canImport == true {
-                importMenu.append(UIAction(title: "\(sort.viewTitle)", image: nil, identifier: .none, discoverabilityTitle: "Sort Options", attributes: [], state: .on, handler: {_ in
+                importMenu.append(UIAction(title: "\(sort.viewTitle)", image: sort.icon, identifier: .none, discoverabilityTitle: "Sort Options", attributes: [], state: .off, handler: {_ in
                     
                     switch sort {
                     case .files:
@@ -222,7 +222,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                     case .scanDocument:
                         self.presentDocumentScanner()
                     case .dropbox:
-                        print ("dkdkdd")
+                        self.presentFolderView(service: .dropbox)
                     case .googledrive:
                         self.presentFolderView(service: .googledrive)
                     default:

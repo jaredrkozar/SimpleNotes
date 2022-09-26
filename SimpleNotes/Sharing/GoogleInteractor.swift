@@ -124,7 +124,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         })
     }
     
-    func downloadFile(identifier: String, onCompleted: @escaping (Data?, Error?) -> ()) {
+    func downloadFile(identifier: String, folderID: String?, onCompleted: @escaping (Data?, Error?) -> ()) {
         
         GIDSignIn.sharedInstance().restorePreviousSignIn()
        
