@@ -9,11 +9,11 @@ import UIKit
 
 class FolderLocationViewController: UITableViewController {
     
-    var noteView: NoteViewController?
-    
     var location: SharingLocation?
     var currentfolder: String?
     var allFiles = [CloudServiceFiles]()
+    var serviceType: CloudType?
+    var returnPDFData: ((_ returnData: Data)->())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,29 +22,25 @@ class FolderLocationViewController: UITableViewController {
         
         tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Select Folder", style: .done, target: self, action: #selector(selectFolderButton))
+        if serviceType == .upload {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Select Folder", style: .done, target: self, action: #selector(selectFolderButton))
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
 
-        if location == .googledrive {
-           
-            GoogleInteractor().fetchFiles(folderID: currentfolder ?? "root", onCompleted: {
-                (files, error) in
-                self.allFiles = files!
-                
-                self.tableView.reloadData()
-                
-            })
-        } else if location == .dropbox {
-            DropboxInteractor().fetchFiles(folderID: currentfolder ?? "/", onCompleted: {
-                (files, error) in
-                self.allFiles = files!
-                
-                self.tableView.reloadData()
-                
-            })
+        guard location!.currentLocation.isSignedIn else {
+            location!.currentLocation.signIn(vc: self)
+            return
         }
+        
+        location?.currentLocation.fetchFiles(folderID: (currentfolder ?? location?.currentLocation.defaultFolder)!, onCompleted: {
+            (files, error) in
+            self.allFiles = files!
+            
+            self.tableView.reloadData()
+            
+        })
     }
     // MARK: - Table view data source
 
@@ -73,6 +69,14 @@ class FolderLocationViewController: UITableViewController {
             cell.accessoryType = .disclosureIndicator
         }
         
+        if serviceType == .download {
+            if file.type.typeURL == "pdf" {
+                cell.isUserInteractionEnabled = true
+            } else {
+                cell.isUserInteractionEnabled = false
+            }
+        }
+        
         return cell
     }
     
@@ -85,6 +89,15 @@ class FolderLocationViewController: UITableViewController {
             vc.location = location
             vc.currentfolder = selectedFile.folderID
             self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        if serviceType == .download {
+            if selectedFile.type == .pdf {
+                location?.currentLocation.downloadFile(identifier: selectedFile.folderID, onCompleted: {(files, error) in
+                    self.dismiss(animated: true)
+                    self.returnPDFData!(files!)
+                })
+            }
         }
     }
 

@@ -82,7 +82,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
                 if let listOfFiles : [GTLRDrive_File] = filesList.files {
                     
                     for file in listOfFiles {
-               
+                        
                         self.filesInFolder.append(CloudServiceFiles(name: file.name!, type: self.getFileType(type: file.mimeType!), folderID: file.identifier!))
                     }
                     
@@ -123,6 +123,22 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
             let finishedUpload = ToastNotification(backgroundColor: .systemGreen, image: UIImage(systemName: "checkmark.circle")!, titleText: "Upload Complete", subtitleText: "The upload is finished. Your can view the note in the Google Drive app or on the website")
         })
     }
+    
+    func downloadFile(identifier: String, onCompleted: @escaping (Data?, Error?) -> ()) {
+        
+        GIDSignIn.sharedInstance().restorePreviousSignIn()
+       
+        driveService.apiKey = "AIzaSyBz0NAnojMb8LOmWUlEIHWTHvljk4Yboaw"
+        driveService.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
+        GIDSignIn.sharedInstance().clientID = clientID
+ 
+        
+        let query = GTLRDriveQuery_FilesGet.queryForMedia(withFileId: identifier)
+         driveService.executeQuery(query) { (ticket, file, error) in
+             onCompleted((file as? GTLRDataObject)?.data, error)
+         }
+    }
+    
     
     override init() {
         super.init()

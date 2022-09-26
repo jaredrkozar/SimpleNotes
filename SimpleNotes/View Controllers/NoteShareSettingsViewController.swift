@@ -64,6 +64,7 @@ class NoteShareSettingsViewController: UITableViewController {
                               let navController = UINavigationController(rootViewController: vc)
                                vc.location = self.sharingLocation
                                vc.currentfolder = self.currentLocation.defaultFolder
+                               vc.serviceType = .upload
                                self.navigationController?.present(navController, animated: true, completion: nil)
                            }
              },

@@ -224,7 +224,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                     case .dropbox:
                         print ("dkdkdd")
                     case .googledrive:
-                        print("DLDLl")
+                        self.presentFolderView(service: .googledrive)
                     default:
                         print("Not supported")
                     }
@@ -272,6 +272,23 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     @objc func reloadNotesTable(notification: Notification) {
         guard let rowNum = notification.userInfo!.values.first as? Int else { return }
         tableView.reloadRows(at: [IndexPath(item: rowNum, section: 0)], with: .fade)
+    }
+    
+    func presentFolderView(service: SharingLocation) {
+        let vc = FolderLocationViewController()
+        let navController = UINavigationController(rootViewController: vc)
+        vc.serviceType = .download
+        vc.location = service
+        
+        present(navController, animated: true)
+        
+        vc.returnPDFData = { file in
+            
+            let newPDF = PDFDocument(data: file)
+            
+            self.addNewNote(thumbnail: (newPDF!.page(at: 0)?.createThumbnail())!, pdf: newPDF!.dataRepresentation()!)
+            
+        }
     }
 }
 
@@ -333,8 +350,6 @@ extension ViewController: VNDocumentCameraViewControllerDelegate {
         for pageNumber in 0..<scan.pageCount {
             newPDF.insert(PDFPage(image: scan.imageOfPage(at: pageNumber))!, at: pageNumber)
         }
-        
-        let imageFromDocumentScan = scan.imageOfPage(at: 0)
         
         controller.dismiss(animated: true)
         addNewNote(thumbnail: (newPDF.page(at: 0)?.createThumbnail())!, pdf: newPDF.dataRepresentation()!)

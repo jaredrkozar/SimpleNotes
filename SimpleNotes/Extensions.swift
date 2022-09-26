@@ -27,6 +27,11 @@ protocol ModalHandler {
     func modalDismissed()
 }
 
+enum CloudType {
+    case upload
+    case download
+}
+
 enum PageDisplayType {
     case vertical
     case horizontal

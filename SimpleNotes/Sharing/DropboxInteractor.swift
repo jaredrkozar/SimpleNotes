@@ -9,6 +9,10 @@ import UIKit
 import SwiftyDropbox
 
 class DropboxInteractor: APIInteractor {
+    func downloadFile(identifier: String, onCompleted: @escaping (Data?, Error?) -> ()) {
+        print(identifier)
+    }
+    
     var defaultFolder: String = "/"
     
     

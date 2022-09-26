@@ -29,9 +29,9 @@ public enum SharingLocation: CaseIterable {
         case .dropbox:
             return UIImage(named: "Dropbox")!
         case .scanDocument:
-            return UIImage(named: "viewfinder")!
+            return UIImage(systemName: "doc.viewfinder")!
         case .files:
-            return UIImage(named: "folder")!
+            return UIImage(systemName: "folder")!
         }
     }
     
@@ -92,6 +92,16 @@ public enum SharingLocation: CaseIterable {
                 return true
         case .files:
                 return true
+        }
+    }
+}
+
+extension SharingLocation {
+    var currentLocation: APIInteractor {
+        if self == .googledrive {
+            return GoogleInteractor()
+        } else {
+            return DropboxInteractor()
         }
     }
 }
