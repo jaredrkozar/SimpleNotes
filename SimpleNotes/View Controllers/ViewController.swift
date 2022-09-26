@@ -10,6 +10,8 @@ import WSTagsField
 import PDFKit
 import MobileCoreServices
 import UniformTypeIdentifiers
+import VisionKit
+import Vision
 
 class ViewController: UITableViewController, UINavigationControllerDelegate {
     
@@ -218,7 +220,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                     case .files:
                         self.presentFilesPicker()
                     case .scanDocument:
-                        print("dlldld")
+                        self.presentDocumentScanner()
                     case .dropbox:
                         print ("dkdkdd")
                     case .googledrive:
@@ -300,3 +302,41 @@ extension ViewController: UIDocumentPickerDelegate {
     }
 }
 
+extension ViewController: VNDocumentCameraViewControllerDelegate {
+    @objc func presentDocumentScanner() {
+        let vc = VNDocumentCameraViewController()
+        vc.delegate = self
+        self.present(vc, animated: true)
+    }
+    
+    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFailWithError error: Error) {
+        let errorAlert = UIAlertController(title: "Failed to scan document", message: "The document couldn't be scanned right now. Please try again.", preferredStyle: .alert)
+        
+        errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        present(errorAlert, animated: true)
+        
+        controller.dismiss(animated: true)
+    }
+    
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func documentCameraViewController(_ controller:            VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
+        // Process the scanned pages
+        let newPDF = PDFDocument()
+        for pageNumber in 0..<scan.pageCount {
+            newPDF.insert(PDFPage(image: scan.imageOfPage(at: pageNumber))!, at: pageNumber)
+        }
+        
+        let imageFromDocumentScan = scan.imageOfPage(at: 0)
+        
+        controller.dismiss(animated: true)
+        addNewNote(thumbnail: (newPDF.page(at: 0)?.createThumbnail())!, pdf: newPDF.dataRepresentation()!)
+    }
+}
