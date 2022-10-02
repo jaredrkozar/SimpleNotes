@@ -32,9 +32,9 @@ enum CloudType {
     case download
 }
 
-enum PageDisplayType {
-    case vertical
-    case horizontal
+enum PageDisplayType: String {
+    case vertical = "Vertical"
+    case horizontal = "Horixontal"
 }
 
 public enum StrokeTypes: Int {

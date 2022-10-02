@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             UserDefaults.standard.set("New Note", forKey: "defaultNoteTitle")
             UserDefaults.standard.set(16.0, forKey: "defaultFontSize")
             UserDefaults.standard.set(Date(), forKey: "defaultNoteDate")
+            UserDefaults.standard.set("Vertical", forKey: "defaultPageScrollType")
         }
         return true
     }

@@ -36,12 +36,21 @@ class DefaultNoteViewController: UITableViewController, UIFontPickerViewControll
         return view
     }()
     
+    var defaultPageTypeButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(UserDefaults.standard.string(forKey: "defaultPageScrollType"), for: .normal)
+        button.contentHorizontalAlignment = .trailing
+        button.showsMenuAsPrimaryAction = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Note Defaults"
         self.tableView = UITableView(frame: self.tableView.frame, style: .insetGrouped)
- 
+        defaultPageTypeButton.menu = pageScrollTypeMenu()
         tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
         self.tableView.backgroundColor = .systemGroupedBackground
         
@@ -62,6 +71,10 @@ class DefaultNoteViewController: UITableViewController, UIFontPickerViewControll
         
         textBoxSettings.append(Sections(title: nil, settings: [
             SettingsOptions(title: "Note Date", option: "", rowIcon: nil, control: .control(controls: [defaultNoteDate], width: 200), handler: nil)
+        ]))
+        
+        textBoxSettings.append(Sections(title: nil, settings: [
+            SettingsOptions(title: "Note Scroll DIrection", option: "", rowIcon: nil, control: .control(controls: [defaultPageTypeButton], width: 200), handler: nil)
         ]))
     }
                                
@@ -144,5 +157,16 @@ class DefaultNoteViewController: UITableViewController, UIFontPickerViewControll
     
     @objc func finishedPickingNoteDate(_ sender: UIDatePicker) {
         UserDefaults.standard.set(sender.date, forKey: "defaultNoteDate")
+    }
+    
+    func pageScrollTypeMenu() -> UIMenu {
+        let verticalScroll = UIAction(title: "Vertical", image: nil, identifier: nil, discoverabilityTitle: nil, attributes: [], state: .off) {_ in
+            UserDefaults.standard.set(PageDisplayType.vertical, forKey: "defaultPageScrollType")
+        }
+        
+        let horizontalScroll = UIAction(title: "Horizontal", image: nil, identifier: nil, discoverabilityTitle: nil, attributes: [], state: .off) {_ in
+            UserDefaults.standard.set(PageDisplayType.horizontal, forKey: "defaultPageScrollType")
+        }
+        return UIMenu(title: "Page Scroll Direction", image: nil, identifier: nil, options: [.singleSelection], children: [verticalScroll, horizontalScroll])
     }
 }
