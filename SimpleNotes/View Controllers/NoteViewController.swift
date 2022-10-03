@@ -119,7 +119,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                     break
                 case .vertical:
                 rect = CGRect(x: 0, y: 0, width: offsets.last!.maxX, height: offsets.last!.maxY)
-                scrollView.frame = CGRect(x: 0, y: 0, width: offsets.last!.maxX, height: view.frame.height)
+                scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
                     break
             default:
                 return
@@ -128,7 +128,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             drawingView.frame = rect
             pdfHolderView.frame = rect
             baseView.frame = rect
-            scrollView.contentSize = CGSize(width: 500, height: 100)
         }
         
         scrollView.minimumZoomScale = 1.0
@@ -289,7 +288,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         var offsets = [Border]()
                
         if (pageDisplayType == .vertical){
-           offsets.append(Border(minX: 0, minY: 0, maxX: view.frame.width, maxY: pageSize.height))
+            offsets.append(Border(minX: 0, minY: 0, maxX: pageSize.width, maxY: pageSize.height))
        } else {
            offsets.append(Border(minX: 0, minY: 0, maxX: pageSize.width, maxY: view.frame.height))
        }
