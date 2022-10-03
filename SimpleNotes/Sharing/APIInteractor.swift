@@ -21,4 +21,6 @@ protocol APIInteractor {
     func uploadFile(note: Data, noteName: String, folderID: String, onCompleted: @escaping (Double, String?) -> ())
     
     func getFileType(type: String) -> MimeTypes
+    
+    func downloadFile(identifier: String, folderID: String?, onCompleted: @escaping (Data?, Error?) -> ())
 }

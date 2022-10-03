@@ -9,14 +9,25 @@ import UIKit
 
 class LineTypeCollectionViewCell: UICollectionViewCell {
     
+    static let identifier = "LineTypeCollectionViewCell"
+
+    var lineType: StrokeTypes?
     
-    @IBOutlet var lineImage: UIImageView!
-    @IBOutlet var lineName: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
-        lineName.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: contentView.bounds.minX, y: contentView.bounds.midY))
+        path.addLine(to: CGPoint(x: contentView.bounds.maxX, y: contentView.bounds.midY))
+        
+        //design path in layer
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        shapeLayer.strokeColor = UIColor.systemCyan.cgColor
+        shapeLayer.lineWidth = 3.0
+        
+        self.layer.addSublayer(shapeLayer)
     }
 
 }

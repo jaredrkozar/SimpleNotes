@@ -27,6 +27,10 @@ class TableRowCell: UITableViewCell {
     var iconView: UIImageView = {
         let view = UIImageView()
         view.frame = CGRect(x: 3, y: 5, width: 35, height: 30)
+<<<<<<< HEAD
+=======
+        view.contentMode = .scaleAspectFit
+>>>>>>> ios-16
         return view
     }()
     
@@ -80,12 +84,22 @@ class TableRowCell: UITableViewCell {
     }
     
     func configureCell(with model: SettingsOptions) {
+<<<<<<< HEAD
         iconView.image = model.icon
         bgView.backgroundColor = model.iconBGColor
         titleLabel.text = model.title
         
         switch model.detailViewType {
         case .control(controls: let controls):
+=======
+        iconView.image = model.rowIcon?.icon
+        iconView.tintColor = model.rowIcon?.iconTintColor ?? UIColor.white
+        bgView.backgroundColor = model.rowIcon?.iconBGColor
+        titleLabel.text = model.title
+        
+        switch model.control {
+        case .control(controls: let controls, width: let width):
+>>>>>>> ios-16
             optionLabel.isHidden = true
             for control in controls {
                 control.sizeToFit()
@@ -96,7 +110,11 @@ class TableRowCell: UITableViewCell {
                 let constraints = [
                     control.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
                     control.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+<<<<<<< HEAD
                     control.widthAnchor.constraint(equalToConstant: 100),
+=======
+                    control.widthAnchor.constraint(equalToConstant: width),
+>>>>>>> ios-16
                     control.heightAnchor.constraint(equalToConstant: 30)
                 ]
                 
@@ -127,7 +145,11 @@ class TableRowCell: UITableViewCell {
             
             NSLayoutConstraint.activate(constraints)
         case .none:
+<<<<<<< HEAD
             print("No control")
+=======
+            return
+>>>>>>> ios-16
         }
     }
     

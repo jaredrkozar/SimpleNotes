@@ -7,6 +7,7 @@
 
 import UIKit
 
+<<<<<<< HEAD
 class ToolOptionsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
     var layoutLineType: UICollectionViewFlowLayout = {
@@ -69,142 +70,80 @@ class ToolOptionsViewController: UIViewController, UICollectionViewDataSource, U
         lineTypeCollectionView.allowsMultipleSelection = false
         return lineTypeCollectionView
     }()
+=======
+class ToolOptionsViewController: UIViewController, UICollectionViewDelegate {
+>>>>>>> ios-16
     
     var drawingview: DrawingView?
-    
-    var colors = [UIColor.systemRed, UIColor.systemOrange, UIColor.systemYellow, UIColor.systemGreen, UIColor.systemBlue, UIColor.systemCyan, UIColor.systemPurple, UIColor.systemIndigo, UIColor.systemPink, UIColor(named: "Red")]
 
-    var sizes = [1.0, 3.0, 5.0, 7.0, 10.0, 13.0, 15.0, 17.0, 21.0, 25.0]
-    
-    var lineTypes = [["normalLine", "Normal"], ["dashedLine", "Dashed"], ["dottedLine", "Dotted"]]
+    private var colorcollectionView: ColorCollectionView?
+    private var sizecollectionview: SizeCollectionView?
+    private var linetypecollectionview: LineTypeCollectionView?
     
     override func viewDidLoad() {
+<<<<<<< HEAD
         title = "Pen Settings"
         
+=======
+        
+        title = "ppl Settings"
+        view.backgroundColor = .systemGroupedBackground
+>>>>>>> ios-16
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .done, target: self, action: #selector(toggleFavoriteTool))
 
-        view.addSubview(colorCollectionView)
-   
-        view.addSubview(sizeCollectionView)
-
-        view.addSubview(lineTypeCollectionView)
+        colorcollectionView = ColorCollectionView(frame: .zero)
+        sizecollectionview = SizeCollectionView(frame: .zero)
+        linetypecollectionview = LineTypeCollectionView(frame: .zero)
         
-        colorCollectionView.delegate = self
-        colorCollectionView.dataSource = self
-        sizeCollectionView.delegate = self
-        sizeCollectionView.dataSource = self
-        lineTypeCollectionView.delegate = self
-        lineTypeCollectionView.dataSource = self
+        view.addSubview(colorcollectionView!)
+        view.addSubview(sizecollectionview!)
+        view.addSubview(linetypecollectionview!)
         
+        colorcollectionView?.translatesAutoresizingMaskIntoConstraints = false
+        sizecollectionview?.translatesAutoresizingMaskIntoConstraints = false
+        linetypecollectionview?.translatesAutoresizingMaskIntoConstraints = false
+        colorcollectionView!.delegate = self
+        sizecollectionview!.delegate = self
+        linetypecollectionview!.delegate = self
+        
+        colorcollectionView?.leadingAnchor.constraint(equalTo:view.readableContentGuide.leadingAnchor).isActive = true
+        colorcollectionView?.trailingAnchor.constraint(equalTo: currentDevice == .iphone ? view.readableContentGuide.trailingAnchor : view.centerXAnchor).isActive = true
+        colorcollectionView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        colorcollectionView?.bottomAnchor.constraint(equalTo: currentDevice == .iphone ? sizecollectionview!.topAnchor : view.lastBaselineAnchor, constant: -50).isActive = true
+        colorcollectionView?.heightAnchor.constraint(equalToConstant: 125).isActive = true
+        
+        sizecollectionview?.leadingAnchor.constraint(equalTo: currentDevice == .iphone ? view.readableContentGuide.leadingAnchor : colorcollectionView!.trailingAnchor).isActive = true
+        sizecollectionview?.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor).isActive = true
+        sizecollectionview?.topAnchor.constraint(equalTo: currentDevice == .iphone ? colorcollectionView!.bottomAnchor : view.safeAreaLayoutGuide.topAnchor).isActive = true
+        sizecollectionview?.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        sizecollectionview?.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        linetypecollectionview?.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        linetypecollectionview?.trailingAnchor.constraint(equalTo: currentDevice == .iphone ? view.safeAreaLayoutGuide.trailingAnchor : view.centerXAnchor).isActive = true
+        linetypecollectionview?.topAnchor.constraint(equalTo: currentDevice == .iphone ? sizecollectionview!.bottomAnchor : colorcollectionView!.bottomAnchor, constant: -15 ).isActive = true
+        linetypecollectionview?.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        colorcollectionView?.selectedColor = { color in
+            
+            UserDefaults.standard.set(color, forKey: "color")
+            NotificationCenter.default.post(name: Notification.Name( "changedColor"), object: nil)
+        }
+        
+        sizecollectionview?.selectedWidth = { width in
+            
+            UserDefaults.standard.set(width, forKey: "width")
+            NotificationCenter.default.post(name: Notification.Name( "changedWidth"), object: nil)
+        }
+        
+        linetypecollectionview?.selectedStroke = { strokeType in
+            
+            UserDefaults.standard.set(strokeType, forKey: "strokeType")
+            NotificationCenter.default.post(name: Notification.Name( "changedStrokeType"), object: nil)
+        }
     }
     
     @objc func toggleFavoriteTool(sender: UIBarButtonItem) {
         
         sender.image = UIImage(systemName: "star.fill")
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if(collectionView == colorCollectionView) {
-            return colors.count
-        } else if(collectionView == sizeCollectionView){
-            return sizes.count
-        } else {
-            return lineTypes.count
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if(collectionView == colorCollectionView) {
-            let cell = colorCollectionView.dequeueReusableCell(withReuseIdentifier: "ColorCollectionViewCell", for: indexPath) as! ColorCollectionViewCell
-            
-            cell.backgroundColor = colors[indexPath.item]
-            cell.layer.cornerRadius = Constants.cornerRadius
-            return cell
-        } else if(collectionView == sizeCollectionView) {
-            let cell = sizeCollectionView.dequeueReusableCell(withReuseIdentifier: "ColorCollectionViewCell", for: indexPath) as! ColorCollectionViewCell
-            
-            let circle = CAShapeLayer()
-            circle.fillColor = UIColor.label.cgColor
-            circle.path = UIBezierPath(arcCenter: CGPoint(x: cell.bounds.size.width * 0.5, y: cell.bounds.size.width * 0.5), radius: sizes[indexPath.item] * 0.75, startAngle: 0.0, endAngle: .pi * 2, clockwise: true).cgPath
-            cell.layer.cornerRadius = Constants.cornerRadius
-            cell.backgroundColor = .systemGray5
-            cell.layer.addSublayer(circle)
-   
-            return cell
-        }  else if(collectionView == lineTypeCollectionView){
-            let cell = lineTypeCollectionView.dequeueReusableCell(withReuseIdentifier: "LineTypeCollectionViewCell", for: indexPath) as! LineTypeCollectionViewCell
-            cell.backgroundColor = .systemGray5
-            cell.layer.cornerRadius = Constants.cornerRadius
-            cell.lineImage.image = UIImage(named: lineTypes[indexPath.item][0])
-            cell.lineName.text = lineTypes[indexPath.item][1]
-            return cell
-        } else {
-            let cell = lineTypeCollectionView.dequeueReusableCell(withReuseIdentifier: "lineTypeCell", for: indexPath) as! LineTypeCollectionViewCell
-            return cell
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if(collectionView == colorCollectionView) {
-            if let cell = colorCollectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
-                cell.layer.borderColor = colors[indexPath.item]?.darker(by: 40.0)?.cgColor
-                cell.layer.borderWidth = Constants.borderWidth
-                }
-            
-            UserDefaults.standard.set(colors[indexPath.item]?.toHex, forKey: "changedColor")
-            NotificationCenter.default.post(name: Notification.Name( "changedColor"), object: nil)
-        } else if(collectionView == sizeCollectionView) {
-
-            if let cell = sizeCollectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
-                cell.layer.borderColor = UIColor.gray.cgColor
-                cell.layer.borderWidth = Constants.borderWidth
-                }
-            
-            UserDefaults.standard.set(sizes[indexPath.item], forKey: "changedWidth")
-            NotificationCenter.default.post(name: Notification.Name( "changedWidth"), object: nil)
-        }  else if(collectionView == lineTypeCollectionView){
-            if let cell = collectionView.cellForItem(at: indexPath) as? LineTypeCollectionViewCell {
-                cell.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.35)
-                cell.layer.borderColor = UIColor.systemBlue.darker(by: 10.0)?.cgColor
-                cell.layer.borderWidth = Constants.borderWidth
-                }
-
-            
-            
-            if(indexPath.item==0) {
-                UserDefaults.standard.set(StrokeTypes.normal.rawValue, forKey: "changedStrokeType")
-            } else if indexPath.item==1 {
-                UserDefaults.standard.set(StrokeTypes.dashed.rawValue, forKey: "changedStrokeType")
-                
-            } else if indexPath.item==2 {
-                UserDefaults.standard.set(StrokeTypes.dotted.rawValue, forKey: "changedStrokeType")
-            }
-            
-            NotificationCenter.default.post(name: Notification.Name( "changedStrokeType"), object: nil)
-            
-        } else {
-            return
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if(collectionView == colorCollectionView) {
-            if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
-                cell.layer.borderWidth = 0.0
-                }
-        } else if(collectionView == sizeCollectionView) {
-
-            if let cell = collectionView.cellForItem(at: indexPath) as? ColorCollectionViewCell {
-                cell.backgroundColor = UIColor.systemGray5
-                cell.layer.borderWidth = 0.0
-                }
-        }  else if(collectionView == lineTypeCollectionView){
-            if let cell = collectionView.cellForItem(at: indexPath) as? LineTypeCollectionViewCell {
-                cell.backgroundColor = UIColor.systemGray5
-                cell.layer.borderWidth = 0.0
-                }
-        } else {
-            return
-        }
     }
 }

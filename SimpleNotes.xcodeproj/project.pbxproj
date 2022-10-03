@@ -7,16 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+<<<<<<< HEAD
 		02640A4828468ADB00160ED1 /* DefaultTextBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02640A4728468ADB00160ED1 /* DefaultTextBoxViewController.swift */; };
 		02640A4B2847BA9900160ED1 /* SettingsSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02640A4A2847BA9900160ED1 /* SettingsSceneDelegate.swift */; };
 		02BF14C728490BE700FA6342 /* Sections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BF14C628490BE700FA6342 /* Sections.swift */; };
+=======
+		0207566428B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */; };
+		02AEB2D828DCE3D600AF46D6 /* CustomPDFPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AEB2D728DCE3D600AF46D6 /* CustomPDFPage.swift */; };
+		02AEB2DA28DD26AA00AF46D6 /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AEB2D928DD26AA00AF46D6 /* Border.swift */; };
+		02AEB2E928E0D2A100AF46D6 /* vitb12.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 02AEB2E828E0D2A100AF46D6 /* vitb12.pdf */; };
+>>>>>>> ios-16
 		1197BA6F1902435A622C74E4 /* Pods_SimpleNotes_SimpleNotesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A3152DECD2FC30763295899 /* Pods_SimpleNotes_SimpleNotesUITests.framework */; };
 		5BBB5572D47E81F29B170B17 /* Pods_SimpleNotesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7042E8EED9EB51C046B04E5F /* Pods_SimpleNotesTests.framework */; };
 		7F0F03E7282C368D00A6B404 /* ToolOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */; };
 		7F0F03EE282E4B8000A6B404 /* LineTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0F03EC282E4B8000A6B404 /* LineTypeCollectionViewCell.swift */; };
-		7F0F03EF282E4B8000A6B404 /* LineTypeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F0F03ED282E4B8000A6B404 /* LineTypeCollectionViewCell.xib */; };
-		7F11DAB5279F351F0053D2FB /* Tags+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F11DAB3279F351F0053D2FB /* Tags+CoreDataClass.swift */; };
-		7F11DAB6279F351F0053D2FB /* Tags+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F11DAB4279F351F0053D2FB /* Tags+CoreDataProperties.swift */; };
 		7F2FE9232830AE4A006777DE /* LockNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2FE9222830AE49006777DE /* LockNote.swift */; };
 		7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3765FF278A078B00A107FF /* NoteShareSettingsViewController.swift */; };
 		7F37660F278A52DA00A107FF /* SharingLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37660E278A52DA00A107FF /* SharingLocation.swift */; };
@@ -28,11 +32,10 @@
 		7F376626278E220D00A107FF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376625278E220D00A107FF /* SettingsViewController.swift */; };
 		7F37662E278E666100A107FF /* GoogleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37662D278E666100A107FF /* GoogleInteractor.swift */; };
 		7F376630278E6A8500A107FF /* APIInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37662F278E6A8500A107FF /* APIInteractor.swift */; };
+		7F4974B32892451400A3D0FF /* LineTypeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4974B22892451400A3D0FF /* LineTypeCollectionView.swift */; };
 		7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AA9276FC22100202413 /* NoteViewController.swift */; };
 		7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */; };
 		7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498ABD2771624200202413 /* NewTagViewController.swift */; };
-		7F498AC627718CAA00202413 /* TagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498AC427718CAA00202413 /* TagTableViewCell.swift */; };
-		7F498AC727718CAA00202413 /* TagTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F498AC527718CAA00202413 /* TagTableViewCell.xib */; };
 		7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B0B27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld */; };
 		7F498B572775719E00202413 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B562775719E00202413 /* CoreData.swift */; };
 		7F53DAA6279BA51B006789F6 /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */; };
@@ -41,9 +44,15 @@
 		7F53DAAC279D4B09006789F6 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAAB279D4B09006789F6 /* TabBarController.swift */; };
 		7F53DAAE279D4B75006789F6 /* TagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAAD279D4B75006789F6 /* TagsTableViewController.swift */; };
 		7F53DAB0279D4CAD006789F6 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAAF279D4CAD006789F6 /* SidebarViewController.swift */; };
-		7F8BBDF1276D6A98005B07C1 /* ReusableTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BBDF0276D6A98005B07C1 /* ReusableTableView.swift */; };
+		7F765A67285D8ABB00C51416 /* ChangeDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F765A66285D8ABB00C51416 /* ChangeDateViewController.swift */; };
 		7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BBDFB276ED795005B07C1 /* Extensions.swift */; };
+		7F97ED5B288FA81E00DA2EB4 /* IconCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97ED5A288FA81E00DA2EB4 /* IconCollectionView.swift */; };
+		7F97ED5D28920FCA00DA2EB4 /* SizeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97ED5C28920FCA00DA2EB4 /* SizeCollectionView.swift */; };
 		7FB7C29B2815155F006C9FE2 /* HoldingClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */; };
+		7FB8120E2869554C00DC9E67 /* ColorCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB8120D2869554C00DC9E67 /* ColorCollectionView.swift */; };
+		7FBC07F4289B153600AA28CB /* TagCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBC07F3289B153600AA28CB /* TagCollectionView.swift */; };
+		7FBC07F6289B16F800AA28CB /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBC07F5289B16F800AA28CB /* TagCollectionViewCell.swift */; };
+		7FC2C11E286D64FA00D90E20 /* DefaultTextBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC2C11D286D64FA00D90E20 /* DefaultTextBoxViewController.swift */; };
 		7FC55D962791372D001DDFD5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */; };
 		7FC55DA12792ADEB001DDFD5 /* TableRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */; };
 		7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55DA327939E49001DDFD5 /* MimeTypes.swift */; };
@@ -51,9 +60,9 @@
 		7FC7FB6F2837F74000CE483E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7FB6E2837F74000CE483E /* Constants.swift */; };
 		7FC7FB71283A0C4B00CE483E /* TintPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7FB70283A0C4A00CE483E /* TintPickerViewController.swift */; };
 		7FD82DCB28233AE500ECCB3B /* Brush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD82DCA28233AE500ECCB3B /* Brush.swift */; };
+		7FDE92FC288777AA00B8E44F /* SelectColorPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE92FB288777AA00B8E44F /* SelectColorPopoverViewController.swift */; };
 		7FE45082281A56F40034928B /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45081281A56F40034928B /* CollectionReusableView.swift */; };
 		7FE45085281A67E20034928B /* ColorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45083281A67E20034928B /* ColorCollectionViewCell.swift */; };
-		7FE45086281A67E20034928B /* ColorCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FE45084281A67E20034928B /* ColorCollectionViewCell.xib */; };
 		7FE45089281E2A460034928B /* DrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45088281E2A460034928B /* DrawingView.swift */; };
 		7FE4508B281E2A8C0034928B /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE4508A281E2A8C0034928B /* Line.swift */; };
 		7FE4508D281E2AAB0034928B /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE4508C281E2AAB0034928B /* Tool.swift */; };
@@ -77,12 +86,6 @@
 		7FEBECA2276136280066F0C0 /* NoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEBECA0276136280066F0C0 /* NoteTableViewCell.swift */; };
 		7FEBECA3276136280066F0C0 /* NoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7FEBECA1276136280066F0C0 /* NoteTableViewCell.xib */; };
 		7FF31CCE2799E04F00923AE3 /* DropboxInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF31CCD2799E04F00923AE3 /* DropboxInteractor.swift */; };
-		7FF892E527A3D2070030588B /* AllTags+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF892E327A3D2070030588B /* AllTags+CoreDataClass.swift */; };
-		7FF892E627A3D2070030588B /* AllTags+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF892E427A3D2070030588B /* AllTags+CoreDataProperties.swift */; };
-		7FF892ED27A4C2F90030588B /* TextBox+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF892E927A4C2F90030588B /* TextBox+CoreDataClass.swift */; };
-		7FF892EE27A4C2F90030588B /* TextBox+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF892EA27A4C2F90030588B /* TextBox+CoreDataProperties.swift */; };
-		7FF892EF27A4C2F90030588B /* Note+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF892EB27A4C2F90030588B /* Note+CoreDataClass.swift */; };
-		7FF892F027A4C2F90030588B /* Note+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF892EC27A4C2F90030588B /* Note+CoreDataProperties.swift */; };
 		89FFEB63BB116947CD42CF9F /* Pods_SimpleNotes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2A758B7642B220E38ECD114 /* Pods_SimpleNotes.framework */; };
 /* End PBXBuildFile section */
 
@@ -104,10 +107,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+<<<<<<< HEAD
 		02640A4728468ADB00160ED1 /* DefaultTextBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextBoxViewController.swift; sourceTree = "<group>"; };
 		02640A4A2847BA9900160ED1 /* SettingsSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSceneDelegate.swift; sourceTree = "<group>"; };
 		02640A4C2847C1A100160ED1 /* SimpleNotes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleNotes.entitlements; sourceTree = "<group>"; };
 		02BF14C628490BE700FA6342 /* Sections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Sections.swift; path = SimpleNotes/Models/Sections.swift; sourceTree = SOURCE_ROOT; };
+=======
+		0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNoteSettingsViewController.swift; sourceTree = "<group>"; };
+		02AEB2D728DCE3D600AF46D6 /* CustomPDFPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPDFPage.swift; sourceTree = "<group>"; };
+		02AEB2D928DD26AA00AF46D6 /* Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
+		02AEB2E828E0D2A100AF46D6 /* vitb12.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = vitb12.pdf; path = "../../../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/2E83D7FC-2927-4084-9EA5-80BA465FE950/vitb12.pdf"; sourceTree = "<group>"; };
+>>>>>>> ios-16
 		0C1A53E84B9AB4F3086B417C /* Pods-SimpleNotes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes.debug.xcconfig"; path = "Target Support Files/Pods-SimpleNotes/Pods-SimpleNotes.debug.xcconfig"; sourceTree = "<group>"; };
 		1176E2B00F40D0F68753D3F9 /* Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig"; path = "Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		15F95CAC11D6C63B056CB79F /* Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig"; path = "Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -116,9 +126,6 @@
 		7042E8EED9EB51C046B04E5F /* Pods_SimpleNotesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleNotesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolOptionsViewController.swift; sourceTree = "<group>"; };
 		7F0F03EC282E4B8000A6B404 /* LineTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineTypeCollectionViewCell.swift; sourceTree = "<group>"; };
-		7F0F03ED282E4B8000A6B404 /* LineTypeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LineTypeCollectionViewCell.xib; sourceTree = "<group>"; };
-		7F11DAB3279F351F0053D2FB /* Tags+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tags+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		7F11DAB4279F351F0053D2FB /* Tags+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tags+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		7F2FE9222830AE49006777DE /* LockNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockNote.swift; sourceTree = "<group>"; };
 		7F3765FF278A078B00A107FF /* NoteShareSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteShareSettingsViewController.swift; sourceTree = "<group>"; };
 		7F37660E278A52DA00A107FF /* SharingLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingLocation.swift; sourceTree = "<group>"; };
@@ -130,11 +137,10 @@
 		7F376625278E220D00A107FF /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		7F37662D278E666100A107FF /* GoogleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleInteractor.swift; sourceTree = "<group>"; };
 		7F37662F278E6A8500A107FF /* APIInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIInteractor.swift; sourceTree = "<group>"; };
+		7F4974B22892451400A3D0FF /* LineTypeCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineTypeCollectionView.swift; sourceTree = "<group>"; };
 		7F498AA9276FC22100202413 /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTagsTableViewController.swift; sourceTree = "<group>"; };
 		7F498ABD2771624200202413 /* NewTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTagViewController.swift; sourceTree = "<group>"; };
-		7F498AC427718CAA00202413 /* TagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTableViewCell.swift; sourceTree = "<group>"; };
-		7F498AC527718CAA00202413 /* TagTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagTableViewCell.xib; sourceTree = "<group>"; };
 		7F498B0C27722F4E00202413 /* SimpleNotesDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleNotesDataModel.xcdatamodel; sourceTree = "<group>"; };
 		7F498B562775719E00202413 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
@@ -143,9 +149,15 @@
 		7F53DAAB279D4B09006789F6 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		7F53DAAD279D4B75006789F6 /* TagsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsTableViewController.swift; sourceTree = "<group>"; };
 		7F53DAAF279D4CAD006789F6 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
-		7F8BBDF0276D6A98005B07C1 /* ReusableTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableTableView.swift; sourceTree = "<group>"; };
+		7F765A66285D8ABB00C51416 /* ChangeDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeDateViewController.swift; sourceTree = "<group>"; };
 		7F8BBDFB276ED795005B07C1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		7F97ED5A288FA81E00DA2EB4 /* IconCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCollectionView.swift; sourceTree = "<group>"; };
+		7F97ED5C28920FCA00DA2EB4 /* SizeCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeCollectionView.swift; sourceTree = "<group>"; };
 		7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingClass.swift; sourceTree = "<group>"; };
+		7FB8120D2869554C00DC9E67 /* ColorCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionView.swift; sourceTree = "<group>"; };
+		7FBC07F3289B153600AA28CB /* TagCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionView.swift; sourceTree = "<group>"; };
+		7FBC07F5289B16F800AA28CB /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
+		7FC2C11D286D64FA00D90E20 /* DefaultTextBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextBoxViewController.swift; sourceTree = "<group>"; };
 		7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableRowCell.swift; sourceTree = "<group>"; };
 		7FC55DA327939E49001DDFD5 /* MimeTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypes.swift; sourceTree = "<group>"; };
@@ -153,9 +165,9 @@
 		7FC7FB6E2837F74000CE483E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7FC7FB70283A0C4A00CE483E /* TintPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TintPickerViewController.swift; sourceTree = "<group>"; };
 		7FD82DCA28233AE500ECCB3B /* Brush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brush.swift; sourceTree = "<group>"; };
+		7FDE92FB288777AA00B8E44F /* SelectColorPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectColorPopoverViewController.swift; sourceTree = "<group>"; };
 		7FE45081281A56F40034928B /* CollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectionReusableView.swift; path = SimpleNotes/CollectionReusableView.swift; sourceTree = SOURCE_ROOT; };
 		7FE45083281A67E20034928B /* ColorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionViewCell.swift; sourceTree = "<group>"; };
-		7FE45084281A67E20034928B /* ColorCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorCollectionViewCell.xib; sourceTree = "<group>"; };
 		7FE45088281E2A460034928B /* DrawingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingView.swift; sourceTree = "<group>"; };
 		7FE4508A281E2A8C0034928B /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		7FE4508C281E2AAB0034928B /* Tool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
@@ -183,12 +195,6 @@
 		7FEBECA0276136280066F0C0 /* NoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewCell.swift; sourceTree = "<group>"; };
 		7FEBECA1276136280066F0C0 /* NoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoteTableViewCell.xib; sourceTree = "<group>"; };
 		7FF31CCD2799E04F00923AE3 /* DropboxInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropboxInteractor.swift; sourceTree = "<group>"; };
-		7FF892E327A3D2070030588B /* AllTags+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AllTags+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		7FF892E427A3D2070030588B /* AllTags+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AllTags+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		7FF892E927A4C2F90030588B /* TextBox+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextBox+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		7FF892EA27A4C2F90030588B /* TextBox+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextBox+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		7FF892EB27A4C2F90030588B /* Note+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		7FF892EC27A4C2F90030588B /* Note+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Note+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		8A3152DECD2FC30763295899 /* Pods_SimpleNotes_SimpleNotesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleNotes_SimpleNotesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2A758B7642B220E38ECD114 /* Pods_SimpleNotes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleNotes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5F91D029CB6F76A1989F591 /* Pods-SimpleNotes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes.release.xcconfig"; path = "Target Support Files/Pods-SimpleNotes/Pods-SimpleNotes.release.xcconfig"; sourceTree = "<group>"; };
@@ -222,6 +228,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+<<<<<<< HEAD
 		02640A4628468ABB00160ED1 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,6 +245,14 @@
 				02640A4A2847BA9900160ED1 /* SettingsSceneDelegate.swift */,
 			);
 			path = Delegates;
+=======
+		02AEB2E728E0D29200AF46D6 /* pdfs */ = {
+			isa = PBXGroup;
+			children = (
+				02AEB2E828E0D2A100AF46D6 /* vitb12.pdf */,
+			);
+			name = pdfs;
+>>>>>>> ios-16
 			sourceTree = "<group>";
 		};
 		0481132D7C0C0C532551601A /* Pods */ = {
@@ -281,13 +296,23 @@
 			isa = PBXGroup;
 			children = (
 				7FC7FB6E2837F74000CE483E /* Constants.swift */,
+				02AEB2D928DD26AA00AF46D6 /* Border.swift */,
+				02AEB2D728DCE3D600AF46D6 /* CustomPDFPage.swift */,
 				7FE45081281A56F40034928B /* CollectionReusableView.swift */,
+				7FBC07F3289B153600AA28CB /* TagCollectionView.swift */,
+				7F97ED5C28920FCA00DA2EB4 /* SizeCollectionView.swift */,
+				7FB8120D2869554C00DC9E67 /* ColorCollectionView.swift */,
+				7F97ED5A288FA81E00DA2EB4 /* IconCollectionView.swift */,
+				7F4974B22892451400A3D0FF /* LineTypeCollectionView.swift */,
 				7F2FE9222830AE49006777DE /* LockNote.swift */,
 				7FC7FB6C2836D5C100CE483E /* CustomButton.swift */,
 				7F53DAA9279CC36C006789F6 /* ToastNotification.swift */,
 				7F53DAA7279BEF62006789F6 /* CloudServiceFiles.swift */,
 				7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */,
+<<<<<<< HEAD
 				7F8BBDF0276D6A98005B07C1 /* ReusableTableView.swift */,
+=======
+>>>>>>> ios-16
 				7F37660E278A52DA00A107FF /* SharingLocation.swift */,
 				7FC55DA327939E49001DDFD5 /* MimeTypes.swift */,
 				7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */,
@@ -301,11 +326,8 @@
 			isa = PBXGroup;
 			children = (
 				7F0F03EC282E4B8000A6B404 /* LineTypeCollectionViewCell.swift */,
-				7F0F03ED282E4B8000A6B404 /* LineTypeCollectionViewCell.xib */,
+				7FBC07F5289B16F800AA28CB /* TagCollectionViewCell.swift */,
 				7FE45083281A67E20034928B /* ColorCollectionViewCell.swift */,
-				7FE45084281A67E20034928B /* ColorCollectionViewCell.xib */,
-				7F498AC427718CAA00202413 /* TagTableViewCell.swift */,
-				7F498AC527718CAA00202413 /* TagTableViewCell.xib */,
 			);
 			path = Tags;
 			sourceTree = "<group>";
@@ -324,13 +346,18 @@
 			children = (
 				02640A4628468ABB00160ED1 /* Settings */,
 				7F498AA9276FC22100202413 /* NoteViewController.swift */,
+				7FDE92FB288777AA00B8E44F /* SelectColorPopoverViewController.swift */,
+				7F765A66285D8ABB00C51416 /* ChangeDateViewController.swift */,
 				7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */,
-				7FC7FB70283A0C4A00CE483E /* TintPickerViewController.swift */,
 				7F53DAAB279D4B09006789F6 /* TabBarController.swift */,
 				7F53DAAD279D4B75006789F6 /* TagsTableViewController.swift */,
 				7F53DAAF279D4CAD006789F6 /* SidebarViewController.swift */,
+<<<<<<< HEAD
 				7F376625278E220D00A107FF /* SettingsViewController.swift */,
 				02BF14C628490BE700FA6342 /* Sections.swift */,
+=======
+				7FC2C11C286D64D400D90E20 /* Settings */,
+>>>>>>> ios-16
 				7FEBEC72276135DA0066F0C0 /* ViewController.swift */,
 				7F498AAB2770398C00202413 /* EditTagsTableViewController.swift */,
 				7F498ABD2771624200202413 /* NewTagViewController.swift */,
@@ -343,17 +370,21 @@
 		7F8358F427792493007428A8 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				7FF892E927A4C2F90030588B /* TextBox+CoreDataClass.swift */,
-				7FF892EA27A4C2F90030588B /* TextBox+CoreDataProperties.swift */,
-				7FF892EB27A4C2F90030588B /* Note+CoreDataClass.swift */,
-				7FF892EC27A4C2F90030588B /* Note+CoreDataProperties.swift */,
-				7FF892E327A3D2070030588B /* AllTags+CoreDataClass.swift */,
-				7FF892E427A3D2070030588B /* AllTags+CoreDataProperties.swift */,
-				7F11DAB3279F351F0053D2FB /* Tags+CoreDataClass.swift */,
-				7F11DAB4279F351F0053D2FB /* Tags+CoreDataProperties.swift */,
 				7F498B562775719E00202413 /* CoreData.swift */,
 			);
 			path = "Core Data";
+			sourceTree = "<group>";
+		};
+		7FC2C11C286D64D400D90E20 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				7FC7FB70283A0C4A00CE483E /* TintPickerViewController.swift */,
+				7FC2C11D286D64FA00D90E20 /* DefaultTextBoxViewController.swift */,
+				0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */,
+				7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */,
+				7F376625278E220D00A107FF /* SettingsViewController.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		7FE45087281E29B40034928B /* Drawing */ = {
@@ -415,6 +446,7 @@
 				7F8BBDFB276ED795005B07C1 /* Extensions.swift */,
 				7FEBEC74276135DA0066F0C0 /* Main.storyboard */,
 				7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */,
+				02AEB2E728E0D29200AF46D6 /* pdfs */,
 				7FE45087281E29B40034928B /* Drawing */,
 				7F376618278BC78A00A107FF /* Sharing */,
 				7F8358F427792493007428A8 /* Core Data */,
@@ -555,9 +587,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F498AC727718CAA00202413 /* TagTableViewCell.xib in Resources */,
-				7FE45086281A67E20034928B /* ColorCollectionViewCell.xib in Resources */,
-				7F0F03EF282E4B8000A6B404 /* LineTypeCollectionViewCell.xib in Resources */,
+				02AEB2E928E0D2A100AF46D6 /* vitb12.pdf in Resources */,
 				7FEBEC7B276135DC0066F0C0 /* LaunchScreen.storyboard in Resources */,
 				7FEBEC78276135DC0066F0C0 /* Assets.xcassets in Resources */,
 				7FEBEC76276135DA0066F0C0 /* Main.storyboard in Resources */,
@@ -727,17 +757,19 @@
 				7F376615278B569D00A107FF /* SendText.swift in Sources */,
 				7FE45082281A56F40034928B /* CollectionReusableView.swift in Sources */,
 				7FD82DCB28233AE500ECCB3B /* Brush.swift in Sources */,
-				7FF892E527A3D2070030588B /* AllTags+CoreDataClass.swift in Sources */,
+				7F97ED5D28920FCA00DA2EB4 /* SizeCollectionView.swift in Sources */,
 				7FC55DA12792ADEB001DDFD5 /* TableRowCell.swift in Sources */,
+				7FBC07F6289B16F800AA28CB /* TagCollectionViewCell.swift in Sources */,
 				7F0F03E7282C368D00A6B404 /* ToolOptionsViewController.swift in Sources */,
 				7FE4508F281E2B3E0034928B /* CustomTextBox.swift in Sources */,
 				7FE45094281E2CE20034928B /* PenTool.swift in Sources */,
 				7FEBEC73276135DA0066F0C0 /* ViewController.swift in Sources */,
-				7FF892EF27A4C2F90030588B /* Note+CoreDataClass.swift in Sources */,
-				7FF892ED27A4C2F90030588B /* TextBox+CoreDataClass.swift in Sources */,
+				7FC2C11E286D64FA00D90E20 /* DefaultTextBoxViewController.swift in Sources */,
+				02AEB2DA28DD26AA00AF46D6 /* Border.swift in Sources */,
+				7FDE92FC288777AA00B8E44F /* SelectColorPopoverViewController.swift in Sources */,
 				7FE4509E281EEE760034928B /* TextTool.swift in Sources */,
 				7FEBEC6F276135DA0066F0C0 /* AppDelegate.swift in Sources */,
-				7F11DAB5279F351F0053D2FB /* Tags+CoreDataClass.swift in Sources */,
+				7F4974B32892451400A3D0FF /* LineTypeCollectionView.swift in Sources */,
 				7F376630278E6A8500A107FF /* APIInteractor.swift in Sources */,
 				7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */,
 				7FEBEC71276135DA0066F0C0 /* SceneDelegate.swift in Sources */,
@@ -746,21 +778,20 @@
 				7F53DAA8279BEF62006789F6 /* CloudServiceFiles.swift in Sources */,
 				7F0F03EE282E4B8000A6B404 /* LineTypeCollectionViewCell.swift in Sources */,
 				7FE45085281A67E20034928B /* ColorCollectionViewCell.swift in Sources */,
+				7F765A67285D8ABB00C51416 /* ChangeDateViewController.swift in Sources */,
 				7F2FE9232830AE4A006777DE /* LockNote.swift in Sources */,
 				7F37660F278A52DA00A107FF /* SharingLocation.swift in Sources */,
 				7FE4509A281E30A00034928B /* HelperFunctions.swift in Sources */,
-				7F11DAB6279F351F0053D2FB /* Tags+CoreDataProperties.swift in Sources */,
 				7FB7C29B2815155F006C9FE2 /* HoldingClass.swift in Sources */,
 				7F37661A278BC7B400A107FF /* PDFCreator.swift in Sources */,
-				7F8BBDF1276D6A98005B07C1 /* ReusableTableView.swift in Sources */,
 				7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */,
 				7FE45096281E2E860034928B /* CustomImageView.swift in Sources */,
 				7FEBECA2276136280066F0C0 /* NoteTableViewCell.swift in Sources */,
 				7FE4508B281E2A8C0034928B /* Line.swift in Sources */,
+				0207566428B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift in Sources */,
 				7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */,
-				7FF892E627A3D2070030588B /* AllTags+CoreDataProperties.swift in Sources */,
-				7F498AC627718CAA00202413 /* TagTableViewCell.swift in Sources */,
 				7F376617278B59B800A107FF /* SendToOtherApp.swift in Sources */,
+				7FBC07F4289B153600AA28CB /* TagCollectionView.swift in Sources */,
 				7FE4509C281E50C80034928B /* CustomSelectionView.swift in Sources */,
 				02640A4828468ADB00160ED1 /* DefaultTextBoxViewController.swift in Sources */,
 				7F498B572775719E00202413 /* CoreData.swift in Sources */,
@@ -771,18 +802,19 @@
 				7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */,
 				7FE45098281E30740034928B /* ResizableButton.swift in Sources */,
 				7F53DAAA279CC36C006789F6 /* ToastNotification.swift in Sources */,
-				7FF892F027A4C2F90030588B /* Note+CoreDataProperties.swift in Sources */,
 				7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */,
+				02AEB2D828DCE3D600AF46D6 /* CustomPDFPage.swift in Sources */,
 				7F376626278E220D00A107FF /* SettingsViewController.swift in Sources */,
 				7F53DAAE279D4B75006789F6 /* TagsTableViewController.swift in Sources */,
 				7F53DAAC279D4B09006789F6 /* TabBarController.swift in Sources */,
-				7FF892EE27A4C2F90030588B /* TextBox+CoreDataProperties.swift in Sources */,
 				7FE4508D281E2AAB0034928B /* Tool.swift in Sources */,
 				7F37662E278E666100A107FF /* GoogleInteractor.swift in Sources */,
 				7FC7FB71283A0C4B00CE483E /* TintPickerViewController.swift in Sources */,
 				7FC7FB6D2836D5C100CE483E /* CustomButton.swift in Sources */,
+				7F97ED5B288FA81E00DA2EB4 /* IconCollectionView.swift in Sources */,
 				7F376613278AC3CD00A107FF /* SendEmail.swift in Sources */,
 				7F37661E278D40F700A107FF /* FolderLocationViewController.swift in Sources */,
+				7FB8120E2869554C00DC9E67 /* ColorCollectionView.swift in Sources */,
 				7FE45091281E2BE90034928B /* ObjectView.swift in Sources */,
 				7F53DAB0279D4CAD006789F6 /* SidebarViewController.swift in Sources */,
 				02640A4B2847BA9900160ED1 /* SettingsSceneDelegate.swift in Sources */,
@@ -977,6 +1009,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1010,6 +1043,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -37,36 +37,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        
+        
 
-        let modelName: String = {
-            var systemInfo = utsname()
-            uname(&systemInfo)
-            let machineMirror = Mirror(reflecting: systemInfo.machine)
-            let identifier = machineMirror.children.reduce("") { identifier, element in
-                guard let value = element.value as? Int8, value != 0 else { return identifier }
-                return identifier + String(UnicodeScalar(UInt8(value)))
-            }
-            func mapToDevice(identifier: String) -> String {
-                #if os(iOS)
-                switch identifier {
-                default: return identifier
-                }
-                #elseif os(tvOS)
-                switch identifier {
-                default: return identifier
-                }
-                #endif
-            }
-            return mapToDevice(identifier: identifier)
-        }()
-
-        if modelName.contains("iPad") {
+        if UIDevice.current.name == "iPad" {
             currentDevice = .ipad
-        } else if modelName.contains("iPhone") {
+        } else if UIDevice.current.name == "iPhone" {
             currentDevice = .iphone
         } else {
             currentDevice = .mac
         }
+        
+        NotificationCenter.default.post(name: Notification.Name( "tintColorChanged"), object: nil)
         
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
@@ -76,6 +58,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             splitViewController.preferredSplitBehavior = .displace
 
             splitViewController.setViewController(SidebarViewController(), for: .primary)
+            splitViewController.setViewController(ViewController(), for: .supplementary)
+            splitViewController.setViewController(UINavigationController(rootViewController: NoteViewController())
+                                                  , for: .secondary)
             splitViewController.setViewController(TabBarController(), for: .compact)
             
             splitViewController.primaryBackgroundStyle = .sidebar

@@ -34,9 +34,7 @@ public class PenTool: Tool {
         self.strokeType = .normal
     }
     
-    public var drawingView: DrawingView?
-    
-    public func moved(currentPath: UIBezierPath, previousPoint: CGPoint, midpoint1: CGPoint, midpoint2: CGPoint) -> UIBezierPath? {
+    func moved(currentPath: UIBezierPath, previousPoint: CGPoint, midpoint1: CGPoint, midpoint2: CGPoint) -> UIBezierPath? {
         
         currentPath.move(to: midpoint1)
         currentPath.addQuadCurve(to: midpoint2, controlPoint:previousPoint)

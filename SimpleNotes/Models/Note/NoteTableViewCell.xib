@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,27 +17,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="414" height="179"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tags" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="prg-9p-jlF">
-                        <rect key="frame" x="107" y="123" width="66" height="38"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="66" id="Qzb-af-aPN"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tSy-fK-hrY" customClass="WSTagsField" customModule="WSTagsField">
-                        <rect key="frame" x="177" y="110" width="225" height="62"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PcY-XQ-iEk">
-                        <rect key="frame" x="106" y="10" width="257" height="58"/>
+                        <rect key="frame" x="141" y="10" width="257" height="58"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wxq-0w-aCs">
-                        <rect key="frame" x="105" y="71" width="286" height="36"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wxq-0w-aCs">
+                        <rect key="frame" x="141" y="71" width="286" height="36"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="36" id="iv0-6l-hCu"/>
                         </constraints>
@@ -45,19 +32,28 @@
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MZL-rY-ScS">
+                        <rect key="frame" x="10" y="10" width="100" height="150"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Tags" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="prg-9p-jlF">
+                        <rect key="frame" x="141" y="122" width="66" height="37.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="66" id="Qzb-af-aPN"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottomMargin" secondItem="tSy-fK-hrY" secondAttribute="bottom" constant="-4" id="00O-Sz-fip"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Wxq-0w-aCs" secondAttribute="trailing" constant="3" id="2bf-OQ-SHq"/>
                     <constraint firstItem="Wxq-0w-aCs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="85" id="9nz-uP-ANv"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="tSy-fK-hrY" secondAttribute="trailing" constant="-8" id="Hvb-wL-RYV"/>
                     <constraint firstItem="PcY-XQ-iEk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-45" id="JBm-75-Xhg"/>
                     <constraint firstItem="Wxq-0w-aCs" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ojl-VX-Xfp"/>
                     <constraint firstItem="PcY-XQ-iEk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="86" id="OvC-jH-IQm"/>
-                    <constraint firstItem="tSy-fK-hrY" firstAttribute="leading" secondItem="prg-9p-jlF" secondAttribute="trailing" constant="4" id="PhF-ft-4if"/>
                     <constraint firstAttribute="bottomMargin" secondItem="prg-9p-jlF" secondAttribute="bottom" constant="7" id="RKd-Sq-z9s"/>
                     <constraint firstAttribute="trailingMargin" secondItem="PcY-XQ-iEk" secondAttribute="trailing" constant="31" id="aFR-9c-Nfi"/>
-                    <constraint firstItem="tSy-fK-hrY" firstAttribute="top" secondItem="Wxq-0w-aCs" secondAttribute="bottom" constant="3" id="j9V-ev-MaI"/>
                     <constraint firstItem="prg-9p-jlF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="87" id="mhD-zN-zyY"/>
                     <constraint firstItem="Wxq-0w-aCs" firstAttribute="top" secondItem="PcY-XQ-iEk" secondAttribute="bottom" constant="3" id="o4r-ua-EJi"/>
                     <constraint firstItem="prg-9p-jlF" firstAttribute="top" secondItem="Wxq-0w-aCs" secondAttribute="bottom" constant="16" id="uhf-YG-KN4"/>
@@ -66,7 +62,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="noteDate" destination="Wxq-0w-aCs" id="Mqd-lk-5jt"/>
-                <outlet property="noteTags" destination="tSy-fK-hrY" id="DVJ-Yu-TiK"/>
+                <outlet property="noteThumbanil" destination="MZL-rY-ScS" id="385-Rq-vwe"/>
                 <outlet property="noteTitle" destination="PcY-XQ-iEk" id="8eT-o9-VQ9"/>
             </connections>
             <point key="canvasLocation" x="121.73913043478262" y="127.56696428571428"/>
@@ -75,9 +71,6 @@
     <resources>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

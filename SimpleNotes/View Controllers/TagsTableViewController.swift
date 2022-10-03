@@ -38,15 +38,20 @@ class TagsTableViewController: UITableViewController {
             fatalError("Unable to dequeue the settings cell.")
         }
         
+<<<<<<< HEAD
         cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", icon: UIImage(systemName: tag.symbol!)?.withTintColor(UIColor(hex: tag.color!)!, renderingMode: .alwaysOriginal), iconBGColor: nil, detailViewType: nil, handler: nil))
         
         
+=======
+       
+        cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", rowIcon: Icon(icon: UIImage(systemName: tag.symbol!), iconBGColor: .systemBackground, iconTintColor: UIColor(hex: tag.color!)), control: nil, handler: nil))
+>>>>>>> ios-16
         return cell
         
     }
     
     @objc func editTags(sender: UIBarButtonItem) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newTagVC") as! NewTagViewController
+        let vc = NewTagViewController()
         
         let navController = UINavigationController(rootViewController: vc)
         self.navigationController?.present(navController, animated: true, completion: nil)
@@ -56,7 +61,7 @@ class TagsTableViewController: UITableViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as! ViewController
         let navController = UINavigationController(rootViewController: vc)
         vc.currentTag = tags[indexPath.row].name
-        vc.viewAppeared()
+
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
@@ -66,7 +71,7 @@ class TagsTableViewController: UITableViewController {
               title: "Edit Tags", image: UIImage(systemName: "tag")) { [self] _ in
                 //gets the current dimension and splits it up into 2 parts, and saves them so they can be shown in the text fields in editPresetViewController. The editPresetViewController is then shown via a popover
                   
-                  let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newTagVC") as! NewTagViewController
+                  let vc = NewTagViewController()
                   let navController = UINavigationController(rootViewController: vc)
                   vc.isEditingTag = true
                   vc.currentTag = tags[indexPath.row]

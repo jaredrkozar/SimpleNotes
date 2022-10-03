@@ -1,8 +1,8 @@
 //
 //  Note+CoreDataClass.swift
-//  SimpleNotes
+//  
 //
-//  Created by JaredKozar on 1/28/22.
+//  Created by Jared Kozar on 9/25/22.
 //
 //
 

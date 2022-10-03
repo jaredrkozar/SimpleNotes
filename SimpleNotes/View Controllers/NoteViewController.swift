@@ -7,26 +7,74 @@
 
 import UIKit
 import WSTagsField
+import PhotosUI
+import PDFKit
 
+<<<<<<< HEAD
 class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrollViewDelegate, UIPopoverPresentationControllerDelegate {
 
     @IBOutlet var noteTitleField: UITextField!
     @IBOutlet var noteDateField: UIDatePicker!
     @IBOutlet var noteTagsField: WSTagsField!
     @IBOutlet var drawingVIew: DrawingView!
+=======
+class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrollViewDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
-    var isNoteLocked: Bool?
+    let drawingView = DrawingView(frame: .zero)
+    let pdfHolderView = UIView(frame: .zero)
+    var baseView = UIView(frame: .zero)
+    
+    private let scrollView = UIScrollView(frame: .zero)
+    
+    public var tool: Tools {
+        get {
+            return drawingView.tool ?? .pen
+        }
+        set {
+            drawingView.currentView?.isNotCurrentView()
+            if newValue == .scroll {
+                self.scrollView.panGestureRecognizer.minimumNumberOfTouches = 1
+                drawingView.isUserInteractionEnabled = true
+            } else {
+                self.scrollView.panGestureRecognizer.minimumNumberOfTouches = 2
+            }
+            drawingView.tool = newValue
+        }
+    }
+    
+    private let searchController = UISearchController(searchResultsController: nil)
+>>>>>>> ios-16
+    
     var timer: Timer?
     
     var currentNote: Note?
     
-    var textBoxes = [CustomTextBox]()
+    var noteIndex: Int!
+    
+    var noteTitle: String?
+    var noteDate: Date?
+    var isNoteLocked: Bool?
     
     var moreButton: UIBarButtonItem?
+    
+    var listOfTags = [String]()
+
+    var pdfDocument: PDFDocument?
+    
+    private var offsets = [Border]()
+    
+    private var visiblePages = [CustomPDFPage]()
+    
+    private var pageDisplayType: PageDisplayType?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.post(name: Notification.Name( "tintColorChanged"), object: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+<<<<<<< HEAD
         ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: "This is a sample toast message", progress: nil)
         
         // Do any additional setup after loading the view.
@@ -39,27 +87,216 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         noteTitleField.backgroundColor = UIColor.systemGray5
         noteTitleField.layer.cornerRadius = 6.0
         noteTitleField.text = currentNote?.title ?? ""
+=======
+        searchController.searchResultsUpdater = self
         
-        noteTagsField.cornerRadius = 6.0
-        noteTagsField.spaceBetweenTags = 3.0
-        noteTagsField.numberOfLines = 2
+        if noteIndex == nil {
+            
+                view.backgroundColor = .systemBackground
+            self.navigationItem.title = nil
+            let noNoteLabel = UILabel()
+            noNoteLabel.textAlignment = .center
+            noNoteLabel.text = "Select a note on the left, or tap the New Note button on the upper right"
+            noNoteLabel.textColor = .systemGray2
+            noNoteLabel.font = UIFont.systemFont(ofSize: 30, weight: .medium)
+            noNoteLabel.numberOfLines = 0
+            noNoteLabel.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(noNoteLabel)
+            
+            NSLayoutConstraint.activate([
+                noNoteLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+                noNoteLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                
+                noNoteLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.70),
+                
+                noNoteLabel.heightAnchor.constraint(equalToConstant: 600)
+            ])
+        } else {
+            pageDisplayType = PageDisplayType(rawValue: UserDefaults.standard.string(forKey: "defaultPageScrollType")!)
+            
+            offsets.append(contentsOf: getAllPageOffsets(page: (pdfDocument?.page(at: 0))!, numberOfPages: pdfDocument!.pageCount))
+            
+            for page in 0..<pdfDocument!.pageCount {
+                visiblePages.append(drawPage(num: page))
+            }
+            
+            drawingView.backgroundColor = .clear
+            self.navigationItem.title = fetchNoteTitle(index: noteIndex!)
+            self.navigationItem.largeTitleDisplayMode = .never
+            noteDate = fetchDate(index: noteIndex)
+>>>>>>> ios-16
         
-        noteTagsField.readOnly = true
-        noteTagsField.addTags((currentNote?.tags?.map({"\(String(describing: ($0 as AnyObject).name!))"})) ?? [String]())
+            baseView.addSubview(pdfHolderView)
+            baseView.addSubview(drawingView)
+            
+            view.addSubview(scrollView)
+            scrollView.addSubview(baseView)
+            scrollView.delegate = self
+            
+            var rect = CGRect()
+            
+            switch pageDisplayType {
+                case .horizontal:
+                rect = CGRect(x: 0, y: 0, width: offsets.last?.maxX ?? 0, height: offsets.last!.maxY)
+                scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: offsets.last!.maxY)
+                    break
+                case .vertical:
+                rect = CGRect(x: 0, y: 0, width: offsets.last!.maxX, height: offsets.last!.maxY)
+                scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+                    break
+            default:
+                return
+                }
+            
+            drawingView.frame = rect
+            pdfHolderView.frame = rect
+            baseView.frame = rect
+            scrollView.contentSize = rect.size
+        }
         
-        noteDateField.date = currentNote?.date ?? Date.now
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 3.5
+    
+        // Do any additional setup after loading the view.
         
+        tool = .pen
+        
+<<<<<<< HEAD
         let shareButton = UIBarButtonItem(title: nil, image: UIImage(systemName: "square.and.arrow.up"), primaryAction: nil, menu: shareButtonTapped(menuOption: .displayInline))
         
                                             
         moreButton = UIBarButtonItem(title: "More", image: UIImage(systemName: "ellipsis.circle"), primaryAction: nil, menu: moreButtonTapped())
+=======
+        drawingView.currentPen = PenTool(width: 20.0, color: .systemPink, opacity: 1.0, blendMode: .normal, strokeType: .normal)
         
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .default)
+        drawingView.currentHighlighter = PenTool(width: 20.0, color: .systemYellow, opacity: 0.6, blendMode: .normal, strokeType: .normal)
         
-        var config = UIImage.SymbolConfiguration(paletteColors: [.systemBlue, .systemYellow])
+        let undoButton = UIBarButtonItem(title: "Undo", image: UIImage(systemName: "arrow.uturn.left.circle"), target: self, action: #selector(undoStroke))
+        
+        let redoButton = UIBarButtonItem(title: "Redo", image: UIImage(systemName: "arrow.uturn.right.circle"), target: self, action: #selector(redoStroke))
+        
+        let addMedia = UIBarButtonItem(title: "Add Media", image: UIImage(systemName: "plus"), target: self, action: nil, menu: addMediaMenu())
+        
+        navigationItem.rightBarButtonItems = [addMedia, redoButton, undoButton]
+>>>>>>> ios-16
+        
+        self.navigationItem.style = .editor
+                    
+        for menuTool in Tools.allCases {
+            navigationItem.centerItemGroups.append(UIBarButtonItem(title: menuTool.name, image: menuTool.icon, primaryAction: UIAction { _ in
+                
+                
+                if (menuTool == self.tool) && (menuTool.optionsView != nil) {
+                    
+                    switch currentDevice {
+                    case .iphone:
+                        
+                        let navigationController = UINavigationController(rootViewController: menuTool.optionsView!)
+            
+                        if let picker = navigationController.presentationController as? UISheetPresentationController {
+                            picker.detents = [.medium()]
+                            picker.prefersGrabberVisible = true
+                            picker.preferredCornerRadius = 5.0
+                        }
+                        self.present(navigationController, animated: true, completion: nil)
+                        
+                    case .ipad, .mac:
+                        let navigationController = UINavigationController(rootViewController: menuTool.optionsView!)
+                        navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
+                        navigationController.preferredContentSize = CGSize(width: 500, height: 250)
+                        navigationController.popoverPresentationController?.barButtonItem = self.navigationItem.centerItemGroups[menuTool.rawValue].barButtonItems.first
+                        self.present(navigationController, animated: true, completion: nil)
+                    case .none:
+                        print("NONE")
+                    }
+                    
+                } else {
+                    self.tool = menuTool
+                }
+            }).creatingMovableGroup(customizationIdentifier: tool.name))
+        }
+        
+        navigationItem.renameDelegate = self
+        navigationItem.titleMenuProvider = { suggestedActions in
+            
+            var children = suggestedActions
+            children += [
+                
+                UIAction(title: "Edit Tags", subtitle: "\(fetchTagsForNote(index: self.noteIndex).count) tags", image: UIImage(systemName: "tag"), identifier: .none, discoverabilityTitle: "Change the tags in this note",  attributes: [], state: .off) { _ in
+                    
+                    let vc = EditTagsTableViewController()
+                    let navController = UINavigationController(rootViewController: vc)
+                    vc.index = self.noteIndex
+                    
+                    switch currentDevice {
+                    case .iphone:
+                        self.present(navController, animated: true, completion: nil)
+                    case .ipad, .mac:
+                        navController.modalPresentationStyle = UIModalPresentationStyle.popover
+                        navController.preferredContentSize = CGSize(width: 375, height: 300)
+                        navController.popoverPresentationController?.sourceView = self.view
+                        self.present(navController, animated: true, completion: nil)
+                    case .none:
+                        return
+                    }
+                },
+                
+                UIAction(title: "Go to Page", subtitle: nil, image: UIImage(systemName: "rectangle.portrait.and.arrow.right"), identifier: .none, discoverabilityTitle: "Go to a specific page in this note",  attributes: [], state: .off) {_ in
+                    
+                    let ac = UIAlertController(title: "Go to Page", message: "There are \(self.pdfDocument!.pageCount) pages in this note.", preferredStyle: .alert)
+                    ac.addTextField()
+                    
+                    ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+                        
+                    ac.addAction(UIAlertAction(title: "OK", style: .default) { [weak self, weak ac] _ in
+                        let textField = ac?.textFields![0]
+                        textField?.keyboardType = .decimalPad
+                        let numEntered = Int(textField!.text!)
+                        if numEntered! <= self!.pdfDocument!.pageCount {
+                            self!.goToPage(pageNum: numEntered!)
+                        }
 
-        var newconfig = config.applying(UIImage.SymbolConfiguration(font: .systemFont(ofSize: 42.0)))
+                    })
+                    self.present(ac, animated: true)
+                    
+                },
+                UIAction(title: fetchNoteLockedStatus(index: self.noteIndex!) == true ? "Unlock Note" : "Lock Note", subtitle: "", image: fetchNoteLockedStatus(index: self.noteIndex!) == true ? UIImage(systemName: "lock.open") : UIImage(systemName: "lock"), identifier: .none, discoverabilityTitle: "", attributes: [], state: .off) {_ in
+                    LockNote().authenticate(title: self.isNoteLocked! ? "Lock this note" : "Unlock this note", onCompleted: {result, error in
+                        
+                        if error == nil {
+                            
+                            self.isNoteLocked = !self.isNoteLocked!
+                            saveNoteLock(isLocked: self.isNoteLocked!, index: self.noteIndex!)
+                        } else {
+                            ToastNotification(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", progress: 0.25)
+                        }
+                    })
+                },
+                
+                UIAction(title: "Change Date", subtitle: self.noteDate?.formatted(), image: UIImage(systemName: "calender"), identifier: .none, discoverabilityTitle: "String? = nil",  attributes: [], state: .off) { _ in
+                    
+                    let vc = ChangeDateViewController()
+                    let navController = UINavigationController(rootViewController: vc)
+                    vc.source = self
+                    vc.noteDate = self.noteDate
+                    switch currentDevice {
+                    case .iphone:
+                        self.present(navController, animated: true, completion: nil)
+                    case .ipad, .mac:
+                        navController.modalPresentationStyle = UIModalPresentationStyle.popover
+                        navController.preferredContentSize = CGSize(width: 375, height: 500)
+                        navController.popoverPresentationController?.sourceView = self.view
+                        self.present(navController, animated: true, completion: nil)
+                    case .none:
+                        return
+                    }
+                },
+                
+                self.shareButtonTapped()
+            ]
 
+<<<<<<< HEAD
         //iPhone only tools
         let currentTool = UIButton()
         currentTool.setImage(UIImage(named: "penIcon")?.applyingSymbolConfiguration(newconfig), for: .normal)
@@ -117,41 +354,132 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             self.navigationItem.leftBarButtonItem = shareButton
         case .none:
             return
+=======
+            return UIMenu(children: children)
+>>>>>>> ios-16
         }
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(changeStrokeType(notification:)), name: Notification.Name("changedStrokeType"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(changeSize(notification:)), name: Notification.Name("changedWidth"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(changeColor(notification:)), name: Notification.Name("changedColor"), object: nil)
         
-        timer = Timer.scheduledTimer(timeInterval: 2.5, target: self, selector: #selector(autoSaveNote), userInfo: nil, repeats: true)
+        NotificationCenter.default.addObserver(self, selector: #selector(tintColorChanged(notification:)), name: Notification.Name("tintColorChanged"), object: nil)
+        
+        timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(autoSaveNote), userInfo: nil, repeats: true)
     }
     
-    @objc func showPenMenu(sender: UIButton) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "penMenu") as! ToolOptionsViewController
-        let navController = UINavigationController(rootViewController: vc)
-    
-        present(navController, animated: true, completion: nil)
+    func goToPage(pageNum: Int) {
+        scrollView.setContentOffset(CGPoint(x: self.offsets[pageNum - 1].minX, y: self.offsets[pageNum - 1].minY), animated: true)
     }
     
-    @objc func cancelButtonTapped(sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+    func getAllPageOffsets(page: PDFPage, numberOfPages: Int) -> [Border] {
+        
+        let pageSize = CGSize(width: (page.bounds(for: .mediaBox).width), height: (page.bounds(for: .artBox).height))
+        var offsets = [Border]()
+               
+        if (pageDisplayType == .vertical){
+            offsets.append(Border(minX: 0, minY: 0, maxX: pageSize.width, maxY: pageSize.height))
+       } else {
+           offsets.append(Border(minX: 0, minY: 0, maxX: pageSize.width, maxY: view.frame.height))
+       }
+        
+       for counter in  1 ..< numberOfPages{
+           var upPage = pdfDocument!.page(at: counter)
+           var lastPage = offsets.last
+           
+           let border: Border
+           switch pageDisplayType {
+           case .horizontal:
+               border = Border(minX: lastPage!.maxX, minY: lastPage!.minY, maxX: lastPage!.maxX + upPage!.bounds(for: .artBox).width, maxY: lastPage!.maxY)
+               break
+           case .vertical:
+               border = Border(minX: lastPage!.minX, minY: offsets[counter - 1].maxY, maxX: lastPage!.maxX, maxY: lastPage!.maxY + (upPage!.bounds(for: .artBox).height))
+               break
+           default:
+               border = Border(minX: pdfHolderView.bounds.minX, minY: pdfHolderView.bounds.minY, maxX: pdfHolderView.bounds.maxX, maxY: pdfHolderView.bounds.maxY)
+           }
+           print("border")
+           offsets.append(border)
+       }
+       return offsets
+    }
+    
+    func drawPage(num: Int) -> CustomPDFPage {
+        let page = pdfDocument?.page(at: num)
+        let pdfpage = CustomPDFPage(frame: CGRect(x: offsets[num].minX, y: offsets[num].minY + 20, width: offsets[num].maxX - offsets[num].minX, height: offsets[num].maxY - offsets[num].minY), page: page, pageNumber: num)
+        pdfHolderView.addSubview(pdfpage)
+        return pdfpage
+    }
+    
+    @objc func undoStroke(_ sender: UIBarButtonItem) {
+        drawingView.undoLastStroke()
+        
+        sender.isEnabled = undoManager!.canUndo
+        navigationItem.rightBarButtonItems![1].isEnabled = undoManager!.canRedo
+    }
+    
+    @objc func redoStroke(_ sender: UIBarButtonItem) {
+        drawingView.redoLastStroke()
+        sender.isEnabled = undoManager!.canRedo
+        navigationItem.rightBarButtonItems![2].isEnabled = undoManager!.canUndo
+    }
+    
+    @available(iOS 16.0, *)
+    func shareButtonTapped() -> UIMenu {
+         var locations = [UIAction]()
+         let vc = NoteShareSettingsViewController()
+         let navigationController = UINavigationController(rootViewController: vc)
+         
+         for location in SharingLocation.allCases {
+             locations.append( UIAction(title: "\(location.viewTitle)", image: location.icon, identifier: nil, attributes: []) { _ in
+
+                 switch currentDevice {
+                 case .iphone:
+                     if let picker = navigationController.presentationController as? UISheetPresentationController {
+                        picker.detents = [.medium()]
+                        picker.prefersGrabberVisible = true
+                        picker.preferredCornerRadius = 7.0
+                     }
+                 case .ipad, .mac:
+                     navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
+                   navigationController.preferredContentSize = CGSize(width: 375, height: 300)
+                     navigationController.popoverPresentationController?.sourceItem = self.drawingView
+                     
+                 
+                 case .none:
+                     return
+                 }
+                 
+                 vc.currentNoteView = self.exportAsPDF()
+                 vc.sharingLocation = location
+                 vc.currentNoteTitle = self.currentNote?.title
+                 self.present(navigationController, animated: true, completion: nil)
+              })
+           }
+         
+        return UIMenu(title: "Share Note", subtitle: nil, image: nil, identifier: nil, options: [], children: locations)
+         
+     }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return baseView
     }
     
     @objc func autoSaveNote() {
-        saveNote(currentNote: currentNote, title: noteTitleField.text!, textboxes: textBoxes, date: noteDateField.date, tags: noteTagsField.tags.map({$0.text}), isLocked: isNoteLocked ?? false)
-        
-        NotificationCenter.default.post(name: Notification.Name("UpdateNotesTable"), object: nil)
-        
+        if currentNote != nil {
+
+            NotificationCenter.default.post(name: Notification.Name("UpdateNotesTable"), object: nil)
+        }
     }
     
     
     @objc func editTagsButtonTapped(_ sender: Any) {
         
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
+        let vc = EditTagsTableViewController()
         let navController = UINavigationController(rootViewController: vc)
-        vc.newNoteVC = noteTagsField
+        vc.index = noteIndex
         
         switch currentDevice {
         case .iphone:
@@ -166,43 +494,13 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         }
     }
     
-    func shareButtonTapped(menuOption: UIMenu.Options) -> UIMenu {
-        var locations = [UIAction]()
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "shareNoteVC") as! NoteShareSettingsViewController
-        let navigationController = UINavigationController(rootViewController: vc)
-        
-        for location in SharingLocation.allCases {
-            locations.append( UIAction(title: "\(location.viewTitle)", image: location.icon, identifier: nil, attributes: []) { _ in
-
-                switch currentDevice {
-                case .iphone:
-                    if let picker = navigationController.presentationController as? UISheetPresentationController {
-                       picker.detents = [.medium()]
-                       picker.prefersGrabberVisible = true
-                       picker.preferredCornerRadius = 7.0
-                    }
-                case .ipad, .mac:
-                    navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
-                  navigationController.preferredContentSize = CGSize(width: 375, height: 300)
-                    navigationController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
-                    
-                
-                case .none:
-                    return
-                }
-                
-                vc.currentNoteView = self.drawingVIew.createPDF() as Data
-                vc.currentNote = self.currentNote
-                vc.sharingLocation = location
-                
-                self.present(navigationController, animated: true, completion: nil)
-             })
-          }
-        
-        return UIMenu(title: "Share Note", subtitle: nil, image: nil, identifier: nil, options: menuOption, children: locations)
-        
+    func dateChanged(date: Date) {
+        noteDate = date
+        saveDate(date: date, index: noteIndex)
+        NotificationCenter.default.post(name: Notification.Name("reloadNotesTable"), object: nil)
     }
     
+<<<<<<< HEAD
     func changeToolsMenu() -> UIMenu {
         var toolsMenu = [UIAction]()
         for tool in Tools.allCases {
@@ -250,63 +548,156 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             } else {
                 drawingVIew.tool = .eraser
             }
-        }
-    }
-    
-    @objc func changeStrokeType(notification: Notification) {
-        if drawingVIew.tool == .pen {
-            drawingVIew.currentPen?.strokeType = StrokeTypes(rawValue: UserDefaults.standard.integer(forKey: "changedStrokeType")) ?? .normal
-            
-        } else {
-            drawingVIew.currentHighlighter?.strokeType = StrokeTypes(rawValue: UserDefaults.standard.integer(forKey: "changedStrokeType")) ?? .normal
-        }
+=======
+    @objc func tintColorChanged(notification: Notification) {
+        navigationController?.navigationBar.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "defaultTintColor")!))
+  
+        self.view.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "defaultTintColor")!))
     }
     
     @objc func changeColor(notification: Notification) {
-        if drawingVIew.tool == .pen {
-            drawingVIew.currentPen?.color = UIColor(hex: UserDefaults.standard.string(forKey: "changedColor")!)!
+        if tool == .pen {
+            drawingView.currentPen?.color = UIColor(hex: UserDefaults.standard.string(forKey: "color")!)!
         } else {
-            drawingVIew.currentHighlighter?.color = UIColor(hex: UserDefaults.standard.string(forKey: "changedColor")!)!
+            drawingView.currentHighlighter?.color = UIColor(hex: UserDefaults.standard.string(forKey: "color")!)!
         }
     }
     
     @objc func changeSize(notification: Notification) {
-        if drawingVIew.tool == .pen {
-            drawingVIew.currentPen?.width = UserDefaults.standard.double(forKey: "changedWidth") 
+        if tool == .pen {
+            drawingView.currentPen?.width = UserDefaults.standard.double(forKey: "width")
         } else {
-            drawingVIew.currentHighlighter?.width = UserDefaults.standard.double(forKey: "changedWidth")
+            drawingView.currentHighlighter?.width = UserDefaults.standard.double(forKey: "width")
+>>>>>>> ios-16
         }
     }
     
-    @objc func moreButtonTapped() -> UIMenu {
-    
-        var showTags = UIAction(title: "Tags", subtitle: "", image: UIImage(systemName: "tag"), identifier: .none, discoverabilityTitle: "", attributes: [], state: .off, handler: {_ in
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editTagsVC") as! EditTagsTableViewController
-            let navController = UINavigationController(rootViewController: vc)
-            vc.newNoteVC = self.noteTagsField
+    @objc func changeStrokeType(notification: Notification) {
+        if tool == .pen {
+            drawingView.currentPen?.strokeType = StrokeTypes(rawValue: UserDefaults.standard.integer(forKey: "strokeType")) ?? .normal
             
-            self.present(navController, animated: true, completion: nil)
-        })
-        
-        let lockTitle = self.isNoteLocked ?? false ? "Unlock note" : "Lock note"
-        let lockImage = self.isNoteLocked! ? "lock.open" : "lock"
-        
-        var lockNote = UIAction(title: lockTitle, subtitle: "", image: UIImage(systemName: lockImage), identifier: .none, discoverabilityTitle: "", attributes: [], state: .off, handler: {_ in
-            LockNote().authenticate(title: self.isNoteLocked! ? "Lock this note" : "Unlock this note", onCompleted: {result, error in
-                
-                if error == nil {
-                    
-                    self.isNoteLocked = !self.isNoteLocked!
-                    self.moreButton?.menu = self.moreButtonTapped()
-                } else {
-                    ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: nil, progress: 4.0)
-                }
-            })
-        })
-        
-        return UIMenu(title: "", children: [shareButtonTapped(menuOption: []), lockNote, showTags])
+        } else {
+            drawingView.currentHighlighter?.strokeType = StrokeTypes(rawValue: UserDefaults.standard.integer(forKey: "strokeType")) ?? .normal
+        }
     }
     
+    func exportAsPDF() -> Data {
+        let newPDF = NSMutableData()
+        UIGraphicsBeginPDFContextToData(newPDF, CGRect(x: 0,y: 0, width: scrollView.contentSize.width, height: scrollView.contentSize.height), nil)
+        let context = UIGraphicsGetCurrentContext()
+        scrollView.setContentOffset(.zero, animated: false)
+        for counter in 0 ..< pdfDocument!.pageCount {
+            print(offsets[counter].minX)
+            scrollView.setContentOffset(CGPoint(x: offsets[counter].minX, y: offsets[counter].minY), animated: false)
+                        switch self.pageDisplayType {
+                        case .horizontal:
+                            scrollView.frame = CGRect(x: scrollView.frame.minX, y: scrollView.frame.minY, width: (offsets[counter].maxX - offsets[counter].minX), height: scrollView.frame.height)
+                        case .vertical:
+                            scrollView.frame = CGRect(x: scrollView.frame.minX, y: scrollView.frame.minY, width: scrollView.frame.width, height: (offsets[counter].maxY - offsets[counter].minY))
+                        case .none:
+                            scrollView.frame = .zero
+                        }
+                        
+                        UIGraphicsBeginPDFPageWithInfo(CGRect(x: 0, y: 0, width: scrollView.frame.width, height: scrollView.frame.height), nil)
+            
+                        context!.translateBy(x: -offsets[counter].minX, y: -offsets[counter].minY)
+            
+            scrollView.layer.render(in: context!)
+        }
+        
+        UIGraphicsEndPDFContext()
+        return newPDF as Data
+    }
+}
+
+extension NoteViewController: UINavigationItemRenameDelegate {
+    
+    func navigationItem(_: UINavigationItem, didEndRenamingWith title: String) {
+        navigationItem.title = title
+        saveTitle(title: title, index: noteIndex!)
+        NotificationCenter.default.post(name: Notification.Name("reloadNotesTable"), object: nil)
+        
+    }
+    
+    @objc func addMediaMenu() -> UIMenu {
+        let presentPhotosPicker = UIAction(title: "Photos Library", image: UIImage(systemName: "photo"), identifier: nil, discoverabilityTitle: nil, attributes: [], state: .on) { _ in
+            var configuration = PHPickerConfiguration()
+            configuration.filter = .images
+            let picker = PHPickerViewController(configuration: configuration)
+            picker.delegate = self
+            self.present(picker, animated: true)
+        }
+        
+        let presentCameraPicker = UIAction(title: "Camera", image: UIImage(systemName: "camera"), identifier: nil, discoverabilityTitle: nil, attributes: [], state: .on) {_ in
+            let vc = UIImagePickerController()
+            vc.sourceType = .camera
+            vc.allowsEditing = true
+            vc.delegate = self
+            self.present(vc, animated: true)
+        }
+        
+        return UIMenu(title: "Add Media", image: nil, identifier: nil, options: .singleSelection, children: [presentPhotosPicker, presentCameraPicker])
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (visiblePages[0].pageNumber! > 0) {
+            print(visiblePages.last?.pageNumber)
+            self.visiblePages.last?.removeFromSuperview()
+            self.visiblePages.removeLast()
+            self.visiblePages.insert(self.drawPage(num: visiblePages[0].pageNumber! - 1), at: 0)
+        }
+        
+        if ((visiblePages.last?.pageNumber)! < pdfDocument!.pageCount - 1) {
+            self.visiblePages[0].removeFromSuperview()
+            self.visiblePages.removeFirst()
+            self.visiblePages.append(self.drawPage(num: (visiblePages.last?.pageNumber)! + 1))
+            print(visiblePages.count)
+        }
+    }
+}
+
+extension NoteViewController: PHPickerViewControllerDelegate {
+    //Image Picker
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        
+        if let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
+                   
+                   itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, error in
+                       DispatchQueue.main.async {
+                           guard let self = self, let image = image as? UIImage else { return }
+                          
+                           let newRect = image.resizeImage(dimension: 400)
+                           
+                           self.drawingView.insertImage(frame: CGRect(x: (newRect.width + (-1 * CGFloat(newRect.width) / 2)), y: (newRect.height + (-1 * CGFloat(newRect.height) / 2)), width: newRect.width, height: newRect.height), image: image)
+                           
+                           picker.dismiss(animated: true)
+                       }
+                   }
+               }
+    }
+    
+    func addString(string: String) {
+        listOfTags.append(string)
+    }
+    
+    
+}
+
+extension NoteViewController: UISearchResultsUpdating {
+    func fetchQuerySuggestions(for searchController: UISearchController) -> [(String, UIImage?)] {
+        let queryText = searchController.searchBar.text
+        // Here you would decide how to transform the queryText into search results. This example just returns something fixed.
+        return [("Sample Suggestion", UIImage(systemName: "rectangle.and.text.magnifyingglass"))]
+    }
+    
+    func updateSearch(_ searchController: UISearchController, query: String) {
+        // This method is used to update the search UI from our query text change
+        // You should also update internal state related to when the query changes, as you might for when the user changes the query by typing.
+        searchController.searchBar.text = query
+    }
+    
+<<<<<<< HEAD
     func presentSettingsStoryboard(identifier: String, source: UIButton) {
         let vc = ToolOptionsViewController()
         let navigationController = UINavigationController(rootViewController: vc)
@@ -329,4 +720,24 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         }
         self.present(navigationController, animated: true)
     }
+=======
+    func updateSearchResults(for searchController: UISearchController) {
+        if #available(iOS 16.0, *) {
+            let querySuggestions = self.fetchQuerySuggestions(for: searchController)
+            searchController.searchSuggestions = querySuggestions.map { name, icon in
+                UISearchSuggestionItem(localizedSuggestion: name, localizedDescription: nil, iconImage: icon)
+            }
+        }
+    }
+
+    @available(iOS 16.0, *)
+    func updateSearchResults(for searchController: UISearchController, selecting searchSuggestion: UISearchSuggestion) {
+        if #available(iOS 16.0, *) {
+            if let suggestion = searchSuggestion.localizedSuggestion {
+                updateSearch(searchController, query: suggestion)
+            }
+        }
+    }
+    
+>>>>>>> ios-16
 }

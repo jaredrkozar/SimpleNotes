@@ -20,6 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Override point for customization after application launch.
         GIDSignIn.sharedInstance().clientID = "968933311910-9e4an07ni7ugfji5i8t6cfkj18h1861m.apps.googleusercontent.com"
         DropboxClientsManager.setupWithAppKey("4plzdchy13fkopr")
+    
+        if isAppAlreadyLaunchedOnce() == false {
+            UserDefaults.standard.set(UIColor.systemBlue.toHex, forKey: "defaultTintColor")
+            UserDefaults.standard.set(UIColor.label.toHex, forKey: "defaultTextColor")
+            UserDefaults.standard.set("New Note", forKey: "defaultNoteTitle")
+            UserDefaults.standard.set(16.0, forKey: "defaultFontSize")
+            UserDefaults.standard.set(Date(), forKey: "defaultNoteDate")
+            UserDefaults.standard.set("Vertical", forKey: "defaultPageScrollType")
+        }
         return true
     }
 
@@ -28,6 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
+<<<<<<< HEAD
         if options.userActivities.first?.activityType == "showSettings" {
            let config = UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
            config.delegateClass = SettingsSceneDelegate.self
@@ -35,6 +45,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         } else {
            return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
         }
+=======
+        
+        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+>>>>>>> ios-16
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
@@ -94,7 +108,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     // Open URL
     func application(_ application: UIApplication,
                       open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+<<<<<<< HEAD
         
+=======
+>>>>>>> ios-16
          var handled: Bool
 
         handled = GIDSignIn.sharedInstance().handle(url)

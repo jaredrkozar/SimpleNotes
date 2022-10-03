@@ -9,24 +9,26 @@ import UIKit
 
 class FolderLocationViewController: UITableViewController {
     
-    var noteView: NoteViewController?
-    
     var location: SharingLocation?
     var currentfolder: String?
     var allFiles = [CloudServiceFiles]()
+    var serviceType: CloudType?
+    var returnPDFData: ((_ returnData: Data, _ title: String)->())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         title = "Folders"
         
-        let nib = UINib(nibName: "TableRowCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "TableRowCell")
+        tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Select Folder", style: .done, target: self, action: #selector(selectFolderButton))
+        if serviceType == .upload {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Select Folder", style: .done, target: self, action: #selector(selectFolderButton))
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
+<<<<<<< HEAD
     
         if location == .googledrive {
            
@@ -45,7 +47,21 @@ class FolderLocationViewController: UITableViewController {
                 self.tableView.reloadData()
                 
             })
+=======
+
+        guard location!.currentLocation.isSignedIn else {
+            location!.currentLocation.signIn(vc: self)
+            return
+>>>>>>> ios-16
         }
+        print(currentfolder)
+        location?.currentLocation.fetchFiles(folderID: (currentfolder ?? location?.currentLocation.defaultFolder)!, onCompleted: {
+            (files, error) in
+            self.allFiles = files!
+            
+            self.tableView.reloadData()
+            
+        })
     }
     // MARK: - Table view data source
 
@@ -65,12 +81,27 @@ class FolderLocationViewController: UITableViewController {
             fatalError("Unable to dequeue the note cell.")
         }
          
+<<<<<<< HEAD
         let file = allFiles[indexPath.row]
        
         cell.configureCell(with: SettingsOptions(title: file.name, option: "nil", icon: file.type.icon, iconBGColor: .systemRed, detailViewType: nil, handler: nil))
+=======
+        var file = allFiles[indexPath.row]
+        
+        
+        cell.configureCell(with: SettingsOptions(title: file.name, option: "", rowIcon: Icon(icon: file.type.icon, iconBGColor: .systemBackground, iconTintColor: file.type.tintColor), control: nil, handler: nil))
+>>>>>>> ios-16
         
         if file.type.typeURL == "folder" {
             cell.accessoryType = .disclosureIndicator
+        }
+        
+        if serviceType == .download {
+            if file.type == .pdf || file.type == .folder {
+                cell.isUserInteractionEnabled = true
+            } else {
+                cell.isUserInteractionEnabled = false
+            }
         }
         
         return cell
@@ -79,12 +110,22 @@ class FolderLocationViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let selectedFile = allFiles[indexPath.row]
-
+        
         if  selectedFile.type == .folder {
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "folderLocationsVC") as! FolderLocationViewController
+            let vc = FolderLocationViewController()
             vc.location = location
             vc.currentfolder = selectedFile.folderID
+            vc.serviceType = serviceType
             self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        if serviceType == .download {
+            if selectedFile.type == .pdf {
+                location?.currentLocation.downloadFile(identifier: selectedFile.folderID, folderID: selectedFile.folderID, onCompleted: {(files, error) in
+                    self.dismiss(animated: true)
+                    self.returnPDFData!(files!, selectedFile.name)
+                })
+            }
         }
     }
 

@@ -12,29 +12,40 @@ import UIKit
     func currentTextBoxColor() -> UIColor
 }
 
-open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UIScrollViewDelegate {
+class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UIScrollViewDelegate {
 
     public weak var delegate: DrawingViewDelegate?
     
     public var objectTintColor: UIColor?
     
     public var tool: Tools?
+    private var lastLine: Line?
     
+<<<<<<< HEAD
     private var selection: Line?
     
     public var selectedTool: Tool {
+=======
+    public var selectedTool: Tool? {
+>>>>>>> ios-16
         if self.tool == .pen {
             return  currentPen ?? PenTool(width: 4.0, color: UIColor.systemBlue, opacity: 1.0, blendMode: .normal, strokeType: .normal)
         } else if self.tool == .highlighter {
             return currentHighlighter ?? PenTool(width: 4.0, color: UIColor.systemYellow, opacity: 0.8, blendMode: .normal, strokeType: .normal)
         } else if self.tool == .eraser {
+<<<<<<< HEAD
             return PenTool(width: 5.0, color: UIColor.gray, opacity: 1.0, blendMode: .clear, strokeType: .normal)
         } else if self.tool == .lasso {
             return currentLasso
+=======
+            return PenTool(width: 4.0, color: UIColor.clear, opacity: 1.0, blendMode: .normal, strokeType: .normal)
+        } else if self.tool == .lasso {
+            return PenTool(width: 4.0, color: UIColor.systemBlue, opacity: 1.0, blendMode: .normal, strokeType: .normal)
+>>>>>>> ios-16
         } else if self.tool == .text {
             return TextTool()
         } else {
-            return PenTool()
+            return nil
         }
     }
     
@@ -47,20 +58,11 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
     public var canCreateTextBox: Bool = true
     private var isSelectingLine: Bool = false
     
-    private var shape: Shapes?
-    
-    public var selectedShape: Shapes? {
-        get {
-            return shape
-        }
-        set {
-            tool = nil
-            self.shape = newValue
-        }
-    }
+    private var drawingStraightLine: Bool = false
     
     var menu = UIMenuController.shared
     var lines = [Line]()
+    
     var textBoxes = [CustomTextBox]()
     var images = [CustomImageView]()
     var currentView: ObjectView?
@@ -75,15 +77,52 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
     var shapeWidth: Double?
     
     private let forceSensitivity: CGFloat = 9.0
+<<<<<<< HEAD
                     
     func setup() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tappedScreen(_:)))
           self.addGestureRecognizer(tapGesture)
           self.layer.drawsAsynchronously = true
 
+=======
+         
+    private lazy var longPressGesture: UILongPressGestureRecognizer = {
+        let press = UILongPressGestureRecognizer(target: self, action: #selector(drawStraightLine(_:)))
+        press.cancelsTouchesInView = false
+        press.delegate = self
+        press.numberOfTouchesRequired = 1
+        press.minimumPressDuration = 0.4
+        return press
+    }()
+    
+    private lazy var tapGesture: UITapGestureRecognizer = {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tappedScreen(_:)))
+        tap.delegate = self
+        tap.cancelsTouchesInView = false
+        tap.numberOfTouchesRequired = 1
+        return tap
+    }()
+    
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.frame = frame
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.isMultipleTouchEnabled = true
+        self.isUserInteractionEnabled = true
+        self.addGestureRecognizer(tapGesture)
+        self.layer.drawsAsynchronously = true
+
+        self.addGestureRecognizer(longPressGesture)
+        
+>>>>>>> ios-16
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
               NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
-
+    }
+    
+    @objc func drawStraightLine(_ gesture: UILongPressGestureRecognizer) {
+        print("dldldldld")
+        drawingStraightLine = true
     }
     
     open override func draw(_ rect: CGRect) {
@@ -94,8 +133,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
         }
         
         for line in lines {
-            
-            context.setBlendMode(line.blendMode )
+
             context.setAlpha(line.opacity)
             
             switch line.strokeType {
@@ -114,17 +152,26 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
                 line.path.lineWidth = line.width
                 line.color.setStroke()
                 line.path.stroke()
+<<<<<<< HEAD
             case .shape:
                 line.path.lineWidth = line.width
                 line.color.setStroke()
                 line.fillColor?.setFill()
                 line.path.stroke()
+=======
+            case .text:
+                line.path.lineWidth = line.width
+                shapeStrokeColor.setStroke()
+                shapeFillColor.setFill()
+                line.path.fill()
+>>>>>>> ios-16
             }
         }
     }
     
     @objc func textBoxTapped(_ sender: UITapGestureRecognizer) {
         currentView?.isNotCurrentView()
+       
        let editItem = UIMenuItem(title: "Edit", action: #selector(self.editTextBox))
        let backgroundColorItem = UIMenuItem(title: "Background Color", action: #selector(self.changeBGColor))
         let moveTextboxItem = UIMenuItem(title: "Move", action: #selector(self.moveTextbox))
@@ -132,7 +179,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
         let deleteTextboxItem = UIMenuItem(title: "Delete", action: #selector(self.deleteTextBox))
         currentView?.isNotCurrentView()
     
-        currentView =  sender.view as! ObjectView
+        currentView =  sender.view as? ObjectView
         
         currentView?.isCurrentView()
         
@@ -152,6 +199,8 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
          let deleteTextboxItem = UIMenuItem(title: "Delete", action: #selector(self.deleteTextBox))
      
         currentView = sender.view as! ObjectView
+        currentView?.isCurrentView()
+        
          menu.menuItems = [moveTextboxItem, resizeTextboxItem, deleteTextboxItem]
          
         menu.showMenu(from: currentView as! UIView, rect: CGRect(x: 1, y: 1, width: 100, height: 100))
@@ -167,6 +216,7 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
         if let textbox = currentView as? CustomTextBox {
             for handle in textbox.resizingHandles {
                 handle.isHidden = false
+                handle.bringSubviewToFront(currentView as! UIView)
             }
         }
     }
@@ -179,15 +229,60 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
     }
     
     @objc func changeBGColor(){
-        if let new = currentView as? CustomTextBox {
-            new.backgroundColor = delegate?.currentTextBoxColor()
+        let vc = SelectColorPopoverViewController()
+        let navigationController = UINavigationController(rootViewController: vc)
+        let topmostVC = findViewController()
+        
+        if currentDevice == .iphone || topmostVC?.traitCollection.horizontalSizeClass == .compact {
+            if let picker = navigationController.presentationController as? UISheetPresentationController {
+                picker.detents = [.medium()]
+                picker.prefersGrabberVisible = true
+                picker.preferredCornerRadius = 5.0
+            }
+        } else if currentDevice == .ipad {
+            navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
+            navigationController.preferredContentSize = CGSize(width: 270, height: 250)
+            navigationController.popoverPresentationController?.sourceItem = currentView as? UIView
+        } else {
+            return
+        }
+        vc.vcTitle = "Background Color"
+        vc.displayTransparent = true
+        topmostVC?.present(navigationController, animated: true)
+        let textBox = self.currentView as? CustomTextBox
+        let originalColor = textBox?.backgroundColor
+        
+        vc.returnColor = { color in
+            
+            let textBox = self.currentView as? CustomTextBox
+            
+            textBox?.backgroundColor = UIColor(hex: color)
+        }
+        
+        undoManager!.registerUndo(withTarget: self) { target in
+            textBox?.backgroundColor = originalColor
         }
     }
     
     @objc func moveTextbox() {
+        
+        if let textbox = currentView as? CustomTextBox {
+            let oldframe = textbox.frame
+
+            undoManager!.registerUndo(withTarget: self) { target in
+                textbox.frame = oldframe
+            }
+            
+        } else if let image = currentView as? CustomImageView {
+            let oldframe = image.frame
+            
+            undoManager!.registerUndo(withTarget: self) { target in
+                image.frame = oldframe
+            }
+        }
+        
         canCreateTextBox = false
         currentView?.moveIconImage.isHidden = false
-        currentView?.moveIconImage.frame = CGRect(x: 4, y: 0, width: (currentView as! UIView).bounds.width / 4, height: (currentView as! UIView).bounds.height / 4)
         currentView?.moveIconImage.center = (currentView as! UIView).center
         currentView?.isMoving = true
     }
@@ -200,51 +295,36 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
         } else if let image = currentView as? CustomImageView {
             image.isNotCurrentView()
             image.removeFromSuperview()
-        } else if let stroke = currentView as? CustomSelectionView {
-            lines.remove(at: lines.firstIndex(where: {stroke.selectedLine == $0})!)
-            currentView?.isNotCurrentView()
-            setNeedsDisplay()
         }
     }
     
     @objc func tappedScreen(_ sender: UITapGestureRecognizer) {
+<<<<<<< HEAD
        
         if currentView?.isMoving == true || currentView?.isResizing == true || isSelectingLine == true {
+=======
+   
+        if currentView != nil {
+>>>>>>> ios-16
             currentView?.moveIconImage.isHidden = true
             canCreateTextBox = true
             isSelectingLine = false
             currentView?.isNotCurrentView()
+            dismissKeyboard()
         } else if menu.isMenuVisible == true {
             currentView?.isNotCurrentView()
+            dismissKeyboard()
             menu.hideMenu()
         } else if keyboardIsOpen == true {
                 dismissKeyboard()
         } else {
             if tool == .text {
-                selectedTool.drawingView?.tappedScreen(sender)
-            
+                if canCreateTextBox == true {
+                    insertTextBox(frame: CGRect(x: sender.location(in: self).x, y: sender.location(in: self).y, width: 100, height: 100))
+                   }
             } else if tool == .eraser {
                 let inLines = self.returnLines(point: sender.location(in: self))
     //            lines.removeAll(where: {inLines.contains($0)})
-            } else if tool == .lasso {
-              
-                let selectedLine = self.returnLines(point: sender.location(in: self))
-                if selectedLine != nil {
-                    let selectionView = CustomSelectionView(line: selectedLine!)
-                    selectionView.isUserInteractionEnabled = true
-                    self.addSubview(selectionView)
-                    selectionView.becomeFirstResponder()
-                    isSelectingLine = true
-                    selectionView.selectedLine = selectedLine
-                    currentView = selectionView
-                    let moveTextboxItem = UIMenuItem(title: "Move", action: #selector(self.moveTextbox))
-                    let resizeTextboxItem = UIMenuItem(title: "Resize", action: #selector(self.resizeTextbox))
-                    let deleteTextboxItem = UIMenuItem(title: "Delete", action: #selector(self.deleteTextBox))
-                
-                    menu.menuItems = [moveTextboxItem, resizeTextboxItem, deleteTextboxItem]
-                    
-                    menu.showMenu(from: currentView as! UIView, rect: CGRect(x: 1, y: 1, width: 100, height: 100))
-                }
             }
         }
     }
@@ -274,9 +354,30 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
         let textBoxTapped = UITapGestureRecognizer(target: self, action: #selector(self.textBoxTapped(_:)))
         textbox.addGestureRecognizer(textBoxTapped)
         textBoxes.append(textbox)
+        
+        undoManager!.registerUndo(withTarget: self) { target in
+            print("TEXTBOX")
+            textbox.removeFromSuperview()
+            self.textBoxes.removeLast()
+        }
     }
     
-        
+    func insertSelectionView(frame: CGRect, selectedLines: [Int]) {
+        let selectionView = CustomSelectionView(frame: frame)
+        selectionView.selectedLines = selectedLines.map({lines[$0]})
+        selectionView.becomeFirstResponder()
+        self.addSubview(selectionView)
+        selectionView.isCurrentView()
+        selectionView.isUserInteractionEnabled = true
+        currentView = selectionView
+        let selectionTapped = UITapGestureRecognizer(target: self, action: #selector(self.textBoxTapped(_:)))
+        selectionView.addGestureRecognizer(selectionTapped)
+    }
+    
+    @objc func selectionTapped(_ sender: UITapGestureRecognizer) {
+        print("SelectionTapped")
+    }
+    
     public func insertImage(frame: CGRect?, image: UIImage) {
         let newImage = CustomImageView(frame: frame!, image: image)
         currentView = newImage
@@ -284,62 +385,134 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
         newImage.isUserInteractionEnabled = true
         
         let textBoxTapped = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped(_:)))
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> ios-16
         newImage.addGestureRecognizer(textBoxTapped)
         
         self.addSubview(newImage)
         
+        undoManager!.registerUndo(withTarget: self) { target in
+            print("image")
+            newImage.removeFromSuperview()
+        }
+        
     }
     
     open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+<<<<<<< HEAD
+=======
+    
+>>>>>>> ios-16
         guard let touch = touches.first else {return}
         currentPoint = touch.location(in: self)
         setTouchPoints(touch)
-        
         shapeFirstPoint = touch.location(in: self)
-        lines.append(Line(color: (selectedTool.color), width: (selectedTool.width) , opacity: (selectedTool.opacity), blendMode: selectedTool.blendMode ?? .normal, path: UIBezierPath(), type: .drawing, strokeType: selectedTool.strokeType))
+        if tool != .scroll && 1 == (event?.allTouches!.count)! {
+            lines.append(Line(color: (selectedTool?.color)!, width: (selectedTool?.width)! , opacity: (selectedTool?.opacity)!, path: UIBezierPath(), type: .drawing, strokeType: selectedTool?.strokeType))
+        }
     }
 
     open override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+  
         guard let touch = touches.first else { return }
         getTouchPoints(touch)
         
-        if tool != .text {
+        if (tool != .scroll && tool != .text) && touches.count == 1 {
+            
             if var currentPath = lines.popLast() {
-                currentPath.path = selectedTool.moved(currentPath: currentPath.path, previousPoint:  CGPoint(x: previousPoint!.x, y: previousPoint!.y), midpoint1: CGPoint(x: getMidPoints().0.x, y: getMidPoints().0.y), midpoint2: CGPoint(x: getMidPoints().1.x, y: getMidPoints().1.y))!
+                
+                if drawingStraightLine == true {
+                    var linePath = UIBezierPath()
+                    linePath.move(to: shapeFirstPoint!)
+                    linePath.addLine(to: currentPoint!)
+                    
+                    currentPath.path = linePath
+                } else {
+                    currentPath.path = (selectedTool?.moved(currentPath: currentPath.path, previousPoint:  CGPoint(x: previousPoint!.x, y: previousPoint!.y), midpoint1: CGPoint(x: getMidPoints().0.x, y: getMidPoints().0.y), midpoint2: CGPoint(x: getMidPoints().1.x, y: getMidPoints().1.y))!)!
+                }
+                
+                if tool == .eraser {
+                    if let returnedInt = returnAnnotationIndexAtPoint(point: currentPoint!), returnAnnotationIndexAtPoint(point: currentPoint!) != nil {
+                       
+                        lines.remove(at: returnedInt)
+                    }
+                }
+                
                 lines.append(currentPath)
+<<<<<<< HEAD
     
+=======
+>>>>>>> ios-16
                 setNeedsDisplay()
            }
-        } else {
+        } else if tool == .text {
             if canCreateTextBox == true {
                 if !lines.isEmpty {
                     lines.removeLast()
                     setNeedsDisplay()
                 }
                 
+<<<<<<< HEAD
                 var newLine = Line(color: .systemBlue, width: 2.0, opacity: 1.0, blendMode: .normal, path: UIBezierPath(), type: .shape, fillColor: .brown, strokeType: .normal)
                 
                 newLine.path = selectedTool.moved(currentPath: newLine.path, previousPoint: shapeFirstPoint!, midpoint1: currentPoint!, midpoint2: currentPoint!)!
+=======
+                var newLine = Line(color: UIColor(hex: (UserDefaults.standard.string(forKey: "defaultTintColor")!))!, width: 2.0, opacity: 1.0, path: UIBezierPath(), type: .drawing)
+                
+                newLine.path = (selectedTool?.moved(currentPath: newLine.path, previousPoint: shapeFirstPoint!, midpoint1: currentPoint!, midpoint2: currentPoint!)!)!
+>>>>>>> ios-16
                 lines.append(newLine)
             }
         }
     }
     
+    public func redoLastStroke() {
+        undoManager?.redo()
+       setNeedsDisplay()
+    }
+    
+    public func undoLastStroke() {
+        undoManager?.undo()
+       setNeedsDisplay()
+        
+    }
+    
     open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        drawingStraightLine = false
+        
+        undoManager?.setActionName("Undo Stroke")
+        
         if currentView?.isMoving == true || currentView?.isResizing  == true {
             currentView?.start = CGPoint.zero
         }
+        
         if tool == .eraser {
             lines.removeLast()
         } else if tool == .text {
             if canCreateTextBox == true {
+               
                 lines.removeLast()
                 setNeedsDisplay()
-                insertTextBox(frame: CGRect(x: shapeFirstPoint!.x, y: shapeFirstPoint!.y, width: currentPoint!.x - shapeFirstPoint!.x, height: currentPoint!.y - shapeFirstPoint!.y))
+                
+                if (abs(currentPoint!.x - shapeFirstPoint!.x) > 50) && (abs(currentPoint!.y - shapeFirstPoint!.y) > 50) {
+                    insertTextBox(frame: CGRect(x: shapeFirstPoint!.x, y: shapeFirstPoint!.y, width: currentPoint!.x - shapeFirstPoint!.x, height: currentPoint!.y - shapeFirstPoint!.y))
+                }
+            }
+        } else if tool == .pen || tool == .highlighter {
+            undoManager!.registerUndo(withTarget: self) { target in
+                if self.lines.count > 0 {
+                    self.lines.removeLast()
+                    self.setNeedsDisplay()
+                }
             }
         }
+    }
+    
+    func undo() {
+        undoManager?.undo()
     }
     
     private func setTouchPoints(_ touch: UITouch) {
@@ -372,30 +545,37 @@ open class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate,
         keyboardIsOpen = true
     }
     
-    required public init?(coder aDecoder: NSCoder) {
-       super.init(coder: aDecoder)
+    required public init?(coder aDecoder: NSCoder?) {
+        super.init(coder: aDecoder!)
     }
-    
-    private func addshape(shape: Shapes) -> UIBezierPath {
-
-        var shapePath = UIBezierPath()
-        
-        switch shape {
-            case .rect:
-            shapePath = UIBezierPath(rect: CGRect(x: shapeFirstPoint!.x, y: shapeFirstPoint!.y, width: currentPoint!.x - shapeFirstPoint!.x, height: currentPoint!.y - shapeFirstPoint!.y))
-        case .circle:
-            shapePath = UIBezierPath(arcCenter: shapeFirstPoint!, radius: currentPoint!.x - shapeFirstPoint!.x, startAngle: 0, endAngle: 180, clockwise: true)
-        case .straightline:
-            shapePath.move(to: shapeFirstPoint!)
-            shapePath.addLine(to: currentPoint!)
-        }
-        return shapePath
-    }
-    
     
     @objc func dismissKeyboard() {
         currentView?.isNotCurrentView()
         canCreateTextBox = true
         self.endEditing(true)
     }
+<<<<<<< HEAD
+=======
+    
+    public func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return self
+    }
+    
+    private func returnAnnotationIndexAtPoint(point: CGPoint) -> Int? {
+        
+        let removeLine = lines.filter({checkContains(point: point, path: $0.path, width: $0.width)})
+        var intToReturn: Int?
+        
+        if removeLine.count != 0 {
+            intToReturn = lines.firstIndex(of: removeLine.first!)
+        }
+        return intToReturn ?? nil
+    }
+    
+    private func checkContains(point: CGPoint, path: UIBezierPath, width: Double) -> Bool {
+        var hitPath: CGPath?
+        hitPath = path.cgPath.copy(strokingWithWidth: width, lineCap: .round, lineJoin: .round, miterLimit: 0)
+        return hitPath?.contains(point) ?? false
+    }
+>>>>>>> ios-16
 }

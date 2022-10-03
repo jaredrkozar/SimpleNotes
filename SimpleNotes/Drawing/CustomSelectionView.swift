@@ -10,7 +10,6 @@ import UIKit
 class CustomSelectionView: UIView, UIGestureRecognizerDelegate, ObjectView {
     var resizingHandles: [UIButton]
     
-    
     private var drawingView: DrawingView?
     var start = CGPoint.zero
     
@@ -21,18 +20,17 @@ class CustomSelectionView: UIView, UIGestureRecognizerDelegate, ObjectView {
     var isResizing: Bool
     
     var selectionLayer = CAShapeLayer()
-    var selectedLine: Line?
+    var selectedLines: [Line]?
     
-    init(line: Line) {
+    override init(frame: CGRect) {
         self.isMoving = false
         self.isResizing = false
         self.resizingHandles = []
-        super.init(frame: line.path.bounds)
+        super.init(frame: frame)
         
         let imageView = UIImageView()
         self.addSubview(imageView)
         imageView.isHidden = true
-        selectedLine = line
         self.isUserInteractionEnabled = true
 
         selectionLayer.strokeColor = UIColor.systemBlue.cgColor
@@ -50,7 +48,10 @@ class CustomSelectionView: UIView, UIGestureRecognizerDelegate, ObjectView {
     
     @objc func swipeLine(_ sender: UIPanGestureRecognizer) {
         if self.isMoving == true {
-            self.selectedLine?.path.apply(CGAffineTransform(translationX:  sender.translation(in: self).x - self.start.x, y:  sender.translation(in: self).y - self.start.y))
+            
+            for line in selectedLines! {
+                line.path.apply((CGAffineTransform(translationX:  sender.translation(in: self).x - self.start.x, y:  sender.translation(in: self).y - self.start.y)))
+            }
                 
             self.start = sender.translation(in: self)
             drawingView?.setNeedsDisplay()

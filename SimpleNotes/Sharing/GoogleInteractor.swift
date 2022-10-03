@@ -82,7 +82,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
                 if let listOfFiles : [GTLRDrive_File] = filesList.files {
                     
                     for file in listOfFiles {
-               
+                        
                         self.filesInFolder.append(CloudServiceFiles(name: file.name!, type: self.getFileType(type: file.mimeType!), folderID: file.identifier!))
                     }
                     
@@ -110,16 +110,35 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
        let upload = GTLRDriveQuery_FilesCreate.query(withObject: file, uploadParameters: params)
         upload.fields = "id"
         
-       self.driveService.executeQuery(upload, completionHandler:  { (response, result, error) in
-           
-           self.driveService.uploadProgressBlock = { [weak self] _, uploaded, total in
-                   guard total > 0 else { return }
-                   let progress = Float(uploaded) / Float(total)
-               onCompleted(Double(progress), error?.localizedDescription)
-               }
-       }
-       )
+        let gkkg = ToastNotification(backgroundColor: .systemBlue, image: UIImage(systemName: "icloud.and.arrow.up")!, titleText: "DDDD", progress: 0.0)
+        
+        driveService.uploadProgressBlock = { _, uploaded, total in
+            
+            gkkg.updateProgress(progress: Float((uploaded / total)) * 100)
+        }
+        
+        self.driveService.executeQuery(upload, completionHandler:  { (response, result, error) in
+            gkkg.removeFromSuperview()
+            
+            let finishedUpload = ToastNotification(backgroundColor: .systemGreen, image: UIImage(systemName: "checkmark.circle")!, titleText: "Upload Complete", subtitleText: "The upload is finished. Your can view the note in the Google Drive app or on the website")
+        })
     }
+    
+    func downloadFile(identifier: String, folderID: String?, onCompleted: @escaping (Data?, Error?) -> ()) {
+        
+        GIDSignIn.sharedInstance().restorePreviousSignIn()
+       
+        driveService.apiKey = "AIzaSyBz0NAnojMb8LOmWUlEIHWTHvljk4Yboaw"
+        driveService.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
+        GIDSignIn.sharedInstance().clientID = clientID
+ 
+        
+        let query = GTLRDriveQuery_FilesGet.queryForMedia(withFileId: identifier)
+         driveService.executeQuery(query) { (ticket, file, error) in
+             onCompleted((file as? GTLRDataObject)?.data, error)
+         }
+    }
+    
     
     override init() {
         super.init()

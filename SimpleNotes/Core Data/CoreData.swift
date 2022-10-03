@@ -10,13 +10,13 @@ import CoreData
 
 let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
-func saveTag(currentTag: AllTags?, name: String, symbol: String, color: String) {
+func saveTag(currentTag: Tags?, name: String, symbol: String, color: String) {
   
-    let newTag = currentTag ?? AllTags(context: context)
+    let newTag = currentTag ?? Tags(context: context)
     newTag.symbol = symbol
     newTag.name = name
     newTag.color = color
-    
+    newTag.note = nil
     do {
         try context.save()
     } catch {
@@ -25,51 +25,98 @@ func saveTag(currentTag: AllTags?, name: String, symbol: String, color: String) 
 }
 
 func fetchTags() {
+    let request = Tags.fetchRequest() as NSFetchRequest<Tags>
+    let sort = NSSortDescriptor(key: #keyPath(Tags.name), ascending: true)
+    request.sortDescriptors = [sort]
+    
     do {
-        tags = try context.fetch(AllTags.fetchRequest())
+        tags = try context.fetch(request)
     } catch {
-        print("An error occured")
+        print("Fetch failed")
     }
 }
 
-func createNote() -> Note {
-    let newNote = Note(context: context)
-    newNote.date = Date()
-    newNote.title = ""
-    newNote.tags = []
-    newNote.isLocked = false
-    return newNote
-}
-
-func saveNote(currentNote: Note?, title: String, textboxes: [CustomTextBox], date: Date, tags: [String], isLocked: Bool) {
+func saveStrokes(strokes: [UIBezierPath], note: Note) {
    
-    let newNote = currentNote ?? Note(context: context)
+}
 
-    newNote.title = title
-    newNote.date = date
+func saveTextBoxes(textBoxes: [UITextField], note: Note) {
+    var textboxesset = Set<TextBox>()
+    
+    for textBox in textboxesset {
+        let newTextbox = TextBox(context: context)
+        textboxesset.insert(newTextbox)
+    }
+    
+    do {
+        try context.save()
+    } catch {
+        print("An error occured while saving a note.")
+    }
+}
+
+func saveImages(images: [UIImage], note: Note) {
+    var imageset = Set<Image>()
+    
+    for image in images {
+        let newImage = Image(context: context)
+        let imageAsData = image.jpegData(compressionQuality: 1.0)
+        newImage.image = imageAsData
+        imageset.insert(newImage)
+    }
+    
+    do {
+        try context.save()
+    } catch {
+        print("An error occured while saving a note.")
+    }
+}
+
+func createNewNote(thumbnail: Data, pdf: Data, title: String?) {
+    let newNote = Note(context: context)
+    newNote.date = (UserDefaults.standard.object(forKey: "defaultNoteDate") as? Date)!
+    newNote.title = title ?? UserDefaults.standard.string(forKey: "defaultNoteTitle")
+    newNote.isLocked = false
     newNote.noteID = UUID().uuidString
-    newNote.isLocked = isLocked
-    var tagset = Set<Tags>()
+    newNote.tags = NSSet()
+    newNote.data = pdf
+    newNote.thumbanil = thumbnail
     
-    for tag in tags {
-        let newtag = Tags(context: context)
-        newtag.name = tag
-        newtag.notes = newNote
-        tagset.insert(newtag)
+    do {
+        try context.save()
+    } catch {
+        print("An error occured while saving a note.")
     }
+}
 
-    newNote.addToTags(tagset)
-    
-    var textboxes = Set<TextBox>()
-    
-    for textbox in textboxes {
-        let newtextbox = TextBox(context: context)
-        newtextbox.text = textbox.text
-        newtextbox.xCoordinate = textbox.xCoordinate
-        newtextbox.yCoordinate = textbox.yCoordinate
+func saveTitle(title: String, index: Int) {
+    if notes.indices.contains(index) {
+        notes[index].setValue(title, forKey: "title")
     }
+    
+    do {
+        try context.save()
+    } catch {
+        print("An error occured while saving a note.")
+    }
+}
 
-    newNote.addToTextbox(textboxes)
+func saveDate(date: Date, index: Int) {
+    if notes.indices.contains(index) {
+        notes[index].setValue(date, forKey: "date")
+    }
+    
+    do {
+        try context.save()
+    } catch {
+        print("An error occured while saving a note.")
+    }
+}
+
+func saveNoteLock(isLocked: Bool, index: Int) {
+    if notes.indices.contains(index) {
+        notes[index].setValue(isLocked, forKey: "isLocked")
+    }
     
     do {
         try context.save()
@@ -95,8 +142,33 @@ func fetchNotes(tag: String?, sortOption: sortOptions?) {
     }
 }
 
-func deleteNote(note: Note) {
-    context.delete(note)
+func fetchNoteLockedStatus(index: Int) -> Bool {
+    var isLocked: Bool = false
+    if notes.indices.contains(index) {
+        isLocked = notes[index].value(forKeyPath: "isLocked") as? Bool ?? false
+    }
+    return isLocked
+}
+
+func fetchDate(index: Int) -> Date {
+    var date = Date()
+    if notes.indices.contains(index) {
+        date = (notes[index].value(forKeyPath: "date") as? Date)!
+    }
+    return date
+}
+
+func fetchNoteTitle(index: Int) -> String {
+    var title: String = ""
+    if notes.indices.contains(index) {
+        title = notes[index].value(forKeyPath: "title") as? String ?? ""
+    }
+    return title
+}
+
+func deleteNote(index: Int) {
+
+    context.delete(notes[index])
     do {
         try context.save()
     } catch {
@@ -104,7 +176,24 @@ func deleteNote(note: Note) {
     }
 }
 
-func deleteTag(tag: AllTags) {
+func fetchTagsForNote(index: Int) -> [String] {
+    guard let context = notes[index].managedObjectContext else {
+        fatalError("unable to load managed object context")
+    }
+    let tagFetchRequest: NSFetchRequest<Tags> = Tags.fetchRequest()
+    tagFetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Tags.name), ascending: true)]
+    
+    var tagarray = [String]()
+    do {
+        tagarray = try context.fetch(tagFetchRequest).map({$0.name ?? ""})
+    } catch {
+        print("An error occured")
+    }
+    
+    return tagarray
+}
+
+func deleteTag(tag: Tags) {
     context.delete(tag)
     
     do {

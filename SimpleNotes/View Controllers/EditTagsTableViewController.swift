@@ -11,7 +11,7 @@ import CoreData
 
 class EditTagsTableViewController: UITableViewController {
 
-    var newNoteVC = WSTagsField()
+    var index: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,12 +22,10 @@ class EditTagsTableViewController: UITableViewController {
         
         let plusButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonTapped))
         
-        let nib = UINib(nibName: "TagTableViewCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "TagTableViewCell")
+        tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
         
         self.navigationItem.leftBarButtonItems = [plusButton]
         self.navigationItem.rightBarButtonItems = [doneButton]
-        
         tableView.rowHeight = 70
         self.tableView.allowsMultipleSelection = true
         fetchTags()
@@ -50,19 +48,17 @@ class EditTagsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TagTableViewCell", for: indexPath) as! TagTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TableRowCell", for: indexPath) as! TableRowCell
         
         let tag = tags[indexPath.row]
-        
-        cell.tagImage.image = UIImage(systemName: tag.symbol!)?.withTintColor(UIColor(hex: tag.color!)!, renderingMode: .alwaysOriginal)
-        
-        cell.tagName.text = tag.name
+
+        cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", rowIcon: Icon(icon: UIImage(systemName: tag.symbol!), iconBGColor: .systemBackground, iconTintColor: UIColor(hex: tag.color!)), control: nil, handler: nil))
         
         return cell
     }
     
     @objc func plusButtonTapped(sender: UIBarButtonItem) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newTagVC") as! NewTagViewController
+        let vc = NewTagViewController()
         let navController = UINavigationController(rootViewController: vc)
         vc.selectedColor = .systemBlue
         self.navigationController?.present(navController, animated: true, completion: nil)
@@ -73,11 +69,15 @@ class EditTagsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if newNoteVC.tags.map({$0.text}).contains(tags[indexPath.row].name) {
-            newNoteVC.removeTag(tags[indexPath.row].name!)
+        
+        if notes[index].tags?.contains(tags[indexPath.row]) == true {
+            notes[index].removeFromTags(tags[indexPath.row])
         } else {
-            newNoteVC.addTag(tags[indexPath.row].name!)
+            print("inserted tag \(tags[indexPath.row].name!)")
+            notes[index].addToTags(tags[indexPath.row])
         }
+        
+        NotificationCenter.default.post(name: Notification.Name("reloadNotesTable"), object: nil, userInfo: ["index":index])
     }
     
     override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
@@ -86,7 +86,7 @@ class EditTagsTableViewController: UITableViewController {
               title: "Edit Tag", image: UIImage(systemName: "tag")) { [self] _ in
                 //gets the current dimension and splits it up into 2 parts, and saves them so they can be shown in the text fields in editPresetViewController. The editPresetViewController is then shown via a popover
                 
-                  let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "newTagVC") as! NewTagViewController
+                  let vc = NewTagViewController()
                   let navController = UINavigationController(rootViewController: vc)
                   vc.isEditingTag = true
                   vc.currentTag = tags[indexPath.row]
@@ -114,6 +114,5 @@ class EditTagsTableViewController: UITableViewController {
             return UIMenu(title: "", children: [editAction, deleteAction])
         }
     }
-    
     
 }

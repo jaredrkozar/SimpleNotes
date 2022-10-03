@@ -13,6 +13,8 @@ public enum SharingLocation: CaseIterable {
     case otherapps
     case googledrive
     case dropbox
+    case scanDocument
+    case files
     
     var icon: UIImage {
         switch self {
@@ -26,6 +28,10 @@ public enum SharingLocation: CaseIterable {
             return UIImage(named: "GoogleDrive")!
         case .dropbox:
             return UIImage(named: "Dropbox")!
+        case .scanDocument:
+            return UIImage(systemName: "doc.viewfinder")!
+        case .files:
+            return UIImage(systemName: "folder")!
         }
     }
     
@@ -42,6 +48,10 @@ public enum SharingLocation: CaseIterable {
                 return "Google Drive"
         case .dropbox:
                 return "Dropbox"
+        case .scanDocument:
+                return "Scan Document"
+        case .files:
+                return "Files"
         }
     }
     
@@ -58,6 +68,40 @@ public enum SharingLocation: CaseIterable {
                 return "Upload to Google Drive"
         case .dropbox:
                 return "Upload to Dropbox"
+        case .scanDocument:
+                return ""
+        case .files:
+                return "Send to Files"
+        }
+    }
+    
+    var canImport: Bool {
+        
+        switch self {
+            case .messages:
+                return false
+        case .email:
+                return false
+        case .otherapps:
+                return false
+        case .googledrive:
+                return true
+        case .dropbox:
+                return true
+        case .scanDocument:
+                return true
+        case .files:
+                return true
+        }
+    }
+}
+
+extension SharingLocation {
+    var currentLocation: APIInteractor {
+        if self == .googledrive {
+            return GoogleInteractor()
+        } else {
+            return DropboxInteractor()
         }
     }
 }

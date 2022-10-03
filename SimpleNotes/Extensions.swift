@@ -6,16 +6,35 @@
 //
 
 import UIKit
+import PDFKit
 
 var notes: [Note] = []
-var tags: [AllTags] = []
+var tags: [Tags] = []
 
 var currentNote: Note?
 
 public var currentDevice: Device?
 
+protocol DateHandler {
+    func dateHandler() -> Date
+}
+
+protocol TagHandler {
+    func tagHandler() -> String
+}
+
 protocol ModalHandler {
     func modalDismissed()
+}
+
+enum CloudType {
+    case upload
+    case download
+}
+
+enum PageDisplayType: String {
+    case vertical = "Vertical"
+    case horizontal = "Horixontal"
 }
 
 public enum StrokeTypes: Int {
@@ -86,14 +105,18 @@ public enum viewOptions: CaseIterable {
     }
 }
 
+<<<<<<< HEAD
 public enum Tools: CaseIterable {
+=======
+public enum Tools: Int, CaseIterable {
+>>>>>>> ios-16
     case pen
     case highlighter
     case eraser
     case lasso
     case text
-    case shape
-    case hand
+    case scroll
+    
     
     var name: String {
         switch self {
@@ -107,10 +130,43 @@ public enum Tools: CaseIterable {
             return "Lasso"
         case .text:
             return "Text"
-        case .shape:
-            return "Shape"
-        case .hand:
-            return "Hand"
+        case .scroll:
+            return "Scroll"
+        }
+    }
+    
+    var icon: UIImage {
+        switch self {
+        case .text:
+            return UIImage(systemName: "character.textbox")!
+        case .scroll:
+            return UIImage(systemName: "hand.point.up.left")!
+        case .eraser:
+            return UIImage(systemName: "pin")!
+        case .pen:
+            return UIImage(systemName: "rectangle.on.rectangle")!
+        case .highlighter:
+            return UIImage(systemName: "rectangle.on.rectangle.circle.fill")!
+        case .lasso:
+            return UIImage(systemName: "lasso")!
+        }
+   
+    }
+    
+    var optionsView: UIViewController? {
+        switch self {
+        case .pen:
+            return ToolOptionsViewController()
+        case .highlighter:
+            return ToolOptionsViewController()
+        case .eraser:
+            return nil
+        case .lasso:
+            return nil
+        case .scroll:
+            return nil
+        case .text:
+            return nil
         }
     }
 }
@@ -123,14 +179,55 @@ public enum Device {
 
 public enum SharingType {
     case pdf
-    case plainText
+    case image
+}
+
+struct Sections {
+    let title: String?
+    var settings: [SettingsOptions]
+}
+
+struct SettingsOptions {
+    let title: String
+    var option: String?
+    let rowIcon: Icon?
+    let control: DetailViewType?
+    let handler: (() -> Void)?
+}
+
+struct Icon {
+    let icon: UIImage?
+    let iconBGColor: UIColor!
+    let iconTintColor: UIColor!
+}
+enum DetailViewType: Equatable {
+    
+    case color(color: UIView)
+    case text(string: String)
+    case control(controls: [UIControl], width: Double)
 }
 
 func sendBackSymbol(imageName: String, color: UIColor) -> UIImage {
     return UIImage(systemName: imageName)!.withTintColor(color, renderingMode: .alwaysOriginal)
 }
 
-
+extension UIImage {
+    func resizeImage(dimension: CGFloat) -> CGRect {
+        let maxDimension =  CGFloat(max(self.size.width, self.size.height))
+        let scale = dimension / maxDimension
+        var rect: CGRect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
+        let transform = CGAffineTransform(scaleX: scale, y: scale)
+        rect = rect.applying(transform)
+        
+        return rect
+    }
+    
+    func converttoString() -> String {
+        let data = self.jpegData(compressionQuality: 1)
+        return (data?.base64EncodedString(options: .endLineWithLineFeed))!
+            
+    }
+}
 extension UIView {
 
     func findViewController() -> UIViewController? {
@@ -248,3 +345,37 @@ extension UIColor {
      }
  }
 
+extension String {
+    
+    func widthOfString() -> CGSize {
+        let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]
+        return self.size(withAttributes: fontAttributes)
+    }
+    
+    func toImage() -> UIImage? {
+        if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters){
+            return UIImage(data: data)
+        }
+        return nil
+    }
+}
+
+func isAppAlreadyLaunchedOnce()->Bool{
+        let defaults = UserDefaults.standard
+        
+        if defaults.bool(forKey: "isAppAlreadyLaunchedOnce"){
+            print("App already launched : \(isAppAlreadyLaunchedOnce)")
+            return true
+        }else{
+            defaults.set(true, forKey: "isAppAlreadyLaunchedOnce")
+            print("App launched first time")
+        return false
+    }
+}
+
+extension PDFPage {
+    func createThumbnail() -> Data {
+        let newThumbanil = self.thumbnail(of: CGSize(width: 1150, height: 150), for: .artBox)
+        return newThumbanil.jpegData(compressionQuality: 0.6)!
+    }
+}
