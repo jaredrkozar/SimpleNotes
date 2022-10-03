@@ -13,7 +13,7 @@ class FolderLocationViewController: UITableViewController {
     var currentfolder: String?
     var allFiles = [CloudServiceFiles]()
     var serviceType: CloudType?
-    var returnPDFData: ((_ returnData: Data)->())?
+    var returnPDFData: ((_ returnData: Data, _ title: String)->())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,7 +96,7 @@ class FolderLocationViewController: UITableViewController {
             if selectedFile.type == .pdf {
                 location?.currentLocation.downloadFile(identifier: selectedFile.folderID, folderID: selectedFile.folderID, onCompleted: {(files, error) in
                     self.dismiss(animated: true)
-                    self.returnPDFData!(files!)
+                    self.returnPDFData!(files!, selectedFile.name)
                 })
             }
         }

@@ -114,10 +114,10 @@ class ToastNotification: UIView {
             self.transform = CGAffineTransform(translationX: 0, y: 180)
         }
         
-        animator.startAnimation()
-        
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGesture))
         self.addGestureRecognizer(panGesture)
+
+        animator.startAnimation()
     }
     
     @objc func panGesture(_ sender: UIPanGestureRecognizer) {

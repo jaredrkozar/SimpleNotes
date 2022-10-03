@@ -64,7 +64,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         searchController.searchResultsUpdater = self
         
         if noteIndex == nil {
@@ -90,12 +90,12 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                 noNoteLabel.heightAnchor.constraint(equalToConstant: 600)
             ])
         } else {
-            pageDisplayType = .vertical
+            pageDisplayType = PageDisplayType(rawValue: UserDefaults.standard.string(forKey: "defaultPageScrollType")!)
             
             offsets.append(contentsOf: getAllPageOffsets(page: (pdfDocument?.page(at: 0))!, numberOfPages: pdfDocument!.pageCount))
             
-            for page in 0..<(pdfDocument!.pageCount) {
-                drawPage(num: page)
+            for page in 0..<pdfDocument!.pageCount {
+                visiblePages.append(drawPage(num: page))
             }
             
             drawingView.backgroundColor = .clear
@@ -128,6 +128,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             drawingView.frame = rect
             pdfHolderView.frame = rect
             baseView.frame = rect
+            scrollView.contentSize = rect.size
         }
         
         scrollView.minimumZoomScale = 1.0
@@ -314,10 +315,11 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
        return offsets
     }
     
-    func drawPage(num: Int) {
+    func drawPage(num: Int) -> CustomPDFPage {
         let page = pdfDocument?.page(at: num)
-        let pdfpage = CustomPDFPage(frame: CGRect(x: offsets[num].minX, y: offsets[num].minY + 20, width: offsets[num].maxX - offsets[num].minX, height: offsets[num].maxY - offsets[num].minY), page: page)
+        let pdfpage = CustomPDFPage(frame: CGRect(x: offsets[num].minX, y: offsets[num].minY + 20, width: offsets[num].maxX - offsets[num].minX, height: offsets[num].maxY - offsets[num].minY), page: page, pageNumber: num)
         pdfHolderView.addSubview(pdfpage)
+        return pdfpage
     }
     
     @objc func undoStroke(_ sender: UIBarButtonItem) {
@@ -444,7 +446,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         let context = UIGraphicsGetCurrentContext()
         scrollView.setContentOffset(.zero, animated: false)
         for counter in 0 ..< pdfDocument!.pageCount {
-            
+            print(offsets[counter].minX)
             scrollView.setContentOffset(CGPoint(x: offsets[counter].minX, y: offsets[counter].minY), animated: false)
                         switch self.pageDisplayType {
                         case .horizontal:
@@ -495,6 +497,22 @@ extension NoteViewController: UINavigationItemRenameDelegate {
         
         return UIMenu(title: "Add Media", image: nil, identifier: nil, options: .singleSelection, children: [presentPhotosPicker, presentCameraPicker])
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (visiblePages[0].pageNumber! > 0) {
+            print(visiblePages.last?.pageNumber)
+            self.visiblePages.last?.removeFromSuperview()
+            self.visiblePages.removeLast()
+            self.visiblePages.insert(self.drawPage(num: visiblePages[0].pageNumber! - 1), at: 0)
+        }
+        
+        if ((visiblePages.last?.pageNumber)! < pdfDocument!.pageCount - 1) {
+            self.visiblePages[0].removeFromSuperview()
+            self.visiblePages.removeFirst()
+            self.visiblePages.append(self.drawPage(num: (visiblePages.last?.pageNumber)! + 1))
+            print(visiblePages.count)
+        }
+    }
 }
 
 extension NoteViewController: PHPickerViewControllerDelegate {
@@ -521,6 +539,8 @@ extension NoteViewController: PHPickerViewControllerDelegate {
     func addString(string: String) {
         listOfTags.append(string)
     }
+    
+    
 }
 
 extension NoteViewController: UISearchResultsUpdating {

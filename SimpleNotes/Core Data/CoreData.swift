@@ -72,15 +72,16 @@ func saveImages(images: [UIImage], note: Note) {
     }
 }
 
-func createNewNote(thumbnail: Data, pdf: Data) {
+func createNewNote(thumbnail: Data, pdf: Data, title: String?) {
     let newNote = Note(context: context)
     newNote.date = (UserDefaults.standard.object(forKey: "defaultNoteDate") as? Date)!
-    newNote.title = UserDefaults.standard.string(forKey: "defaultNoteTitle")
+    newNote.title = title ?? UserDefaults.standard.string(forKey: "defaultNoteTitle")
     newNote.isLocked = false
     newNote.noteID = UUID().uuidString
     newNote.tags = NSSet()
     newNote.data = pdf
     newNote.thumbanil = thumbnail
+    
     do {
         try context.save()
     } catch {

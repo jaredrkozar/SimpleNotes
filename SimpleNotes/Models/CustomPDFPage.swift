@@ -11,12 +11,14 @@ import PDFKit
 class CustomPDFPage: UIView {
 
     public var page: PDFPage?
+    public var pageNumber: Int?
     
-    init(frame: CGRect, page: PDFPage?)
+    init(frame: CGRect, page: PDFPage?, pageNumber: Int?)
     {
         super.init(frame: frame)
         self.frame = frame
         self.page = page
+        self.pageNumber = pageNumber
     }
     
     required init?(coder: NSCoder) {

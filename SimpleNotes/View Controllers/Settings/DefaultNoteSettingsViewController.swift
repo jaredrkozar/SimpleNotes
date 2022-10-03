@@ -161,11 +161,11 @@ class DefaultNoteViewController: UITableViewController, UIFontPickerViewControll
     
     func pageScrollTypeMenu() -> UIMenu {
         let verticalScroll = UIAction(title: "Vertical", image: nil, identifier: nil, discoverabilityTitle: nil, attributes: [], state: .off) {_ in
-            UserDefaults.standard.set(PageDisplayType.vertical, forKey: "defaultPageScrollType")
+            UserDefaults.standard.set(PageDisplayType.vertical.rawValue, forKey: "defaultPageScrollType")
         }
         
         let horizontalScroll = UIAction(title: "Horizontal", image: nil, identifier: nil, discoverabilityTitle: nil, attributes: [], state: .off) {_ in
-            UserDefaults.standard.set(PageDisplayType.horizontal, forKey: "defaultPageScrollType")
+            UserDefaults.standard.set(PageDisplayType.horizontal.rawValue, forKey: "defaultPageScrollType")
         }
         return UIMenu(title: "Page Scroll Direction", image: nil, identifier: nil, options: [.singleSelection], children: [verticalScroll, horizontalScroll])
     }

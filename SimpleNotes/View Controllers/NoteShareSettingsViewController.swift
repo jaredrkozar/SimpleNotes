@@ -133,6 +133,7 @@ class NoteShareSettingsViewController: UITableViewController {
     }
     
     @objc func uploadNote() {
+       
         currentLocation.uploadFile(note: currentNoteView, noteName: "currentNoteTitle!", folderID: folderID, onCompleted: {_,_ in
             print("slsl")
         })

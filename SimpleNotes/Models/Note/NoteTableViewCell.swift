@@ -13,7 +13,6 @@ class NoteTableViewCell: UITableViewCell {
     @IBOutlet weak var noteThumbanil: UIImageView!
     @IBOutlet var noteTitle: UILabel!
     @IBOutlet var noteDate: UILabel!
-    @IBOutlet var noteText: UITextView!
     
     var tagView: TagView?
     

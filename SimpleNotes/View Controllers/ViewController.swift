@@ -104,11 +104,11 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         let templateAsData = PDFDocument()
         templateAsData.insert(PDFPage(image: UIImage(named: "dottedGrid")!)!, at: 0)
         templateAsData.insert(PDFPage(image: UIImage(named: "dottedGrid")!)!, at: 1)
-        addNewNote(thumbnail: templateAsData.page(at: 0)!.createThumbnail(), pdf: templateAsData.dataRepresentation()!)
+        addNewNote(thumbnail: templateAsData.page(at: 0)!.createThumbnail(), pdf: templateAsData.dataRepresentation()!, title: nil)
     }
     
-    func addNewNote(thumbnail: Data, pdf: Data) {
-        createNewNote(thumbnail: thumbnail, pdf: pdf)
+    func addNewNote(thumbnail: Data, pdf: Data, title: String?) {
+        createNewNote(thumbnail: thumbnail, pdf: pdf, title: title)
         fetchNotes(tag: nil, sortOption: .titleAscending)
         tableView.dataSource = self
         tableView.delegate = self
@@ -282,11 +282,11 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         
         present(navController, animated: true)
         
-        vc.returnPDFData = { file in
+        vc.returnPDFData = { file, title in
             
             let newPDF = PDFDocument(data: file)
             
-            self.addNewNote(thumbnail: (newPDF!.page(at: 0)?.createThumbnail())!, pdf: newPDF!.dataRepresentation()!)
+            self.addNewNote(thumbnail: (newPDF!.page(at: 0)?.createThumbnail())!, pdf: newPDF!.dataRepresentation()!, title: title)
             
         }
     }
@@ -308,8 +308,8 @@ extension ViewController: UIDocumentPickerDelegate {
         myURL.startAccessingSecurityScopedResource()
         do {
             let newDoc = PDFDocument(url: myURL)
-            print(newDoc?.pageCount)
-            addNewNote(thumbnail: (newDoc?.page(at: 0)!.createThumbnail())!, pdf: (newDoc?.dataRepresentation())!)
+         
+            addNewNote(thumbnail: (newDoc?.page(at: 0)!.createThumbnail())!, pdf: (newDoc?.dataRepresentation())!, title: myURL.lastPathComponent)
         } catch {
             print("There was an error loading the image: \(error). Please try again.")
         }
@@ -352,6 +352,6 @@ extension ViewController: VNDocumentCameraViewControllerDelegate {
         }
         
         controller.dismiss(animated: true)
-        addNewNote(thumbnail: (newPDF.page(at: 0)?.createThumbnail())!, pdf: newPDF.dataRepresentation()!)
+        addNewNote(thumbnail: (newPDF.page(at: 0)?.createThumbnail())!, pdf: newPDF.dataRepresentation()!, title: "Scanned Document")
     }
 }
