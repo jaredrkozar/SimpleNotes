@@ -2,11 +2,7 @@
 //  DefaultTextBoxViewController.swift
 //  SimpleNotes
 //
-<<<<<<< HEAD
-//  Created by Jared Kozar on 5/31/22.
-=======
 //  Created by JaredKozar on 6/30/22.
->>>>>>> ios-16
 //
 
 import UIKit
@@ -19,11 +15,8 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
         textfield.keyboardType = .numberPad
         textfield.backgroundColor = .secondarySystemFill
         textfield.layer.cornerRadius = Constants.cornerRadius
-<<<<<<< HEAD
-=======
         textfield.addTarget(nil, action: #selector(finishedPickingFontSize), for: .editingDidEnd)
         textfield.text = UserDefaults.standard.string(forKey: "defaultFontSize")
->>>>>>> ios-16
         return textfield
     }()
     
@@ -31,24 +24,17 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
         let view = UIView()
         view.sizeToFit()
         view.layer.cornerRadius = Constants.cornerRadius
-<<<<<<< HEAD
-        view.backgroundColor = .green
-=======
         view.backgroundColor = UIColor(hex: UserDefaults.standard.string(forKey: "defaultTextColor")!)
->>>>>>> ios-16
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-<<<<<<< HEAD
-=======
     var optionLabel: UILabel = {
         let view = UILabel()
         view.numberOfLines = 1
         return view
     }()
     
->>>>>>> ios-16
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,31 +48,13 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
     }
 
     // MARK: - Table view data source
-<<<<<<< HEAD
-
-    func configureTextBoxSettings() {
-        textBoxSettings.append(Sections(title: nil, settings: [
-            SettingsOptions(title: "Font", option: "HELLO", icon: nil, iconBGColor: nil, detailViewType: .text(string: "DDD"), handler: {
-=======
     func configureTextBoxSettings() {
         textBoxSettings.append(Sections(title: nil, settings: [
             SettingsOptions(title: "Font", option: "HELLO", rowIcon: nil, control: .text(string: "DDD")) {
->>>>>>> ios-16
                 
                 let fontPicker = UIFontPickerViewController()
                 fontPicker.delegate = self
                 self.present(fontPicker, animated: true)
-<<<<<<< HEAD
-            })
-        ]))
-        
-        textBoxSettings.append(Sections(title: nil, settings: [
-            SettingsOptions(title: "Color", option: "", icon: nil, iconBGColor: nil, detailViewType: .color(color: colorCircle), handler: {
-                
-               let colorPicker = UIColorPickerViewController()
-                colorPicker.delegate = self
-                self.present(colorPicker, animated: true)
-=======
             }
         ]))
         
@@ -94,19 +62,11 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
             SettingsOptions(title: "Text Color", option: "", rowIcon: nil, control: .color(color: colorCircle), handler: {
                 
                 self.showColorPicker(popoverPresenter: self.colorCircle, saveTo: "defaultTextColor", vcTitle: "Text Color")
->>>>>>> ios-16
             })
         ]))
         
         textBoxSettings.append(Sections(title: nil, settings: [
-<<<<<<< HEAD
-            SettingsOptions(title: "Font SIze", option: "", icon: nil, iconBGColor: nil, detailViewType: .control(controls: [fontSize]), handler: {
-                
-               
-            })
-=======
             SettingsOptions(title: "Font Size", option: "", rowIcon: nil, control: .control(controls: [fontSize], width: 100), handler: nil)
->>>>>>> ios-16
         ]))
     }
                                
@@ -134,16 +94,9 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-<<<<<<< HEAD
-        print(indexPath.section)
-        print(indexPath.row)
-        let model = textBoxSettings[indexPath.section].settings[indexPath.row]
-        model.handler!()
-=======
 
         let model = textBoxSettings[indexPath.section].settings[indexPath.row]
         model.handler?()
->>>>>>> ios-16
     }
 
     func fontPickerViewControllerDidPickFont(_ viewController: UIFontPickerViewController) {
@@ -153,20 +106,13 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
         let cell = tableView.cellForRow(at: IndexPath(item: 0, section: 0)) as! TableRowCell
         
         cell.optionLabel.text = font.familyName
-<<<<<<< HEAD
-=======
         UserDefaults.standard.set(font.familyName, forKey: "defaultFont")
->>>>>>> ios-16
         self.tableView.reloadRows(at: [IndexPath(item: 0, section: 1)], with: .automatic)
     }
     
     func colorPickerViewController(_ viewController: UIColorPickerViewController, didSelect color: UIColor, continuously: Bool) {
         if continuously == false {
             colorCircle.backgroundColor = color
-<<<<<<< HEAD
-        }
-    }
-=======
             UserDefaults.standard.set(color.toHex, forKey: "defaultTextColor")
         }
     }
@@ -199,5 +145,4 @@ class DefaultTextBoxViewController: UITableViewController, UIFontPickerViewContr
     @objc func finishedPickingFontSize() {
         UserDefaults.standard.set(fontSize.text, forKey: "defaultFontSize")
     }
->>>>>>> ios-16
 }

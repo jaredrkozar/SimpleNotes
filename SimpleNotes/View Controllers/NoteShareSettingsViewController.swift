@@ -91,21 +91,6 @@ class NoteShareSettingsViewController: UITableViewController {
         
         cell.configureCell(with: model)
         
-<<<<<<< HEAD
-        switch sharingLocation {
-            case .email:
-                sendEmail(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: currentNoteView)
-            case .messages:
-                sendText(noteTitle: (currentNote?.title)!, noteText: nil, noteDate: nil, notePDF: currentNoteView)
-            case .otherapps:
-            
-                sendToOtherApps(data: [currentNoteView, currentNote?.title! ?? ""])
-        case .googledrive, .dropbox:
-  
-            uploadFileToCloud(folder: folderID ?? currentLocation.defaultFolder)
-            default:
-                break
-=======
         if  models[1].settings[0].title == "Folder" {
          // Own Account
            cell.accessoryType = .none
@@ -113,7 +98,6 @@ class NoteShareSettingsViewController: UITableViewController {
         }else{
          //Guest Account
             cell.accessoryType = .checkmark
->>>>>>> ios-16
         }
        
         return cell
@@ -143,24 +127,9 @@ class NoteShareSettingsViewController: UITableViewController {
         }
     }
     
-<<<<<<< HEAD
-    func uploadFileToCloud(folder: String) {
-
-        if currentLocation.isSignedIn {
-            currentLocation.uploadFile(note: currentNoteView, noteName: (currentNote?.title)!, folderID: folder, onCompleted: {progress,error in
-                
-                let notic = ToastNotification().showToast(backgroundColor: .systemBlue, image: UIImage(systemName: "pin")!, titleText: "DDDD", subtitleText: "DLDLDLDLD", progress: nil)
-            
-            
-            })
-        } else {
-            currentLocation.signIn(vc: self)
-        }
-=======
     @IBAction func doneButtonTapped(_ sender: Any) {
         
         dismiss(animated: true, completion: nil)
->>>>>>> ios-16
     }
     
     @objc func uploadNote() {

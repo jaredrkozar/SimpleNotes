@@ -45,10 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         } else {
            return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
         }
-=======
-        
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
->>>>>>> ios-16
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {

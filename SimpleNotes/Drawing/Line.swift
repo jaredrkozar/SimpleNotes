@@ -18,10 +18,6 @@ public struct Line: Equatable {
 
 
 enum DrawingType {
-<<<<<<< HEAD
-    case shape
-=======
->>>>>>> ios-16
     case drawing
     case text
 }

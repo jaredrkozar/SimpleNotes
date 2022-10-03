@@ -38,14 +38,8 @@ class TagsTableViewController: UITableViewController {
             fatalError("Unable to dequeue the settings cell.")
         }
         
-<<<<<<< HEAD
-        cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", icon: UIImage(systemName: tag.symbol!)?.withTintColor(UIColor(hex: tag.color!)!, renderingMode: .alwaysOriginal), iconBGColor: nil, detailViewType: nil, handler: nil))
-        
-        
-=======
        
         cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", rowIcon: Icon(icon: UIImage(systemName: tag.symbol!), iconBGColor: .systemBackground, iconTintColor: UIColor(hex: tag.color!)), control: nil, handler: nil))
->>>>>>> ios-16
         return cell
         
     }

@@ -28,31 +28,10 @@ class FolderLocationViewController: UITableViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-<<<<<<< HEAD
-    
-        if location == .googledrive {
-           
-            GoogleInteractor().fetchFiles(folderID: currentfolder ?? "root", onCompleted: {
-                (files, error) in
-                self.allFiles = files!
-                
-                self.tableView.reloadData()
-                
-            })
-        } else if location == .dropbox {
-            DropboxInteractor().fetchFiles(folderID: currentfolder ?? "/", onCompleted: {
-                (files, error) in
-                self.allFiles = files!
-                
-                self.tableView.reloadData()
-                
-            })
-=======
 
         guard location!.currentLocation.isSignedIn else {
             location!.currentLocation.signIn(vc: self)
             return
->>>>>>> ios-16
         }
         print(currentfolder)
         location?.currentLocation.fetchFiles(folderID: (currentfolder ?? location?.currentLocation.defaultFolder)!, onCompleted: {
@@ -81,16 +60,10 @@ class FolderLocationViewController: UITableViewController {
             fatalError("Unable to dequeue the note cell.")
         }
          
-<<<<<<< HEAD
-        let file = allFiles[indexPath.row]
-       
-        cell.configureCell(with: SettingsOptions(title: file.name, option: "nil", icon: file.type.icon, iconBGColor: .systemRed, detailViewType: nil, handler: nil))
-=======
         var file = allFiles[indexPath.row]
         
         
         cell.configureCell(with: SettingsOptions(title: file.name, option: "", rowIcon: Icon(icon: file.type.icon, iconBGColor: .systemBackground, iconTintColor: file.type.tintColor), control: nil, handler: nil))
->>>>>>> ios-16
         
         if file.type.typeURL == "folder" {
             cell.accessoryType = .disclosureIndicator
@@ -130,7 +103,7 @@ class FolderLocationViewController: UITableViewController {
     }
 
     @objc func selectFolderButton(_ sender: UIBarButtonItem) {
-        
+        print(currentfolder)
         let presenter = self.presentingViewController?.children.last as? NoteShareSettingsViewController
         presenter?.folderID = currentfolder
         
