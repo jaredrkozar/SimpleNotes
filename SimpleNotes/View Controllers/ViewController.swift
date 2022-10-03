@@ -92,20 +92,6 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         cell.layoutIfNeeded()
         return cell
     }
-<<<<<<< HEAD
-
-    @objc func settingsScreen(sender: UIButton) {
-        if currentDevice == .iphone {
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "settingsVC") as! SettingsViewController
-            let navController = UINavigationController(rootViewController: vc)
-            self.present(navController, animated: true, completion: nil)
-        } else {
-            let activity = NSUserActivity(activityType: "showSettings")
-            UIApplication.shared.requestSceneSessionActivation(nil, userActivity: activity, options: nil) { (error) in
-                print(error)
-            }
-        }
-=======
     
     @objc func tintColorChanged(notification: Notification) {
  
@@ -128,7 +114,6 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         tableView.delegate = self
         tableView.reloadData()
         showNote(noteIndex: notes.count - 1)
->>>>>>> ios-16
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -186,7 +171,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                 //gets the current dimension and splits it up into 2 parts, and saves them so they can be shown in the text fields in editPresetViewController. The editPresetViewController is then shown via a popover
                   let vc = EditTagsTableViewController()
                   let navController = UINavigationController(rootViewController: vc)
-                  vc.index = indexPath.row 
+                  vc.index = indexPath.row
                   self.navigationController?.present(navController, animated: true, completion: nil)
                 
             }
@@ -270,6 +255,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         for view in viewOptions.allCases {
             viewoptions.append(UIAction(title: "\(view.title)", image: UIImage(systemName: "\(view.icon)"), identifier: .none, discoverabilityTitle: "View Options", attributes: [], state: .on, handler: {_ in
                 
+               print("FLLFLFLFL")
                 
             }))
         }

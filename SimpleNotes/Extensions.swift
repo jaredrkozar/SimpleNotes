@@ -105,11 +105,7 @@ public enum viewOptions: CaseIterable {
     }
 }
 
-<<<<<<< HEAD
-public enum Tools: CaseIterable {
-=======
 public enum Tools: Int, CaseIterable {
->>>>>>> ios-16
     case pen
     case highlighter
     case eraser

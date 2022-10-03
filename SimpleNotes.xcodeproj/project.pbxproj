@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0207566428B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */; };
+		02AD68B828EB89AA004E3319 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD68B728EB89AA004E3319 /* SceneDelegate.swift */; };
 		02AEB2D828DCE3D600AF46D6 /* CustomPDFPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AEB2D728DCE3D600AF46D6 /* CustomPDFPage.swift */; };
 		02AEB2DA28DD26AA00AF46D6 /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AEB2D928DD26AA00AF46D6 /* Border.swift */; };
 		02AEB2E928E0D2A100AF46D6 /* vitb12.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 02AEB2E828E0D2A100AF46D6 /* vitb12.pdf */; };
@@ -69,9 +70,7 @@
 		7FE4509C281E50C80034928B /* CustomSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE4509B281E50C80034928B /* CustomSelectionView.swift */; };
 		7FE4509E281EEE760034928B /* TextTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE4509D281EEE760034928B /* TextTool.swift */; };
 		7FEBEC6F276135DA0066F0C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEBEC6E276135DA0066F0C0 /* AppDelegate.swift */; };
-		7FEBEC71276135DA0066F0C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEBEC70276135DA0066F0C0 /* SceneDelegate.swift */; };
 		7FEBEC73276135DA0066F0C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEBEC72276135DA0066F0C0 /* ViewController.swift */; };
-		7FEBEC76276135DA0066F0C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FEBEC74276135DA0066F0C0 /* Main.storyboard */; };
 		7FEBEC78276135DC0066F0C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FEBEC77276135DC0066F0C0 /* Assets.xcassets */; };
 		7FEBEC7B276135DC0066F0C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FEBEC79276135DC0066F0C0 /* LaunchScreen.storyboard */; };
 		7FEBEC86276135DC0066F0C0 /* SimpleNotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEBEC85276135DC0066F0C0 /* SimpleNotesTests.swift */; };
@@ -102,6 +101,7 @@
 
 /* Begin PBXFileReference section */
 		0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNoteSettingsViewController.swift; sourceTree = "<group>"; };
+		02AD68B728EB89AA004E3319 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		02AEB2D728DCE3D600AF46D6 /* CustomPDFPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPDFPage.swift; sourceTree = "<group>"; };
 		02AEB2D928DD26AA00AF46D6 /* Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
 		02AEB2E828E0D2A100AF46D6 /* vitb12.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = vitb12.pdf; path = "../../../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/2E83D7FC-2927-4084-9EA5-80BA465FE950/vitb12.pdf"; sourceTree = "<group>"; };
@@ -168,9 +168,7 @@
 		7FE4509D281EEE760034928B /* TextTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTool.swift; sourceTree = "<group>"; };
 		7FEBEC6B276135DA0066F0C0 /* SimpleNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FEBEC6E276135DA0066F0C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7FEBEC70276135DA0066F0C0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		7FEBEC72276135DA0066F0C0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		7FEBEC75276135DA0066F0C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7FEBEC77276135DC0066F0C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7FEBEC7A276135DC0066F0C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7FEBEC7C276135DC0066F0C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -399,9 +397,8 @@
 			children = (
 				7FEBEC6E276135DA0066F0C0 /* AppDelegate.swift */,
 				7F498B0B27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld */,
-				7FEBEC70276135DA0066F0C0 /* SceneDelegate.swift */,
 				7F8BBDFB276ED795005B07C1 /* Extensions.swift */,
-				7FEBEC74276135DA0066F0C0 /* Main.storyboard */,
+				02AD68B728EB89AA004E3319 /* SceneDelegate.swift */,
 				7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */,
 				02AEB2E728E0D29200AF46D6 /* pdfs */,
 				7FE45087281E29B40034928B /* Drawing */,
@@ -547,7 +544,6 @@
 				02AEB2E928E0D2A100AF46D6 /* vitb12.pdf in Resources */,
 				7FEBEC7B276135DC0066F0C0 /* LaunchScreen.storyboard in Resources */,
 				7FEBEC78276135DC0066F0C0 /* Assets.xcassets in Resources */,
-				7FEBEC76276135DA0066F0C0 /* Main.storyboard in Resources */,
 				7FEBECA3276136280066F0C0 /* NoteTableViewCell.xib in Resources */,
 				7FC55D962791372D001DDFD5 /* GoogleService-Info.plist in Resources */,
 			);
@@ -729,7 +725,6 @@
 				7F4974B32892451400A3D0FF /* LineTypeCollectionView.swift in Sources */,
 				7F376630278E6A8500A107FF /* APIInteractor.swift in Sources */,
 				7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */,
-				7FEBEC71276135DA0066F0C0 /* SceneDelegate.swift in Sources */,
 				7FE45089281E2A460034928B /* DrawingView.swift in Sources */,
 				7FC7FB6F2837F74000CE483E /* Constants.swift in Sources */,
 				7F53DAA8279BEF62006789F6 /* CloudServiceFiles.swift in Sources */,
@@ -745,6 +740,7 @@
 				7FE45096281E2E860034928B /* CustomImageView.swift in Sources */,
 				7FEBECA2276136280066F0C0 /* NoteTableViewCell.swift in Sources */,
 				7FE4508B281E2A8C0034928B /* Line.swift in Sources */,
+				02AD68B828EB89AA004E3319 /* SceneDelegate.swift in Sources */,
 				0207566428B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift in Sources */,
 				7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */,
 				7F376617278B59B800A107FF /* SendToOtherApp.swift in Sources */,
@@ -809,14 +805,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		7FEBEC74276135DA0066F0C0 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7FEBEC75276135DA0066F0C0 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		7FEBEC79276135DC0066F0C0 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

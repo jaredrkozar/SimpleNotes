@@ -10,10 +10,7 @@ import SwiftyDropbox
 import PDFKit
 
 class DropboxInteractor: APIInteractor {
-<<<<<<< HEAD
-=======
     
->>>>>>> ios-16
     var defaultFolder: String = ""
     
     var filesInFolder = [CloudServiceFiles]()
@@ -25,17 +22,13 @@ class DropboxInteractor: APIInteractor {
             if let result = response {
         
                 for file in result.entries {
-                    var isFolder: Bool = false
+                    var isFolder: Bool = true
                     
                     if file is Files.FileMetadata {
-                        isFolder = true
+                        isFolder = false
                     }
                 
-<<<<<<< HEAD
-                    self.filesInFolder.append(CloudServiceFiles(name: file.name, type: isFolder ? self.getFileType(type: file.name) : .folder, folderID: file.pathLower!))
-=======
                     self.filesInFolder.append(CloudServiceFiles(name: file.name, type: isFolder == true ? .folder : self.getFileType(type: file.name), folderID: file.pathLower!))
->>>>>>> ios-16
                 }
                 
                 onCompleted(self.filesInFolder, nil)
@@ -70,12 +63,6 @@ class DropboxInteractor: APIInteractor {
         DropboxClientsManager.unlinkClients()
     }
     
-<<<<<<< HEAD
-    func uploadFile(note: Data, noteName: String, folderID: String, onCompleted: @escaping (Double, String?) -> ()) {
-
-        let newPath = folderID + "/\(noteName).pdf"
-        var request = client?.files.upload(path: newPath, mode: .add, autorename: true, clientModified: Date(), mute: true, propertyGroups: nil, strictConflict: true, input: note)
-=======
     func uploadFile(note: Data, noteName: String, folderID: String?, onCompleted: @escaping (Double, String?) -> ()) {
         var progress: Double?
         let newPath = folderID! + "/\(noteName).pdf"
@@ -85,15 +72,13 @@ class DropboxInteractor: APIInteractor {
                 progress = progressData.fractionCompleted
                 print(progress)
             }
->>>>>>> ios-16
         
-            .response { response, error in
-                if let response = response {
-                    ToastNotification().showToast(backgroundColor: .systemGreen, image: UIImage(systemName: "checkmark.circle.fill")!, titleText: "File uploaded to Dropbox", subtitleText: "The note was successfully uplrmmrmrmrmr rkrkkrkrkrkrrk  rkrkrkkrkkrkrkr  rkrkrkrkrkkrr rkrkkrkrr oaded to Dropbox", progress: nil)
-                } else if let error = error {
-                    ToastNotification().showToast(backgroundColor: .systemGreen, image: UIImage(systemName: "exclamationmark.icloud")!, titleText: "Error uploading note to Dropbox", subtitleText: error.description, progress: nil)
+            .response(queue: DispatchQueue.global(qos: .userInteractive), completionHandler: { response, error in
+                if let _ = response {
+                    onCompleted(progress ?? 0.0, "D")
                 }
-            }
+               
+            })
     }
     
     func downloadFile(identifier: String, folderID: String?, onCompleted: @escaping (Data?, Error?) -> ()) {

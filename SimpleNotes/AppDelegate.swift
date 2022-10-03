@@ -37,14 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
-<<<<<<< HEAD
-        if options.userActivities.first?.activityType == "showSettings" {
-           let config = UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-           config.delegateClass = SettingsSceneDelegate.self
-           return config
-        } else {
-           return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-        }
+        
+        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
@@ -104,10 +98,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     // Open URL
     func application(_ application: UIApplication,
                       open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-<<<<<<< HEAD
-        
-=======
->>>>>>> ios-16
          var handled: Bool
 
         handled = GIDSignIn.sharedInstance().handle(url)
