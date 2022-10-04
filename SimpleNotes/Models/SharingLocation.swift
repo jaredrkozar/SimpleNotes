@@ -94,6 +94,16 @@ public enum SharingLocation: CaseIterable {
                 return true
         }
     }
+    
+    var canExport: Bool {
+        
+        switch self {
+        case .messages, .files, .googledrive, .dropbox, .email, .otherapps:
+                return true
+        case .scanDocument:
+            return false
+        }
+    }
 }
 
 extension SharingLocation {

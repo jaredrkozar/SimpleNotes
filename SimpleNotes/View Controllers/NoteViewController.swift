@@ -343,7 +343,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
          
          for location in SharingLocation.allCases {
              locations.append( UIAction(title: "\(location.viewTitle)", image: location.icon, identifier: nil, attributes: []) { _ in
-
+                 
                  switch currentDevice {
                  case .iphone:
                      if let picker = navigationController.presentationController as? UISheetPresentationController {
@@ -363,7 +363,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                  
                  vc.currentNoteView = self.exportAsPDF()
                  vc.sharingLocation = location
-                 vc.currentNoteTitle = self.currentNote?.title
+                 vc.currentNoteTitle = self.navigationItem.title
                  self.present(navigationController, animated: true, completion: nil)
               })
            }

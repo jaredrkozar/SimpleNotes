@@ -33,7 +33,7 @@ class FolderLocationViewController: UITableViewController {
             location!.currentLocation.signIn(vc: self)
             return
         }
-        print(currentfolder)
+        
         location?.currentLocation.fetchFiles(folderID: (currentfolder ?? location?.currentLocation.defaultFolder)!, onCompleted: {
             (files, error) in
             self.allFiles = files!

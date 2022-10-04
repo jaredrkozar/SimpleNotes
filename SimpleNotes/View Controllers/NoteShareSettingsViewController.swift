@@ -10,19 +10,12 @@ import GoogleSignIn
 
 class NoteShareSettingsViewController: UITableViewController {
     
+    private var filesExport = UIDocumentBrowserViewController()
     private var models = [Sections]()
     var format: SharingType?
     var currentNoteTitle: String?
     var currentNoteView: Data!
     var sharingLocation: SharingLocation?
-    
-    var currentLocation: APIInteractor {
-        if self.sharingLocation == .googledrive {
-            return GoogleInteractor()
-        } else {
-            return DropboxInteractor()
-        }
-    }
     
     let google = GoogleInteractor()
     let dropbox = DropboxInteractor()
@@ -38,7 +31,7 @@ class NoteShareSettingsViewController: UITableViewController {
         
         title = "Settings"
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Upload Note", style: .done, target: self, action: #selector(uploadNote))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: sharingLocation?.buttonMessage, style: .done, target: self, action: #selector(uploadNote))
         
     }
 
@@ -57,13 +50,13 @@ class NoteShareSettingsViewController: UITableViewController {
         models.append(Sections(title: "Location", settings: [
             SettingsOptions(title: "Folder", option: "", rowIcon: nil, control: nil) {
                 
-                if self.currentLocation.isSignedIn == false {
-                    self.currentLocation.signIn(vc: self)
+                if self.sharingLocation?.currentLocation.isSignedIn == false {
+                    self.sharingLocation?.currentLocation.signIn(vc: self)
                            } else {
                                let vc = FolderLocationViewController()
                               let navController = UINavigationController(rootViewController: vc)
                                vc.location = self.sharingLocation
-                               vc.currentfolder = self.currentLocation.defaultFolder
+                               vc.currentfolder = self.sharingLocation?.currentLocation.defaultFolder
                                vc.serviceType = .upload
                                self.navigationController?.present(navController, animated: true, completion: nil)
                            }
@@ -133,9 +126,16 @@ class NoteShareSettingsViewController: UITableViewController {
     }
     
     @objc func uploadNote() {
-       
-        currentLocation.uploadFile(note: currentNoteView, noteName: "currentNoteTitle!", folderID: folderID, onCompleted: {_,_ in
-            print("slsl")
-        })
+        if sharingLocation == .dropbox || sharingLocation == .googledrive {
+            sharingLocation?.currentLocation.uploadFile(note: currentNoteView, noteName: "currentNoteTitle!", folderID: folderID, onCompleted: {_,_ in
+                print("slsl")
+            })
+        } else if sharingLocation == .files {
+            let dataAsURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(String(describing: currentNoteTitle!)).pdf")
+            try! currentNoteView.write(to: dataAsURL)
+    
+            let documentController = UIDocumentPickerViewController(forExporting: [dataAsURL])
+            present(documentController, animated: true)
+        }
     }
 }
