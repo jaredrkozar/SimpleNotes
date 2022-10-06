@@ -126,21 +126,22 @@ class NoteShareSettingsViewController: UITableViewController {
     }
     
     @objc func uploadNote() {
-        if sharingLocation == .dropbox || sharingLocation == .googledrive {
+        switch sharingLocation {
+        case .googledrive,.dropbox:
             sharingLocation?.currentLocation.uploadFile(note: currentNoteView, noteName: currentNoteTitle!, folderID: folderID, onCompleted: {_,_ in
                 print("slsl")
             })
-        } else if sharingLocation == .files {
+        case .files:
             let dataAsURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(String(describing: currentNoteTitle!)).pdf")
             try! currentNoteView.write(to: dataAsURL)
     
             let documentController = UIDocumentPickerViewController(forExporting: [dataAsURL])
             present(documentController, animated: true)
-        } else if sharingLocation == .email {
+        case .email:
             sendEmail(noteTitle: currentNoteTitle!, notePDF: currentNoteView)
-        } else if sharingLocation == .messages {
+        case .messages:
             sendText(noteTitle: currentNoteTitle!, notePDF: currentNoteView)
-        } else if sharingLocation == .print {
+        case .print:
             let printInfo = UIPrintInfo(dictionary: nil)
             printInfo.jobName = currentNoteTitle!
             
@@ -149,6 +150,8 @@ class NoteShareSettingsViewController: UITableViewController {
              printController.showsNumberOfCopies = false
 
             printController.present(animated: true)
+        default:
+            print("This export type is not supported")
         }
     }
 }

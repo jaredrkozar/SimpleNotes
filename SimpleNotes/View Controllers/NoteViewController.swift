@@ -341,31 +341,33 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
          let vc = NoteShareSettingsViewController()
          let navigationController = UINavigationController(rootViewController: vc)
          
-         for location in SharingLocation.allCases {
-             locations.append( UIAction(title: "\(location.viewTitle)", image: location.icon, identifier: nil, attributes: []) { _ in
-                 
-                 switch currentDevice {
-                 case .iphone:
-                     if let picker = navigationController.presentationController as? UISheetPresentationController {
-                        picker.detents = [.medium()]
-                        picker.prefersGrabberVisible = true
-                        picker.preferredCornerRadius = 7.0
-                     }
-                 case .ipad, .mac:
-                     navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
-                   navigationController.preferredContentSize = CGSize(width: 375, height: 300)
-                     navigationController.popoverPresentationController?.sourceItem = self.drawingView
-                     
-                 
-                 case .none:
-                     return
-                 }
-                 
-                 vc.currentNoteView = self.exportAsPDF()
-                 vc.sharingLocation = location
-                 vc.currentNoteTitle = self.navigationItem.title
-                 self.present(navigationController, animated: true, completion: nil)
-              })
+            for location in SharingLocation.allCases {
+                if location.canExport == true {
+                    locations.append( UIAction(title: "\(location.viewTitle)", image: location.icon, identifier: nil, attributes: []) { _ in
+                        
+                        switch currentDevice {
+                        case .iphone:
+                            if let picker = navigationController.presentationController as? UISheetPresentationController {
+                               picker.detents = [.medium()]
+                               picker.prefersGrabberVisible = true
+                               picker.preferredCornerRadius = 7.0
+                            }
+                        case .ipad, .mac:
+                            navigationController.modalPresentationStyle = UIModalPresentationStyle.popover
+                          navigationController.preferredContentSize = CGSize(width: 375, height: 300)
+                            navigationController.popoverPresentationController?.sourceItem = self.drawingView
+                            
+                        
+                        case .none:
+                            return
+                        }
+                        
+                        vc.currentNoteView = self.exportAsPDF()
+                        vc.sharingLocation = location
+                        vc.currentNoteTitle = self.navigationItem.title
+                        self.present(navigationController, animated: true, completion: nil)
+                     })
+                }
            }
          
         return UIMenu(title: "Share Note", subtitle: nil, image: nil, identifier: nil, options: [], children: locations)
@@ -566,7 +568,6 @@ extension NoteViewController: UISearchResultsUpdating {
         }
     }
 
-    @available(iOS 16.0, *)
     func updateSearchResults(for searchController: UISearchController, selecting searchSuggestion: UISearchSuggestion) {
         if #available(iOS 16.0, *) {
             if let suggestion = searchSuggestion.localizedSuggestion {
