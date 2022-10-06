@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		0207566428B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */; };
 		02AD68B828EB89AA004E3319 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD68B728EB89AA004E3319 /* SceneDelegate.swift */; };
+		02AD68BB28EF23A5004E3319 /* UIBezierPath+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD68BA28EF23A5004E3319 /* UIBezierPath+Extension.swift */; };
+		02AD68BD28EF23BD004E3319 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD68BC28EF23BD004E3319 /* UIColor+Extension.swift */; };
+		02AD68BF28EF23EC004E3319 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD68BE28EF23EC004E3319 /* String+Extension.swift */; };
+		02AD68C128EF240C004E3319 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD68C028EF240C004E3319 /* UIView+Extension.swift */; };
+		02AD68C328EF242E004E3319 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD68C228EF242E004E3319 /* UIImageView+Extension.swift */; };
 		02AEB2D828DCE3D600AF46D6 /* CustomPDFPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AEB2D728DCE3D600AF46D6 /* CustomPDFPage.swift */; };
 		02AEB2DA28DD26AA00AF46D6 /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AEB2D928DD26AA00AF46D6 /* Border.swift */; };
 		02AEB2E928E0D2A100AF46D6 /* vitb12.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 02AEB2E828E0D2A100AF46D6 /* vitb12.pdf */; };
@@ -102,6 +107,11 @@
 /* Begin PBXFileReference section */
 		0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNoteSettingsViewController.swift; sourceTree = "<group>"; };
 		02AD68B728EB89AA004E3319 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		02AD68BA28EF23A5004E3319 /* UIBezierPath+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIBezierPath+Extension.swift"; path = "SimpleNotes/UIBezierPath+Extension.swift"; sourceTree = SOURCE_ROOT; };
+		02AD68BC28EF23BD004E3319 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		02AD68BE28EF23EC004E3319 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		02AD68C028EF240C004E3319 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		02AD68C228EF242E004E3319 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		02AEB2D728DCE3D600AF46D6 /* CustomPDFPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPDFPage.swift; sourceTree = "<group>"; };
 		02AEB2D928DD26AA00AF46D6 /* Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
 		02AEB2E828E0D2A100AF46D6 /* vitb12.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = vitb12.pdf; path = "../../../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/2E83D7FC-2927-4084-9EA5-80BA465FE950/vitb12.pdf"; sourceTree = "<group>"; };
@@ -213,6 +223,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02AD68B928EF2382004E3319 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				02AD68BA28EF23A5004E3319 /* UIBezierPath+Extension.swift */,
+				02AD68BC28EF23BD004E3319 /* UIColor+Extension.swift */,
+				02AD68BE28EF23EC004E3319 /* String+Extension.swift */,
+				02AD68C028EF240C004E3319 /* UIView+Extension.swift */,
+				02AD68C228EF242E004E3319 /* UIImageView+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		02AEB2E728E0D29200AF46D6 /* pdfs */ = {
 			isa = PBXGroup;
 			children = (
@@ -397,6 +419,7 @@
 			children = (
 				7FEBEC6E276135DA0066F0C0 /* AppDelegate.swift */,
 				7F498B0B27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld */,
+				02AD68B928EF2382004E3319 /* Extensions */,
 				7F8BBDFB276ED795005B07C1 /* Extensions.swift */,
 				02AD68B728EB89AA004E3319 /* SceneDelegate.swift */,
 				7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */,
@@ -707,6 +730,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02AD68C128EF240C004E3319 /* UIView+Extension.swift in Sources */,
 				7F376615278B569D00A107FF /* SendText.swift in Sources */,
 				7FE45082281A56F40034928B /* CollectionReusableView.swift in Sources */,
 				7FD82DCB28233AE500ECCB3B /* Brush.swift in Sources */,
@@ -734,6 +758,7 @@
 				7F2FE9232830AE4A006777DE /* LockNote.swift in Sources */,
 				7F37660F278A52DA00A107FF /* SharingLocation.swift in Sources */,
 				7FE4509A281E30A00034928B /* HelperFunctions.swift in Sources */,
+				02AD68BB28EF23A5004E3319 /* UIBezierPath+Extension.swift in Sources */,
 				7FB7C29B2815155F006C9FE2 /* HoldingClass.swift in Sources */,
 				7F37661A278BC7B400A107FF /* PDFCreator.swift in Sources */,
 				7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */,
@@ -761,13 +786,16 @@
 				7FE4508D281E2AAB0034928B /* Tool.swift in Sources */,
 				7F37662E278E666100A107FF /* GoogleInteractor.swift in Sources */,
 				7FC7FB71283A0C4B00CE483E /* TintPickerViewController.swift in Sources */,
+				02AD68BD28EF23BD004E3319 /* UIColor+Extension.swift in Sources */,
 				7FC7FB6D2836D5C100CE483E /* CustomButton.swift in Sources */,
 				7F97ED5B288FA81E00DA2EB4 /* IconCollectionView.swift in Sources */,
+				02AD68BF28EF23EC004E3319 /* String+Extension.swift in Sources */,
 				7F376613278AC3CD00A107FF /* SendEmail.swift in Sources */,
 				7F37661E278D40F700A107FF /* FolderLocationViewController.swift in Sources */,
 				7FB8120E2869554C00DC9E67 /* ColorCollectionView.swift in Sources */,
 				7FE45091281E2BE90034928B /* ObjectView.swift in Sources */,
 				7F53DAB0279D4CAD006789F6 /* SidebarViewController.swift in Sources */,
+				02AD68C328EF242E004E3319 /* UIImageView+Extension.swift in Sources */,
 				7FF31CCE2799E04F00923AE3 /* DropboxInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

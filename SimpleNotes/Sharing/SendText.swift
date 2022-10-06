@@ -14,15 +14,13 @@ extension NoteShareSettingsViewController: MFMessageComposeViewControllerDelegat
     }
     
     
-    func sendText(noteTitle: String, noteText: String?, noteDate: String?, notePDF: Data?) {
+    func sendText(noteTitle: String, notePDF: Data?) {
         
         if (MFMessageComposeViewController.canSendText()) {
             let message = MFMessageComposeViewController()
             message.messageComposeDelegate = self
 
-            if noteText != nil {
-                message.body = "Title: \(noteTitle) Created on \(noteDate!) TextL \(noteText!)"
-            }
+            message.body = "Title: \(noteTitle)"
             
             if notePDF != nil {
                 message.addAttachmentData(notePDF!, typeIdentifier: "application/pdf", filename: "\(noteTitle).pdf")

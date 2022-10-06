@@ -127,7 +127,7 @@ class NoteShareSettingsViewController: UITableViewController {
     
     @objc func uploadNote() {
         if sharingLocation == .dropbox || sharingLocation == .googledrive {
-            sharingLocation?.currentLocation.uploadFile(note: currentNoteView, noteName: "currentNoteTitle!", folderID: folderID, onCompleted: {_,_ in
+            sharingLocation?.currentLocation.uploadFile(note: currentNoteView, noteName: currentNoteTitle!, folderID: folderID, onCompleted: {_,_ in
                 print("slsl")
             })
         } else if sharingLocation == .files {
@@ -136,6 +136,19 @@ class NoteShareSettingsViewController: UITableViewController {
     
             let documentController = UIDocumentPickerViewController(forExporting: [dataAsURL])
             present(documentController, animated: true)
+        } else if sharingLocation == .email {
+            sendEmail(noteTitle: currentNoteTitle!, notePDF: currentNoteView)
+        } else if sharingLocation == .messages {
+            sendText(noteTitle: currentNoteTitle!, notePDF: currentNoteView)
+        } else if sharingLocation == .print {
+            let printInfo = UIPrintInfo(dictionary: nil)
+            printInfo.jobName = currentNoteTitle!
+            
+            let printController = UIPrintInteractionController()
+            printController.printingItem = currentNoteView
+             printController.showsNumberOfCopies = false
+
+            printController.present(animated: true)
         }
     }
 }

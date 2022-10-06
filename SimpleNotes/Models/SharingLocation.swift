@@ -15,6 +15,7 @@ public enum SharingLocation: CaseIterable {
     case dropbox
     case scanDocument
     case files
+    case print
     
     var icon: UIImage {
         switch self {
@@ -32,6 +33,8 @@ public enum SharingLocation: CaseIterable {
             return UIImage(systemName: "doc.viewfinder")!
         case .files:
             return UIImage(systemName: "folder")!
+        case .print:
+            return UIImage(systemName: "printer")!
         }
     }
     
@@ -52,6 +55,8 @@ public enum SharingLocation: CaseIterable {
                 return "Scan Document"
         case .files:
                 return "Files"
+        case .print:
+            return "Print Note"
         }
     }
     
@@ -72,33 +77,25 @@ public enum SharingLocation: CaseIterable {
                 return ""
         case .files:
                 return "Send to Files"
+        case .print:
+                return "Print Note"
         }
     }
     
     var canImport: Bool {
         
         switch self {
-            case .messages:
-                return false
-        case .email:
-                return false
-        case .otherapps:
-                return false
-        case .googledrive:
-                return true
-        case .dropbox:
-                return true
-        case .scanDocument:
-                return true
-        case .files:
-                return true
+        case .scanDocument, .dropbox, .files, .googledrive:
+            return true
+        default:
+            return false
         }
     }
     
     var canExport: Bool {
         
         switch self {
-        case .messages, .files, .googledrive, .dropbox, .email, .otherapps:
+        case .messages, .files, .googledrive, .dropbox, .email, .otherapps, .print:
                 return true
         case .scanDocument:
             return false

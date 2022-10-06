@@ -429,6 +429,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         } else {
             drawingView.currentHighlighter?.width = UserDefaults.standard.double(forKey: "width")
         }
+        
     }
     
     @objc func changeStrokeType(notification: Notification) {
@@ -444,9 +445,9 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         let newPDF = NSMutableData()
         UIGraphicsBeginPDFContextToData(newPDF, CGRect(x: 0,y: 0, width: scrollView.contentSize.width, height: scrollView.contentSize.height), nil)
         let context = UIGraphicsGetCurrentContext()
-        scrollView.setContentOffset(.zero, animated: false)
+        scrollView.setContentOffset(CGPoint(x: 0, y: 100), animated: false)
         for counter in 0 ..< pdfDocument!.pageCount {
-            print(offsets[counter].minX)
+          
             scrollView.setContentOffset(CGPoint(x: offsets[counter].minX, y: offsets[counter].minY), animated: false)
                         switch self.pageDisplayType {
                         case .horizontal:
