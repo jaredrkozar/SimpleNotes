@@ -327,7 +327,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
            default:
                border = Border(minX: pdfHolderView.bounds.minX, minY: pdfHolderView.bounds.minY, maxX: pdfHolderView.bounds.maxX, maxY: pdfHolderView.bounds.maxY)
            }
-           print("border")
+           
            offsets.append(border)
        }
        return offsets
@@ -335,7 +335,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
     func drawPage(num: Int) -> CustomPDFPage {
         let page = pdfDocument?.page(at: num)
-        print(num)
+
         let pdfpage = CustomPDFPage(frame: CGRect(x: offsets[num].minX, y: offsets[num].minY + 20, width: offsets[num].maxX - offsets[num].minX, height: offsets[num].maxY - offsets[num].minY), page: page, pageNumber: num)
         pdfHolderView.addSubview(pdfpage)
         return pdfpage
@@ -557,9 +557,9 @@ extension NoteViewController: UINavigationItemRenameDelegate {
                 self.visiblePages.insert(self.drawPage(num: visiblePages[0].pageNumber! - 1), at: 0)
             }
         }
-        print(visiblePages.count)
+        
         if let last = visiblePages.last, (last.pageNumber! < pdfDocument!.pageCount - 1){
-            print(checkBelow(offset: scrollView.contentOffset.y / scrollView.zoomScale, test: offsets[last.pageNumber!].maxY))
+            
             if (checkBelow(offset: scrollView.contentOffset.y / scrollView.zoomScale, test: offsets[last.pageNumber!].maxY)){
                 self.visiblePages[0].removeFromSuperview()
                 self.visiblePages.removeFirst()
