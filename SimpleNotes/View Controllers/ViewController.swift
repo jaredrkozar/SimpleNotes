@@ -294,7 +294,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
 
 extension ViewController: UIDocumentPickerDelegate {
     @objc func presentFilesPicker() {
-        let documentpicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.pdf, UTType.data])
+        let documentpicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.pdf])
         documentpicker.delegate = self
             self.present(documentpicker, animated: true, completion: nil)
     }

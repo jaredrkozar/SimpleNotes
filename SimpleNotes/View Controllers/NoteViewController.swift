@@ -12,7 +12,7 @@ import PDFKit
 
 class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrollViewDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
-    let drawingView = DrawingView(frame: .zero)
+    var drawingView = DrawingView(frame: .zero)
     let pdfHolderView = UIView(frame: .zero)
     var baseView = UIView(frame: .zero)
     
@@ -36,10 +36,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
     private let searchController = UISearchController(searchResultsController: nil)
     
-    var timer: Timer?
-    
-    var currentNote: Note?
-    
     var noteIndex: Int!
     
     var noteTitle: String?
@@ -58,8 +54,14 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
     private var pageDisplayType: PageDisplayType?
     
+    private var currentPage: Int? = 0
+    
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.post(name: Notification.Name( "tintColorChanged"), object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        pdfDocument = nil
     }
     
     override func viewDidLoad() {
@@ -94,9 +96,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             
             offsets.append(contentsOf: getAllPageOffsets(page: (pdfDocument?.page(at: 0))!, numberOfPages: pdfDocument!.pageCount))
             
-            for page in 0..<pdfDocument!.pageCount {
-                visiblePages.append(drawPage(num: page))
-            }
+            drawFirstCouplePages(range: (0 ..< min(3, pdfDocument!.pageCount)))
             
             drawingView.backgroundColor = .clear
             self.navigationItem.title = fetchNoteTitle(index: noteIndex!)
@@ -113,22 +113,21 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             var rect = CGRect()
             
             switch pageDisplayType {
-                case .horizontal:
-                rect = CGRect(x: 0, y: 0, width: offsets.last?.maxX ?? 0, height: offsets.last!.maxY)
-                scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: offsets.last!.maxY)
-                    break
-                case .vertical:
-                rect = CGRect(x: 0, y: 0, width: offsets.last!.maxX, height: offsets.last!.maxY)
-                scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-                    break
-            default:
-                return
-                }
-            
+                           case .horizontal:
+                           rect = CGRect(x: 0, y: 0, width: offsets.last?.maxX ?? 0, height: offsets.last!.maxY)
+                           scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: offsets.last!.maxY)
+                               break
+                           case .vertical:
+                           rect = CGRect(x: 0, y: 0, width: offsets.last!.maxX, height: offsets.last!.maxY)
+                scrollView.frame = CGRect(x: 0, y: 0, width: offsets.last!.maxX, height: offsets.last!.maxY)
+                               break
+                       default:
+                           return
+                           }
+            scrollView.contentSize = scrollView.frame.size
             drawingView.frame = rect
             pdfHolderView.frame = rect
             baseView.frame = rect
-            scrollView.contentSize = rect.size
         }
         
         scrollView.minimumZoomScale = 1.0
@@ -275,8 +274,27 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         NotificationCenter.default.addObserver(self, selector: #selector(changeColor(notification:)), name: Notification.Name("changedColor"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(tintColorChanged(notification:)), name: Notification.Name("tintColorChanged"), object: nil)
-        
-        timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(autoSaveNote), userInfo: nil, repeats: true)
+    }
+    
+    func drawFirstCouplePages(range: CountableRange<Int>) {
+        visiblePages.forEach({$0.removeFromSuperview()})
+        visiblePages.removeAll()
+        for counter in range
+        {
+            visiblePages.append(drawPage(num: counter))
+        }
+    }
+    
+    func returnRange(currentPageNum: Int) -> CountableRange<Int> {
+        if (currentPageNum - 2 < 0){
+            return 0 ..< min(pdfDocument!.pageCount, 3)
+          }
+        else if (currentPageNum != pdfDocument?.pageCount){
+              return currentPageNum - 2 ..< currentPageNum + 1
+          }
+          else{
+              return currentPageNum - 3 ..< currentPageNum
+          }
     }
     
     func goToPage(pageNum: Int) {
@@ -317,6 +335,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     
     func drawPage(num: Int) -> CustomPDFPage {
         let page = pdfDocument?.page(at: num)
+        print(num)
         let pdfpage = CustomPDFPage(frame: CGRect(x: offsets[num].minX, y: offsets[num].minY + 20, width: offsets[num].maxX - offsets[num].minX, height: offsets[num].maxY - offsets[num].minY), page: page, pageNumber: num)
         pdfHolderView.addSubview(pdfpage)
         return pdfpage
@@ -377,14 +396,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return baseView
     }
-    
-    @objc func autoSaveNote() {
-        if currentNote != nil {
-
-            NotificationCenter.default.post(name: Notification.Name("UpdateNotesTable"), object: nil)
-        }
-    }
-    
     
     @objc func editTagsButtonTapped(_ sender: Any) {
         
@@ -501,19 +512,59 @@ extension NoteViewController: UINavigationItemRenameDelegate {
         return UIMenu(title: "Add Media", image: nil, identifier: nil, options: .singleSelection, children: [presentPhotosPicker, presentCameraPicker])
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (visiblePages[0].pageNumber! > 0) {
-            print(visiblePages.last?.pageNumber)
-            self.visiblePages.last?.removeFromSuperview()
-            self.visiblePages.removeLast()
-            self.visiblePages.insert(self.drawPage(num: visiblePages[0].pageNumber! - 1), at: 0)
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        switch self.pageDisplayType {
+        case .horizontal:
+            self.updateHorizontal(scrollView)
+            break
+        case .vertical:
+            self.updateVertical(scrollView)
+            break
+        case .none:
+            print("DK")
         }
-        
-        if ((visiblePages.last?.pageNumber)! < pdfDocument!.pageCount - 1) {
-            self.visiblePages[0].removeFromSuperview()
-            self.visiblePages.removeFirst()
-            self.visiblePages.append(self.drawPage(num: (visiblePages.last?.pageNumber)! + 1))
-            print(visiblePages.count)
+    }
+    
+    private func checkBelow(offset: CGFloat, test: CGFloat) -> Bool{
+        return test - offset < self.view.frame.height && test >= offset
+    }
+    private func checkAbove(offset: CGFloat, test: CGFloat) -> Bool{
+        return offset - test < view.frame.height && offset >= test
+    }
+    
+    private func updateHorizontal(_ scrollView: UIScrollView) {
+        if (visiblePages[0].pageNumber! > 0){
+            if (checkAbove(offset: scrollView.contentOffset.x, test: offsets[visiblePages[0].pageNumber!].minX)){
+                self.visiblePages.last?.removeFromSuperview()
+                self.visiblePages.removeLast()
+                self.visiblePages.insert(self.drawPage(num: visiblePages[0].pageNumber! - 1), at: 0)
+            }
+        }
+        if let last = visiblePages.last, (last.pageNumber! < pdfDocument!.pageCount - 1){
+            if (checkBelow(offset: scrollView.contentOffset.x / scrollView.zoomScale, test: offsets[last.pageNumber!].maxX)){
+                self.visiblePages[0].removeFromSuperview()
+                self.visiblePages.removeFirst()
+                self.visiblePages.append(self.drawPage(num: last.pageNumber! + 1))
+            }
+        }
+    }
+    
+    private func updateVertical(_ scrollView: UIScrollView)  {
+        if (visiblePages[0].pageNumber! > 0){
+            if (checkAbove(offset: scrollView.contentOffset.y / scrollView.zoomScale, test: offsets[visiblePages[0].pageNumber!].minY)){
+                self.visiblePages.last?.removeFromSuperview()
+                self.visiblePages.removeLast()
+                self.visiblePages.insert(self.drawPage(num: visiblePages[0].pageNumber! - 1), at: 0)
+            }
+        }
+        print(visiblePages.count)
+        if let last = visiblePages.last, (last.pageNumber! < pdfDocument!.pageCount - 1){
+            print(checkBelow(offset: scrollView.contentOffset.y / scrollView.zoomScale, test: offsets[last.pageNumber!].maxY))
+            if (checkBelow(offset: scrollView.contentOffset.y / scrollView.zoomScale, test: offsets[last.pageNumber!].maxY)){
+                self.visiblePages[0].removeFromSuperview()
+                self.visiblePages.removeFirst()
+                self.visiblePages.append(self.drawPage(num: last.pageNumber! + 1))
+            }
         }
     }
 }
