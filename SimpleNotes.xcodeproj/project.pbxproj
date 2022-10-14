@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0207566428B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */; };
+		0285F0F528F5F4AC0044070C /* PDFHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0285F0F428F5F4AC0044070C /* PDFHolderView.swift */; };
 		02AD68B828EB89AA004E3319 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD68B728EB89AA004E3319 /* SceneDelegate.swift */; };
 		02AD68BB28EF23A5004E3319 /* UIBezierPath+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD68BA28EF23A5004E3319 /* UIBezierPath+Extension.swift */; };
 		02AD68BD28EF23BD004E3319 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD68BC28EF23BD004E3319 /* UIColor+Extension.swift */; };
@@ -106,6 +107,7 @@
 
 /* Begin PBXFileReference section */
 		0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNoteSettingsViewController.swift; sourceTree = "<group>"; };
+		0285F0F428F5F4AC0044070C /* PDFHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFHolderView.swift; sourceTree = "<group>"; };
 		02AD68B728EB89AA004E3319 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		02AD68BA28EF23A5004E3319 /* UIBezierPath+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIBezierPath+Extension.swift"; path = "SimpleNotes/UIBezierPath+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		02AD68BC28EF23BD004E3319 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 			isa = PBXGroup;
 			children = (
 				7F498AA9276FC22100202413 /* NoteViewController.swift */,
+				0285F0F428F5F4AC0044070C /* PDFHolderView.swift */,
 				7FDE92FB288777AA00B8E44F /* SelectColorPopoverViewController.swift */,
 				7F765A66285D8ABB00C51416 /* ChangeDateViewController.swift */,
 				7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */,
@@ -751,6 +754,7 @@
 				7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */,
 				7FE45089281E2A460034928B /* DrawingView.swift in Sources */,
 				7FC7FB6F2837F74000CE483E /* Constants.swift in Sources */,
+				0285F0F528F5F4AC0044070C /* PDFHolderView.swift in Sources */,
 				7F53DAA8279BEF62006789F6 /* CloudServiceFiles.swift in Sources */,
 				7F0F03EE282E4B8000A6B404 /* LineTypeCollectionViewCell.swift in Sources */,
 				7FE45085281A67E20034928B /* ColorCollectionViewCell.swift in Sources */,
