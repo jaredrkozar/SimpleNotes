@@ -354,6 +354,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     }
     
     public func insertImage(frame: CGRect?, image: UIImage) {
+        print(frame)
         let newImage = CustomImageView(frame: frame!, image: image)
         insertedImage?(image, frame!)
         currentView = newImage
@@ -440,7 +441,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     
     open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         drawingStraightLine = false
-        
+       
         undoManager?.setActionName("Undo Stroke")
         
         if currentView?.isMoving == true || currentView?.isResizing  == true {

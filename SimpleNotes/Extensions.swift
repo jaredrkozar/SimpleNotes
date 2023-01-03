@@ -246,9 +246,9 @@ extension PDFPage {
 }
 
 extension UIImage {
-    func returnFrame() -> CGRect {
+    func returnFrame(location: CGPoint?) -> CGRect {
         let newRect = self.resizeImage(dimension: 400)
         
-        return CGRect(x: (newRect.width + (-1 * CGFloat(newRect.width) / 2)), y: (newRect.height + (-1 * CGFloat(newRect.height) / 2)), width: newRect.width, height: newRect.height)
+        return CGRect(x: ((location?.x ?? newRect.width) + (-1 * CGFloat(newRect.width) / 2)), y: ((location?.y ?? newRect.height) + (-1 * CGFloat(newRect.height) / 2)), width: newRect.width, height: newRect.height)
     }
 }

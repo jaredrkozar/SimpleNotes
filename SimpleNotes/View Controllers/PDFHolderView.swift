@@ -8,7 +8,7 @@
 import UIKit
 import PDFKit
 
-class PDFHolderView: UIView, UIScrollViewDelegate {
+class PDFHolderView: UIView, UIScrollViewDelegate, UIDropInteractionDelegate {
 
     var pdfDocument: PDFDocument?
     
@@ -47,6 +47,9 @@ class PDFHolderView: UIView, UIScrollViewDelegate {
     init(pdfDocument: PDFDocument?, frame: CGRect, defaultScrollDirection: PageDisplayType, index: Int) {
         self.pdfDocument = pdfDocument
         super.init(frame: frame)
+        
+        self.isUserInteractionEnabled = true
+        self.addInteraction(UIDropInteraction(delegate: self))
         
         drawingView.addImagesToNote(images: fetchImages(index: index))
         drawingView.insertedImage = { image, frame in
@@ -288,6 +291,37 @@ class PDFHolderView: UIView, UIScrollViewDelegate {
                 self.visiblePages.removeFirst()
                 self.visiblePages.append(self.drawPage(num: last.pageNumber! + 1))
             }
+        }
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        // Ensure the drop session has an object of the appropriate type
+        return session.canLoadObjects(ofClass: UIImage.self)
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+            // Propose to the system to copy the item from the source app
+            return UIDropProposal(operation: .copy)
+    }
+    
+    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
+    
+        for dragItem in session.items {
+            dragItem.itemProvider.loadObject(ofClass: UIImage.self, completionHandler: { (obj, err) in
+                
+                if let err = err {
+                    print("Failed to load our dragged item:", err)
+                    return
+                }
+                
+                guard let draggedImage = obj as? UIImage else { return }
+                
+                DispatchQueue.main.async {
+                    print(session.location(in: self))
+                    self.drawingView.insertImage(frame: draggedImage.returnFrame(location: session.location(in: interaction.view!)), image: draggedImage)
+                }
+                
+            })
         }
     }
 }

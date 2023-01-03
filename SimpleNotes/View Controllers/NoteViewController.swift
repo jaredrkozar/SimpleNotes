@@ -10,7 +10,7 @@ import WSTagsField
 import PhotosUI
 import PDFKit
 
-class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrollViewDelegate, UIImagePickerControllerDelegate, UIDropInteractionDelegate & UINavigationControllerDelegate {
+class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrollViewDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     
     var noteTitle: String?
@@ -62,9 +62,6 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
         } else {
             let holderView = UIView(frame: .zero)
             pdfHolderView = PDFHolderView(pdfDocument: pdfDocument, frame: CGRect(x: holderView.bounds.minX, y: holderView.bounds.minY, width: 400, height: view.bounds.height), defaultScrollDirection: PageDisplayType(rawValue: UserDefaults.standard.string(forKey: "defaultPageScrollType")!)!, index: noteIndex ?? 0)
-            
-            self.view.isUserInteractionEnabled = true
-            self.view.addInteraction(UIDropInteraction(delegate: self))
             
             holderView.translatesAutoresizingMaskIntoConstraints = false
             holderView.addSubview(pdfHolderView!)
@@ -377,7 +374,7 @@ extension NoteViewController: PHPickerViewControllerDelegate {
                        DispatchQueue.main.async {
                            guard let self = self, let image = image as? UIImage else { return }
                           
-                           self.pdfHolderView?.drawingView.insertImage(frame: image.returnFrame(), image: image)
+                           self.pdfHolderView?.drawingView.insertImage(frame: image.returnFrame(location: nil), image: image)
                            
                            picker.dismiss(animated: true)
                        }
@@ -419,36 +416,6 @@ extension NoteViewController: UISearchResultsUpdating {
             if let suggestion = searchSuggestion.localizedSuggestion {
                 updateSearch(searchController, query: suggestion)
             }
-        }
-    }
-    
-    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
-        // Ensure the drop session has an object of the appropriate type
-        return session.canLoadObjects(ofClass: UIImage.self)
-    }
-    
-    func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
-            // Propose to the system to copy the item from the source app
-            return UIDropProposal(operation: .copy)
-    }
-    
-    func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
-        for dragItem in session.items {
-            dragItem.itemProvider.loadObject(ofClass: UIImage.self, completionHandler: { (obj, err) in
-                
-                if let err = err {
-                    print("Failed to load our dragged item:", err)
-                    return
-                }
-                
-                guard let draggedImage = obj as? UIImage else { return }
-                
-                DispatchQueue.main.async {
-                    print("ldlddldl")
-                    self.pdfHolderView?.drawingView.insertImage(frame: draggedImage.returnFrame(), image: draggedImage)
-                }
-                
-            })
         }
     }
 }
