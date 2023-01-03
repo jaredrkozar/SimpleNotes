@@ -11,6 +11,7 @@ public enum MimeTypes: CaseIterable {
     case folder
     case pdf
     case document
+    case image
     case spreadsheet
     case presentation
     case audiofile
@@ -28,6 +29,8 @@ public enum MimeTypes: CaseIterable {
             return UIImage(systemName: "tablecells")!
         case .presentation:
             return UIImage(systemName: "rectangle.grid.2x2")!
+        case .image:
+            return UIImage(systemName: "photo")!
         case .audiofile:
             return UIImage(systemName: "mic")!
         case .other:
@@ -47,6 +50,8 @@ public enum MimeTypes: CaseIterable {
             return .systemGreen
             case .presentation:
             return .systemYellow
+        case .image:
+        return .systemTeal
             case .audiofile:
             return .systemGray
             case .other:
@@ -67,6 +72,8 @@ public enum MimeTypes: CaseIterable {
                 return "spreadsheet"
         case .presentation:
                 return "presentation"
+        case .image:
+                return "image"
         case .audiofile:
                 return "audiofile"
         case .other:

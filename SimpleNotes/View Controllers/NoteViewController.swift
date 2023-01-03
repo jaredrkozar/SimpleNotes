@@ -12,6 +12,7 @@ import PDFKit
 
 class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrollViewDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
+    
     var noteTitle: String?
     var noteDate: Date?
     var isNoteLocked: Bool?
@@ -60,7 +61,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
             ])
         } else {
             let holderView = UIView(frame: .zero)
-            pdfHolderView = PDFHolderView(pdfDocument: pdfDocument, frame: CGRect(x: holderView.bounds.minX, y: holderView.bounds.minY, width: 400, height: view.bounds.height), defaultScrollDirection: PageDisplayType(rawValue: UserDefaults.standard.string(forKey: "defaultPageScrollType")!)!)
+            pdfHolderView = PDFHolderView(pdfDocument: pdfDocument, frame: CGRect(x: holderView.bounds.minX, y: holderView.bounds.minY, width: 400, height: view.bounds.height), defaultScrollDirection: PageDisplayType(rawValue: UserDefaults.standard.string(forKey: "defaultPageScrollType")!)!, index: noteIndex ?? 0)
             
             pdfHolderView?.isUserInteractionEnabled = true
             holderView.isUserInteractionEnabled = true
@@ -232,6 +233,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     func shareButtonTapped() -> UIMenu {
          var locations = [UIAction]()
          let vc = NoteShareSettingsViewController()
+
          let navigationController = UINavigationController(rootViewController: vc)
          
             for location in SharingLocation.allCases {
@@ -255,7 +257,11 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                             return
                         }
                         
-                        vc.currentNoteView = self.pdfHolderView?.exportAsPDF()
+                        vc.getNoteData = { color in
+                            
+                            return (self.pdfHolderView?.returnExport(exportType: color))!.first!
+                        }
+                        
                         vc.sharingLocation = location
                         vc.currentNoteTitle = self.navigationItem.title
                         self.present(navigationController, animated: true, completion: nil)

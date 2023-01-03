@@ -46,3 +46,17 @@ extension UIView {
         }
     }
 }
+
+func createTempDirectory() -> URL? {
+    if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+        let dir = documentDirectory.appendingPathComponent("temp-dir-\(UUID().uuidString)")
+        do {
+            try FileManager.default.createDirectory(atPath: dir.path, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            print(error.localizedDescription)
+        }
+        return dir
+    } else {
+        return nil
+    }
+}

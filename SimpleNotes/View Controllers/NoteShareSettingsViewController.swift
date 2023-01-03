@@ -9,12 +9,12 @@ import UIKit
 import GoogleSignIn
 
 class NoteShareSettingsViewController: UITableViewController {
-    
+    var getNoteData: ((_ exportType: SharingType)->(Data))?
     private var filesExport = UIDocumentBrowserViewController()
     private var models = [Sections]()
     var format: SharingType?
     var currentNoteTitle: String?
-    var currentNoteView: Data!
+    var currentNoteView: UIViewController!
     var sharingLocation: SharingLocation?
     
     let google = GoogleInteractor()
@@ -126,21 +126,23 @@ class NoteShareSettingsViewController: UITableViewController {
     }
     
     @objc func uploadNote() {
+        let noteData = self.getNoteData!(format ?? .pdf)
+        
         switch sharingLocation {
         case .googledrive,.dropbox:
-            sharingLocation?.currentLocation.uploadFile(note: currentNoteView, noteName: currentNoteTitle!, folderID: folderID, onCompleted: {_,_ in
+            sharingLocation?.currentLocation.uploadFile(note: noteData, noteName: currentNoteTitle!, noteFormat: format ?? .pdf, folderID: folderID, onCompleted: {_,_ in
                 print("slsl")
             })
         case .files:
-            let dataAsURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(String(describing: currentNoteTitle!)).pdf")
-            try! currentNoteView.write(to: dataAsURL)
+            let dataAsURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(String(describing: currentNoteTitle!)).\(format!.dropboxFileType)")
+            try! noteData.write(to: dataAsURL)
     
             let documentController = UIDocumentPickerViewController(forExporting: [dataAsURL])
             present(documentController, animated: true)
         case .email:
-            sendEmail(noteTitle: currentNoteTitle!, notePDF: currentNoteView)
+            sendEmail(noteTitle: currentNoteTitle!, notePDF: noteData)
         case .messages:
-            sendText(noteTitle: currentNoteTitle!, notePDF: currentNoteView)
+            sendText(noteTitle: currentNoteTitle!, notePDF: noteData)
         case .print:
             let printInfo = UIPrintInfo(dictionary: nil)
             printInfo.jobName = currentNoteTitle!
@@ -153,5 +155,5 @@ class NoteShareSettingsViewController: UITableViewController {
         default:
             print("This export type is not supported")
         }
-    }
+    } 
 }

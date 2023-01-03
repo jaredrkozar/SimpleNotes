@@ -36,11 +36,11 @@ func fetchTags() {
     }
 }
 
-func saveStrokes(strokes: [UIBezierPath], note: Note) {
+func saveStrokes(strokes: Line, note: Note) {
    
 }
 
-func saveTextBoxes(textBoxes: [UITextField], note: Note) {
+func saveTextBoxes(textBoxes: [UITextField], index: Int) {
     var textboxesset = Set<TextBox>()
     
     for textBox in textboxesset {
@@ -55,21 +55,64 @@ func saveTextBoxes(textBoxes: [UITextField], note: Note) {
     }
 }
 
-func saveImages(images: [UIImage], note: Note) {
-    var imageset = Set<Image>()
+func updateTextBoxWidth(newWidth: Double, index: Int) {
     
-    for image in images {
-        let newImage = Image(context: context)
-        let imageAsData = image.jpegData(compressionQuality: 1.0)
-        newImage.image = imageAsData
-        imageset.insert(newImage)
-    }
-    
+}
+func saveImage(image: UIImage, frame: CGRect, index: Int) {
+    let newImage = Image(context: context)
+    newImage.image = image.jpegData(compressionQuality: 1.0)
+    newImage.x = frame.minX
+    newImage.y = frame.minY
+    newImage.height = frame.height
+    newImage.width = frame.width
+    newImage.note = notes[index]
+    print("SAVED IMAGE")
     do {
         try context.save()
     } catch {
         print("An error occured while saving a note.")
     }
+}
+
+func removeImage(index: Int, noteIndex: Int) {
+    guard let context = notes[noteIndex].managedObjectContext else {
+        fatalError("unable to load managed object context")
+    }
+    
+    let imageFetchRequest: NSFetchRequest<Image> = Image.fetchRequest()
+    
+    do {
+        let fetchedImages = try context.fetch(imageFetchRequest)
+        
+        context.delete(fetchedImages[index])
+        
+        try context.save()
+    } catch {
+        print("An error occured while saving a note.")
+    }
+}
+
+func fetchImages(index: Int) -> [CustomImageView] {
+    guard let context = notes[index].managedObjectContext else {
+        fatalError("unable to load managed object context")
+    }
+    
+    let imageFetchRequest: NSFetchRequest<Image> = Image.fetchRequest()
+    
+    var imageArray = [CustomImageView]()
+    
+    do {
+        let fetchedImages = try context.fetch(imageFetchRequest)
+
+        for image in fetchedImages {
+            imageArray.append(CustomImageView(frame: CGRect(x: image.x, y: image.y, width: image.width, height: image.height), image: UIImage(data: image.image!)!))
+        }
+        return imageArray
+    } catch {
+        print("Dk")
+    }
+    
+    return imageArray
 }
 
 func createNewNote(thumbnail: Data, pdf: Data, title: String?) {

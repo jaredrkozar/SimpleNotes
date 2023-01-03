@@ -92,7 +92,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         }
        }
 
-    func uploadFile(note: Data, noteName: String, folderID: String?, onCompleted: @escaping (Double, String?) -> ()) {
+    func uploadFile(note: Data, noteName: String, noteFormat: SharingType, folderID: String?, onCompleted: @escaping (Double, String?) -> ()) {
         
         GIDSignIn.sharedInstance().restorePreviousSignIn()
        
@@ -104,7 +104,8 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         let file = GTLRDrive_File()
         file.name = noteName
         file.parents = ["root"]
-        let params = GTLRUploadParameters(data: note, mimeType: "application/pdf")
+        let params = GTLRUploadParameters(data: note, mimeType: noteFormat.googleDriveFileType)
+    
        params.shouldUploadWithSingleRequest = true
   
        let upload = GTLRDriveQuery_FilesCreate.query(withObject: file, uploadParameters: params)

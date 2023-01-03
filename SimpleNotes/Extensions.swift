@@ -176,6 +176,24 @@ public enum Device {
 public enum SharingType {
     case pdf
     case image
+    
+    var googleDriveFileType: String {
+        switch self {
+            case .pdf:
+            return "application/pdf"
+            case .image:
+            return "application/zip"
+        }
+    }
+    
+    var dropboxFileType: String {
+        switch self {
+            case .pdf:
+            return "pdf"
+            case .image:
+            return "png"
+        }
+    }
 }
 
 struct Sections {

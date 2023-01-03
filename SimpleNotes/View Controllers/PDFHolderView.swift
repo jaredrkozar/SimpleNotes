@@ -44,10 +44,23 @@ class PDFHolderView: UIView, UIScrollViewDelegate {
     }
     
     
-    init(pdfDocument: PDFDocument?, frame: CGRect, defaultScrollDirection: PageDisplayType) {
+    init(pdfDocument: PDFDocument?, frame: CGRect, defaultScrollDirection: PageDisplayType, index: Int) {
         self.pdfDocument = pdfDocument
         super.init(frame: frame)
+        print(fetchImages(index: index).count)
+        drawingView.addImagesToNote(images: fetchImages(index: index))
+        drawingView.insertedImage = { image, frame in
+            print("SAVE IMAGE")
+            saveImage(image: image, frame: frame, index: index)
+        }
         
+        drawingView.deleteImage = { imageindex in
+            removeImage(index: imageindex, noteIndex: index)
+        }
+        
+        drawingView.insertedStroke = { stroke in
+            print("DLLDLD")
+        }
        pageDisplayType = defaultScrollDirection
         drawingView.backgroundColor = .clear
         
@@ -147,7 +160,7 @@ class PDFHolderView: UIView, UIScrollViewDelegate {
        }
        return offsets
     }
-    
+
     func drawPage(num: Int) -> CustomPDFPage {
         let page = pdfDocument?.page(at: num)
         
@@ -157,8 +170,40 @@ class PDFHolderView: UIView, UIScrollViewDelegate {
         return pdfpage
     }
     
+    func returnExport(exportType: SharingType) -> [Data] {
+        var returnData: [Data]?
+        switch exportType {
+            case .image:
+              returnData = exportAsImage()
+            case .pdf:
+            returnData = [exportAsPDF()]
+        }
+        return returnData!
+    }
     
-    func exportAsPDF() -> Data {
+    private func exportAsImage() -> [Data] {
+        var newImage = [Data]()
+        let dpi: CGFloat = 300.0 / 72.0
+        let pageRect = pdfDocument?.page(at: 1)
+        
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: (pageRect?.bounds(for: .artBox).width)!, height: (pageRect?.bounds(for: .artBox).height)!))
+        
+        scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+        
+        for counter in 0..<pdfDocument!.pageCount {
+            let image = renderer.image { (context) in
+                UIColor.white.setFill()
+                context.fill(pageRect?.bounds(for: .artBox) ?? CGRect(x: 0, y: 0, width: 100, height: 100))
+                context.cgContext.translateBy(x: 0.0, y: (pageRect?.bounds(for: .artBox).height) ?? 0)
+                context.cgContext.scaleBy(x: 1.0, y: -1.0)
+                scrollView.layer.render(in: context.cgContext)
+            }
+            newImage.append(image.pngData()!)
+        }
+        return newImage
+    }
+    
+    private func exportAsPDF() -> Data {
         let newPDF = NSMutableData()
         UIGraphicsBeginPDFContextToData(newPDF, CGRect(x: 0,y: 0, width: scrollView.contentSize.width, height: scrollView.contentSize.height), nil)
         let context = UIGraphicsGetCurrentContext()
@@ -205,6 +250,7 @@ class PDFHolderView: UIView, UIScrollViewDelegate {
     private func checkBelow(offset: CGFloat, test: CGFloat) -> Bool{
         return test - offset < self.frame.height && test >= offset
     }
+    
     private func checkAbove(offset: CGFloat, test: CGFloat) -> Bool{
         return offset - test < self.frame.height && offset >= test
     }

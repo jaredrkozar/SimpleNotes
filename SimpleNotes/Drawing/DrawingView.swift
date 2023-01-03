@@ -20,6 +20,12 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     
     public var tool: Tools?
     private var lastLine: Line?
+    var insertedStroke: ((_ lineToInsert: Line)->())?
+    var deleteStroke: ((_ lineIndexToDelete: Int)->())?
+    var insertedImage: ((_ imageToInsert: UIImage, _ imageFrame: CGRect)->())?
+    var deleteImage: ((_ imageIndexToDelete: Int)->())?
+    var insertedTextbox: ((_ textboxToInsert: CustomTextBox)->())?
+    var deleteTextbox: ((_ textboxIndexToDelete: Int)->())?
     
     public var selectedTool: Tool? {
         if self.tool == .pen {
@@ -100,7 +106,6 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     }
     
     @objc func drawStraightLine(_ gesture: UILongPressGestureRecognizer) {
-        print("dldldldld")
         drawingStraightLine = true
     }
     
@@ -264,8 +269,13 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
             textbox.isNotCurrentView()
             textBoxes.remove(at: textBoxes.firstIndex(of: textbox)!)
         } else if let image = currentView as? CustomImageView {
+            let firstImageIndex = (images.firstIndex(of: image) ?? images.count)
+            
+            images.remove(at: firstImageIndex)
+            deleteImage?(firstImageIndex)
             image.isNotCurrentView()
             image.removeFromSuperview()
+            
         }
     }
     
@@ -322,7 +332,6 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         textBoxes.append(textbox)
         
         undoManager!.registerUndo(withTarget: self) { target in
-            print("TEXTBOX")
             textbox.removeFromSuperview()
             self.textBoxes.removeLast()
         }
@@ -346,18 +355,18 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     
     public func insertImage(frame: CGRect?, image: UIImage) {
         let newImage = CustomImageView(frame: frame!, image: image)
+        insertedImage?(image, frame!)
         currentView = newImage
         newImage.becomeFirstResponder()
         newImage.isUserInteractionEnabled = true
-        
+        images.append(newImage)
         let textBoxTapped = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped(_:)))
     
         newImage.addGestureRecognizer(textBoxTapped)
         
         self.addSubview(newImage)
         
-        undoManager!.registerUndo(withTarget: self) { target in
-            print("image")
+        undoManager?.registerUndo(withTarget: self) { target in
             newImage.removeFromSuperview()
         }
         
@@ -451,6 +460,7 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
                 }
             }
         } else if tool == .pen || tool == .highlighter {
+            insertedStroke?(lines.last!)
             undoManager!.registerUndo(withTarget: self) { target in
                 if self.lines.count > 0 {
                     self.lines.removeLast()
@@ -523,5 +533,11 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
         var hitPath: CGPath?
         hitPath = path.cgPath.copy(strokingWithWidth: width, lineCap: .round, lineJoin: .round, miterLimit: 0)
         return hitPath?.contains(point) ?? false
+    }
+    
+    func addImagesToNote(images: [CustomImageView]) {
+        for image in images {
+            insertImage(frame: image.frame, image: image.image!)
+        }
     }
 }
