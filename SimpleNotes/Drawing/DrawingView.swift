@@ -354,7 +354,6 @@ class DrawingView: UIView, UIGestureRecognizerDelegate, UITextViewDelegate, UISc
     }
     
     public func insertImage(frame: CGRect?, image: UIImage) {
-        print(frame)
         let newImage = CustomImageView(frame: frame!, image: image)
         insertedImage?(image, frame!)
         currentView = newImage

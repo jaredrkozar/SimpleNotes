@@ -317,8 +317,26 @@ class PDFHolderView: UIView, UIScrollViewDelegate, UIDropInteractionDelegate {
                 guard let draggedImage = obj as? UIImage else { return }
                 
                 DispatchQueue.main.async {
-                    print(session.location(in: self))
-                    self.drawingView.insertImage(frame: draggedImage.returnFrame(location: session.location(in: interaction.view!)), image: draggedImage)
+                    
+                    var imageFrame = draggedImage.returnFrame(location: session.location(in: interaction.view!))
+                    
+                    if imageFrame.maxX > self.bounds.width {
+                        imageFrame.origin.x = self.frame.width - imageFrame.width
+                    }
+                    
+                    if imageFrame.minX < 0 {
+                        imageFrame.origin.x = 0
+                    }
+                    
+                    if imageFrame.maxY > self.bounds.height {
+                        imageFrame.origin.y = self.frame.height - imageFrame.height
+                    }
+                    
+                    if imageFrame.minY < 0 {
+                        imageFrame.origin.y = 0
+                    }
+                    
+                    self.drawingView.insertImage(frame: imageFrame, image: draggedImage)
                 }
                 
             })

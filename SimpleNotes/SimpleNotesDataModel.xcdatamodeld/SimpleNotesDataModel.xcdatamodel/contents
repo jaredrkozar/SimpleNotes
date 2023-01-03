@@ -15,10 +15,10 @@
         <attribute name="noteID" optional="YES" attributeType="String"/>
         <attribute name="thumbanil" optional="YES" attributeType="Binary"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="images" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="note" inverseEntity="Image"/>
-        <relationship name="strokes" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stroke" inverseName="note" inverseEntity="Stroke"/>
-        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tags" inverseName="note" inverseEntity="Tags"/>
-        <relationship name="textbox" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TextBox" inverseName="note" inverseEntity="TextBox"/>
+        <relationship name="images" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Image" inverseName="note" inverseEntity="Image"/>
+        <relationship name="strokes" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Stroke" inverseName="note" inverseEntity="Stroke"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Tags" inverseName="note" inverseEntity="Tags"/>
+        <relationship name="textbox" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TextBox" inverseName="note" inverseEntity="TextBox"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="noteID"/>
