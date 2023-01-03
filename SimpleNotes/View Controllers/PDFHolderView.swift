@@ -47,7 +47,7 @@ class PDFHolderView: UIView, UIScrollViewDelegate {
     init(pdfDocument: PDFDocument?, frame: CGRect, defaultScrollDirection: PageDisplayType, index: Int) {
         self.pdfDocument = pdfDocument
         super.init(frame: frame)
-        print(fetchImages(index: index).count)
+        
         drawingView.addImagesToNote(images: fetchImages(index: index))
         drawingView.insertedImage = { image, frame in
             print("SAVE IMAGE")

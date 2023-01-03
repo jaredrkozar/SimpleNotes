@@ -244,3 +244,11 @@ extension PDFPage {
         return newThumbanil.jpegData(compressionQuality: 0.6)!
     }
 }
+
+extension UIImage {
+    func returnFrame() -> CGRect {
+        let newRect = self.resizeImage(dimension: 400)
+        
+        return CGRect(x: (newRect.width + (-1 * CGFloat(newRect.width) / 2)), y: (newRect.height + (-1 * CGFloat(newRect.height) / 2)), width: newRect.width, height: newRect.height)
+    }
+}
