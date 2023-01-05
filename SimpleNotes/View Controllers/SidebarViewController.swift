@@ -36,22 +36,10 @@ class SidebarViewController: UIViewController {
     }
     
     @objc func settingsScreen() {
-        let settingsVC = SettingsViewController()
+        let settingsVC = SettingsView()
         
-        let navigationController = UINavigationController(rootViewController: settingsVC)
-        
-        switch currentDevice {
-            case .iphone:
-                present(navigationController, animated: true)
-            case .ipad, .mac:
-            let splitView = UISplitViewController(style: .doubleColumn)
-            splitView.displayModeButtonVisibility = .never
-            splitView.viewControllers = [navigationController]
-            present(splitView, animated: true)
-        case .none:
-            return
-        }
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         #if targetEnvironment(macCatalyst)
         navigationController?.setNavigationBarHidden(true, animated: animated)

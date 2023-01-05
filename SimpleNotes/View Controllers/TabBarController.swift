@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class TabBarController: UITabBarController {
 
@@ -48,7 +49,7 @@ private extension TabBarController {
     }
     
     private func makeSettingsViewController() -> UINavigationController {
-        let vc = SettingsViewController()
+        let vc = UIHostingController(rootView: SettingsView())
         vc.tabBarItem = UITabBarItem(title: "Settings",
                                      image: UIImage(systemName: "gear"),
                                      tag: 2)

@@ -94,10 +94,11 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     }
     
     @objc func tintColorChanged(notification: Notification) {
- 
-        navigationController?.navigationBar.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "defaultTintColor")!))
+        let tintColor = UIColor(hex: UserDefaults.standard.string(forKey: "defaultTintColor")!)
+        navigationController?.navigationBar.tintColor = tintColor
   
-        self.view.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "defaultTintColor")!))
+        self.view.tintColor = tintColor
+        self.tabBarController?.tabBar.tintColor = tintColor
     }
     
     @objc func addDefaultNote(sender: UIBarButtonItem) {

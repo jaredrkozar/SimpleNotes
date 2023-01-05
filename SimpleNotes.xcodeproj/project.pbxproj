@@ -7,8 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0207566428B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */; };
 		0285F0F528F5F4AC0044070C /* PDFHolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0285F0F428F5F4AC0044070C /* PDFHolderView.swift */; };
+		0290CC33296528A5002ED229 /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290CC32296528A5002ED229 /* ToggleCell.swift */; };
+		0290CC3629652A44002ED229 /* StepperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290CC3529652A44002ED229 /* StepperCell.swift */; };
+		0290CC3829652EFB002ED229 /* IconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290CC3729652EFB002ED229 /* IconCell.swift */; };
+		0290CC4229653672002ED229 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290CC4129653672002ED229 /* SettingsView.swift */; };
+		0290CC462965411A002ED229 /* SettingsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290CC452965411A002ED229 /* SettingsData.swift */; };
+		0290CC4829654AF4002ED229 /* SettingsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290CC4729654AF4002ED229 /* SettingsConfig.swift */; };
+		0290CC4A29656B32002ED229 /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290CC4929656B32002ED229 /* TextCell.swift */; };
+		0290CC4C296577DF002ED229 /* ColorPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290CC4B296577DF002ED229 /* ColorPickerCell.swift */; };
 		02AD68B828EB89AA004E3319 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD68B728EB89AA004E3319 /* SceneDelegate.swift */; };
 		02AD68BB28EF23A5004E3319 /* UIBezierPath+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD68BA28EF23A5004E3319 /* UIBezierPath+Extension.swift */; };
 		02AD68BD28EF23BD004E3319 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD68BC28EF23BD004E3319 /* UIColor+Extension.swift */; };
@@ -30,7 +37,6 @@
 		7F376617278B59B800A107FF /* SendToOtherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376616278B59B800A107FF /* SendToOtherApp.swift */; };
 		7F37661A278BC7B400A107FF /* PDFCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376619278BC7B400A107FF /* PDFCreator.swift */; };
 		7F37661E278D40F700A107FF /* FolderLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37661D278D40F700A107FF /* FolderLocationViewController.swift */; };
-		7F376626278E220D00A107FF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F376625278E220D00A107FF /* SettingsViewController.swift */; };
 		7F37662E278E666100A107FF /* GoogleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37662D278E666100A107FF /* GoogleInteractor.swift */; };
 		7F376630278E6A8500A107FF /* APIInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F37662F278E6A8500A107FF /* APIInteractor.swift */; };
 		7F4974B32892451400A3D0FF /* LineTypeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4974B22892451400A3D0FF /* LineTypeCollectionView.swift */; };
@@ -39,7 +45,6 @@
 		7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498ABD2771624200202413 /* NewTagViewController.swift */; };
 		7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B0B27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld */; };
 		7F498B572775719E00202413 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F498B562775719E00202413 /* CoreData.swift */; };
-		7F53DAA6279BA51B006789F6 /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */; };
 		7F53DAA8279BEF62006789F6 /* CloudServiceFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAA7279BEF62006789F6 /* CloudServiceFiles.swift */; };
 		7F53DAAA279CC36C006789F6 /* ToastNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAA9279CC36C006789F6 /* ToastNotification.swift */; };
 		7F53DAAC279D4B09006789F6 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53DAAB279D4B09006789F6 /* TabBarController.swift */; };
@@ -53,13 +58,11 @@
 		7FB8120E2869554C00DC9E67 /* ColorCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB8120D2869554C00DC9E67 /* ColorCollectionView.swift */; };
 		7FBC07F4289B153600AA28CB /* TagCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBC07F3289B153600AA28CB /* TagCollectionView.swift */; };
 		7FBC07F6289B16F800AA28CB /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBC07F5289B16F800AA28CB /* TagCollectionViewCell.swift */; };
-		7FC2C11E286D64FA00D90E20 /* DefaultTextBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC2C11D286D64FA00D90E20 /* DefaultTextBoxViewController.swift */; };
 		7FC55D962791372D001DDFD5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */; };
 		7FC55DA12792ADEB001DDFD5 /* TableRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */; };
 		7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC55DA327939E49001DDFD5 /* MimeTypes.swift */; };
 		7FC7FB6D2836D5C100CE483E /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7FB6C2836D5C100CE483E /* CustomButton.swift */; };
 		7FC7FB6F2837F74000CE483E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7FB6E2837F74000CE483E /* Constants.swift */; };
-		7FC7FB71283A0C4B00CE483E /* TintPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC7FB70283A0C4A00CE483E /* TintPickerViewController.swift */; };
 		7FD82DCB28233AE500ECCB3B /* Brush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD82DCA28233AE500ECCB3B /* Brush.swift */; };
 		7FDE92FC288777AA00B8E44F /* SelectColorPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE92FB288777AA00B8E44F /* SelectColorPopoverViewController.swift */; };
 		7FE45082281A56F40034928B /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE45081281A56F40034928B /* CollectionReusableView.swift */; };
@@ -106,8 +109,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNoteSettingsViewController.swift; sourceTree = "<group>"; };
 		0285F0F428F5F4AC0044070C /* PDFHolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFHolderView.swift; sourceTree = "<group>"; };
+		0290CC32296528A5002ED229 /* ToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
+		0290CC3529652A44002ED229 /* StepperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperCell.swift; sourceTree = "<group>"; };
+		0290CC3729652EFB002ED229 /* IconCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCell.swift; sourceTree = "<group>"; };
+		0290CC3D2965348E002ED229 /* Photo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Photo+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		0290CC3E2965348E002ED229 /* Photo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Photo+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		0290CC4129653672002ED229 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		0290CC452965411A002ED229 /* SettingsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsData.swift; sourceTree = "<group>"; };
+		0290CC4729654AF4002ED229 /* SettingsConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsConfig.swift; sourceTree = "<group>"; };
+		0290CC4929656B32002ED229 /* TextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
+		0290CC4B296577DF002ED229 /* ColorPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerCell.swift; sourceTree = "<group>"; };
 		02AD68B728EB89AA004E3319 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		02AD68BA28EF23A5004E3319 /* UIBezierPath+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIBezierPath+Extension.swift"; path = "SimpleNotes/UIBezierPath+Extension.swift"; sourceTree = SOURCE_ROOT; };
 		02AD68BC28EF23BD004E3319 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -133,7 +145,6 @@
 		7F376616278B59B800A107FF /* SendToOtherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendToOtherApp.swift; sourceTree = "<group>"; };
 		7F376619278BC7B400A107FF /* PDFCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFCreator.swift; sourceTree = "<group>"; };
 		7F37661D278D40F700A107FF /* FolderLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLocationViewController.swift; sourceTree = "<group>"; };
-		7F376625278E220D00A107FF /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		7F37662D278E666100A107FF /* GoogleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleInteractor.swift; sourceTree = "<group>"; };
 		7F37662F278E6A8500A107FF /* APIInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIInteractor.swift; sourceTree = "<group>"; };
 		7F4974B22892451400A3D0FF /* LineTypeCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineTypeCollectionView.swift; sourceTree = "<group>"; };
@@ -142,7 +153,6 @@
 		7F498ABD2771624200202413 /* NewTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTagViewController.swift; sourceTree = "<group>"; };
 		7F498B0C27722F4E00202413 /* SimpleNotesDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleNotesDataModel.xcdatamodel; sourceTree = "<group>"; };
 		7F498B562775719E00202413 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
-		7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		7F53DAA7279BEF62006789F6 /* CloudServiceFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudServiceFiles.swift; sourceTree = "<group>"; };
 		7F53DAA9279CC36C006789F6 /* ToastNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastNotification.swift; sourceTree = "<group>"; tabWidth = 1; };
 		7F53DAAB279D4B09006789F6 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -156,13 +166,11 @@
 		7FB8120D2869554C00DC9E67 /* ColorCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionView.swift; sourceTree = "<group>"; };
 		7FBC07F3289B153600AA28CB /* TagCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionView.swift; sourceTree = "<group>"; };
 		7FBC07F5289B16F800AA28CB /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
-		7FC2C11D286D64FA00D90E20 /* DefaultTextBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTextBoxViewController.swift; sourceTree = "<group>"; };
 		7FC55D952791372D001DDFD5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableRowCell.swift; sourceTree = "<group>"; };
 		7FC55DA327939E49001DDFD5 /* MimeTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypes.swift; sourceTree = "<group>"; };
 		7FC7FB6C2836D5C100CE483E /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		7FC7FB6E2837F74000CE483E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		7FC7FB70283A0C4A00CE483E /* TintPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TintPickerViewController.swift; sourceTree = "<group>"; };
 		7FD82DCA28233AE500ECCB3B /* Brush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brush.swift; sourceTree = "<group>"; };
 		7FDE92FB288777AA00B8E44F /* SelectColorPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectColorPopoverViewController.swift; sourceTree = "<group>"; };
 		7FE45081281A56F40034928B /* CollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectionReusableView.swift; path = SimpleNotes/CollectionReusableView.swift; sourceTree = SOURCE_ROOT; };
@@ -225,6 +233,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0290CC34296529FD002ED229 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				0290CC32296528A5002ED229 /* ToggleCell.swift */,
+				0290CC4929656B32002ED229 /* TextCell.swift */,
+				0290CC3729652EFB002ED229 /* IconCell.swift */,
+				0290CC3529652A44002ED229 /* StepperCell.swift */,
+				0290CC4B296577DF002ED229 /* ColorPickerCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		02AD68B928EF2382004E3319 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -304,6 +324,7 @@
 				7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */,
 				7F498ACB27718EDC00202413 /* Note */,
 				7F498ACA27718ECB00202413 /* Tags */,
+				0290CC34296529FD002ED229 /* Cells */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -351,6 +372,8 @@
 		7F8358F427792493007428A8 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				0290CC3D2965348E002ED229 /* Photo+CoreDataClass.swift */,
+				0290CC3E2965348E002ED229 /* Photo+CoreDataProperties.swift */,
 				7F498B562775719E00202413 /* CoreData.swift */,
 			);
 			path = "Core Data";
@@ -359,11 +382,9 @@
 		7FC2C11C286D64D400D90E20 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				7FC7FB70283A0C4A00CE483E /* TintPickerViewController.swift */,
-				7FC2C11D286D64FA00D90E20 /* DefaultTextBoxViewController.swift */,
-				0207566328B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift */,
-				7F53DAA5279BA51B006789F6 /* AccountSettingsViewController.swift */,
-				7F376625278E220D00A107FF /* SettingsViewController.swift */,
+				0290CC4129653672002ED229 /* SettingsView.swift */,
+				0290CC452965411A002ED229 /* SettingsData.swift */,
+				0290CC4729654AF4002ED229 /* SettingsConfig.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -741,16 +762,19 @@
 				7FC55DA12792ADEB001DDFD5 /* TableRowCell.swift in Sources */,
 				7FBC07F6289B16F800AA28CB /* TagCollectionViewCell.swift in Sources */,
 				7F0F03E7282C368D00A6B404 /* ToolOptionsViewController.swift in Sources */,
+				0290CC462965411A002ED229 /* SettingsData.swift in Sources */,
 				7FE4508F281E2B3E0034928B /* CustomTextBox.swift in Sources */,
+				0290CC4A29656B32002ED229 /* TextCell.swift in Sources */,
 				7FE45094281E2CE20034928B /* PenTool.swift in Sources */,
 				7FEBEC73276135DA0066F0C0 /* ViewController.swift in Sources */,
-				7FC2C11E286D64FA00D90E20 /* DefaultTextBoxViewController.swift in Sources */,
 				02AEB2DA28DD26AA00AF46D6 /* Border.swift in Sources */,
 				7FDE92FC288777AA00B8E44F /* SelectColorPopoverViewController.swift in Sources */,
 				7FE4509E281EEE760034928B /* TextTool.swift in Sources */,
 				7FEBEC6F276135DA0066F0C0 /* AppDelegate.swift in Sources */,
 				7F4974B32892451400A3D0FF /* LineTypeCollectionView.swift in Sources */,
+				0290CC3629652A44002ED229 /* StepperCell.swift in Sources */,
 				7F376630278E6A8500A107FF /* APIInteractor.swift in Sources */,
+				0290CC4229653672002ED229 /* SettingsView.swift in Sources */,
 				7F498ABE2771624200202413 /* NewTagViewController.swift in Sources */,
 				7FE45089281E2A460034928B /* DrawingView.swift in Sources */,
 				7FC7FB6F2837F74000CE483E /* Constants.swift in Sources */,
@@ -768,28 +792,27 @@
 				7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */,
 				7FE45096281E2E860034928B /* CustomImageView.swift in Sources */,
 				7FEBECA2276136280066F0C0 /* NoteTableViewCell.swift in Sources */,
+				0290CC4829654AF4002ED229 /* SettingsConfig.swift in Sources */,
 				7FE4508B281E2A8C0034928B /* Line.swift in Sources */,
 				02AD68B828EB89AA004E3319 /* SceneDelegate.swift in Sources */,
-				0207566428B47B6C00F603A7 /* DefaultNoteSettingsViewController.swift in Sources */,
 				7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */,
 				7F376617278B59B800A107FF /* SendToOtherApp.swift in Sources */,
+				0290CC3829652EFB002ED229 /* IconCell.swift in Sources */,
 				7FBC07F4289B153600AA28CB /* TagCollectionView.swift in Sources */,
 				7FE4509C281E50C80034928B /* CustomSelectionView.swift in Sources */,
 				7F498B572775719E00202413 /* CoreData.swift in Sources */,
 				7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */,
-				7F53DAA6279BA51B006789F6 /* AccountSettingsViewController.swift in Sources */,
 				7F498AAC2770398C00202413 /* EditTagsTableViewController.swift in Sources */,
 				7F498B0D27722F4E00202413 /* SimpleNotesDataModel.xcdatamodeld in Sources */,
 				7FE45098281E30740034928B /* ResizableButton.swift in Sources */,
 				7F53DAAA279CC36C006789F6 /* ToastNotification.swift in Sources */,
 				7FC55DA427939E49001DDFD5 /* MimeTypes.swift in Sources */,
 				02AEB2D828DCE3D600AF46D6 /* CustomPDFPage.swift in Sources */,
-				7F376626278E220D00A107FF /* SettingsViewController.swift in Sources */,
 				7F53DAAE279D4B75006789F6 /* TagsTableViewController.swift in Sources */,
 				7F53DAAC279D4B09006789F6 /* TabBarController.swift in Sources */,
 				7FE4508D281E2AAB0034928B /* Tool.swift in Sources */,
+				0290CC33296528A5002ED229 /* ToggleCell.swift in Sources */,
 				7F37662E278E666100A107FF /* GoogleInteractor.swift in Sources */,
-				7FC7FB71283A0C4B00CE483E /* TintPickerViewController.swift in Sources */,
 				02AD68BD28EF23BD004E3319 /* UIColor+Extension.swift in Sources */,
 				7FC7FB6D2836D5C100CE483E /* CustomButton.swift in Sources */,
 				7F97ED5B288FA81E00DA2EB4 /* IconCollectionView.swift in Sources */,
@@ -801,6 +824,7 @@
 				7F53DAB0279D4CAD006789F6 /* SidebarViewController.swift in Sources */,
 				02AD68C328EF242E004E3319 /* UIImageView+Extension.swift in Sources */,
 				7FF31CCE2799E04F00923AE3 /* DropboxInteractor.swift in Sources */,
+				0290CC4C296577DF002ED229 /* ColorPickerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

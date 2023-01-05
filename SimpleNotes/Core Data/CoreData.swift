@@ -59,7 +59,8 @@ func updateTextBoxWidth(newWidth: Double, index: Int) {
     
 }
 func saveImage(image: UIImage, frame: CGRect, index: Int) {
-    let newImage = Image(context: context)
+    let newImage = Photo(context: context)
+    
     newImage.image = image.jpegData(compressionQuality: 1.0)
     newImage.x = frame.minX
     newImage.y = frame.minY
@@ -79,7 +80,7 @@ func removeImage(index: Int, noteIndex: Int) {
         fatalError("unable to load managed object context")
     }
     
-    let imageFetchRequest: NSFetchRequest<Image> = Image.fetchRequest()
+    let imageFetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
     
     do {
         let fetchedImages = try context.fetch(imageFetchRequest)
@@ -97,10 +98,10 @@ func fetchImages(index: Int) -> [CustomImageView] {
         fatalError("unable to load managed object context")
     }
     
-    let imageFetchRequest: NSFetchRequest<Image> = Image.fetchRequest()
+    let imageFetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
     
     var imageArray = [CustomImageView]()
-    
+ 
     do {
         let fetchedImages = try context.fetch(imageFetchRequest)
 

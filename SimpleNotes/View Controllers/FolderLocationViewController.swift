@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class FolderLocationViewController: UITableViewController {
     
@@ -63,7 +64,7 @@ class FolderLocationViewController: UITableViewController {
         var file = allFiles[indexPath.row]
         
         
-        cell.configureCell(with: SettingsOptions(title: file.name, option: "", rowIcon: Icon(icon: file.type.icon, iconBGColor: .systemBackground, iconTintColor: file.type.tintColor), control: nil, handler: nil))
+        cell.configureCell(with: SettingsOptions(title: file.name, option: "", rowIcon: Icon(icon: "pin", iconBGColor: Color.green, iconTintColor: Color.purple), control: nil, handler: nil))
         
         if file.type.typeURL == "folder" {
             cell.accessoryType = .disclosureIndicator

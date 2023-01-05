@@ -8,6 +8,7 @@
 import UIKit
 import WSTagsField
 import CoreData
+import SwiftUI
 
 class EditTagsTableViewController: UITableViewController {
 
@@ -52,7 +53,7 @@ class EditTagsTableViewController: UITableViewController {
         
         let tag = tags[indexPath.row]
 
-        cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", rowIcon: Icon(icon: UIImage(systemName: tag.symbol!), iconBGColor: .systemBackground, iconTintColor: UIColor(hex: tag.color!)), control: nil, handler: nil))
+        cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", rowIcon: Icon(icon: tag.symbol, iconBGColor: Color.green, iconTintColor: Color.purple), control: nil, handler: nil))
         
         return cell
     }

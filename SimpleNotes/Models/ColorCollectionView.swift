@@ -9,7 +9,7 @@ import UIKit
 
 class ColorCollectionView: UICollectionView, UICollectionViewDelegate, UIColorPickerViewControllerDelegate {
     
-    var colors: [Color] = [Color(color: UIColor.systemRed.toHex), Color(color: UIColor.systemOrange.toHex), Color(color: UIColor.systemYellow.toHex), Color(color: UIColor.systemGreen.toHex), Color(color: UIColor.systemBlue.toHex), Color(color: UIColor.systemIndigo.toHex), Color(color: UIColor.systemPurple.toHex), Color(color: UIColor.systemPink.toHex), Color(color: UIColor.systemMint.toHex), Color(color: UIColor.systemTeal.toHex), Color(color: UIColor.systemCyan.toHex), Color(color: UIColor.tertiarySystemBackground.toHex)]
+    var colors: [ColorStruct] = [ColorStruct(color: UIColor.systemRed.toHex), ColorStruct(color: UIColor.systemOrange.toHex), ColorStruct(color: UIColor.systemYellow.toHex), ColorStruct(color: UIColor.systemGreen.toHex), ColorStruct(color: UIColor.systemBlue.toHex), ColorStruct(color: UIColor.systemIndigo.toHex), ColorStruct(color: UIColor.systemPurple.toHex), ColorStruct(color: UIColor.systemPink.toHex), ColorStruct(color: UIColor.systemMint.toHex), ColorStruct(color: UIColor.systemTeal.toHex), ColorStruct(color: UIColor.systemCyan.toHex), ColorStruct(color: UIColor.tertiarySystemBackground.toHex)]
     
     var allowTransparent: Bool?
     lazy var collectiondataSource = configureDataSource()
@@ -26,7 +26,7 @@ class ColorCollectionView: UICollectionView, UICollectionViewDelegate, UIColorPi
         super.init(frame: frame, collectionViewLayout: UICollectionViewFlowLayout())
         
         if allowTransparent == true  {
-            colors.insert(Color(color: UIColor.secondarySystemBackground.toHex), at: 2)
+            colors.insert(ColorStruct(color: UIColor.secondarySystemBackground.toHex), at: 2)
         }
         
         collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
@@ -49,9 +49,9 @@ class ColorCollectionView: UICollectionView, UICollectionViewDelegate, UIColorPi
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureDataSource() -> UICollectionViewDiffableDataSource<ColorSection, Color> {
+    func configureDataSource() -> UICollectionViewDiffableDataSource<ColorSection, ColorStruct> {
      
-        let dataSource = UICollectionViewDiffableDataSource<ColorSection, Color>(collectionView: collectionView!) { (collectionView, indexPath, icon) -> ColorCollectionViewCell? in
+        let dataSource = UICollectionViewDiffableDataSource<ColorSection, ColorStruct>(collectionView: collectionView!) { (collectionView, indexPath, icon) -> ColorCollectionViewCell? in
      
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ColorCollectionViewCell.identifier, for: indexPath) as! ColorCollectionViewCell
             cell.backgroundColor = UIColor(hex: self.colors[indexPath.item].color)
@@ -72,7 +72,7 @@ class ColorCollectionView: UICollectionView, UICollectionViewDelegate, UIColorPi
     
     func applySnapshot() {
       
-        var snapshot = NSDiffableDataSourceSnapshot<ColorSection, Color>()
+        var snapshot = NSDiffableDataSourceSnapshot<ColorSection, ColorStruct>()
           snapshot.appendSections([.main])
           snapshot.appendItems(colors, toSection: .main)
        
@@ -93,14 +93,14 @@ class ColorCollectionView: UICollectionView, UICollectionViewDelegate, UIColorPi
     
     func colorPickerViewController(_ viewController: UIColorPickerViewController, didSelect color: UIColor, continuously: Bool) {
         if continuously == false {
-            colors.insert(Color(color: viewController.selectedColor.toHex), at: colors.count - 1)
+            colors.insert(ColorStruct(color: viewController.selectedColor.toHex), at: colors.count - 1)
             applySnapshot()
         }
 
     }
 }
 
-struct Color: Hashable {
+struct ColorStruct: Hashable {
     var color: String!
     
     init(color: String!) {

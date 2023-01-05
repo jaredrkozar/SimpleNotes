@@ -7,6 +7,7 @@
 
 import UIKit
 import PDFKit
+import SwiftUI
 
 var notes: [Note] = []
 var tags: [Tags] = []
@@ -210,10 +211,11 @@ struct SettingsOptions {
 }
 
 struct Icon {
-    let icon: UIImage?
-    let iconBGColor: UIColor!
-    let iconTintColor: UIColor!
+    let icon: String?
+    let iconBGColor: Color!
+    let iconTintColor: Color!
 }
+
 enum DetailViewType: Equatable {
     
     case color(color: UIView)
@@ -250,5 +252,35 @@ extension UIImage {
         let newRect = self.resizeImage(dimension: 400)
         
         return CGRect(x: ((location?.x ?? newRect.width) + (-1 * CGFloat(newRect.width) / 2)), y: ((location?.y ?? newRect.height) + (-1 * CGFloat(newRect.height) / 2)), width: newRect.width, height: newRect.height)
+    }
+}
+
+enum ThemeColors: CaseIterable, Identifiable {
+    var id: Self { self }
+    
+    case red
+    case orange
+    case yellow
+    
+    var tintColor: Color {
+        switch self {
+            case .red:
+                return Color.red
+            case .orange:
+                return Color.orange
+            case .yellow:
+                return Color.yellow
+        }
+    }
+    
+    var themeName: String {
+        switch self {
+            case .red:
+                return "Ruby Red"
+            case .orange:
+                return "Atomic Orange"
+            case .yellow:
+                return "Mango Yellow"
+        }
     }
 }

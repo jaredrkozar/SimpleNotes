@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21511" systemVersion="22A5358e" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Image" representedClassName="Image" syncable="YES" codeGenerationType="class">
-        <attribute name="height" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="image" optional="YES" attributeType="Binary"/>
-        <attribute name="width" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="x" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="y" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="note" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="images" inverseEntity="Note"/>
-    </entity>
     <entity name="Note" representedClassName="Note" syncable="YES" codeGenerationType="class">
         <attribute name="data" optional="YES" attributeType="Binary"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -15,7 +7,7 @@
         <attribute name="noteID" optional="YES" attributeType="String"/>
         <attribute name="thumbanil" optional="YES" attributeType="Binary"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="images" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Image" inverseName="note" inverseEntity="Image"/>
+        <relationship name="images" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Photo" inverseName="note" inverseEntity="Photo"/>
         <relationship name="strokes" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Stroke" inverseName="note" inverseEntity="Stroke"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Tags" inverseName="note" inverseEntity="Tags"/>
         <relationship name="textbox" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TextBox" inverseName="note" inverseEntity="TextBox"/>
@@ -24,6 +16,14 @@
                 <constraint value="noteID"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
+    </entity>
+    <entity name="Photo" representedClassName="Photo" syncable="YES" codeGenerationType="class">
+        <attribute name="height" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="width" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="x" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="y" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="note" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="images" inverseEntity="Note"/>
     </entity>
     <entity name="Stroke" representedClassName="Stroke" syncable="YES" codeGenerationType="class">
         <attribute name="color" optional="YES" attributeType="String"/>
