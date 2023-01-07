@@ -11,6 +11,7 @@ struct IconCell: View {
     var iconName: Icon
     var title: String
     var view: AnyView
+    
     var body: some View {
         NavigationLink(
             destination: view

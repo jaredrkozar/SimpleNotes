@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct ToggleCell: View {
+struct ToggleCell: View, SettingsCell {
     @State var text: String
-    @State var toggleData: Bool
+    @Binding var toggleData: Bool
     
     var body: some View {
         Toggle(text, isOn: $toggleData)
