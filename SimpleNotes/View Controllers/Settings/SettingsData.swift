@@ -19,16 +19,20 @@ struct SettingsGroup: Identifiable {
 struct DefaultNoteSettings: View {
     @AppStorage("defaultNoteTitle") var defaultNoteTitle: String = "Anonymous"
     @AppStorage("defaultOnOff") var defaultOnOff: Bool = false
+    @AppStorage("storeStepperValue") var stepperValue: Int = 4
+    @AppStorage("tintColor") var defaulttintColor: String = Color.green.toHex()!
     
     var body: some View {
         SectionView(settings: [
             SettingsGroup(header: "Hello", settings: [
-                AnyView(ToggleCell(text: "On.off", toggleData: $defaultOnOff)),
-                AnyView(ToggleCell(text: "On.off", toggleData: $defaultOnOff))
+                AnyView(ToggleCell(text: "On.off", toggleData: $defaultOnOff, tintColor: $defaulttintColor)),
+                AnyView(TextCell(currentText: $defaultNoteTitle, placeholder: "NOte", leftText: "LeftText")),
+                AnyView(ColorPickerCell(currentTintColor: $defaulttintColor)),
+                AnyView(StepperCell(minValue: 1, maxValue: 10, text: "Stepper", currentValue: $stepperValue))
             ], footer: "Goodbye"),
             
             SettingsGroup(header: "Hello", settings: [
-                AnyView(ToggleCell(text: "On.off", toggleData: $defaultOnOff))
+                AnyView(ToggleCell(text: "On.off", toggleData: $defaultOnOff, tintColor: $defaulttintColor))
             ], footer: "Goodbye")
         ])
     }

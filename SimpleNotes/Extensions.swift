@@ -261,7 +261,9 @@ enum ThemeColors: CaseIterable, Identifiable {
     case red
     case orange
     case yellow
-    
+    case green
+    case lightBlue
+    case darkBlue
     var tintColor: Color {
         switch self {
             case .red:
@@ -270,6 +272,12 @@ enum ThemeColors: CaseIterable, Identifiable {
                 return Color.orange
             case .yellow:
                 return Color.yellow
+            case .green:
+                return Color.green
+            case .lightBlue:
+                return Color.cyan
+        case .darkBlue:
+            return Color.blue
         }
     }
     
@@ -281,6 +289,12 @@ enum ThemeColors: CaseIterable, Identifiable {
                 return "Atomic Orange"
             case .yellow:
                 return "Mango Yellow"
+            case .green:
+                return "Grassy Green"
+            case .lightBlue:
+                return "Pastel Blue"
+            case .darkBlue:
+                return "Ocean Blue"
         }
     }
 }

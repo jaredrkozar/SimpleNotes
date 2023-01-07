@@ -14,8 +14,9 @@ struct StepperCell: View {
     @Binding var currentValue: Int
     
     var body: some View {
-        Text(text)
-        Stepper("", value: $currentValue, in: minValue...maxValue)
+        HStack {
+            Stepper("\(text): \(currentValue)", value: $currentValue, in: minValue...maxValue)
+        }
     }
 }
 

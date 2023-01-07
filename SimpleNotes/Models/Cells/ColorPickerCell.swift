@@ -8,26 +8,28 @@
 import SwiftUI
 
 struct ColorPickerCell: View {
+    @Binding var currentTintColor: String
     
     var body: some View {
-        HStack {
-            ForEach(ThemeColors.allCases) { color in
-                ColorCell(color: color)
+        ScrollView(.horizontal) {
+            LazyHStack {
+                ForEach(ThemeColors.allCases) { color in
+                    ColorCell(color: color, currentValue: $currentTintColor)
+                }
             }
         }
-        .frame(height: 100)
-        .frame(maxWidth: .infinity)
-        .padding(Constants.rowHorizontalInsets)
-        .padding(Constants.rowVerticalInsetsFromText)
+        .frame(height: 150)
     }
 }
 
 private struct ColorCell: View {
     @State var color: ThemeColors
-
+    @Binding var currentValue: String
+    
     var body: some View {
         Button(action: {
             UserDefaults.standard.set(color.tintColor.toHex(), forKey: "defaultTintColor")
+            currentValue = color.tintColor.toHex()!
             NotificationCenter.default.post(name: Notification.Name( "tintColorChanged"), object: nil)
         }) {
             ZStack {
@@ -43,15 +45,10 @@ private struct ColorCell: View {
                 }
             }
         }
-        .frame(width: 100, height: 110, alignment: .center)
-        .background(Color.green)
+        .frame(width: 100, alignment: .center)
+        .frame(maxHeight: .infinity)
+        .background(Color(uiColor: .quaternarySystemFill))
         .cornerRadius(15)
         .buttonStyle(PlainButtonStyle())
-    }
-}
-
-struct ColorPickerCell_Previews: PreviewProvider {
-    static var previews: some View {
-        ColorPickerCell()
     }
 }
