@@ -8,18 +8,20 @@
 import SwiftUI
 
 struct StepperCell: View {
+    @State var minValue: Int
+    @State var maxValue: Int
     @State var text: String
-    @Binding var bindingVar: Int
+    @Binding var currentValue: Int
     
     var body: some View {
         Text(text)
-        Stepper("", value: $bindingVar)
+        Stepper("", value: $currentValue, in: minValue...maxValue)
     }
 }
 
 struct StepperCell_Previews: PreviewProvider {
     @State static var font: Int = 20
     static var previews: some View {
-        StepperCell(text: "Font size", bindingVar: $font)
+        StepperCell(minValue: 1, maxValue: 20, text: "STEPPER", currentValue: $font)
     }
 }

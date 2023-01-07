@@ -9,15 +9,10 @@ import SwiftUI
 
 struct ToggleCell: View {
     @State var text: String
-    @Binding var enabled: Bool
+    @State var toggleData: Bool
+    
     var body: some View {
-        Toggle(text, isOn: $enabled)
+        Toggle(text, isOn: $toggleData)
     }
 }
 
-struct ToggleCell_Previews: PreviewProvider {
-    @State static var showingAddUser = false
-    static var previews: some View {
-        ToggleCell(text: "Dark mode", enabled: $showingAddUser)
-    }
-}

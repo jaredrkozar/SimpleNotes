@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TextCell: View {
-    @State var currentText: String
+    @Binding var currentText: String
     @State var placeholder: String
     @State var leftText: String
     

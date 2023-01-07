@@ -13,7 +13,6 @@
 		0290CC3829652EFB002ED229 /* IconCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290CC3729652EFB002ED229 /* IconCell.swift */; };
 		0290CC4229653672002ED229 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290CC4129653672002ED229 /* SettingsView.swift */; };
 		0290CC462965411A002ED229 /* SettingsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290CC452965411A002ED229 /* SettingsData.swift */; };
-		0290CC4829654AF4002ED229 /* SettingsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290CC4729654AF4002ED229 /* SettingsConfig.swift */; };
 		0290CC4A29656B32002ED229 /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290CC4929656B32002ED229 /* TextCell.swift */; };
 		0290CC4C296577DF002ED229 /* ColorPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0290CC4B296577DF002ED229 /* ColorPickerCell.swift */; };
 		02AD68B828EB89AA004E3319 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AD68B728EB89AA004E3319 /* SceneDelegate.swift */; };
@@ -117,7 +116,6 @@
 		0290CC3E2965348E002ED229 /* Photo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Photo+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		0290CC4129653672002ED229 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		0290CC452965411A002ED229 /* SettingsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsData.swift; sourceTree = "<group>"; };
-		0290CC4729654AF4002ED229 /* SettingsConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsConfig.swift; sourceTree = "<group>"; };
 		0290CC4929656B32002ED229 /* TextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
 		0290CC4B296577DF002ED229 /* ColorPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerCell.swift; sourceTree = "<group>"; };
 		02AD68B728EB89AA004E3319 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -384,7 +382,6 @@
 			children = (
 				0290CC4129653672002ED229 /* SettingsView.swift */,
 				0290CC452965411A002ED229 /* SettingsData.swift */,
-				0290CC4729654AF4002ED229 /* SettingsConfig.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -792,7 +789,6 @@
 				7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */,
 				7FE45096281E2E860034928B /* CustomImageView.swift in Sources */,
 				7FEBECA2276136280066F0C0 /* NoteTableViewCell.swift in Sources */,
-				0290CC4829654AF4002ED229 /* SettingsConfig.swift in Sources */,
 				7FE4508B281E2A8C0034928B /* Line.swift in Sources */,
 				02AD68B828EB89AA004E3319 /* SceneDelegate.swift in Sources */,
 				7F498AAA276FC22100202413 /* NoteViewController.swift in Sources */,
