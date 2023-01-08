@@ -10,11 +10,11 @@ import SwiftUI
 struct ToggleCell: View, SettingsCell {
     @State var text: String
     @Binding var toggleData: Bool
-    @Binding var tintColor: String
+    @Binding var tintColor: Int
     
     var body: some View {
         Toggle(text, isOn: $toggleData)
-            .tint(Color(hex: tintColor))
+            .tint(ThemeColors(rawValue: tintColor)?.tintColor)
     }
 }
 

@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         DropboxClientsManager.setupWithAppKey("4plzdchy13fkopr")
     
         if isAppAlreadyLaunchedOnce() == false {
-            UserDefaults.standard.set(UIColor.systemBlue.toHex, forKey: "defaultTintColor")
+
             UserDefaults.standard.set(UIColor.label.toHex, forKey: "defaultTextColor")
             UserDefaults.standard.set("New Note", forKey: "defaultNoteTitle")
             UserDefaults.standard.set(16.0, forKey: "defaultFontSize")

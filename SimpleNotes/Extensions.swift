@@ -255,7 +255,7 @@ extension UIImage {
     }
 }
 
-enum ThemeColors: CaseIterable, Identifiable {
+enum ThemeColors: Int, CaseIterable, Identifiable {
     var id: Self { self }
     
     case red
@@ -264,6 +264,7 @@ enum ThemeColors: CaseIterable, Identifiable {
     case green
     case lightBlue
     case darkBlue
+    
     var tintColor: Color {
         switch self {
             case .red:
@@ -295,6 +296,23 @@ enum ThemeColors: CaseIterable, Identifiable {
                 return "Pastel Blue"
             case .darkBlue:
                 return "Ocean Blue"
+        }
+    }
+    
+    var returnUIColor: UIColor {
+        switch self {
+            case .red:
+                return UIColor.systemRed
+            case .orange:
+                return UIColor.systemOrange
+            case .yellow:
+                return UIColor.systemYellow
+            case .green:
+                return UIColor.systemGreen
+            case .lightBlue:
+                return UIColor.systemCyan
+            case .darkBlue:
+                return UIColor.systemBlue
         }
     }
 }

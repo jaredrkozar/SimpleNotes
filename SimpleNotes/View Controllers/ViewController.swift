@@ -94,9 +94,8 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     }
     
     @objc func tintColorChanged(notification: Notification) {
-        let tintColor = UIColor(hex: UserDefaults.standard.string(forKey: "defaultTintColor")!)
+        let tintColor = ThemeColors(rawValue: UserDefaults.standard.integer(forKey: "defaultTintColor"))?.returnUIColor
         navigationController?.navigationBar.tintColor = tintColor
-  
         self.view.tintColor = tintColor
         self.tabBarController?.tabBar.tintColor = tintColor
     }
@@ -296,6 +295,7 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
 extension ViewController: UIDocumentPickerDelegate {
     @objc func presentFilesPicker() {
         let documentpicker = UIDocumentPickerViewController(forOpeningContentTypes: [UTType.pdf])
+        documentpicker.view.tintColor =         ThemeColors(rawValue: UserDefaults.standard.integer(forKey: "defaultTintColor"))?.returnUIColor
         documentpicker.delegate = self
             self.present(documentpicker, animated: true, completion: nil)
     }
@@ -324,6 +324,7 @@ extension ViewController: VNDocumentCameraViewControllerDelegate {
     @objc func presentDocumentScanner() {
         let vc = VNDocumentCameraViewController()
         vc.delegate = self
+        vc.view.tintColor = ThemeColors(rawValue: UserDefaults.standard.integer(forKey: "defaultTintColor"))?.returnUIColor
         self.present(vc, animated: true)
     }
     

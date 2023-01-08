@@ -301,9 +301,9 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     }
     
     @objc func tintColorChanged(notification: Notification) {
-        navigationController?.navigationBar.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "defaultTintColor")!))
+        navigationController?.navigationBar.tintColor = ThemeColors(rawValue: UserDefaults.standard.integer(forKey: "defaultTintColor"))?.returnUIColor
   
-        self.view.tintColor = UIColor(hex: (UserDefaults.standard.string(forKey: "defaultTintColor")!))
+        self.view.tintColor = ThemeColors(rawValue: UserDefaults.standard.integer(forKey: "defaultTintColor"))?.returnUIColor
     }
     
     @objc func changeColor(notification: Notification) {

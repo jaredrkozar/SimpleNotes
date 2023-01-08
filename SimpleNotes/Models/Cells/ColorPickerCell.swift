@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct ColorPickerCell: View {
-    @Binding var currentTintColor: String
+    @Binding var currentTintColor: Int
     
     var body: some View {
         ScrollView(.horizontal) {
-            LazyHStack {
-                ForEach(ThemeColors.allCases) { color in
-                    ColorCell(color: color, currentValue: $currentTintColor)
+            HStack {
+                ForEach(0..<ThemeColors.allCases.count) { color in
+                    ColorCell(colorID: color, currentValue: $currentTintColor)
                 }
             }
         }
@@ -23,22 +23,23 @@ struct ColorPickerCell: View {
 }
 
 private struct ColorCell: View {
-    @State var color: ThemeColors
-    @Binding var currentValue: String
+    @State var colorID: Int
+    @Binding var currentValue: Int
     
     var body: some View {
+        let currentColor = ThemeColors(rawValue: colorID)
         Button(action: {
-            UserDefaults.standard.set(color.tintColor.toHex(), forKey: "defaultTintColor")
-            currentValue = color.tintColor.toHex()!
+            UserDefaults.standard.set(colorID, forKey: "defaultTintColor")
+            currentValue = colorID
             NotificationCenter.default.post(name: Notification.Name( "tintColorChanged"), object: nil)
         }) {
             ZStack {
                 VStack {
                     Circle()
-                        .fill(color.tintColor)
+                        .fill(currentColor!.tintColor)
                         .frame(width: 30, height: 30)
                     
-                    Text(color.themeName)
+                    Text(currentColor!.themeName)
                         .foregroundColor(Color.secondary)
                         .lineLimit(2)
                         .multilineTextAlignment(.center)
@@ -48,7 +49,14 @@ private struct ColorCell: View {
         .frame(width: 100, alignment: .center)
         .frame(maxHeight: .infinity)
         .background(Color(uiColor: .quaternarySystemFill))
-        .cornerRadius(15)
         .buttonStyle(PlainButtonStyle())
+        .cornerRadius(15)
+    
+        .overlay(
+            RoundedRectangle(cornerRadius: 15)
+                .stroke(currentColor!.tintColor, lineWidth: currentColor?.tintColor.toHex() == ThemeColors(rawValue: currentValue)?.tintColor.toHex() ? 4.0 : 0.0)
+        )
+        .padding(10)
+        
     }
 }

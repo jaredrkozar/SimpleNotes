@@ -7,26 +7,33 @@
 
 import SwiftUI
 
-struct IconCell: View {
+struct IconCell: View, Hashable, Identifiable {
+    
+    let id = UUID()
+    
+    public func hash(into hasher: inout Hasher) {
+        return hasher.combine(id)
+    }
+    
+    public static func == (lhs: IconCell, rhs: IconCell) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     var iconName: Icon
     var title: String
-    var view: AnyView
+    var view: AnyView?
     
     var body: some View {
-        NavigationLink(
-            destination: view
-        ) {
-            HStack {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                          .fill(.red)
-                          .frame(width: 40, height: 40)
-                    
-                    Image(systemName: iconName.icon!)
-                }
+        HStack {
+            ZStack {
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .fill(iconName.iconBGColor)
+                      .frame(width: 40, height: 40)
                 
-                Text(title)
+                Image(systemName: iconName.icon!).foregroundColor(iconName.iconTintColor)
             }
+            
+            Text(title)
         }
     }
 }

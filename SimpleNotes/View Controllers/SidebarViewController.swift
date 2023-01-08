@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class SidebarViewController: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>! = nil
@@ -36,7 +37,8 @@ class SidebarViewController: UIViewController {
     }
     
     @objc func settingsScreen() {
-        let settingsVC = SettingsView()
+        let settingsVC = UIHostingController(rootView: SettingsView())
+        present(settingsVC, animated: true)
         
     }
     

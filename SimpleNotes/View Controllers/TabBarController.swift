@@ -19,7 +19,7 @@ class TabBarController: UITabBarController {
         viewControllers = [allNotesViewController,
                            tagsTableViewController, settingsViewController]
         
-        self.tabBar.tintColor = UIColor(hex: UserDefaults.standard.string(forKey: "defaultTintColor")!)
+        self.tabBar.tintColor = ThemeColors(rawValue: UserDefaults.standard.integer(forKey: "defaultTintColor"))?.returnUIColor
     }
 
     override func viewWillAppear(_ animated: Bool) {

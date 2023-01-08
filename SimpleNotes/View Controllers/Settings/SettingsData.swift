@@ -20,7 +20,7 @@ struct DefaultNoteSettings: View {
     @AppStorage("defaultNoteTitle") var defaultNoteTitle: String = "Anonymous"
     @AppStorage("defaultOnOff") var defaultOnOff: Bool = false
     @AppStorage("storeStepperValue") var stepperValue: Int = 4
-    @AppStorage("tintColor") var defaulttintColor: String = Color.green.toHex()!
+    @AppStorage("defaultTintColor") var defaulttintColor: Int = 0
     
     var body: some View {
         SectionView(settings: [
