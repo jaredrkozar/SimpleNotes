@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct ColorPickerCell: View {
-    @Binding var currentTintColor: Int
+    @Binding var currentValue: Int
+    @State var tappedAction: ((Int) -> Void)
     
     var body: some View {
         ScrollView(.horizontal) {
             HStack {
-                ForEach(0..<ThemeColors.allCases.count) { color in
-                    ColorCell(colorID: color, currentValue: $currentTintColor)
+                ForEach(Array(ThemeColors.allCases.enumerated()), id: \.element) { index, color in
+                    ColorCell(color: color.tintColor, text: color.themeName, index: index, currentValue: $currentValue, tappedAction: tappedAction)
                 }
             }
         }
@@ -23,23 +24,24 @@ struct ColorPickerCell: View {
 }
 
 private struct ColorCell: View {
-    @State var colorID: Int
+    @State var color: Color
+    @State var text: String
+    @State var index: Int
     @Binding var currentValue: Int
+    @State var tappedAction: ((Int) -> Void)
     
     var body: some View {
-        let currentColor = ThemeColors(rawValue: colorID)
         Button(action: {
-            UserDefaults.standard.set(colorID, forKey: "defaultTintColor")
-            currentValue = colorID
-            NotificationCenter.default.post(name: Notification.Name( "tintColorChanged"), object: nil)
+            currentValue = index
+            tappedAction(currentValue)
         }) {
             ZStack {
                 VStack {
                     Circle()
-                        .fill(currentColor!.tintColor)
+                        .fill(color)
                         .frame(width: 30, height: 30)
                     
-                    Text(currentColor!.themeName)
+                    Text(text)
                         .foregroundColor(Color.secondary)
                         .lineLimit(2)
                         .multilineTextAlignment(.center)
@@ -54,10 +56,9 @@ private struct ColorCell: View {
     
         .overlay(
             RoundedRectangle(cornerRadius: 15)
-                .stroke(currentColor!.tintColor, lineWidth: currentColor?.tintColor.toHex() == ThemeColors(rawValue: currentValue)?.tintColor.toHex() ? 4.0 : 0.0)
+                .stroke(color, lineWidth:  index == currentValue ? 4.0 : 0.0)
         )
         .padding(10)
         
     }
 }
-

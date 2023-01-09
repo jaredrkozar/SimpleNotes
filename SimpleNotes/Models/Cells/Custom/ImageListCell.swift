@@ -12,13 +12,20 @@ struct ImagePickerCell: View {
     @Binding var cellTapped: Int
     @State var tappedAction: ((Int) -> Void)
     
+    let gridlayout = [
+        GridItem(.adaptive(minimum: 100))
+    ]
+    
     var body: some View {
-        ScrollView(.horizontal) {
+        ScrollView(.vertical) {
             HStack {
-                ForEach(Array(images.enumerated()), id: \.element) { index, image in
+                LazyVGrid(columns: gridlayout , spacing: 0) {
+                    ForEach(Array(images.enumerated()), id: \.element) { index, image in
                     
-                    ImageListCell(image: image.image, text: image.text, index: index, currentValue: $cellTapped, tappedAction: tappedAction)
-                }
+                        ImageListCell(image: image.image, text: image.text, index: index, currentValue: $cellTapped, tappedAction: tappedAction)
+                    }
+               }
+               .padding(.horizontal)
             }
         }
     }
@@ -30,7 +37,6 @@ private struct ImageListCell: View {
     @State var index: Int
     @Binding var currentValue: Int
     @State var tappedAction: ((Int) -> Void)
-    var selectedInt: Int = 0
     
     var body: some View {
         Button(action: {
@@ -41,8 +47,9 @@ private struct ImageListCell: View {
                 VStack {
                     image
                         .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
+                        .aspectRatio(contentMode: .fit)
+                        .padding([.top], 10)
+                        .frame(width: 50, height: 50)
                     
                     
                     Text(text)
@@ -51,6 +58,7 @@ private struct ImageListCell: View {
                         .multilineTextAlignment(.center)
                     
                     Image(systemName: index == currentValue ? "checkmark.circle.fill" : "circle")
+                        .padding([.bottom], 10)
                 }
             }
         }
@@ -59,7 +67,7 @@ private struct ImageListCell: View {
         .background(Color(uiColor: .quaternarySystemFill))
         .buttonStyle(PlainButtonStyle())
         .cornerRadius(15)
-        .padding(10)
+        .padding(15)
     }
 }
 

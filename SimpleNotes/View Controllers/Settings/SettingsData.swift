@@ -29,7 +29,10 @@ struct DefaultNoteSettings: View {
             SettingsGroup(header: "Hello", settings: [
                 AnyView(ToggleCell(text: "On.off", toggleData: $defaultOnOff, tintColor: $defaulttintColor)),
                 AnyView(TextCell(currentText: $defaultNoteTitle, placeholder: "NOte", leftText: "LeftText")),
-                AnyView(ColorPickerCell(currentTintColor: $defaulttintColor)),
+                AnyView(ColorPickerCell(currentValue: $defaulttintColor) {index in
+                    UserDefaults.standard.set(index, forKey: "defaultTintColor")
+                    NotificationCenter.default.post(name: Notification.Name( "tintColorChanged"), object: nil)
+                }),
                 AnyView(StepperCell(minValue: 1, maxValue: 10, text: "Stepper", currentValue: $stepperValue))
             ], footer: "Goodbye"),
             
@@ -37,7 +40,9 @@ struct DefaultNoteSettings: View {
                 AnyView(ToggleCell(text: "On.off", toggleData: $defaultOnOff, tintColor: $defaulttintColor)),
                 AnyView(PickerCell(title: "Sample Picker", options: ["Option 1", "Option 2", "Option 3"], selected: $selectedPageDirection)),
                 AnyView(ImagePickerCell(images: [ImageCell(image: Image(systemName: "pin"), text: "Pin"),
-                    ImageCell(image: Image(systemName: "photo"), text: "Photo")
+                    ImageCell(image: Image(systemName: "photo"), text: "Photo"),
+                     ImageCell(image: Image(systemName: "photo"), text: "Photo"),
+                     ImageCell(image: Image(systemName: "photo"), text: "Photo")
                     ], cellTapped: $sfsymbolCellTapped) {_ in
                                                     
                         print("eee")
