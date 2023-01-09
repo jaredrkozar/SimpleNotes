@@ -24,6 +24,9 @@
 		02AEB2D828DCE3D600AF46D6 /* CustomPDFPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AEB2D728DCE3D600AF46D6 /* CustomPDFPage.swift */; };
 		02AEB2DA28DD26AA00AF46D6 /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AEB2D928DD26AA00AF46D6 /* Border.swift */; };
 		02AEB2E928E0D2A100AF46D6 /* vitb12.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 02AEB2E828E0D2A100AF46D6 /* vitb12.pdf */; };
+		02F2910A296A991A00B14CDD /* PickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F29109296A991A00B14CDD /* PickerCell.swift */; };
+		02F2910C296A9DA200B14CDD /* ImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F2910B296A9DA200B14CDD /* ImageListCell.swift */; };
+		02F2910E296AB45400B14CDD /* TextStylingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F2910D296AB45400B14CDD /* TextStylingCell.swift */; };
 		1197BA6F1902435A622C74E4 /* Pods_SimpleNotes_SimpleNotesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A3152DECD2FC30763295899 /* Pods_SimpleNotes_SimpleNotesUITests.framework */; };
 		5BBB5572D47E81F29B170B17 /* Pods_SimpleNotesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7042E8EED9EB51C046B04E5F /* Pods_SimpleNotesTests.framework */; };
 		7F0F03E7282C368D00A6B404 /* ToolOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0F03E6282C368D00A6B404 /* ToolOptionsViewController.swift */; };
@@ -127,6 +130,9 @@
 		02AEB2D728DCE3D600AF46D6 /* CustomPDFPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPDFPage.swift; sourceTree = "<group>"; };
 		02AEB2D928DD26AA00AF46D6 /* Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
 		02AEB2E828E0D2A100AF46D6 /* vitb12.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = vitb12.pdf; path = "../../../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/2E83D7FC-2927-4084-9EA5-80BA465FE950/vitb12.pdf"; sourceTree = "<group>"; };
+		02F29109296A991A00B14CDD /* PickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerCell.swift; sourceTree = "<group>"; };
+		02F2910B296A9DA200B14CDD /* ImageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListCell.swift; sourceTree = "<group>"; };
+		02F2910D296AB45400B14CDD /* TextStylingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStylingCell.swift; sourceTree = "<group>"; };
 		0C1A53E84B9AB4F3086B417C /* Pods-SimpleNotes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes.debug.xcconfig"; path = "Target Support Files/Pods-SimpleNotes/Pods-SimpleNotes.debug.xcconfig"; sourceTree = "<group>"; };
 		1176E2B00F40D0F68753D3F9 /* Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig"; path = "Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		15F95CAC11D6C63B056CB79F /* Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig"; path = "Target Support Files/Pods-SimpleNotes-SimpleNotesUITests/Pods-SimpleNotes-SimpleNotesUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -234,11 +240,8 @@
 		0290CC34296529FD002ED229 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				0290CC32296528A5002ED229 /* ToggleCell.swift */,
-				0290CC4929656B32002ED229 /* TextCell.swift */,
-				0290CC3729652EFB002ED229 /* IconCell.swift */,
-				0290CC3529652A44002ED229 /* StepperCell.swift */,
-				0290CC4B296577DF002ED229 /* ColorPickerCell.swift */,
+				02F29110296AB47300B14CDD /* Controls */,
+				02F2910F296AB45C00B14CDD /* Custom */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -261,6 +264,28 @@
 				02AEB2E828E0D2A100AF46D6 /* vitb12.pdf */,
 			);
 			name = pdfs;
+			sourceTree = "<group>";
+		};
+		02F2910F296AB45C00B14CDD /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				0290CC4B296577DF002ED229 /* ColorPickerCell.swift */,
+				02F2910D296AB45400B14CDD /* TextStylingCell.swift */,
+				02F2910B296A9DA200B14CDD /* ImageListCell.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		02F29110296AB47300B14CDD /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				0290CC32296528A5002ED229 /* ToggleCell.swift */,
+				02F29109296A991A00B14CDD /* PickerCell.swift */,
+				0290CC4929656B32002ED229 /* TextCell.swift */,
+				0290CC3729652EFB002ED229 /* IconCell.swift */,
+				0290CC3529652A44002ED229 /* StepperCell.swift */,
+			);
+			path = Controls;
 			sourceTree = "<group>";
 		};
 		0481132D7C0C0C532551601A /* Pods */ = {
@@ -755,6 +780,7 @@
 				7F376615278B569D00A107FF /* SendText.swift in Sources */,
 				7FE45082281A56F40034928B /* CollectionReusableView.swift in Sources */,
 				7FD82DCB28233AE500ECCB3B /* Brush.swift in Sources */,
+				02F2910E296AB45400B14CDD /* TextStylingCell.swift in Sources */,
 				7F97ED5D28920FCA00DA2EB4 /* SizeCollectionView.swift in Sources */,
 				7FC55DA12792ADEB001DDFD5 /* TableRowCell.swift in Sources */,
 				7FBC07F6289B16F800AA28CB /* TagCollectionViewCell.swift in Sources */,
@@ -788,6 +814,7 @@
 				7F37661A278BC7B400A107FF /* PDFCreator.swift in Sources */,
 				7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */,
 				7FE45096281E2E860034928B /* CustomImageView.swift in Sources */,
+				02F2910C296A9DA200B14CDD /* ImageListCell.swift in Sources */,
 				7FEBECA2276136280066F0C0 /* NoteTableViewCell.swift in Sources */,
 				7FE4508B281E2A8C0034928B /* Line.swift in Sources */,
 				02AD68B828EB89AA004E3319 /* SceneDelegate.swift in Sources */,
@@ -812,6 +839,7 @@
 				02AD68BD28EF23BD004E3319 /* UIColor+Extension.swift in Sources */,
 				7FC7FB6D2836D5C100CE483E /* CustomButton.swift in Sources */,
 				7F97ED5B288FA81E00DA2EB4 /* IconCollectionView.swift in Sources */,
+				02F2910A296A991A00B14CDD /* PickerCell.swift in Sources */,
 				02AD68BF28EF23EC004E3319 /* String+Extension.swift in Sources */,
 				7F376613278AC3CD00A107FF /* SendEmail.swift in Sources */,
 				7F37661E278D40F700A107FF /* FolderLocationViewController.swift in Sources */,

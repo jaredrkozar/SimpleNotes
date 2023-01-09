@@ -21,6 +21,8 @@ struct DefaultNoteSettings: View {
     @AppStorage("defaultOnOff") var defaultOnOff: Bool = false
     @AppStorage("storeStepperValue") var stepperValue: Int = 4
     @AppStorage("defaultTintColor") var defaulttintColor: Int = 0
+    @AppStorage("defaultPageDirection") var selectedPageDirection: String = "DLLD"
+    @AppStorage("sfsymbolCellTapped") var sfsymbolCellTapped: Int = 0
     
     var body: some View {
         SectionView(settings: [
@@ -32,7 +34,14 @@ struct DefaultNoteSettings: View {
             ], footer: "Goodbye"),
             
             SettingsGroup(header: "Hello", settings: [
-                AnyView(ToggleCell(text: "On.off", toggleData: $defaultOnOff, tintColor: $defaulttintColor))
+                AnyView(ToggleCell(text: "On.off", toggleData: $defaultOnOff, tintColor: $defaulttintColor)),
+                AnyView(PickerCell(title: "Sample Picker", options: ["Option 1", "Option 2", "Option 3"], selected: $selectedPageDirection)),
+                AnyView(ImagePickerCell(images: [ImageCell(image: Image(systemName: "pin"), text: "Pin"),
+                    ImageCell(image: Image(systemName: "photo"), text: "Photo")
+                    ], cellTapped: $sfsymbolCellTapped) {_ in
+                                                    
+                        print("eee")
+                        })
             ], footer: "Goodbye")
         ])
     }

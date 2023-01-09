@@ -277,15 +277,15 @@ enum ThemeColors: Int, CaseIterable, Identifiable {
                 return Color.green
             case .lightBlue:
                 return Color.cyan
-        case .darkBlue:
-            return Color.blue
+            case .darkBlue:
+                return Color.blue
         }
     }
     
     var themeName: String {
         switch self {
             case .red:
-                return "Ruby Red"
+                return "Fiery Red"
             case .orange:
                 return "Atomic Orange"
             case .yellow:

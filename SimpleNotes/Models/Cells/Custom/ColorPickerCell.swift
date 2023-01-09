@@ -60,3 +60,4 @@ private struct ColorCell: View {
         
     }
 }
+
