@@ -41,7 +41,7 @@ struct DefaultNoteSettings: View {
                 AnyView(PickerCell(title: "Sample Picker", options: ["Option 1", "Option 2", "Option 3"], selected: $selectedPageDirection)),
                 AnyView(ImagePickerCell(images: [ImageCell(image: Image(systemName: "pin"), text: "Pin"),
                     ImageCell(image: Image(systemName: "photo"), text: "Photo"),
-                     ImageCell(image: Image(systemName: "photo"), text: "Photo"),
+                     ImageCell(image: Image(systemName: "photo"), text: "Photod ddmdm kd"),
                      ImageCell(image: Image(systemName: "photo"), text: "Photo")
                     ], cellTapped: $sfsymbolCellTapped) {_ in
                                                     

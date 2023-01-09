@@ -42,11 +42,13 @@ private struct ColorCell: View {
                         .frame(width: 30, height: 30)
                     
                     Text(text)
+                        .frame(width: 80, height: 60)
                         .foregroundColor(Color.secondary)
                         .lineLimit(2)
                         .multilineTextAlignment(.center)
                 }
             }
+            .contentShape(Rectangle())
         }
         .frame(width: 100, alignment: .center)
         .frame(maxHeight: .infinity)

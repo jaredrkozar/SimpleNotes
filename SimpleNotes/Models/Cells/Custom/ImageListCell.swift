@@ -19,7 +19,7 @@ struct ImagePickerCell: View {
     var body: some View {
         ScrollView(.vertical) {
             HStack {
-                LazyVGrid(columns: gridlayout , spacing: 0) {
+                LazyVGrid(columns: gridlayout , spacing: 10) {
                     ForEach(Array(images.enumerated()), id: \.element) { index, image in
                     
                         ImageListCell(image: image.image, text: image.text, index: index, currentValue: $cellTapped, tappedAction: tappedAction)
@@ -53,6 +53,7 @@ private struct ImageListCell: View {
                     
                     
                     Text(text)
+                        .frame(width: 80, height: 60)
                         .foregroundColor(Color.secondary)
                         .lineLimit(2)
                         .multilineTextAlignment(.center)
@@ -61,13 +62,13 @@ private struct ImageListCell: View {
                         .padding([.bottom], 10)
                 }
             }
+            .contentShape(Rectangle())
         }
         .frame(width: 100, alignment: .center)
         .frame(maxHeight: .infinity)
         .background(Color(uiColor: .quaternarySystemFill))
         .buttonStyle(PlainButtonStyle())
         .cornerRadius(15)
-        .padding(15)
     }
 }
 
