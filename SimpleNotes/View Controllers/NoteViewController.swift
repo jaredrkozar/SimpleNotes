@@ -9,6 +9,7 @@ import UIKit
 import WSTagsField
 import PhotosUI
 import PDFKit
+import SwiftUI
 
 class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrollViewDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
@@ -230,10 +231,10 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
     @available(iOS 16.0, *)
     func shareButtonTapped() -> UIMenu {
          var locations = [UIAction]()
-         let vc = NoteShareSettingsViewController()
-
+         let vc = UIHostingController(rootView: NoteShareSettingsViewController())
+     
          let navigationController = UINavigationController(rootViewController: vc)
-         
+        
             for location in SharingLocation.allCases {
                 if location.canExport == true {
                     locations.append( UIAction(title: "\(location.viewTitle)", image: location.icon, identifier: nil, attributes: []) { _ in
@@ -255,13 +256,13 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                             return
                         }
                         
-                        vc.getNoteData = { color in
+                        vc.rootView.getNoteData = { color in
                             
                             return (self.pdfHolderView?.returnExport(exportType: color))!.first!
                         }
                         
-                        vc.sharingLocation = location
-                        vc.currentNoteTitle = self.navigationItem.title
+                        vc.rootView.sharingLocation = location
+                        vc.rootView.currentNoteTitle = self.navigationItem.title
                         self.present(navigationController, animated: true, completion: nil)
                      })
                 }

@@ -174,9 +174,27 @@ public enum Device {
     case mac
 }
 
-public enum SharingType {
+public enum SharingType: Int, CaseIterable {
     case pdf
     case image
+    
+    var name: String {
+        switch self {
+            case .pdf:
+            return "PDF"
+            case .image:
+            return "Image"
+        }
+    }
+    
+    var color: Color {
+        switch self {
+            case .pdf:
+            return Color.blue
+            case .image:
+            return Color.red
+        }
+    }
     
     var googleDriveFileType: String {
         switch self {
@@ -195,6 +213,21 @@ public enum SharingType {
             return "png"
         }
     }
+    
+    var image: Image {
+        switch self {
+        case .pdf:
+            return Image(systemName: "doc")
+            
+        case .image:
+            return Image(systemName: "photo")
+        }
+    }
+}
+
+enum ImageTypes {
+    case jpeg
+    case png
 }
 
 struct Sections {
@@ -212,7 +245,7 @@ struct SettingsOptions {
 
 struct Icon {
     let icon: String?
-    let iconBGColor: Color!
+    let iconBGColor: Color?
     let iconTintColor: Color!
 }
 
@@ -315,4 +348,12 @@ enum ThemeColors: Int, CaseIterable, Identifiable {
                 return UIColor.systemBlue
         }
     }
+}
+
+
+func getRootViewController() -> UIViewController? {
+    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController
+    
+    // OR If you use SwiftUI 2.0 based WindowGroup try this one
+    // UIApplication.shared.windows.first?.rootViewController
 }

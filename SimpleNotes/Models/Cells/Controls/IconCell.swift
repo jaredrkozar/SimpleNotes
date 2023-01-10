@@ -27,7 +27,7 @@ struct IconCell: View, Hashable, Identifiable {
         HStack {
             ZStack {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(iconName.iconBGColor)
+                    .fill(iconName.iconBGColor ?? Color(uiColor: UIColor.systemBackground))
                       .frame(width: 40, height: 40)
                 
                 Image(systemName: iconName.icon!).foregroundColor(iconName.iconTintColor)

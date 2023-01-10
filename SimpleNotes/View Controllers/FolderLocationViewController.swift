@@ -5,109 +5,53 @@
 //  Created by JaredKozar on 1/10/22.
 //
 
-import UIKit
 import SwiftUI
 
-class FolderLocationViewController: UITableViewController {
-    
-    var location: SharingLocation?
-    var currentfolder: String?
-    var allFiles = [CloudServiceFiles]()
+struct FolderLocationViewController: View {
+    @State var location: SharingLocation?
+    @Binding var currentfolder: String?
+    @State private var allFiles = [CloudServiceFiles]()
     var serviceType: CloudType?
-    var returnPDFData: ((_ returnData: Data, _ title: String)->())?
+    @State private var presentAlert: Bool = false
+    @State private var errorMessage: String?
+    @Environment(\.dismiss) var dismiss
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        title = "Folders"
-        
-        tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
-        
-        if serviceType == .upload {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Select Folder", style: .done, target: self, action: #selector(selectFolderButton))
-        }
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-
-        guard location!.currentLocation.isSignedIn else {
-            location!.currentLocation.signIn(vc: self)
-            return
-        }
-        
-        location?.currentLocation.fetchFiles(folderID: (currentfolder ?? location?.currentLocation.defaultFolder)!, onCompleted: {
-            (files, error) in
-            self.allFiles = files!
+    var body: some View {
+        NavigationView {
             
-            self.tableView.reloadData()
-            
-        })
-    }
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return allFiles.count
-    }
-
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableRowCell", for: indexPath) as? TableRowCell else {
-            fatalError("Unable to dequeue the note cell.")
-        }
-         
-        var file = allFiles[indexPath.row]
-        
-        
-        cell.configureCell(with: SettingsOptions(title: file.name, option: "", rowIcon: Icon(icon: "pin", iconBGColor: Color.green, iconTintColor: Color.purple), control: nil, handler: nil))
-        
-        if file.type.typeURL == "folder" {
-            cell.accessoryType = .disclosureIndicator
-        }
-        
-        if serviceType == .download {
-            if file.type == .pdf || file.type == .folder {
-                cell.isUserInteractionEnabled = true
-            } else {
-                cell.isUserInteractionEnabled = false
+            List(allFiles) { item in
+                NavigationLink(destination: FolderLocationViewController(location: location, currentfolder: .constant(item.folderID), serviceType: serviceType)) {
+                   
+                    IconCell(iconName: Icon(icon: item.type?.icon, iconBGColor: Color.primary, iconTintColor: Color(uiColor: item.type!.tintColor)), title: item.name ?? "Name not found")
+                }
+                .disabled(serviceType == .upload && item.type != .folder)
             }
+            .navigationBarTitle(currentfolder ?? location!.viewTitle, displayMode: .inline)
+            .toolbar {
+                 Button("Select Folder") {
+                     dismiss()
+                 }
+             }
         }
         
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let selectedFile = allFiles[indexPath.row]
-        
-        if  selectedFile.type == .folder {
-            let vc = FolderLocationViewController()
-            vc.location = location
-            vc.currentfolder = selectedFile.folderID
-            vc.serviceType = serviceType
-            self.navigationController?.pushViewController(vc, animated: true)
+       
+        .onAppear {
+            location?.currentLocation.fetchFiles(folderID: (currentfolder ?? location?.currentLocation.defaultFolder)!, onCompleted: {
+                (files, error) in
+                
+                guard error == nil else {
+                    self.errorMessage = error?.localizedDescription
+                    self.presentAlert = true
+                    return
+                }
+                print(files?.count)
+                allFiles = files!
+                
+            })
         }
         
-        if serviceType == .download {
-            if selectedFile.type == .pdf {
-                location?.currentLocation.downloadFile(identifier: selectedFile.folderID, folderID: selectedFile.folderID, onCompleted: {(files, error) in
-                    self.dismiss(animated: true)
-                    self.returnPDFData!(files!, selectedFile.name)
-                })
-            }
+        .alert(isPresented: $presentAlert) {
+            Alert(title: Text(errorMessage!), message: nil, dismissButton: nil)
         }
     }
-
-    @objc func selectFolderButton(_ sender: UIBarButtonItem) {
-        let presenter = self.presentingViewController?.children.last as? NoteShareSettingsViewController
-        presenter?.folderID = currentfolder
-        
-        self.dismiss(animated: true)
-    }
-    
 }

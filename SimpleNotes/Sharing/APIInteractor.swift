@@ -9,7 +9,7 @@ import UIKit
 
 protocol APIInteractor {
     
-    func signIn(vc: UIViewController)
+    func signIn()
     
     var isSignedIn: Bool { get }
     

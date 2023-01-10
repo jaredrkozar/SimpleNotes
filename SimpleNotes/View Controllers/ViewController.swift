@@ -12,6 +12,7 @@ import MobileCoreServices
 import UniformTypeIdentifiers
 import VisionKit
 import Vision
+import SwiftUI
 
 class ViewController: UITableViewController, UINavigationControllerDelegate {
     
@@ -222,9 +223,11 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                     case .scanDocument:
                         self.presentDocumentScanner()
                     case .dropbox:
-                        self.presentFolderView(service: .dropbox)
+                        let vc = UIHostingController(rootView: FolderLocationViewController(location: .dropbox, currentfolder: .constant(""), serviceType: .download))
+                        self.present(vc, animated: true)
                     case .googledrive:
-                        self.presentFolderView(service: .googledrive)
+                        let vc = UIHostingController(rootView: FolderLocationViewController(location: .googledrive, currentfolder: .constant("root"), serviceType: .download))
+                        self.present(vc, animated: true)
                     default:
                         print("Not supported")
                     }
@@ -272,23 +275,6 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
     @objc func reloadNotesTable(notification: Notification) {
         guard let rowNum = notification.userInfo!.values.first as? Int else { return }
         tableView.reloadRows(at: [IndexPath(item: rowNum, section: 0)], with: .fade)
-    }
-    
-    func presentFolderView(service: SharingLocation) {
-        let vc = FolderLocationViewController()
-        let navController = UINavigationController(rootViewController: vc)
-        vc.serviceType = .download
-        vc.location = service
-        
-        present(navController, animated: true)
-        
-        vc.returnPDFData = { file, title in
-            
-            let newPDF = PDFDocument(data: file)
-            
-            self.addNewNote(thumbnail: (newPDF!.page(at: 0)?.createThumbnail())!, pdf: newPDF!.dataRepresentation()!, title: title)
-            
-        }
     }
 }
 

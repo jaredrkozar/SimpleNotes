@@ -7,8 +7,10 @@
 
 import UIKit
 
-struct CloudServiceFiles {
-    var name: String
-    var type: MimeTypes
-    var folderID: String
+struct CloudServiceFiles: Identifiable, Hashable {
+    let id = UUID()
+    
+    var name: String?
+    var type: MimeTypes?
+    var folderID: String?
 }

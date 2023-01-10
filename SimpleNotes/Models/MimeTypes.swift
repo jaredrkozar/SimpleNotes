@@ -17,24 +17,24 @@ public enum MimeTypes: CaseIterable {
     case audiofile
     case other
     
-    var icon: UIImage {
+    var icon: String {
         switch self {
             case .folder:
-            return UIImage(systemName: "folder")!
+            return "folder"
         case .pdf:
-            return UIImage(systemName: "doc.viewfinder")!
+            return "doc.viewfinder"
         case .document:
-            return UIImage(systemName: "doc")!
+            return "doc"
         case .spreadsheet:
-            return UIImage(systemName: "tablecells")!
+            return "tablecells"
         case .presentation:
-            return UIImage(systemName: "rectangle.grid.2x2")!
+            return "rectangle.grid.2x2"
         case .image:
-            return UIImage(systemName: "photo")!
+            return "photo"
         case .audiofile:
-            return UIImage(systemName: "mic")!
+            return "mic"
         case .other:
-            return UIImage(systemName: "questionmark.circle")!
+            return "questionmark.circle"
         }
     }
     

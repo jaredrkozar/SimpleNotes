@@ -26,15 +26,9 @@ struct SettingsView: View {
           .navigationTitle("World")
             
         } detail: {
-            if let country = selection {
-                if country.view != nil {
-                    
-                    AnyView(country.view)
-                }
-            
-          } else {
-            Text("Select a country")
-          }
+            if let setting = selection {
+                AnyView(setting.view)
+            }
         }
     }
 }

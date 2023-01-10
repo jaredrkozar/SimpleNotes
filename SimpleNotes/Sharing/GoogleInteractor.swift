@@ -16,7 +16,6 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
     
     var defaultFolder: String = "root"
     
-    
     var driveService = GTLRDriveService()
     
     var driveUser: GIDGoogleUser?
@@ -34,7 +33,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         return GIDSignIn.sharedInstance().handle(url)
     }
     
-    func signIn(vc: UIViewController) {
+    func signIn() {
         
         GIDSignIn.sharedInstance().scopes = [kGTLRAuthScopeDrive]
         
@@ -43,6 +42,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
             driveService.apiKey = "AIzaSyBz0NAnojMb8LOmWUlEIHWTHvljk4Yboaw"
             driveService.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
         } else {
+            let vc =             getRootViewController()
             GIDSignIn.sharedInstance().presentingViewController = vc
             GIDSignIn.sharedInstance().delegate = vc as? GIDSignInDelegate
             GIDSignIn.sharedInstance().signIn()
@@ -61,8 +61,13 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
     func fetchFiles(folderID: String, onCompleted: @escaping ([CloudServiceFiles]?, Error?) -> ()) {
         
         GIDSignIn.sharedInstance().restorePreviousSignIn()
-       
         driveService.apiKey = "AIzaSyBz0NAnojMb8LOmWUlEIHWTHvljk4Yboaw"
+        
+        guard GIDSignIn.sharedInstance().currentUser != nil else {
+            signIn()
+            return
+        }
+
         driveService.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
         GIDSignIn.sharedInstance().clientID = clientID
  
@@ -76,11 +81,11 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         query.corpora = "user"
         
         driveService.executeQuery(query) { (ticket, result, error) in
-        
+            print(error)
             if let filesList : GTLRDrive_FileList = result as? GTLRDrive_FileList {
 
                 if let listOfFiles : [GTLRDrive_File] = filesList.files {
-                    
+
                     for file in listOfFiles {
                         
                         self.filesInFolder.append(CloudServiceFiles(name: file.name!, type: self.getFileType(type: file.mimeType!), folderID: file.identifier!))
@@ -143,8 +148,12 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
     
     override init() {
         super.init()
-        GIDSignIn.sharedInstance().restorePreviousSignIn()
-
+        
+        if isSignedIn == true && GIDSignIn.sharedInstance().currentUser != nil {
+            GIDSignIn.sharedInstance().restorePreviousSignIn()
+        } else {
+            signIn()
+        }
     }
     
     func getFileType(type: String) -> MimeTypes {

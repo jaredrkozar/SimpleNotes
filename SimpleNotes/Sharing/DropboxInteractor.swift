@@ -39,11 +39,11 @@ class DropboxInteractor: APIInteractor {
             
     }
     
-    func signIn(vc: UIViewController) {
+    func signIn() {
         let scopeRequest = ScopeRequest(scopeType: .user, scopes: [], includeGrantedScopes: false)
             DropboxClientsManager.authorizeFromControllerV2(
                 UIApplication.shared,
-                controller: vc,
+                controller: getRootViewController(),
                 loadingStatusDelegate: nil,
                 openURL: { (url: URL) -> Void in UIApplication.shared.open(url, options: [:], completionHandler: nil) },
                 scopeRequest: scopeRequest

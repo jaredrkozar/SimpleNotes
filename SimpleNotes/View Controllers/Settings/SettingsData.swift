@@ -46,7 +46,8 @@ struct DefaultNoteSettings: View {
                     ], cellTapped: $sfsymbolCellTapped) {_ in
                                                     
                         print("eee")
-                        })
+                        }),
+                AnyView(TextStylingCell())
             ], footer: "Goodbye")
         ])
     }
