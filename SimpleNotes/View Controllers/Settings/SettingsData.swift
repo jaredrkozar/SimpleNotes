@@ -50,6 +50,8 @@ struct DefaultNoteSettings: View {
                 AnyView(TextStylingCell())
             ], footer: "Goodbye")
         ])
+        .navigationTitle("GREEN")
+        .tint(Color.green)
     }
 }
 

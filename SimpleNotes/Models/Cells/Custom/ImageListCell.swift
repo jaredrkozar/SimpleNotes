@@ -64,11 +64,7 @@ private struct ImageListCell: View {
             }
             .contentShape(Rectangle())
         }
-        .frame(width: 100, alignment: .center)
-        .frame(maxHeight: .infinity)
-        .background(Color(uiColor: .quaternarySystemFill))
-        .buttonStyle(PlainButtonStyle())
-        .cornerRadius(15)
+        .buttonStyle(BaseButtonStyle())
     }
 }
 

@@ -55,7 +55,7 @@
 		7F8BBDFC276ED795005B07C1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8BBDFB276ED795005B07C1 /* Extensions.swift */; };
 		7F97ED5B288FA81E00DA2EB4 /* IconCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97ED5A288FA81E00DA2EB4 /* IconCollectionView.swift */; };
 		7F97ED5D28920FCA00DA2EB4 /* SizeCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F97ED5C28920FCA00DA2EB4 /* SizeCollectionView.swift */; };
-		7FB7C29B2815155F006C9FE2 /* HoldingClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */; };
+		7FB7C29B2815155F006C9FE2 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB7C29A2815155F006C9FE2 /* ButtonStyles.swift */; };
 		7FB8120E2869554C00DC9E67 /* ColorCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB8120D2869554C00DC9E67 /* ColorCollectionView.swift */; };
 		7FBC07F4289B153600AA28CB /* TagCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBC07F3289B153600AA28CB /* TagCollectionView.swift */; };
 		7FBC07F6289B16F800AA28CB /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBC07F5289B16F800AA28CB /* TagCollectionViewCell.swift */; };
@@ -164,7 +164,7 @@
 		7F8BBDFB276ED795005B07C1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7F97ED5A288FA81E00DA2EB4 /* IconCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCollectionView.swift; sourceTree = "<group>"; };
 		7F97ED5C28920FCA00DA2EB4 /* SizeCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeCollectionView.swift; sourceTree = "<group>"; };
-		7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldingClass.swift; sourceTree = "<group>"; };
+		7FB7C29A2815155F006C9FE2 /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		7FB8120D2869554C00DC9E67 /* ColorCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionView.swift; sourceTree = "<group>"; };
 		7FBC07F3289B153600AA28CB /* TagCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionView.swift; sourceTree = "<group>"; };
 		7FBC07F5289B16F800AA28CB /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -340,7 +340,7 @@
 				7FC55D9F2792ADEB001DDFD5 /* TableRowCell.swift */,
 				7F37660E278A52DA00A107FF /* SharingLocation.swift */,
 				7FC55DA327939E49001DDFD5 /* MimeTypes.swift */,
-				7FB7C29A2815155F006C9FE2 /* HoldingClass.swift */,
+				7FB7C29A2815155F006C9FE2 /* ButtonStyles.swift */,
 				7F498ACB27718EDC00202413 /* Note */,
 				7F498ACA27718ECB00202413 /* Tags */,
 				0290CC34296529FD002ED229 /* Cells */,
@@ -807,7 +807,7 @@
 				7F37660F278A52DA00A107FF /* SharingLocation.swift in Sources */,
 				7FE4509A281E30A00034928B /* HelperFunctions.swift in Sources */,
 				02AD68BB28EF23A5004E3319 /* UIBezierPath+Extension.swift in Sources */,
-				7FB7C29B2815155F006C9FE2 /* HoldingClass.swift in Sources */,
+				7FB7C29B2815155F006C9FE2 /* ButtonStyles.swift in Sources */,
 				7F37661A278BC7B400A107FF /* PDFCreator.swift in Sources */,
 				7F376600278A078B00A107FF /* NoteShareSettingsViewController.swift in Sources */,
 				7FE45096281E2E860034928B /* CustomImageView.swift in Sources */,

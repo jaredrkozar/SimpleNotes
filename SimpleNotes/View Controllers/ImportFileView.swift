@@ -9,18 +9,57 @@ import SwiftUI
 import PDFKit
 
 struct ImportFileView: View {
-    private var imageFromPDF: Image {
-        let pdf = PDFDocument(data: pdfData)
-        let firstPage = pdf?.page(at: 1)
-        return Image(uiImage: UIImage(data: (firstPage?.createThumbnail())!)!)
-    }
+    @State private var imageFromPDF: Image?
+    
+    var fileData: String?
     
     var title: String?
     
-    var pdfData: Data
+    @State var pdfData: Data?
+    @State var pageAsThumbnail: Data?
+    var location: SharingLocation
+    
+    private var firstPageImage: Data? {
+        if pdfData != nil {
+            let pdf = PDFDocument(data: pdfData!)
+            let firstPage = pdf?.page(at: 0)
+            let pageAsThumbnail = firstPage?.createThumbnail()
+            return pageAsThumbnail
+        }
+        return nil
+    }
     var body: some View {
-        HStack {
-            imageFromPDF
+        VStack {
+            
+            if firstPageImage == nil {
+                ProgressView()
+            } else {
+                Image(uiImage: UIImage(data: firstPageImage!)!)
+            }
+            
+            Text(title!)
+                .font(.title)
+            
+            Button(action: {
+                createNewNote(thumbnail: pageAsThumbnail!, pdf: pdfData!, title: title)
+            }) {
+                Text("Create New Note")
+            }
+            
+            .frame(height: 100)
+            .buttonStyle(BaseButtonStyle())
+        }
+        
+        .onAppear {
+            location.currentLocation.downloadFile(identifier: fileData!, folderID: fileData, onCompleted: {
+                file, error in
+                guard error == nil else {
+                    print("Errro")
+                    return
+                }
+                
+                pdfData = file!
+            })
         }
     }
 }

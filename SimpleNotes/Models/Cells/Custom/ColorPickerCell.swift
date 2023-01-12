@@ -50,16 +50,13 @@ private struct ColorCell: View {
             }
             .contentShape(Rectangle())
         }
-        .frame(width: 100, alignment: .center)
-        .frame(maxHeight: .infinity)
-        .background(Color(uiColor: .quaternarySystemFill))
-        .buttonStyle(PlainButtonStyle())
-        .cornerRadius(15)
-    
+        
         .overlay(
             RoundedRectangle(cornerRadius: 15)
                 .stroke(color, lineWidth:  index == currentValue ? 4.0 : 0.0)
         )
+        .buttonStyle(BaseButtonStyle())
+        
         .padding(10)
         
     }

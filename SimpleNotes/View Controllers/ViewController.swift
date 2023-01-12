@@ -52,8 +52,6 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadNotesTable(notification:)), name: Notification.Name("reloadNotesTable"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(tintColorChanged(notification:)), name: Notification.Name("tintColorChanged"), object: nil)
-        
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -75,22 +73,23 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
         }
         
         let singlenote = notes[indexPath.row]
-
-        if singlenote.isLocked == true {
-            cell.noteTitle.text = "Note Locked"
-        } else {
-            cell.noteTitle.text = singlenote.title
+        
+        cell.contentConfiguration = UIHostingConfiguration {
+            HStack(alignment: .top) {
+                Image(uiImage: UIImage(data: singlenote.thumbanil!)!)
+                VStack(alignment: .leading) {
+                    Text(singlenote.title!)
+                        .font(.title)
+                    Text((singlenote.date?.formatted())!)
+                        .font(.body)
+                }
+                
+                singlenote.isLocked ? Image(systemName: "lock.fill")
+                    .foregroundColor(Color.blue)
+                : nil
+            }
         }
-        
-        cell.noteThumbanil.image = UIImage(data: singlenote.thumbanil!)
-        cell.noteDate.text = singlenote.date!.formatted()
-        
-        cell.tagView?.tags = fetchTagsForNote(index: indexPath.row).sorted()
-        cell.tagView?.addTags()
-    
-        cell.accessibilityLabel = "\(singlenote.title) Created on  \(singlenote.date)"
-        
-        cell.layoutIfNeeded()
+            
         return cell
     }
     

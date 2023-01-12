@@ -14,28 +14,25 @@ struct FolderLocationViewController: View {
     var serviceType: CloudType?
     @State private var presentAlert: Bool = false
     @State private var errorMessage: String?
-    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         NavigationView {
             
             List(allFiles) { item in
-                NavigationLink(destination: FolderLocationViewController(location: location, currentfolder: .constant(item.folderID), serviceType: serviceType)) {
+                NavigationLink(destination:
+                                serviceType == .download && item.type == .pdf ? AnyView(ImportFileView(fileData: item.folderID, title: item.name, location: location!)) : AnyView(FolderLocationViewController(location: location, currentfolder: .constant(item.folderID), serviceType: serviceType))
+                ) {
                    
                     IconCell(iconName: Icon(icon: item.type?.icon, iconBGColor: Color.primary, iconTintColor: Color(uiColor: item.type!.tintColor)), title: item.name ?? "Name not found")
                 }
                 .disabled(serviceType == .upload && item.type != .folder)
             }
             .navigationBarTitle(currentfolder ?? location!.viewTitle, displayMode: .inline)
-            .toolbar {
-                 Button("Select Folder") {
-                     dismiss()
-                 }
-             }
         }
         
        
         .onAppear {
+            print(location)
             location?.currentLocation.fetchFiles(folderID: (currentfolder ?? location?.currentLocation.defaultFolder)!, onCompleted: {
                 (files, error) in
                 
@@ -44,7 +41,7 @@ struct FolderLocationViewController: View {
                     self.presentAlert = true
                     return
                 }
-                print(files?.count)
+                
                 allFiles = files!
                 
             })
@@ -53,5 +50,12 @@ struct FolderLocationViewController: View {
         .alert(isPresented: $presentAlert) {
             Alert(title: Text(errorMessage!), message: nil, dismissButton: nil)
         }
+    }
+    
+    func getDataForFile(location: SharingLocation, fileID: String, userCompletionHandler: @escaping (Data) -> Void) {
+        location.currentLocation.downloadFile(identifier: fileID, folderID: fileID, onCompleted: {file, error in
+            
+            userCompletionHandler(file!)
+        })
     }
 }

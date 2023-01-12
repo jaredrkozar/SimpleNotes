@@ -23,6 +23,7 @@ struct SettingsView: View {
               cell
             }
           }
+            
           .navigationTitle("World")
             
         } detail: {

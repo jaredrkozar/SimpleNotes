@@ -38,6 +38,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         GIDSignIn.sharedInstance().scopes = [kGTLRAuthScopeDrive]
         
         GIDSignIn.sharedInstance().restorePreviousSignIn()
+        
         if GIDSignIn.sharedInstance().hasPreviousSignIn() {
             driveService.apiKey = "AIzaSyBz0NAnojMb8LOmWUlEIHWTHvljk4Yboaw"
             driveService.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
@@ -141,7 +142,7 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         
         let query = GTLRDriveQuery_FilesGet.queryForMedia(withFileId: identifier)
          driveService.executeQuery(query) { (ticket, file, error) in
-             onCompleted((file as? GTLRDataObject)?.data, error)
+            onCompleted((file as? GTLRDataObject)?.data, error)
          }
     }
     
