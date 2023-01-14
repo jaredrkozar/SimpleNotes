@@ -38,12 +38,12 @@ struct NoteShareSettingsViewController: View {
                 PickerCell(title: "Image Type", options: ["PNG", "JPEG"], selected: $imageType)
             }
             
-            IconCell(iconName: Icon(icon: "cloud", iconBGColor: .blue, iconTintColor: .white), title: "Location")
+            IconCell(icon: RoundedIcon(icon: .systemImage(iconName: "cloud", backgroundColor: .blue, tintColor: .white)), title: "Folders")
                 .onTapGesture {
                     showingSheet = true
                 }
                 .sheet(isPresented: $showingSheet) {
-                    FolderLocationViewController(location: sharingLocation, currentfolder: $folderID ??  .constant(sharingLocation?.currentLocation.defaultFolder), serviceType: .upload)
+                    FileBrowserHolder(location: sharingLocation, currentfolder: sharingLocation?.currentLocation.defaultFolder, serviceType: .upload)
                 }
         }
         

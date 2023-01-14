@@ -15,7 +15,7 @@ class TagsTableViewController: UITableViewController {
 
         // Do any additional setup after loading the view.
         
-        tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
+        tableView.register(NoteTableViewCell.self, forCellReuseIdentifier: "TableRowCell")
         
         title = "Tags"
         
@@ -35,18 +35,19 @@ class TagsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tag = tags[indexPath.row]
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableRowCell", for: indexPath) as? TableRowCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableRowCell", for: indexPath) as? NoteTableViewCell else {
             fatalError("Unable to dequeue the settings cell.")
         }
         
-       
-        cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", rowIcon: Icon(icon: tag.symbol, iconBGColor: Color.green, iconTintColor: Color.purple), control: nil, handler: nil))
+        cell.contentConfiguration = UIHostingConfiguration {
+            IconCell(icon: RoundedIcon(icon: .systemImage(iconName: tag.symbol!, backgroundColor: Color.primary, tintColor: ThemeColors(rawValue: Int(tag.colorIndex))?.tintColor ?? Color.blue)), title: tag.name!, view: nil)
+        }
         return cell
         
     }
     
     @objc func editTags(sender: UIBarButtonItem) {
-        let vc = NewTagViewController()
+        let vc = UIHostingController(rootView: NewTagViewController())
         
         let navController = UINavigationController(rootViewController: vc)
         self.navigationController?.present(navController, animated: true, completion: nil)
@@ -66,14 +67,11 @@ class TagsTableViewController: UITableViewController {
               title: "Edit Tags", image: UIImage(systemName: "tag")) { [self] _ in
                 //gets the current dimension and splits it up into 2 parts, and saves them so they can be shown in the text fields in editPresetViewController. The editPresetViewController is then shown via a popover
                   
-                  let vc = NewTagViewController()
+                  let vc = UIHostingController(rootView: NewTagViewController())
                   let navController = UINavigationController(rootViewController: vc)
-                  vc.isEditingTag = true
-                  vc.currentTag = tags[indexPath.row]
-                  vc.selectedColor = UIColor(hex: tags[indexPath.row].color!)
-                  vc.image = tags[indexPath.row].symbol
-                  vc.name = tags[indexPath.row].name
-                  vc.isEditingTag = true
+                  vc.rootView.color = Int(tags[indexPath.row].colorIndex)
+                  vc.rootView.icon = tags[indexPath.row].symbol
+                  vc.rootView.name = tags[indexPath.row].name!
                   self.navigationController?.present(navController, animated: true, completion: nil)
                 
             }

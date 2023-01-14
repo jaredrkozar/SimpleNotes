@@ -150,10 +150,8 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
     override init() {
         super.init()
         
-        if isSignedIn == true && GIDSignIn.sharedInstance().currentUser != nil {
-            GIDSignIn.sharedInstance().restorePreviousSignIn()
-        } else {
-            signIn()
+        if isSignedIn == false {
+           signIn()
         }
     }
     

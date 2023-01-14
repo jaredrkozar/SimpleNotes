@@ -241,7 +241,7 @@ class NoteViewController: UIViewController, UIGestureRecognizerDelegate, UIScrol
                         
                         switch currentDevice {
                         case .iphone:
-                            if let picker = navigationController.presentationController as? UISheetPresentationController {
+                            if let picker = vc.presentationController as? UISheetPresentationController {
                                picker.detents = [.medium()]
                                picker.prefersGrabberVisible = true
                                picker.preferredCornerRadius = 7.0

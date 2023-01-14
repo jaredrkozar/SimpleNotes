@@ -53,7 +53,6 @@ class PDFHolderView: UIView, UIScrollViewDelegate, UIDropInteractionDelegate {
         
         drawingView.addImagesToNote(images: fetchImages(index: index))
         drawingView.insertedImage = { image, frame in
-            print("SAVE IMAGE")
             saveImage(image: image, frame: frame, index: index)
         }
         
@@ -64,6 +63,7 @@ class PDFHolderView: UIView, UIScrollViewDelegate, UIDropInteractionDelegate {
         drawingView.insertedStroke = { stroke in
             print("DLLDLD")
         }
+        
        pageDisplayType = defaultScrollDirection
         drawingView.backgroundColor = .clear
         

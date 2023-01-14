@@ -12,9 +12,9 @@ struct SettingsView: View {
     
     @State var title: String = "Settings"
     
-    var defaultSettings = [IconCell(iconName: Icon(icon: "doc", iconBGColor: Color.red, iconTintColor: Color.white), title: "Note", view: AnyView(DefaultNoteSettings())),
-        
-        IconCell(iconName: Icon(icon: "doc", iconBGColor: Color.red, iconTintColor: Color.white), title: "Note", view: nil)]
+    var defaultSettings = [IconCell(icon: RoundedIcon(icon: .systemImage(iconName: "cloud", backgroundColor: .blue, tintColor: .white)), title: "Accounts", view: AnyView(AccountsSettings())),
+                           
+       IconCell(icon: RoundedIcon(icon: .systemImage(iconName: "doc", backgroundColor: .red, tintColor: .white)), title: "Note", view: AnyView(DefaultNoteSettings()))]
 
     var body: some View {
         NavigationSplitView {
@@ -25,7 +25,7 @@ struct SettingsView: View {
           }
             
           .navigationTitle("World")
-            
+          
         } detail: {
             if let setting = selection {
                 AnyView(setting.view)

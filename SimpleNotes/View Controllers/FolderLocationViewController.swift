@@ -8,36 +8,40 @@
 import SwiftUI
 
 struct FolderLocationViewController: View {
-    @State var location: SharingLocation?
+    var location: SharingLocation?
     @Binding var currentfolder: String?
     @State private var allFiles = [CloudServiceFiles]()
     var serviceType: CloudType?
+    var currentFolderName: String?
     @State private var presentAlert: Bool = false
-    @State private var errorMessage: String?
+    @State private var errorMessage: String = ""
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        NavigationView {
-            
-            List(allFiles) { item in
-                NavigationLink(destination:
-                                serviceType == .download && item.type == .pdf ? AnyView(ImportFileView(fileData: item.folderID, title: item.name, location: location!)) : AnyView(FolderLocationViewController(location: location, currentfolder: .constant(item.folderID), serviceType: serviceType))
-                ) {
-                   
-                    IconCell(iconName: Icon(icon: item.type?.icon, iconBGColor: Color.primary, iconTintColor: Color(uiColor: item.type!.tintColor)), title: item.name ?? "Name not found")
-                }
-                .disabled(serviceType == .upload && item.type != .folder)
+        List(allFiles) { item in
+            NavigationLink(destination: item.type == .pdf &&
+                           serviceType == .download ? AnyView(Text("ELEL")) : AnyView(FolderLocationViewController(location: location, currentfolder: .constant(item.folderID), serviceType: serviceType, currentFolderName: item.name))
+            ) {
+                IconCell(icon: RoundedIcon(icon: .systemImage(iconName: item.type?.icon ?? "exclamationmark.triangle", backgroundColor:  Color(uiColor: item.type!.tintColor), tintColor: Color.white)), title: item.name ?? "Name not found", view: nil)
             }
-            .navigationBarTitle(currentfolder ?? location!.viewTitle, displayMode: .inline)
+            .disabled(serviceType == .upload && item.type != .folder)
+        }
+        .navigationTitle(currentFolderName ?? (location == .dropbox ? "Dropbox" : "Google Drive"))
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Select Folder") {
+                    dismiss()
+                }
+            }
         }
         
-       
         .onAppear {
-            print(location)
             location?.currentLocation.fetchFiles(folderID: (currentfolder ?? location?.currentLocation.defaultFolder)!, onCompleted: {
                 (files, error) in
                 
                 guard error == nil else {
-                    self.errorMessage = error?.localizedDescription
+                    self.errorMessage = error!.localizedDescription
                     self.presentAlert = true
                     return
                 }
@@ -48,7 +52,7 @@ struct FolderLocationViewController: View {
         }
         
         .alert(isPresented: $presentAlert) {
-            Alert(title: Text(errorMessage!), message: nil, dismissButton: nil)
+            Alert(title: Text(errorMessage), message: nil, dismissButton: nil)
         }
     }
     

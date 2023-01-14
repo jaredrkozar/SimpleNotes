@@ -16,6 +16,17 @@ struct SettingsGroup: Identifiable {
     var footer: String
 }
 
+struct AccountsSettings: View {
+    var body: some View {
+        SectionView(settings: [
+        SettingsGroup(header: "Accounts", settings: [
+            AnyView(LogInCell(icon: RoundedIcon(icon: .customImage(iconName: "GoogleDrive", backgroundColor: .blue, paddingInset: 0)), title: "Google Drive", interactor: GoogleInteractor())),
+            AnyView(LogInCell(icon: RoundedIcon(icon: .customImage(iconName: "Dropbox", backgroundColor: .blue, paddingInset: 0)), title: "Dropbox", interactor: DropboxInteractor()))
+        ], footer: "Log in and out of your Google Drive and Dropbox accounts.")
+        ])
+    }
+}
+
 struct DefaultNoteSettings: View {
     @AppStorage("defaultNoteTitle") var defaultNoteTitle: String = "Anonymous"
     @AppStorage("defaultOnOff") var defaultOnOff: Bool = false

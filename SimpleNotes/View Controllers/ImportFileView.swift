@@ -46,7 +46,7 @@ struct ImportFileView: View {
                 Text("Create New Note")
             }
             
-            .frame(height: 100)
+            .frame(width: 600, height: 100)
             .buttonStyle(BaseButtonStyle())
         }
         

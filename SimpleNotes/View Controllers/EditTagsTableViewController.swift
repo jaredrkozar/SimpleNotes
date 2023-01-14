@@ -23,7 +23,7 @@ class EditTagsTableViewController: UITableViewController {
         
         let plusButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(plusButtonTapped))
         
-        tableView.register(TableRowCell.self, forCellReuseIdentifier: TableRowCell.identifier)
+        tableView.register(NoteTableViewCell.self, forCellReuseIdentifier: "NoteTableViewCell")
         
         self.navigationItem.leftBarButtonItems = [plusButton]
         self.navigationItem.rightBarButtonItems = [doneButton]
@@ -49,20 +49,19 @@ class EditTagsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TableRowCell", for: indexPath) as! TableRowCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NoteTableViewCell", for: indexPath) as! NoteTableViewCell
         
         let tag = tags[indexPath.row]
 
-        cell.configureCell(with: SettingsOptions(title: tag.name!, option: "", rowIcon: Icon(icon: tag.symbol, iconBGColor: Color.green, iconTintColor: Color.purple), control: nil, handler: nil))
+        cell.contentConfiguration = UIHostingConfiguration {
+            IconCell(icon: RoundedIcon(icon: .systemImage(iconName: tag.symbol!, backgroundColor: Color.primary, tintColor: ThemeColors(rawValue: Int(tag.colorIndex))?.tintColor ?? Color.blue)), title: tag.name!, view: nil)
+        }
         
         return cell
     }
     
     @objc func plusButtonTapped(sender: UIBarButtonItem) {
-        let vc = NewTagViewController()
-        let navController = UINavigationController(rootViewController: vc)
-        vc.selectedColor = .systemBlue
-        self.navigationController?.present(navController, animated: true, completion: nil)
+        presentTag(editingTag: false, name: nil, icon: nil, color: nil)
     }
     
     @objc func doneButtonTapped(sender: UIBarButtonItem) {
@@ -87,16 +86,7 @@ class EditTagsTableViewController: UITableViewController {
               title: "Edit Tag", image: UIImage(systemName: "tag")) { [self] _ in
                 //gets the current dimension and splits it up into 2 parts, and saves them so they can be shown in the text fields in editPresetViewController. The editPresetViewController is then shown via a popover
                 
-                  let vc = NewTagViewController()
-                  let navController = UINavigationController(rootViewController: vc)
-                  vc.isEditingTag = true
-                  vc.currentTag = tags[indexPath.row]
-                  vc.selectedColor = UIColor(hex: tags[indexPath.row].color!)
-                  vc.image = tags[indexPath.row].symbol
-                  vc.name = tags[indexPath.row].name
-                  vc.isEditingTag = true
-                  self.navigationController?.present(navController, animated: true, completion: nil)
-                
+                  presentTag(editingTag: true, name: tags[indexPath.row].name!, icon: tags[indexPath.row].symbol!, color: Int(tags[indexPath.row].colorIndex))
             }
             
             let deleteAction = UIAction(
@@ -116,4 +106,20 @@ class EditTagsTableViewController: UITableViewController {
         }
     }
     
+    func presentTag(editingTag: Bool, name: String?, icon: String?, color: Int?) {
+        let vc = UIHostingController(rootView: NewTagViewController())
+        let navController = UINavigationController(rootViewController: vc)
+        if let picker = navController.presentationController as? UISheetPresentationController {
+                    picker.detents = [.medium()]
+                    picker.prefersGrabberVisible = true
+                    picker.preferredCornerRadius = 5.0
+                }
+        if editingTag == true {
+            vc.rootView.color = color!
+            vc.rootView.icon = icon
+            vc.rootView.name = name!
+        }
+        
+        self.present(navController, animated: true)
+    }
 }

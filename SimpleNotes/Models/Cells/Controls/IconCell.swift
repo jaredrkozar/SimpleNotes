@@ -19,20 +19,13 @@ struct IconCell: View, Hashable, Identifiable {
         return lhs.id == rhs.id
     }
     
-    var iconName: Icon
+    var icon: RoundedIcon?
     var title: String
     var view: AnyView?
     
     var body: some View {
         HStack {
-            ZStack {
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(iconName.iconBGColor ?? Color(uiColor: UIColor.systemBackground))
-                      .frame(width: 40, height: 40)
-                
-                Image(systemName: iconName.icon!).foregroundColor(iconName.iconTintColor)
-            }
-            
+            icon
             Text(title)
         }
     }
@@ -40,6 +33,6 @@ struct IconCell: View, Hashable, Identifiable {
 
 struct IconCell_Previews: PreviewProvider {
     static var previews: some View {
-        IconCell(iconName: Icon(icon: "photo", iconBGColor: Color.red, iconTintColor: Color.white), title: "Picture", view: AnyView(DefaultNoteSettings()))
+        IconCell(icon: RoundedIcon(icon: .systemImage(iconName: "dpc", backgroundColor: Color.red, tintColor: .white)), title: "Hello")
     }
 }

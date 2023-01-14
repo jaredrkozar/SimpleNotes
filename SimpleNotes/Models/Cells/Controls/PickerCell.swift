@@ -8,14 +8,19 @@
 import SwiftUI
 
 struct PickerCell: View {
+    var icon: RoundedIcon?
     @State var title: String
     @State var options: [String]
     @Binding var selected: String
     
     var body: some View {
-        Picker(title, selection: $selected) {                ForEach(options, id: \.self) { option in
-            Text(option)
-        }
+        HStack {
+            icon
+        
+            Picker(title, selection: $selected) {                ForEach(options, id: \.self) { option in
+                    Text(option)
+                }
+            }
         }
     }
 }

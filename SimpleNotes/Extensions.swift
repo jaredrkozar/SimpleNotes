@@ -230,32 +230,6 @@ enum ImageTypes {
     case png
 }
 
-struct Sections {
-    let title: String?
-    var settings: [SettingsOptions]
-}
-
-struct SettingsOptions {
-    let title: String
-    var option: String?
-    let rowIcon: Icon?
-    let control: DetailViewType?
-    let handler: (() -> Void)?
-}
-
-struct Icon {
-    let icon: String?
-    let iconBGColor: Color?
-    let iconTintColor: Color!
-}
-
-enum DetailViewType: Equatable {
-    
-    case color(color: UIView)
-    case text(string: String)
-    case control(controls: [UIControl], width: Double)
-}
-
 func sendBackSymbol(imageName: String, color: UIColor) -> UIImage {
     return UIImage(systemName: imageName)!.withTintColor(color, renderingMode: .alwaysOriginal)
 }
