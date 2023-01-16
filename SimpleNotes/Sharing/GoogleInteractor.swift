@@ -63,11 +63,6 @@ class GoogleInteractor: NSObject, GIDSignInDelegate, APIInteractor {
         
         GIDSignIn.sharedInstance().restorePreviousSignIn()
         driveService.apiKey = "AIzaSyBz0NAnojMb8LOmWUlEIHWTHvljk4Yboaw"
-        
-        guard GIDSignIn.sharedInstance().currentUser != nil else {
-            signIn()
-            return
-        }
 
         driveService.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
         GIDSignIn.sharedInstance().clientID = clientID

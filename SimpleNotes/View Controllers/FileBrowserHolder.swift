@@ -9,13 +9,13 @@ import SwiftUI
 
 struct FileBrowserHolder: View {
     @State var location: SharingLocation?
-    @State var currentfolder: String?
-    @State private var allFiles = [CloudServiceFiles]()
+    @Binding var currentfolder: String?
     var serviceType: CloudType?
     
     var body: some View {
         NavigationView {
             FolderLocationViewController(location: location, currentfolder: $currentfolder, serviceType: serviceType)
+
        }
     }
 }

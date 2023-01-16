@@ -43,7 +43,10 @@ struct NoteShareSettingsViewController: View {
                     showingSheet = true
                 }
                 .sheet(isPresented: $showingSheet) {
-                    FileBrowserHolder(location: sharingLocation, currentfolder: sharingLocation?.currentLocation.defaultFolder, serviceType: .upload)
+                    FileBrowserHolder(location: sharingLocation, currentfolder: $folderID, serviceType: .upload)
+                }
+                .onReceive(NotificationCenter.default.publisher(for: Notification.Name(rawValue: "removeViewNotification"))) { _ in
+                    print(folderID)
                 }
         }
         
@@ -61,29 +64,7 @@ struct NoteShareSettingsViewController: View {
     }
     
     func shareNote() {
-        let noteData = self.getNoteData!(format ?? .pdf)
-      
-      switch sharingLocation {
-      case .googledrive,.dropbox:
-          sharingLocation?.currentLocation.uploadFile(note: noteData, noteName: currentNoteTitle!, noteFormat: format ?? .pdf, folderID: folderID, onCompleted: {_,_ in
-              print("slsl")
-          })
-      case .email:
-          SendHelper().sendEmail(title: currentNoteTitle!, noteData: noteData)
-      case .messages:
-          SendHelper().sendText(noteTitle: currentNoteTitle!, notePDF: noteData)
-      case .print:
-          let printInfo = UIPrintInfo(dictionary: nil)
-          printInfo.jobName = currentNoteTitle!
-          
-          let printController = UIPrintInteractionController()
-          printController.printingItem = noteData
-           printController.showsNumberOfCopies = false
-
-          printController.present(animated: true)
-      default:
-          print("This export type is not supported")
-      }
+        print(folderID)
     }
 }
 

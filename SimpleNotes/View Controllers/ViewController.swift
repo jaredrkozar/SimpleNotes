@@ -222,10 +222,10 @@ class ViewController: UITableViewController, UINavigationControllerDelegate {
                     case .scanDocument:
                         self.presentDocumentScanner()
                     case .dropbox:
-                        let vc = UIHostingController(rootView: FileBrowserHolder(location: .dropbox, currentfolder: "", serviceType: .download))
+                        let vc = UIHostingController(rootView: FileBrowserHolder(location: .dropbox, currentfolder: .constant(""), serviceType: .download))
                         self.present(vc, animated: true)
                     case .googledrive:
-                        let vc = UIHostingController(rootView: FileBrowserHolder(location: .googledrive, currentfolder: "", serviceType: .download))
+                        let vc = UIHostingController(rootView: FileBrowserHolder(location: .googledrive, currentfolder: .constant("root"), serviceType: .download))
                         self.present(vc, animated: true)
                     default:
                         print("Not supported")

@@ -32,12 +32,14 @@ struct RoundedIcon: View {
             
             switch icon {
             case .systemImage(iconName: let name, backgroundColor: let bgColor, tintColor: let iconTintColor):
+                settingsRowIconStyle(backgroundColor: bgColor)
                 Image(systemName: name)
-                    .foregroundColor(Color.white)
-                    .settingsRowIconStyle(backgroundColor: bgColor)
+                    .foregroundColor(iconTintColor)
             case .customImage(iconName: let name, backgroundColor: let backgroundColor, paddingInset: let paddingInset):
+                
+                settingsRowIconStyle(backgroundColor: Color.white)
+                
                 Image(name)
-                    .settingsRowIconStyle(backgroundColor: backgroundColor)
             }
         }
     }
@@ -45,6 +47,7 @@ struct RoundedIcon: View {
 
 extension View {
     func settingsRowIconStyle(backgroundColor: Color) -> some View {
+        
         RoundedRectangle(cornerRadius: 10, style: .continuous)
             .fill(backgroundColor)
               .frame(width: 40, height: 40)

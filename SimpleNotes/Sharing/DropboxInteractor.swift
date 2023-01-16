@@ -72,7 +72,7 @@ class DropboxInteractor: APIInteractor {
     
     func uploadFile(note: Data, noteName: String, noteFormat: SharingType, folderID: String?, onCompleted: @escaping (Double, String?) -> ()) {
         var progress: Double?
-        let newPath = folderID! + "/\(noteName).\(noteFormat.dropboxFileType)"
+        let newPath = folderID! + "/\(noteName).pdf)"
         client?.files.upload(path: newPath, mode: .add, autorename: true, clientModified: nil, mute: false, input: note)
             
             .progress { progressData in
